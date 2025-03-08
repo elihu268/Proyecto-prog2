@@ -15,6 +15,7 @@
     <Folder Include="Model\" />
     <Folder Include="Utilities\" />
     <Folder Include="Resources\" />
+    <Folder Include="View\" />
   </ItemGroup>
 
   <ItemGroup>
