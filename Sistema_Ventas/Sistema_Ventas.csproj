@@ -9,13 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Bussines\" />
     <Folder Include="Controller\" />
     <Folder Include="Data\" />
     <Folder Include="Model\" />
-    <Folder Include="Utilities\" />
     <Folder Include="Resources\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace Sistema_Ventas
             frmLogin login_form = new frmLogin();
             if (login_form.ShowDialog() == DialogResult.OK)
             {//si la respuesta es ok lo que va a correr el mdi
-               // Application.Run(new MDI_Sistema_Ventas());
+               Application.Run(new MDI_Sistema_ventas());
             }
         }
     }
