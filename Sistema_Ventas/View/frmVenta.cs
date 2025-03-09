@@ -29,5 +29,10 @@ namespace Sistema_Ventas.View
         {
 
         }
+
+        private void gbx_metodo_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

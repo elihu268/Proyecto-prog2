@@ -32,6 +32,7 @@
             sc_venta = new SplitContainer();
             gbx_venta = new GroupBox();
             gbx_metodo = new GroupBox();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
             sc_venta.Panel2.SuspendLayout();
@@ -46,6 +47,7 @@
             // 
             // sc_venta.Panel1
             // 
+            sc_venta.Panel1.Controls.Add(groupBox1);
             sc_venta.Panel1.Controls.Add(gbx_venta);
             // 
             // sc_venta.Panel2
@@ -58,12 +60,12 @@
             // 
             // gbx_venta
             // 
-            gbx_venta.Location = new Point(8, 8);
+            gbx_venta.Location = new Point(3, 95);
             gbx_venta.Name = "gbx_venta";
-            gbx_venta.Size = new Size(751, 616);
+            gbx_venta.Size = new Size(751, 78);
             gbx_venta.TabIndex = 0;
             gbx_venta.TabStop = false;
-            gbx_venta.Text = "Compra";
+            gbx_venta.Text = "Busqueda";
             // 
             // gbx_metodo
             // 
@@ -73,6 +75,16 @@
             gbx_metodo.TabIndex = 0;
             gbx_metodo.TabStop = false;
             gbx_metodo.Text = "Metodo de pago";
+            gbx_metodo.Enter += gbx_metodo_Enter;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Location = new Point(3, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(756, 86);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "groupBox1";
             // 
             // frmVenta
             // 
@@ -97,5 +109,6 @@
         private SplitContainer sc_venta;
         private GroupBox gbx_venta;
         private GroupBox gbx_metodo;
+        private GroupBox groupBox1;
     }
 }
