@@ -63,7 +63,7 @@
             btn_inciar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_inciar.Image = (Image)resources.GetObject("btn_inciar.Image");
             btn_inciar.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_inciar.Location = new Point(165, 295);
+            btn_inciar.Location = new Point(136, 295);
             btn_inciar.Name = "btn_inciar";
             btn_inciar.Size = new Size(181, 59);
             btn_inciar.TabIndex = 2;
