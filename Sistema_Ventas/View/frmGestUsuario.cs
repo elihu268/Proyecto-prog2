@@ -136,8 +136,8 @@ namespace PuntodeVenta.View
                 if (extension == ".xlsx" || extension == ".xls")
                 {
                     MessageBox.Show("Archivo Valido" + filePath, "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                  //  lbCargaMasiva.Text =  filePath;
-                    
+                    //  lbCargaMasiva.Text =  filePath;
+
                 }
                 else
                 {
