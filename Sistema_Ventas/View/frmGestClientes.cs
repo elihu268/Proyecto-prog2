@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Ventas.Bussines;
+using static Sistema_Ventas.Bussines.Negocio;
 
 namespace PuntodeVenta.View
 {
@@ -64,7 +66,7 @@ namespace PuntodeVenta.View
         }
         private bool DatosValidos()
         {
-            if (!UsuarioNegocio.EsCorreoValido(txtCorreoCliente.Text.Trim()))
+            if (!UsuariosNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
             {
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
