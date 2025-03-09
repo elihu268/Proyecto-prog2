@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Sistema_Ventas.View
 {
-    public partial class frmCatalogo : Form
+    public partial class frmCargaCatalogo : Form
     {
-        public frmCatalogo()
+        public frmCargaCatalogo()
         {
             InitializeComponent();
+        }
+
+        private void frmCatalogo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
