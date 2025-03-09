@@ -145,5 +145,15 @@ namespace PuntodeVenta.View
                 }
             }
         }
+        private bool Datosbusqueda()
+        {
+            if(cbxtipoFecha.Text == ""|| dtpFechaInicio.Text =="" || dtpFechaFin.Text == "")
+            {
+                MessageBox.Show("Seleccione una fecha", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+        
     }
 }

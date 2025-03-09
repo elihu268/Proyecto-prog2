@@ -47,17 +47,17 @@
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
-            stpFechaInicio = new DateTimePicker();
+            dtpFechaInicio = new DateTimePicker();
             lbFechaFin = new Label();
             lbFechaInicio = new Label();
             btnBuscar = new Button();
             txtBusqueda = new TextBox();
             lbBusqueda = new Label();
             gbxherramientas = new GroupBox();
+            lbCargaMasiva = new Label();
             btnCarga = new Button();
             btncargaUsuario = new Button();
             ofdArchivo = new OpenFileDialog();
-            lbCargaMasiva = new Label();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -230,7 +230,7 @@
             gbxBusqueda.Controls.Add(cbxtipoFecha);
             gbxBusqueda.Controls.Add(lbTipoFecha);
             gbxBusqueda.Controls.Add(dtpFechaFin);
-            gbxBusqueda.Controls.Add(stpFechaInicio);
+            gbxBusqueda.Controls.Add(dtpFechaInicio);
             gbxBusqueda.Controls.Add(lbFechaFin);
             gbxBusqueda.Controls.Add(lbFechaInicio);
             gbxBusqueda.Controls.Add(btnBuscar);
@@ -269,13 +269,13 @@
             dtpFechaFin.Size = new Size(110, 23);
             dtpFechaFin.TabIndex = 10;
             // 
-            // stpFechaInicio
+            // dtpFechaInicio
             // 
-            stpFechaInicio.Format = DateTimePickerFormat.Short;
-            stpFechaInicio.Location = new Point(249, 16);
-            stpFechaInicio.Name = "stpFechaInicio";
-            stpFechaInicio.Size = new Size(110, 23);
-            stpFechaInicio.TabIndex = 9;
+            dtpFechaInicio.Format = DateTimePickerFormat.Short;
+            dtpFechaInicio.Location = new Point(249, 16);
+            dtpFechaInicio.Name = "dtpFechaInicio";
+            dtpFechaInicio.Size = new Size(110, 23);
+            dtpFechaInicio.TabIndex = 9;
             // 
             // lbFechaFin
             // 
@@ -335,6 +335,15 @@
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
             // 
+            // lbCargaMasiva
+            // 
+            lbCargaMasiva.AutoSize = true;
+            lbCargaMasiva.Location = new Point(224, 20);
+            lbCargaMasiva.Name = "lbCargaMasiva";
+            lbCargaMasiva.Size = new Size(86, 15);
+            lbCargaMasiva.TabIndex = 2;
+            lbCargaMasiva.Text = "Ruta de acceso";
+            // 
             // btnCarga
             // 
             btnCarga.Location = new Point(127, 18);
@@ -358,15 +367,6 @@
             // ofdArchivo
             // 
             ofdArchivo.FileName = "Carga Masiva de Usuarios";
-            // 
-            // lbCargaMasiva
-            // 
-            lbCargaMasiva.AutoSize = true;
-            lbCargaMasiva.Location = new Point(224, 20);
-            lbCargaMasiva.Name = "lbCargaMasiva";
-            lbCargaMasiva.Size = new Size(86, 15);
-            lbCargaMasiva.TabIndex = 2;
-            lbCargaMasiva.Text = "Ruta de acceso";
             // 
             // frmGestUsuario
             // 
@@ -415,7 +415,7 @@
         private TextBox txtBusqueda;
         private Label lbBusqueda;
         private DateTimePicker dtpFechaFin;
-        private DateTimePicker stpFechaInicio;
+        private DateTimePicker dtpFechaInicio;
         private Label lbFechaFin;
         private Label lbFechaInicio;
         private Label lbTipoFecha;
