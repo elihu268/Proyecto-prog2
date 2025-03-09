@@ -126,6 +126,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmLogin";
             Text = "inicio de sesion";
+            Load += frmLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

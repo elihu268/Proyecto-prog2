@@ -17,6 +17,7 @@ namespace Sistema_Ventas.View
         public frmLogin()
         {
             InitializeComponent();
+
         }
 
         private void btn_iniciar_Click(object sender, EventArgs e)
@@ -47,6 +48,11 @@ namespace Sistema_Ventas.View
         private void btn_cerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
