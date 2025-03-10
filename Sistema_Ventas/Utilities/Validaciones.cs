@@ -19,7 +19,7 @@ namespace Sistema_Ventas.Utilities
         {
             int resultado;
             return int.TryParse(numeroEntero, out resultado);
-        }        
+              
         }
         
     }
