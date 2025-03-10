@@ -53,17 +53,17 @@
             grp_busqueda = new GroupBox();
             rb_nombre = new RadioButton();
             rb_codigo = new RadioButton();
-            textBox1 = new TextBox();
+            txt_busqueda = new TextBox();
             gbx_venta = new GroupBox();
+            txt_nombre = new TextBox();
             btn_eliminar = new Button();
-            textBox2 = new TextBox();
+            txt_cantidad = new TextBox();
             btn_agregar = new Button();
             lbl_cantidad = new Label();
             lbl_nombre = new Label();
             gbx_metodo = new GroupBox();
             rb_tarjeta = new RadioButton();
             rb_efectivo = new RadioButton();
-            textBox3 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
             sc_venta.Panel2.SuspendLayout();
@@ -290,7 +290,7 @@
             grp_busqueda.BackColor = SystemColors.InactiveBorder;
             grp_busqueda.Controls.Add(rb_nombre);
             grp_busqueda.Controls.Add(rb_codigo);
-            grp_busqueda.Controls.Add(textBox1);
+            grp_busqueda.Controls.Add(txt_busqueda);
             grp_busqueda.Location = new Point(3, 3);
             grp_busqueda.Name = "grp_busqueda";
             grp_busqueda.Size = new Size(645, 86);
@@ -320,20 +320,20 @@
             rb_codigo.Text = "Codigo";
             rb_codigo.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txt_busqueda
             // 
-            textBox1.Location = new Point(9, 30);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(341, 31);
-            textBox1.TabIndex = 2;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txt_busqueda.Location = new Point(9, 30);
+            txt_busqueda.Name = "txt_busqueda";
+            txt_busqueda.Size = new Size(341, 31);
+            txt_busqueda.TabIndex = 2;
+            txt_busqueda.TextChanged += textBox1_TextChanged;
             // 
             // gbx_venta
             // 
             gbx_venta.BackColor = SystemColors.InactiveBorder;
-            gbx_venta.Controls.Add(textBox3);
+            gbx_venta.Controls.Add(txt_nombre);
             gbx_venta.Controls.Add(btn_eliminar);
-            gbx_venta.Controls.Add(textBox2);
+            gbx_venta.Controls.Add(txt_cantidad);
             gbx_venta.Controls.Add(btn_agregar);
             gbx_venta.Controls.Add(lbl_cantidad);
             gbx_venta.Controls.Add(lbl_nombre);
@@ -343,6 +343,13 @@
             gbx_venta.TabIndex = 0;
             gbx_venta.TabStop = false;
             gbx_venta.Text = "datos articulo";
+            // 
+            // txt_nombre
+            // 
+            txt_nombre.Location = new Point(103, 39);
+            txt_nombre.Name = "txt_nombre";
+            txt_nombre.Size = new Size(145, 31);
+            txt_nombre.TabIndex = 7;
             // 
             // btn_eliminar
             // 
@@ -355,12 +362,12 @@
             btn_eliminar.Text = "Eliminar";
             btn_eliminar.UseVisualStyleBackColor = false;
             // 
-            // textBox2
+            // txt_cantidad
             // 
-            textBox2.Location = new Point(370, 35);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(150, 31);
-            textBox2.TabIndex = 5;
+            txt_cantidad.Location = new Point(370, 35);
+            txt_cantidad.Name = "txt_cantidad";
+            txt_cantidad.Size = new Size(150, 31);
+            txt_cantidad.TabIndex = 5;
             // 
             // btn_agregar
             // 
@@ -425,13 +432,6 @@
             rb_efectivo.Text = "Efectivo";
             rb_efectivo.UseVisualStyleBackColor = true;
             // 
-            // textBox3
-            // 
-            textBox3.Location = new Point(103, 39);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(145, 31);
-            textBox3.TabIndex = 7;
-            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -472,12 +472,12 @@
         private DataGridViewTextBoxColumn clm_stock;
         private Button btn_terminar;
         private Button btn_limpiar;
-        private TextBox textBox1;
+        private TextBox txt_busqueda;
         private Label lbl_cantidad;
         private Label lbl_nombre;
         private GroupBox grbox_carrito;
         private Button btn_agregar;
-        private TextBox textBox2;
+        private TextBox txt_cantidad;
         private Label lbl_nombreBusqueda;
         private ListBox listBox2;
         private ListBox listBox1;
@@ -494,7 +494,7 @@
         private RadioButton rb_codigo;
         private Button btn_eliminar;
         private RadioButton rb_nombre;
-        private TextBox textBox3;
+        private TextBox txt_nombre;
         private RadioButton rb_tarjeta;
         private RadioButton rb_efectivo;
     }

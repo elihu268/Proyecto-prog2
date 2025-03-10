@@ -45,7 +45,8 @@ namespace Sistema_Ventas.View
             if (rb_codigo.Checked==true)
             {
                 //corre un filtro para saber si exite el codigo
-
+                Utilities.Validaciones.EsUnNumeroEntero(txt_busqueda.Text);
+                
             }
             else
             {
