@@ -180,7 +180,7 @@
             txtCorreo.Name = "txtCorreo";
             txtCorreo.Size = new Size(320, 31);
             txtCorreo.TabIndex = 20;
-            txtCorreo.TextChanged += txtCorreo_TextChanged;
+            //txtCorreo.TextChanged += txtCorreo_TextChanged;
             // 
             // txtNombre
             // 
