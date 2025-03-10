@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAsignarPermisos));
             splitContainer1 = new SplitContainer();
             groupBox1 = new GroupBox();
             button1 = new Button();
@@ -37,6 +38,9 @@
             clm_usuario = new DataGridViewTextBoxColumn();
             clm_rol = new DataGridViewTextBoxColumn();
             clm_estatus = new DataGridViewTextBoxColumn();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton3 = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -64,6 +68,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(radioButton3);
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(radioButton1);
             groupBox1.Controls.Add(button1);
             groupBox1.Location = new Point(5, 11);
             groupBox1.Name = "groupBox1";
@@ -76,7 +83,7 @@
             // 
             button1.BackColor = SystemColors.ActiveCaption;
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(39, 360);
+            button1.Location = new Point(50, 271);
             button1.Name = "button1";
             button1.Size = new Size(153, 59);
             button1.TabIndex = 1;
@@ -136,6 +143,39 @@
             clm_estatus.Name = "clm_estatus";
             clm_estatus.Width = 150;
             // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(50, 66);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(141, 29);
+            radioButton1.TabIndex = 2;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "radioButton1";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(50, 109);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(141, 29);
+            radioButton2.TabIndex = 3;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "radioButton2";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(50, 154);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(141, 29);
+            radioButton3.TabIndex = 4;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "radioButton3";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
             // frmAsignarPermisos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -143,6 +183,7 @@
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(909, 485);
             Controls.Add(splitContainer1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmAsignarPermisos";
             Text = "Permisos";
             splitContainer1.Panel1.ResumeLayout(false);
@@ -150,6 +191,7 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -166,5 +208,8 @@
         private DataGridViewTextBoxColumn clm_usuario;
         private DataGridViewTextBoxColumn clm_rol;
         private DataGridViewTextBoxColumn clm_estatus;
+        private RadioButton radioButton3;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }
