@@ -28,27 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblTitulo = new Label();
             dgvResumVentas = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgvResumVentas).BeginInit();
             SuspendLayout();
             // 
-            // lblTitulo
-            // 
-            lblTitulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblTitulo.BackColor = SystemColors.ActiveCaption;
-            lblTitulo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(12, 9);
-            lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(776, 23);
-            lblTitulo.TabIndex = 0;
-            lblTitulo.Text = "Resumen de ventas";
-            lblTitulo.TextAlign = ContentAlignment.TopCenter;
-            // 
             // dgvResumVentas
             // 
             dgvResumVentas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvResumVentas.BackgroundColor = SystemColors.Window;
+            dgvResumVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvResumVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvResumVentas.Location = new Point(12, 44);
             dgvResumVentas.Name = "dgvResumVentas";
@@ -60,9 +47,9 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(800, 450);
             Controls.Add(dgvResumVentas);
-            Controls.Add(lblTitulo);
             Name = "frmResumenVentas";
             Text = "frmResumenVentas";
             ((System.ComponentModel.ISupportInitialize)dgvResumVentas).EndInit();
@@ -70,8 +57,6 @@
         }
 
         #endregion
-
-        private Label lblTitulo;
         private DataGridView dgvResumVentas;
     }
 }
