@@ -71,7 +71,6 @@
             // 
             scUsuarios.Dock = DockStyle.Fill;
             scUsuarios.Location = new Point(0, 0);
-            scUsuarios.Margin = new Padding(4, 5, 4, 5);
             scUsuarios.Name = "scUsuarios";
             // 
             // scUsuarios.Panel1
@@ -82,9 +81,8 @@
             // 
             scUsuarios.Panel2.Controls.Add(gbxBusqueda);
             scUsuarios.Panel2.Controls.Add(gbxherramientas);
-            scUsuarios.Size = new Size(1251, 668);
-            scUsuarios.SplitterDistance = 417;
-            scUsuarios.SplitterWidth = 6;
+            scUsuarios.Size = new Size(876, 401);
+            scUsuarios.SplitterDistance = 292;
             scUsuarios.TabIndex = 0;
             // 
             // groupBox1
@@ -103,11 +101,9 @@
             groupBox1.Controls.Add(lbTelefono);
             groupBox1.Controls.Add(lbCorreo);
             groupBox1.Controls.Add(lbNombre);
-            groupBox1.Location = new Point(4, 5);
-            groupBox1.Margin = new Padding(4, 5, 4, 5);
+            groupBox1.Location = new Point(3, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 5, 4, 5);
-            groupBox1.Size = new Size(413, 668);
+            groupBox1.Size = new Size(289, 401);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Datos del Usuario";
@@ -115,28 +111,25 @@
             // cbxRoles
             // 
             cbxRoles.FormattingEnabled = true;
-            cbxRoles.Location = new Point(29, 482);
-            cbxRoles.Margin = new Padding(4, 5, 4, 5);
+            cbxRoles.Location = new Point(20, 289);
             cbxRoles.Name = "cbxRoles";
-            cbxRoles.Size = new Size(171, 33);
+            cbxRoles.Size = new Size(121, 23);
             cbxRoles.TabIndex = 27;
             // 
             // lbRol
             // 
             lbRol.AutoSize = true;
-            lbRol.Location = new Point(21, 452);
-            lbRol.Margin = new Padding(4, 0, 4, 0);
+            lbRol.Location = new Point(15, 271);
             lbRol.Name = "lbRol";
-            lbRol.Size = new Size(37, 25);
+            lbRol.Size = new Size(24, 15);
             lbRol.TabIndex = 26;
             lbRol.Text = "Rol";
             // 
             // btnGuardar
             // 
-            btnGuardar.Location = new Point(236, 548);
-            btnGuardar.Margin = new Padding(4, 5, 4, 5);
+            btnGuardar.Location = new Point(165, 329);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(107, 38);
+            btnGuardar.Size = new Size(75, 23);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
             btnGuardar.UseVisualStyleBackColor = true;
@@ -145,100 +138,89 @@
             // cbxEstatus
             // 
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(29, 400);
-            cbxEstatus.Margin = new Padding(4, 5, 4, 5);
+            cbxEstatus.Location = new Point(20, 240);
             cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(191, 33);
+            cbxEstatus.Size = new Size(135, 23);
             cbxEstatus.TabIndex = 23;
             // 
             // dtpNacimiento
             // 
             dtpNacimiento.Format = DateTimePickerFormat.Short;
             dtpNacimiento.ImeMode = ImeMode.NoControl;
-            dtpNacimiento.Location = new Point(21, 327);
-            dtpNacimiento.Margin = new Padding(4, 5, 4, 5);
+            dtpNacimiento.Location = new Point(15, 196);
             dtpNacimiento.Name = "dtpNacimiento";
-            dtpNacimiento.Size = new Size(284, 31);
+            dtpNacimiento.Size = new Size(200, 23);
             dtpNacimiento.TabIndex = 22;
             // 
             // txtTelefono
             // 
             txtTelefono.Cursor = Cursors.IBeam;
-            txtTelefono.Location = new Point(21, 248);
-            txtTelefono.Margin = new Padding(4, 5, 4, 5);
+            txtTelefono.Location = new Point(15, 149);
             txtTelefono.MaxLength = 15;
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(323, 31);
+            txtTelefono.Size = new Size(227, 23);
             txtTelefono.TabIndex = 21;
             // 
             // txtCorreo
             // 
             txtCorreo.Cursor = Cursors.IBeam;
-            txtCorreo.Location = new Point(21, 147);
-            txtCorreo.Margin = new Padding(4, 5, 4, 5);
+            txtCorreo.Location = new Point(15, 88);
             txtCorreo.MaxLength = 100;
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(320, 31);
+            txtCorreo.Size = new Size(225, 23);
             txtCorreo.TabIndex = 20;
-            //txtCorreo.TextChanged += txtCorreo_TextChanged;
             // 
             // txtNombre
             // 
             txtNombre.Cursor = Cursors.IBeam;
-            txtNombre.Location = new Point(21, 62);
-            txtNombre.Margin = new Padding(4, 5, 4, 5);
+            txtNombre.Location = new Point(15, 37);
             txtNombre.MaxLength = 100;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(320, 31);
+            txtNombre.Size = new Size(225, 23);
             txtNombre.TabIndex = 19;
             // 
             // lbEstatus
             // 
             lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(19, 370);
-            lbEstatus.Margin = new Padding(4, 0, 4, 0);
+            lbEstatus.Location = new Point(13, 222);
             lbEstatus.Name = "lbEstatus";
-            lbEstatus.Size = new Size(68, 25);
+            lbEstatus.Size = new Size(44, 15);
             lbEstatus.TabIndex = 18;
             lbEstatus.Text = "Estatus";
             // 
             // lbfechaNacimiento
             // 
             lbfechaNacimiento.AutoSize = true;
-            lbfechaNacimiento.Location = new Point(26, 297);
-            lbfechaNacimiento.Margin = new Padding(4, 0, 4, 0);
+            lbfechaNacimiento.Location = new Point(18, 178);
             lbfechaNacimiento.Name = "lbfechaNacimiento";
-            lbfechaNacimiento.Size = new Size(177, 25);
+            lbfechaNacimiento.Size = new Size(119, 15);
             lbfechaNacimiento.TabIndex = 17;
             lbfechaNacimiento.Text = "Fecha de Nacimiento";
             // 
             // lbTelefono
             // 
             lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(21, 218);
-            lbTelefono.Margin = new Padding(4, 0, 4, 0);
+            lbTelefono.Location = new Point(15, 131);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(79, 25);
+            lbTelefono.Size = new Size(53, 15);
             lbTelefono.TabIndex = 16;
             lbTelefono.Text = "Telefono";
             // 
             // lbCorreo
             // 
             lbCorreo.AutoSize = true;
-            lbCorreo.Location = new Point(21, 105);
-            lbCorreo.Margin = new Padding(4, 0, 4, 0);
+            lbCorreo.Location = new Point(15, 63);
             lbCorreo.Name = "lbCorreo";
-            lbCorreo.Size = new Size(66, 25);
+            lbCorreo.Size = new Size(43, 15);
             lbCorreo.TabIndex = 15;
             lbCorreo.Text = "Correo";
             // 
             // lbNombre
             // 
             lbNombre.AutoSize = true;
-            lbNombre.Location = new Point(21, 32);
-            lbNombre.Margin = new Padding(4, 0, 4, 0);
+            lbNombre.Location = new Point(15, 19);
             lbNombre.Name = "lbNombre";
-            lbNombre.Size = new Size(162, 25);
+            lbNombre.Size = new Size(107, 15);
             lbNombre.TabIndex = 14;
             lbNombre.Text = "Nombre Completo";
             // 
@@ -255,11 +237,9 @@
             gbxBusqueda.Controls.Add(txtBusqueda);
             gbxBusqueda.Controls.Add(lbBusqueda);
             gbxBusqueda.Dock = DockStyle.Top;
-            gbxBusqueda.Location = new Point(0, 105);
-            gbxBusqueda.Margin = new Padding(4, 5, 4, 5);
+            gbxBusqueda.Location = new Point(0, 63);
             gbxBusqueda.Name = "gbxBusqueda";
-            gbxBusqueda.Padding = new Padding(4, 5, 4, 5);
-            gbxBusqueda.Size = new Size(828, 123);
+            gbxBusqueda.Size = new Size(580, 74);
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda";
@@ -267,85 +247,78 @@
             // cbxtipoFecha
             // 
             cbxtipoFecha.FormattingEnabled = true;
-            cbxtipoFecha.Location = new Point(119, 28);
-            cbxtipoFecha.Margin = new Padding(4, 5, 4, 5);
+            cbxtipoFecha.Location = new Point(83, 17);
             cbxtipoFecha.Name = "cbxtipoFecha";
-            cbxtipoFecha.Size = new Size(123, 33);
+            cbxtipoFecha.Size = new Size(87, 23);
             cbxtipoFecha.TabIndex = 12;
             // 
             // lbTipoFecha
             // 
             lbTipoFecha.AutoSize = true;
-            lbTipoFecha.Location = new Point(17, 32);
-            lbTipoFecha.Margin = new Padding(4, 0, 4, 0);
+            lbTipoFecha.Location = new Point(12, 19);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(97, 25);
+            lbTipoFecha.Size = new Size(65, 15);
             lbTipoFecha.TabIndex = 11;
             lbTipoFecha.Text = "Tipo Fecha";
             // 
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(604, 25);
-            dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaFin.Location = new Point(423, 15);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(155, 31);
+            dtpFechaFin.Size = new Size(110, 23);
             dtpFechaFin.TabIndex = 10;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(249, 16);
+            dtpFechaInicio.Location = new Point(282, 14);
+            dtpFechaInicio.Margin = new Padding(2, 2, 2, 2);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(110, 23);
+            dtpFechaInicio.Size = new Size(78, 23);
             dtpFechaInicio.TabIndex = 9;
             // 
             // lbFechaFin
             // 
             lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(521, 32);
-            lbFechaFin.Margin = new Padding(4, 0, 4, 0);
+            lbFechaFin.Location = new Point(365, 19);
             lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(85, 25);
+            lbFechaFin.Size = new Size(57, 15);
             lbFechaFin.TabIndex = 8;
             lbFechaFin.Text = "Fecha Fin";
             // 
             // lbFechaInicio
             // 
             lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(251, 33);
-            lbFechaInicio.Margin = new Padding(4, 0, 4, 0);
+            lbFechaInicio.Location = new Point(207, 19);
             lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(104, 25);
+            lbFechaInicio.Size = new Size(70, 15);
             lbFechaInicio.TabIndex = 7;
             lbFechaInicio.Text = "Fecha Inicio";
             // 
             // btnBuscar
             // 
-            btnBuscar.Location = new Point(641, 75);
-            btnBuscar.Margin = new Padding(4, 5, 4, 5);
+            btnBuscar.Location = new Point(449, 45);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(107, 38);
+            btnBuscar.Size = new Size(75, 23);
             btnBuscar.TabIndex = 2;
             btnBuscar.Text = "actualizar";
             btnBuscar.UseVisualStyleBackColor = true;
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(196, 75);
-            txtBusqueda.Margin = new Padding(4, 5, 4, 5);
+            txtBusqueda.Location = new Point(137, 45);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(380, 31);
+            txtBusqueda.Size = new Size(267, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBusqueda
             // 
             lbBusqueda.AutoSize = true;
-            lbBusqueda.Location = new Point(14, 73);
-            lbBusqueda.Margin = new Padding(4, 0, 4, 0);
+            lbBusqueda.Location = new Point(10, 44);
             lbBusqueda.Name = "lbBusqueda";
-            lbBusqueda.Size = new Size(188, 25);
+            lbBusqueda.Size = new Size(123, 15);
             lbBusqueda.TabIndex = 0;
             lbBusqueda.Text = "Busqueda de Usuarios";
             // 
@@ -357,10 +330,8 @@
             gbxherramientas.Controls.Add(btncargaUsuario);
             gbxherramientas.Dock = DockStyle.Top;
             gbxherramientas.Location = new Point(0, 0);
-            gbxherramientas.Margin = new Padding(4, 5, 4, 5);
             gbxherramientas.Name = "gbxherramientas";
-            gbxherramientas.Padding = new Padding(4, 5, 4, 5);
-            gbxherramientas.Size = new Size(828, 105);
+            gbxherramientas.Size = new Size(580, 63);
             gbxherramientas.TabIndex = 0;
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
@@ -368,7 +339,8 @@
             // lbCargaMasiva
             // 
             lbCargaMasiva.AutoSize = true;
-            lbCargaMasiva.Location = new Point(224, 20);
+            lbCargaMasiva.Location = new Point(220, 22);
+            lbCargaMasiva.Margin = new Padding(2, 0, 2, 0);
             lbCargaMasiva.Name = "lbCargaMasiva";
             lbCargaMasiva.Size = new Size(86, 15);
             lbCargaMasiva.TabIndex = 2;
@@ -376,10 +348,9 @@
             // 
             // btnCarga
             // 
-            btnCarga.Location = new Point(181, 30);
-            btnCarga.Margin = new Padding(4, 5, 4, 5);
+            btnCarga.Location = new Point(127, 18);
             btnCarga.Name = "btnCarga";
-            btnCarga.Size = new Size(126, 38);
+            btnCarga.Size = new Size(88, 23);
             btnCarga.TabIndex = 1;
             btnCarga.Text = "Carga Masiva";
             btnCarga.UseVisualStyleBackColor = true;
@@ -387,10 +358,9 @@
             // 
             // btncargaUsuario
             // 
-            btncargaUsuario.Location = new Point(9, 30);
-            btncargaUsuario.Margin = new Padding(4, 5, 4, 5);
+            btncargaUsuario.Location = new Point(6, 18);
             btncargaUsuario.Name = "btncargaUsuario";
-            btncargaUsuario.Size = new Size(164, 38);
+            btncargaUsuario.Size = new Size(115, 23);
             btncargaUsuario.TabIndex = 0;
             btncargaUsuario.Text = "Cargar Usuario";
             btncargaUsuario.UseVisualStyleBackColor = true;
@@ -402,11 +372,10 @@
             // 
             // frmGestUsuario
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1251, 668);
+            ClientSize = new Size(876, 401);
             Controls.Add(scUsuarios);
-            Margin = new Padding(4, 5, 4, 5);
             Name = "frmGestUsuario";
             Text = "frmGestUsuario";
             Load += frmGestUsuario_Load;
