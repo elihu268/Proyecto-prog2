@@ -30,13 +30,13 @@
         {
             splitContainer1 = new SplitContainer();
             groupBox1 = new GroupBox();
+            button1 = new Button();
             groupBox2 = new GroupBox();
             btn_editar = new Button();
             dataGridView1 = new DataGridView();
             clm_usuario = new DataGridViewTextBoxColumn();
             clm_rol = new DataGridViewTextBoxColumn();
             clm_estatus = new DataGridViewTextBoxColumn();
-            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -72,6 +72,17 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
             // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ActiveCaption;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(39, 360);
+            button1.Name = "button1";
+            button1.Size = new Size(153, 59);
+            button1.TabIndex = 1;
+            button1.Text = "Actualizar permisos";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(btn_editar);
@@ -87,7 +98,7 @@
             // 
             btn_editar.BackColor = SystemColors.ActiveCaption;
             btn_editar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_editar.Location = new Point(63, 62);
+            btn_editar.Location = new Point(365, 62);
             btn_editar.Name = "btn_editar";
             btn_editar.Size = new Size(150, 46);
             btn_editar.TabIndex = 15;
@@ -98,7 +109,7 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { clm_usuario, clm_rol, clm_estatus });
-            dataGridView1.Location = new Point(30, 114);
+            dataGridView1.Location = new Point(23, 190);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(516, 225);
@@ -124,17 +135,6 @@
             clm_estatus.MinimumWidth = 8;
             clm_estatus.Name = "clm_estatus";
             clm_estatus.Width = 150;
-            // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.ActiveCaption;
-            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(39, 360);
-            button1.Name = "button1";
-            button1.Size = new Size(153, 59);
-            button1.TabIndex = 1;
-            button1.Text = "Actualizar permisos";
-            button1.UseVisualStyleBackColor = false;
             // 
             // frmAsignarPermisos
             // 

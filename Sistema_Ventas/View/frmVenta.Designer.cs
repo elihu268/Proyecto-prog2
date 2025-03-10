@@ -30,32 +30,45 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVenta));
             sc_venta = new SplitContainer();
-            grp_busqueda = new GroupBox();
-            gbx_venta = new GroupBox();
-            gbx_metodo = new GroupBox();
+            grbox_carrito = new GroupBox();
+            lbl_total = new Label();
+            btn_terminar = new Button();
+            lbl_IVA = new Label();
+            lbl_subtotal = new Label();
+            lbl_Concepto = new Label();
+            lbl_xcantidad = new Label();
+            lbl_producto = new Label();
+            txt_Subtotal = new TextBox();
+            txt_IVA = new TextBox();
+            txt_total = new TextBox();
+            listBox2 = new ListBox();
+            listBox1 = new ListBox();
+            lb_Producto = new ListBox();
+            btn_limpiar = new Button();
             dtv_productos = new DataGridView();
             clm_id = new DataGridViewTextBoxColumn();
             clm_nombre = new DataGridViewTextBoxColumn();
             clm_precio = new DataGridViewTextBoxColumn();
             clm_stock = new DataGridViewTextBoxColumn();
-            btn_terminar = new Button();
-            btn_limpiar = new Button();
-            lbl_nombre = new Label();
-            lbl_cantidad = new Label();
+            grp_busqueda = new GroupBox();
+            rb_nombre = new RadioButton();
+            rb_codigo = new RadioButton();
             textBox1 = new TextBox();
-            nud_cantidad = new NumericUpDown();
-            btn_agregar = new Button();
+            gbx_venta = new GroupBox();
             btn_eliminar = new Button();
-            grbox_carrito = new GroupBox();
+            textBox2 = new TextBox();
+            btn_agregar = new Button();
+            lbl_cantidad = new Label();
+            lbl_nombre = new Label();
+            gbx_metodo = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
             sc_venta.Panel2.SuspendLayout();
             sc_venta.SuspendLayout();
+            grbox_carrito.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dtv_productos).BeginInit();
             grp_busqueda.SuspendLayout();
             gbx_venta.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dtv_productos).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nud_cantidad).BeginInit();
-            grbox_carrito.SuspendLayout();
             SuspendLayout();
             // 
             // sc_venta
@@ -67,7 +80,6 @@
             // sc_venta.Panel1
             // 
             sc_venta.Panel1.Controls.Add(grbox_carrito);
-            sc_venta.Panel1.Controls.Add(btn_terminar);
             sc_venta.Panel1.Controls.Add(dtv_productos);
             sc_venta.Panel1.Controls.Add(grp_busqueda);
             sc_venta.Panel1.Controls.Add(gbx_venta);
@@ -77,41 +89,157 @@
             sc_venta.Panel2.Controls.Add(gbx_metodo);
             sc_venta.Panel2.Paint += splitContainer1_Panel2_Paint;
             sc_venta.Size = new Size(1452, 636);
-            sc_venta.SplitterDistance = 992;
+            sc_venta.SplitterDistance = 1044;
             sc_venta.TabIndex = 0;
+            sc_venta.SplitterMoved += sc_venta_SplitterMoved;
             // 
-            // grp_busqueda
+            // grbox_carrito
             // 
-            grp_busqueda.Controls.Add(textBox1);
-            grp_busqueda.Location = new Point(3, 3);
-            grp_busqueda.Name = "grp_busqueda";
-            grp_busqueda.Size = new Size(986, 86);
-            grp_busqueda.TabIndex = 1;
-            grp_busqueda.TabStop = false;
-            grp_busqueda.Text = "busqueda";
+            grbox_carrito.BackColor = SystemColors.InactiveBorder;
+            grbox_carrito.Controls.Add(lbl_total);
+            grbox_carrito.Controls.Add(btn_terminar);
+            grbox_carrito.Controls.Add(lbl_IVA);
+            grbox_carrito.Controls.Add(lbl_subtotal);
+            grbox_carrito.Controls.Add(lbl_Concepto);
+            grbox_carrito.Controls.Add(lbl_xcantidad);
+            grbox_carrito.Controls.Add(lbl_producto);
+            grbox_carrito.Controls.Add(txt_Subtotal);
+            grbox_carrito.Controls.Add(txt_IVA);
+            grbox_carrito.Controls.Add(txt_total);
+            grbox_carrito.Controls.Add(listBox2);
+            grbox_carrito.Controls.Add(listBox1);
+            grbox_carrito.Controls.Add(lb_Producto);
+            grbox_carrito.Controls.Add(btn_limpiar);
+            grbox_carrito.Location = new Point(666, 12);
+            grbox_carrito.Name = "grbox_carrito";
+            grbox_carrito.Size = new Size(375, 612);
+            grbox_carrito.TabIndex = 5;
+            grbox_carrito.TabStop = false;
+            grbox_carrito.Text = "Carrito de compras";
             // 
-            // gbx_venta
+            // lbl_total
             // 
-            gbx_venta.Controls.Add(btn_agregar);
-            gbx_venta.Controls.Add(nud_cantidad);
-            gbx_venta.Controls.Add(lbl_cantidad);
-            gbx_venta.Controls.Add(lbl_nombre);
-            gbx_venta.Location = new Point(12, 95);
-            gbx_venta.Name = "gbx_venta";
-            gbx_venta.Size = new Size(977, 105);
-            gbx_venta.TabIndex = 0;
-            gbx_venta.TabStop = false;
-            gbx_venta.Text = "datos articulo";
+            lbl_total.AutoSize = true;
+            lbl_total.Location = new Point(154, 387);
+            lbl_total.Name = "lbl_total";
+            lbl_total.Size = new Size(49, 25);
+            lbl_total.TabIndex = 17;
+            lbl_total.Text = "Total";
             // 
-            // gbx_metodo
+            // btn_terminar
             // 
-            gbx_metodo.Location = new Point(11, 10);
-            gbx_metodo.Name = "gbx_metodo";
-            gbx_metodo.Size = new Size(433, 623);
-            gbx_metodo.TabIndex = 0;
-            gbx_metodo.TabStop = false;
-            gbx_metodo.Text = "Metodo de pago";
-            gbx_metodo.Enter += gbx_metodo_Enter;
+            btn_terminar.BackColor = SystemColors.ActiveCaption;
+            btn_terminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_terminar.Location = new Point(88, 545);
+            btn_terminar.Name = "btn_terminar";
+            btn_terminar.Size = new Size(195, 34);
+            btn_terminar.TabIndex = 3;
+            btn_terminar.Text = "Terminar Compra";
+            btn_terminar.UseVisualStyleBackColor = false;
+            // 
+            // lbl_IVA
+            // 
+            lbl_IVA.AutoSize = true;
+            lbl_IVA.Location = new Point(164, 339);
+            lbl_IVA.Name = "lbl_IVA";
+            lbl_IVA.Size = new Size(39, 25);
+            lbl_IVA.TabIndex = 16;
+            lbl_IVA.Text = "IVA";
+            // 
+            // lbl_subtotal
+            // 
+            lbl_subtotal.AutoSize = true;
+            lbl_subtotal.Location = new Point(117, 295);
+            lbl_subtotal.Name = "lbl_subtotal";
+            lbl_subtotal.Size = new Size(90, 25);
+            lbl_subtotal.TabIndex = 15;
+            lbl_subtotal.Text = "Subototal";
+            // 
+            // lbl_Concepto
+            // 
+            lbl_Concepto.AutoSize = true;
+            lbl_Concepto.Location = new Point(244, 52);
+            lbl_Concepto.Name = "lbl_Concepto";
+            lbl_Concepto.Size = new Size(89, 25);
+            lbl_Concepto.TabIndex = 14;
+            lbl_Concepto.Text = "Concepto";
+            // 
+            // lbl_xcantidad
+            // 
+            lbl_xcantidad.AutoSize = true;
+            lbl_xcantidad.Location = new Point(132, 52);
+            lbl_xcantidad.Name = "lbl_xcantidad";
+            lbl_xcantidad.Size = new Size(106, 25);
+            lbl_xcantidad.TabIndex = 13;
+            lbl_xcantidad.Text = "$x Cantidad";
+            // 
+            // lbl_producto
+            // 
+            lbl_producto.AutoSize = true;
+            lbl_producto.Location = new Point(24, 52);
+            lbl_producto.Name = "lbl_producto";
+            lbl_producto.Size = new Size(86, 25);
+            lbl_producto.TabIndex = 12;
+            lbl_producto.Text = "producto";
+            // 
+            // txt_Subtotal
+            // 
+            txt_Subtotal.Location = new Point(211, 295);
+            txt_Subtotal.Name = "txt_Subtotal";
+            txt_Subtotal.Size = new Size(135, 31);
+            txt_Subtotal.TabIndex = 11;
+            // 
+            // txt_IVA
+            // 
+            txt_IVA.Location = new Point(214, 339);
+            txt_IVA.Name = "txt_IVA";
+            txt_IVA.Size = new Size(134, 31);
+            txt_IVA.TabIndex = 10;
+            // 
+            // txt_total
+            // 
+            txt_total.Location = new Point(211, 376);
+            txt_total.Name = "txt_total";
+            txt_total.Size = new Size(137, 31);
+            txt_total.TabIndex = 9;
+            // 
+            // listBox2
+            // 
+            listBox2.FormattingEnabled = true;
+            listBox2.ItemHeight = 25;
+            listBox2.Location = new Point(134, 83);
+            listBox2.Name = "listBox2";
+            listBox2.Size = new Size(104, 179);
+            listBox2.TabIndex = 8;
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 25;
+            listBox1.Location = new Point(244, 83);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(104, 179);
+            listBox1.TabIndex = 7;
+            // 
+            // lb_Producto
+            // 
+            lb_Producto.FormattingEnabled = true;
+            lb_Producto.ItemHeight = 25;
+            lb_Producto.Location = new Point(24, 83);
+            lb_Producto.Name = "lb_Producto";
+            lb_Producto.Size = new Size(104, 179);
+            lb_Producto.TabIndex = 6;
+            // 
+            // btn_limpiar
+            // 
+            btn_limpiar.BackColor = SystemColors.ActiveCaption;
+            btn_limpiar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_limpiar.Location = new Point(88, 487);
+            btn_limpiar.Name = "btn_limpiar";
+            btn_limpiar.Size = new Size(195, 34);
+            btn_limpiar.TabIndex = 4;
+            btn_limpiar.Text = "limpiar";
+            btn_limpiar.UseVisualStyleBackColor = false;
             // 
             // dtv_productos
             // 
@@ -119,10 +247,10 @@
             dtv_productos.AllowUserToDeleteRows = false;
             dtv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dtv_productos.Columns.AddRange(new DataGridViewColumn[] { clm_id, clm_nombre, clm_precio, clm_stock });
-            dtv_productos.Location = new Point(41, 250);
+            dtv_productos.Location = new Point(12, 230);
             dtv_productos.Name = "dtv_productos";
             dtv_productos.RowHeadersWidth = 62;
-            dtv_productos.Size = new Size(606, 225);
+            dtv_productos.Size = new Size(636, 225);
             dtv_productos.TabIndex = 2;
             // 
             // clm_id
@@ -153,95 +281,120 @@
             clm_stock.Name = "clm_stock";
             clm_stock.Width = 150;
             // 
-            // btn_terminar
+            // grp_busqueda
             // 
-            btn_terminar.BackColor = SystemColors.ActiveCaption;
-            btn_terminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_terminar.Location = new Point(287, 590);
-            btn_terminar.Name = "btn_terminar";
-            btn_terminar.Size = new Size(195, 34);
-            btn_terminar.TabIndex = 3;
-            btn_terminar.Text = "Terminar Compra";
-            btn_terminar.UseVisualStyleBackColor = false;
+            grp_busqueda.BackColor = SystemColors.InactiveBorder;
+            grp_busqueda.Controls.Add(rb_nombre);
+            grp_busqueda.Controls.Add(rb_codigo);
+            grp_busqueda.Controls.Add(textBox1);
+            grp_busqueda.Location = new Point(3, 3);
+            grp_busqueda.Name = "grp_busqueda";
+            grp_busqueda.Size = new Size(645, 86);
+            grp_busqueda.TabIndex = 1;
+            grp_busqueda.TabStop = false;
+            grp_busqueda.Text = "busqueda";
             // 
-            // btn_limpiar
+            // rb_nombre
             // 
-            btn_limpiar.BackColor = SystemColors.ActiveCaption;
-            btn_limpiar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_limpiar.Location = new Point(55, 321);
-            btn_limpiar.Name = "btn_limpiar";
-            btn_limpiar.Size = new Size(195, 34);
-            btn_limpiar.TabIndex = 4;
-            btn_limpiar.Text = "limpiar";
-            btn_limpiar.UseVisualStyleBackColor = false;
+            rb_nombre.AutoSize = true;
+            rb_nombre.Location = new Point(458, 32);
+            rb_nombre.Name = "rb_nombre";
+            rb_nombre.Size = new Size(103, 29);
+            rb_nombre.TabIndex = 5;
+            rb_nombre.Text = "Nombre";
+            rb_nombre.UseVisualStyleBackColor = true;
             // 
-            // lbl_nombre
+            // rb_codigo
             // 
-            lbl_nombre.AutoSize = true;
-            lbl_nombre.Location = new Point(19, 30);
-            lbl_nombre.Name = "lbl_nombre";
-            lbl_nombre.Size = new Size(84, 25);
-            lbl_nombre.TabIndex = 0;
-            lbl_nombre.Text = "nombre: ";
-            // 
-            // lbl_cantidad
-            // 
-            lbl_cantidad.AutoSize = true;
-            lbl_cantidad.Location = new Point(163, 29);
-            lbl_cantidad.Name = "lbl_cantidad";
-            lbl_cantidad.Size = new Size(80, 25);
-            lbl_cantidad.TabIndex = 1;
-            lbl_cantidad.Text = "cantidad";
+            rb_codigo.AutoSize = true;
+            rb_codigo.Checked = true;
+            rb_codigo.Location = new Point(356, 32);
+            rb_codigo.Name = "rb_codigo";
+            rb_codigo.Size = new Size(96, 29);
+            rb_codigo.TabIndex = 4;
+            rb_codigo.TabStop = true;
+            rb_codigo.Text = "Codigo";
+            rb_codigo.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(38, 49);
+            textBox1.Location = new Point(9, 30);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(150, 31);
+            textBox1.Size = new Size(341, 31);
             textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
-            // nud_cantidad
+            // gbx_venta
             // 
-            nud_cantidad.Location = new Point(167, 61);
-            nud_cantidad.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            nud_cantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            nud_cantidad.Name = "nud_cantidad";
-            nud_cantidad.Size = new Size(180, 31);
-            nud_cantidad.TabIndex = 2;
-            nud_cantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            gbx_venta.BackColor = SystemColors.InactiveBorder;
+            gbx_venta.Controls.Add(btn_eliminar);
+            gbx_venta.Controls.Add(textBox2);
+            gbx_venta.Controls.Add(btn_agregar);
+            gbx_venta.Controls.Add(lbl_cantidad);
+            gbx_venta.Controls.Add(lbl_nombre);
+            gbx_venta.Location = new Point(12, 95);
+            gbx_venta.Name = "gbx_venta";
+            gbx_venta.Size = new Size(636, 105);
+            gbx_venta.TabIndex = 0;
+            gbx_venta.TabStop = false;
+            gbx_venta.Text = "datos articulo";
+            // 
+            // btn_eliminar
+            // 
+            btn_eliminar.BackColor = SystemColors.ActiveCaption;
+            btn_eliminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_eliminar.Location = new Point(448, 65);
+            btn_eliminar.Name = "btn_eliminar";
+            btn_eliminar.Size = new Size(91, 34);
+            btn_eliminar.TabIndex = 6;
+            btn_eliminar.Text = "Eliminar";
+            btn_eliminar.UseVisualStyleBackColor = false;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(249, 41);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(150, 31);
+            textBox2.TabIndex = 5;
             // 
             // btn_agregar
             // 
             btn_agregar.BackColor = SystemColors.ActiveCaption;
             btn_agregar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_agregar.Location = new Point(427, 65);
+            btn_agregar.Location = new Point(448, 25);
             btn_agregar.Name = "btn_agregar";
             btn_agregar.Size = new Size(91, 34);
             btn_agregar.TabIndex = 4;
             btn_agregar.Text = "Agregar";
             btn_agregar.UseVisualStyleBackColor = false;
             // 
-            // btn_eliminar
+            // lbl_cantidad
             // 
-            btn_eliminar.BackColor = SystemColors.ActiveCaption;
-            btn_eliminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_eliminar.Location = new Point(55, 267);
-            btn_eliminar.Name = "btn_eliminar";
-            btn_eliminar.Size = new Size(195, 34);
-            btn_eliminar.TabIndex = 5;
-            btn_eliminar.Text = "eliminar";
-            btn_eliminar.UseVisualStyleBackColor = false;
+            lbl_cantidad.AutoSize = true;
+            lbl_cantidad.Location = new Point(163, 41);
+            lbl_cantidad.Name = "lbl_cantidad";
+            lbl_cantidad.Size = new Size(80, 25);
+            lbl_cantidad.TabIndex = 1;
+            lbl_cantidad.Text = "cantidad";
             // 
-            // grbox_carrito
+            // lbl_nombre
             // 
-            grbox_carrito.Controls.Add(btn_eliminar);
-            grbox_carrito.Controls.Add(btn_limpiar);
-            grbox_carrito.Location = new Point(671, 202);
-            grbox_carrito.Name = "grbox_carrito";
-            grbox_carrito.Size = new Size(300, 410);
-            grbox_carrito.TabIndex = 5;
-            grbox_carrito.TabStop = false;
-            grbox_carrito.Text = "Carrito de compras";
+            lbl_nombre.AutoSize = true;
+            lbl_nombre.Location = new Point(19, 56);
+            lbl_nombre.Name = "lbl_nombre";
+            lbl_nombre.Size = new Size(84, 25);
+            lbl_nombre.TabIndex = 0;
+            lbl_nombre.Text = "nombre: ";
+            // 
+            // gbx_metodo
+            // 
+            gbx_metodo.Location = new Point(11, 10);
+            gbx_metodo.Name = "gbx_metodo";
+            gbx_metodo.Size = new Size(433, 79);
+            gbx_metodo.TabIndex = 0;
+            gbx_metodo.TabStop = false;
+            gbx_metodo.Text = "Metodo de pago";
+            gbx_metodo.Enter += gbx_metodo_Enter;
             // 
             // frmVenta
             // 
@@ -258,13 +411,13 @@
             sc_venta.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)sc_venta).EndInit();
             sc_venta.ResumeLayout(false);
+            grbox_carrito.ResumeLayout(false);
+            grbox_carrito.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dtv_productos).EndInit();
             grp_busqueda.ResumeLayout(false);
             grp_busqueda.PerformLayout();
             gbx_venta.ResumeLayout(false);
             gbx_venta.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dtv_productos).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nud_cantidad).EndInit();
-            grbox_carrito.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -282,11 +435,26 @@
         private Button btn_terminar;
         private Button btn_limpiar;
         private TextBox textBox1;
-        private NumericUpDown nud_cantidad;
         private Label lbl_cantidad;
         private Label lbl_nombre;
         private GroupBox grbox_carrito;
-        private Button btn_eliminar;
         private Button btn_agregar;
+        private TextBox textBox2;
+        private Label lbl_nombreBusqueda;
+        private ListBox listBox2;
+        private ListBox listBox1;
+        private ListBox lb_Producto;
+        private Label lbl_total;
+        private Label lbl_IVA;
+        private Label lbl_subtotal;
+        private Label lbl_Concepto;
+        private Label lbl_xcantidad;
+        private Label lbl_producto;
+        private TextBox txt_Subtotal;
+        private TextBox txt_IVA;
+        private TextBox txt_total;
+        private RadioButton rb_codigo;
+        private Button btn_eliminar;
+        private RadioButton rb_nombre;
     }
 }
