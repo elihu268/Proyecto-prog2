@@ -59,17 +59,13 @@
             btn_agregar = new Button();
             lbl_cantidad = new Label();
             lbl_nombre = new Label();
-            gbx_metodo = new GroupBox();
-            domainUpDown1 = new DomainUpDown();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
-            sc_venta.Panel2.SuspendLayout();
             sc_venta.SuspendLayout();
             grbox_carrito.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtv_productos).BeginInit();
             grp_busqueda.SuspendLayout();
             gbx_venta.SuspendLayout();
-            gbx_metodo.SuspendLayout();
             SuspendLayout();
             // 
             // sc_venta
@@ -87,10 +83,9 @@
             // 
             // sc_venta.Panel2
             // 
-            sc_venta.Panel2.Controls.Add(gbx_metodo);
             sc_venta.Panel2.Paint += splitContainer1_Panel2_Paint;
             sc_venta.Size = new Size(1452, 636);
-            sc_venta.SplitterDistance = 1044;
+            sc_venta.SplitterDistance = 1209;
             sc_venta.TabIndex = 0;
             sc_venta.SplitterMoved += sc_venta_SplitterMoved;
             // 
@@ -295,7 +290,7 @@
             // 
             // txt_busqueda
             // 
-            txt_busqueda.Location = new Point(9, 30);
+            txt_busqueda.Location = new Point(32, 30);
             txt_busqueda.Name = "txt_busqueda";
             txt_busqueda.Size = new Size(341, 31);
             txt_busqueda.TabIndex = 2;
@@ -371,25 +366,6 @@
             lbl_nombre.TabIndex = 0;
             lbl_nombre.Text = "nombre: ";
             // 
-            // gbx_metodo
-            // 
-            gbx_metodo.Controls.Add(domainUpDown1);
-            gbx_metodo.Location = new Point(11, 10);
-            gbx_metodo.Name = "gbx_metodo";
-            gbx_metodo.Size = new Size(433, 79);
-            gbx_metodo.TabIndex = 0;
-            gbx_metodo.TabStop = false;
-            gbx_metodo.Text = "Metodo de pago";
-            gbx_metodo.Enter += gbx_metodo_Enter;
-            // 
-            // domainUpDown1
-            // 
-            domainUpDown1.Location = new Point(107, 30);
-            domainUpDown1.Name = "domainUpDown1";
-            domainUpDown1.Size = new Size(180, 31);
-            domainUpDown1.TabIndex = 1;
-            domainUpDown1.Text = "domainUpDown1";
-            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -402,7 +378,6 @@
             Text = "Compra";
             Load += frmVenta_Load;
             sc_venta.Panel1.ResumeLayout(false);
-            sc_venta.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)sc_venta).EndInit();
             sc_venta.ResumeLayout(false);
             grbox_carrito.ResumeLayout(false);
@@ -412,7 +387,6 @@
             grp_busqueda.PerformLayout();
             gbx_venta.ResumeLayout(false);
             gbx_venta.PerformLayout();
-            gbx_metodo.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -420,7 +394,6 @@
 
         private SplitContainer sc_venta;
         private GroupBox gbx_venta;
-        private GroupBox gbx_metodo;
         private GroupBox grp_busqueda;
         private DataGridView dtv_productos;
         private DataGridViewTextBoxColumn clm_id;
@@ -450,6 +423,5 @@
         private TextBox txt_total;
         private Button btn_eliminar;
         private TextBox txt_nombre;
-        private DomainUpDown domainUpDown1;
     }
 }
