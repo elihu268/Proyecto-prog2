@@ -61,6 +61,9 @@
             lbl_cantidad = new Label();
             lbl_nombre = new Label();
             gbx_metodo = new GroupBox();
+            rb_tarjeta = new RadioButton();
+            rb_efectivo = new RadioButton();
+            textBox3 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
             sc_venta.Panel2.SuspendLayout();
@@ -69,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)dtv_productos).BeginInit();
             grp_busqueda.SuspendLayout();
             gbx_venta.SuspendLayout();
+            gbx_metodo.SuspendLayout();
             SuspendLayout();
             // 
             // sc_venta
@@ -250,7 +254,7 @@
             dtv_productos.Location = new Point(12, 230);
             dtv_productos.Name = "dtv_productos";
             dtv_productos.RowHeadersWidth = 62;
-            dtv_productos.Size = new Size(636, 225);
+            dtv_productos.Size = new Size(636, 375);
             dtv_productos.TabIndex = 2;
             // 
             // clm_id
@@ -327,6 +331,7 @@
             // gbx_venta
             // 
             gbx_venta.BackColor = SystemColors.InactiveBorder;
+            gbx_venta.Controls.Add(textBox3);
             gbx_venta.Controls.Add(btn_eliminar);
             gbx_venta.Controls.Add(textBox2);
             gbx_venta.Controls.Add(btn_agregar);
@@ -343,7 +348,7 @@
             // 
             btn_eliminar.BackColor = SystemColors.ActiveCaption;
             btn_eliminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_eliminar.Location = new Point(448, 65);
+            btn_eliminar.Location = new Point(539, 65);
             btn_eliminar.Name = "btn_eliminar";
             btn_eliminar.Size = new Size(91, 34);
             btn_eliminar.TabIndex = 6;
@@ -352,7 +357,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(249, 41);
+            textBox2.Location = new Point(370, 35);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(150, 31);
             textBox2.TabIndex = 5;
@@ -361,7 +366,7 @@
             // 
             btn_agregar.BackColor = SystemColors.ActiveCaption;
             btn_agregar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_agregar.Location = new Point(448, 25);
+            btn_agregar.Location = new Point(539, 25);
             btn_agregar.Name = "btn_agregar";
             btn_agregar.Size = new Size(91, 34);
             btn_agregar.TabIndex = 4;
@@ -371,7 +376,7 @@
             // lbl_cantidad
             // 
             lbl_cantidad.AutoSize = true;
-            lbl_cantidad.Location = new Point(163, 41);
+            lbl_cantidad.Location = new Point(284, 42);
             lbl_cantidad.Name = "lbl_cantidad";
             lbl_cantidad.Size = new Size(80, 25);
             lbl_cantidad.TabIndex = 1;
@@ -380,7 +385,7 @@
             // lbl_nombre
             // 
             lbl_nombre.AutoSize = true;
-            lbl_nombre.Location = new Point(19, 56);
+            lbl_nombre.Location = new Point(13, 41);
             lbl_nombre.Name = "lbl_nombre";
             lbl_nombre.Size = new Size(84, 25);
             lbl_nombre.TabIndex = 0;
@@ -388,6 +393,8 @@
             // 
             // gbx_metodo
             // 
+            gbx_metodo.Controls.Add(rb_tarjeta);
+            gbx_metodo.Controls.Add(rb_efectivo);
             gbx_metodo.Location = new Point(11, 10);
             gbx_metodo.Name = "gbx_metodo";
             gbx_metodo.Size = new Size(433, 79);
@@ -395,6 +402,35 @@
             gbx_metodo.TabStop = false;
             gbx_metodo.Text = "Metodo de pago";
             gbx_metodo.Enter += gbx_metodo_Enter;
+            // 
+            // rb_tarjeta
+            // 
+            rb_tarjeta.AutoSize = true;
+            rb_tarjeta.Location = new Point(216, 25);
+            rb_tarjeta.Name = "rb_tarjeta";
+            rb_tarjeta.Size = new Size(87, 29);
+            rb_tarjeta.TabIndex = 7;
+            rb_tarjeta.Text = "Tarjeta";
+            rb_tarjeta.UseVisualStyleBackColor = true;
+            // 
+            // rb_efectivo
+            // 
+            rb_efectivo.AutoSize = true;
+            rb_efectivo.Checked = true;
+            rb_efectivo.Location = new Point(114, 25);
+            rb_efectivo.Name = "rb_efectivo";
+            rb_efectivo.Size = new Size(99, 29);
+            rb_efectivo.TabIndex = 6;
+            rb_efectivo.TabStop = true;
+            rb_efectivo.Text = "Efectivo";
+            rb_efectivo.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(103, 39);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(145, 31);
+            textBox3.TabIndex = 7;
             // 
             // frmVenta
             // 
@@ -418,6 +454,8 @@
             grp_busqueda.PerformLayout();
             gbx_venta.ResumeLayout(false);
             gbx_venta.PerformLayout();
+            gbx_metodo.ResumeLayout(false);
+            gbx_metodo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -456,5 +494,8 @@
         private RadioButton rb_codigo;
         private Button btn_eliminar;
         private RadioButton rb_nombre;
+        private TextBox textBox3;
+        private RadioButton rb_tarjeta;
+        private RadioButton rb_efectivo;
     }
 }
