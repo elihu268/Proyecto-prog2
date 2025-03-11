@@ -28,18 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMetodoDePago));
             sp_efectivo = new Splitter();
             gpbox_efectivo = new GroupBox();
-            dtp_nacimiento = new DateTimePicker();
-            txt_telefono = new TextBox();
             txt_correo = new TextBox();
-            txt_RFC = new TextBox();
-            txt_nombre = new TextBox();
-            lbl_fechaNacimiento = new Label();
-            lbl_telefono = new Label();
             lbl_Correo = new Label();
-            lbl_RFC = new Label();
-            lbl_nombre = new Label();
             spc_metodoPago = new SplitContainer();
             gbox_cliente = new GroupBox();
             gpbox_tarjeta = new GroupBox();
@@ -47,6 +40,12 @@
             btn_tarjeta = new Button();
             btn_cobrarEfectivo = new Button();
             btn_cobrarTarjeta = new Button();
+            btn_regresarVenta = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            lbl_no_cuenta = new Label();
+            lbl_cvc = new Label();
+            lbl_fecha_cad = new Label();
             gpbox_efectivo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spc_metodoPago).BeginInit();
             spc_metodoPago.Panel1.SuspendLayout();
@@ -67,6 +66,8 @@
             // 
             // gpbox_efectivo
             // 
+            gpbox_efectivo.Controls.Add(label2);
+            gpbox_efectivo.Controls.Add(label1);
             gpbox_efectivo.Controls.Add(btn_cobrarEfectivo);
             gpbox_efectivo.Location = new Point(7, 9);
             gpbox_efectivo.Name = "gpbox_efectivo";
@@ -75,59 +76,13 @@
             gpbox_efectivo.TabStop = false;
             gpbox_efectivo.Text = "Efectivo";
             // 
-            // dtp_nacimiento
-            // 
-            dtp_nacimiento.Format = DateTimePickerFormat.Short;
-            dtp_nacimiento.Location = new Point(27, 295);
-            dtp_nacimiento.Name = "dtp_nacimiento";
-            dtp_nacimiento.Size = new Size(225, 31);
-            dtp_nacimiento.TabIndex = 19;
-            // 
-            // txt_telefono
-            // 
-            txt_telefono.Location = new Point(119, 199);
-            txt_telefono.Name = "txt_telefono";
-            txt_telefono.Size = new Size(150, 31);
-            txt_telefono.TabIndex = 18;
-            // 
             // txt_correo
             // 
             txt_correo.Location = new Point(119, 153);
+            txt_correo.MaxLength = 50;
             txt_correo.Name = "txt_correo";
             txt_correo.Size = new Size(150, 31);
             txt_correo.TabIndex = 17;
-            // 
-            // txt_RFC
-            // 
-            txt_RFC.Location = new Point(120, 116);
-            txt_RFC.Name = "txt_RFC";
-            txt_RFC.Size = new Size(150, 31);
-            txt_RFC.TabIndex = 16;
-            // 
-            // txt_nombre
-            // 
-            txt_nombre.Location = new Point(120, 74);
-            txt_nombre.Name = "txt_nombre";
-            txt_nombre.Size = new Size(150, 31);
-            txt_nombre.TabIndex = 15;
-            // 
-            // lbl_fechaNacimiento
-            // 
-            lbl_fechaNacimiento.AutoSize = true;
-            lbl_fechaNacimiento.Location = new Point(26, 252);
-            lbl_fechaNacimiento.Name = "lbl_fechaNacimiento";
-            lbl_fechaNacimiento.Size = new Size(174, 25);
-            lbl_fechaNacimiento.TabIndex = 14;
-            lbl_fechaNacimiento.Text = "Fecha de nacimiento";
-            // 
-            // lbl_telefono
-            // 
-            lbl_telefono.AutoSize = true;
-            lbl_telefono.Location = new Point(26, 197);
-            lbl_telefono.Name = "lbl_telefono";
-            lbl_telefono.Size = new Size(88, 25);
-            lbl_telefono.TabIndex = 13;
-            lbl_telefono.Text = "Telefono: ";
             // 
             // lbl_Correo
             // 
@@ -137,24 +92,6 @@
             lbl_Correo.Size = new Size(75, 25);
             lbl_Correo.TabIndex = 12;
             lbl_Correo.Text = "Correo: ";
-            // 
-            // lbl_RFC
-            // 
-            lbl_RFC.AutoSize = true;
-            lbl_RFC.Location = new Point(62, 118);
-            lbl_RFC.Name = "lbl_RFC";
-            lbl_RFC.Size = new Size(52, 25);
-            lbl_RFC.TabIndex = 11;
-            lbl_RFC.Text = "RFC: ";
-            // 
-            // lbl_nombre
-            // 
-            lbl_nombre.AutoSize = true;
-            lbl_nombre.Location = new Point(27, 74);
-            lbl_nombre.Name = "lbl_nombre";
-            lbl_nombre.Size = new Size(87, 25);
-            lbl_nombre.TabIndex = 10;
-            lbl_nombre.Text = "Nombre: ";
             // 
             // spc_metodoPago
             // 
@@ -176,18 +113,11 @@
             // 
             // gbox_cliente
             // 
+            gbox_cliente.Controls.Add(btn_regresarVenta);
             gbox_cliente.Controls.Add(btn_tarjeta);
             gbox_cliente.Controls.Add(btn_efectivo);
-            gbox_cliente.Controls.Add(dtp_nacimiento);
-            gbox_cliente.Controls.Add(lbl_RFC);
-            gbox_cliente.Controls.Add(txt_telefono);
-            gbox_cliente.Controls.Add(lbl_nombre);
             gbox_cliente.Controls.Add(txt_correo);
             gbox_cliente.Controls.Add(lbl_Correo);
-            gbox_cliente.Controls.Add(txt_RFC);
-            gbox_cliente.Controls.Add(lbl_telefono);
-            gbox_cliente.Controls.Add(txt_nombre);
-            gbox_cliente.Controls.Add(lbl_fechaNacimiento);
             gbox_cliente.Location = new Point(13, 9);
             gbox_cliente.Name = "gbox_cliente";
             gbox_cliente.Size = new Size(340, 561);
@@ -198,6 +128,9 @@
             // 
             // gpbox_tarjeta
             // 
+            gpbox_tarjeta.Controls.Add(lbl_fecha_cad);
+            gpbox_tarjeta.Controls.Add(lbl_cvc);
+            gpbox_tarjeta.Controls.Add(lbl_no_cuenta);
             gpbox_tarjeta.Controls.Add(btn_cobrarTarjeta);
             gpbox_tarjeta.Location = new Point(13, 3);
             gpbox_tarjeta.Name = "gpbox_tarjeta";
@@ -208,7 +141,7 @@
             // 
             // btn_efectivo
             // 
-            btn_efectivo.Location = new Point(36, 503);
+            btn_efectivo.Location = new Point(24, 216);
             btn_efectivo.Name = "btn_efectivo";
             btn_efectivo.Size = new Size(112, 34);
             btn_efectivo.TabIndex = 20;
@@ -217,7 +150,7 @@
             // 
             // btn_tarjeta
             // 
-            btn_tarjeta.Location = new Point(199, 503);
+            btn_tarjeta.Location = new Point(183, 216);
             btn_tarjeta.Name = "btn_tarjeta";
             btn_tarjeta.Size = new Size(112, 34);
             btn_tarjeta.TabIndex = 21;
@@ -226,7 +159,7 @@
             // 
             // btn_cobrarEfectivo
             // 
-            btn_cobrarEfectivo.Location = new Point(84, 503);
+            btn_cobrarEfectivo.Location = new Point(95, 508);
             btn_cobrarEfectivo.Name = "btn_cobrarEfectivo";
             btn_cobrarEfectivo.Size = new Size(112, 34);
             btn_cobrarEfectivo.TabIndex = 0;
@@ -235,12 +168,66 @@
             // 
             // btn_cobrarTarjeta
             // 
-            btn_cobrarTarjeta.Location = new Point(95, 509);
+            btn_cobrarTarjeta.Location = new Point(102, 514);
             btn_cobrarTarjeta.Name = "btn_cobrarTarjeta";
             btn_cobrarTarjeta.Size = new Size(112, 34);
             btn_cobrarTarjeta.TabIndex = 1;
             btn_cobrarTarjeta.Text = "Cobrar";
             btn_cobrarTarjeta.UseVisualStyleBackColor = true;
+            // 
+            // btn_regresarVenta
+            // 
+            btn_regresarVenta.Location = new Point(0, 521);
+            btn_regresarVenta.Name = "btn_regresarVenta";
+            btn_regresarVenta.Size = new Size(112, 34);
+            btn_regresarVenta.TabIndex = 22;
+            btn_regresarVenta.Text = "Regresar";
+            btn_regresarVenta.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(23, 69);
+            label1.Name = "label1";
+            label1.Size = new Size(59, 25);
+            label1.TabIndex = 1;
+            label1.Text = "label1";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(23, 180);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 25);
+            label2.TabIndex = 2;
+            label2.Text = "label2";
+            // 
+            // lbl_no_cuenta
+            // 
+            lbl_no_cuenta.AutoSize = true;
+            lbl_no_cuenta.Location = new Point(18, 64);
+            lbl_no_cuenta.Name = "lbl_no_cuenta";
+            lbl_no_cuenta.Size = new Size(156, 25);
+            lbl_no_cuenta.TabIndex = 2;
+            lbl_no_cuenta.Text = "numero de cuenta";
+            // 
+            // lbl_cvc
+            // 
+            lbl_cvc.AutoSize = true;
+            lbl_cvc.Location = new Point(18, 159);
+            lbl_cvc.Name = "lbl_cvc";
+            lbl_cvc.Size = new Size(45, 25);
+            lbl_cvc.TabIndex = 3;
+            lbl_cvc.Text = "CVC";
+            // 
+            // lbl_fecha_cad
+            // 
+            lbl_fecha_cad.AutoSize = true;
+            lbl_fecha_cad.Location = new Point(6, 258);
+            lbl_fecha_cad.Name = "lbl_fecha_cad";
+            lbl_fecha_cad.Size = new Size(183, 25);
+            lbl_fecha_cad.TabIndex = 4;
+            lbl_fecha_cad.Text = "Fecha de vencimiento";
             // 
             // frmMetodoDePago
             // 
@@ -250,10 +237,12 @@
             Controls.Add(spc_metodoPago);
             Controls.Add(gpbox_efectivo);
             Controls.Add(sp_efectivo);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmMetodoDePago";
-            Text = "frmMetodoDePago";
+            Text = "Metodo de pago";
             Load += frmMetodoDePago_Load;
             gpbox_efectivo.ResumeLayout(false);
+            gpbox_efectivo.PerformLayout();
             spc_metodoPago.Panel1.ResumeLayout(false);
             spc_metodoPago.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)spc_metodoPago).EndInit();
@@ -261,6 +250,7 @@
             gbox_cliente.ResumeLayout(false);
             gbox_cliente.PerformLayout();
             gpbox_tarjeta.ResumeLayout(false);
+            gpbox_tarjeta.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -268,16 +258,8 @@
 
         private Splitter sp_efectivo;
         private GroupBox gpbox_efectivo;
-        private DateTimePicker dtp_nacimiento;
-        private TextBox txt_telefono;
         private TextBox txt_correo;
-        private TextBox txt_RFC;
-        private TextBox txt_nombre;
-        private Label lbl_fechaNacimiento;
-        private Label lbl_telefono;
         private Label lbl_Correo;
-        private Label lbl_RFC;
-        private Label lbl_nombre;
         private SplitContainer spc_metodoPago;
         private GroupBox gbox_cliente;
         private GroupBox gpbox_tarjeta;
@@ -285,5 +267,11 @@
         private Button btn_tarjeta;
         private Button btn_efectivo;
         private Button btn_cobrarTarjeta;
+        private Button btn_regresarVenta;
+        private Label label2;
+        private Label label1;
+        private Label lbl_fecha_cad;
+        private Label lbl_cvc;
+        private Label lbl_no_cuenta;
     }
 }
