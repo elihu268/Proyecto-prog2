@@ -51,8 +51,6 @@
             clm_precio = new DataGridViewTextBoxColumn();
             clm_stock = new DataGridViewTextBoxColumn();
             grp_busqueda = new GroupBox();
-            rb_nombre = new RadioButton();
-            rb_codigo = new RadioButton();
             txt_busqueda = new TextBox();
             gbx_venta = new GroupBox();
             txt_nombre = new TextBox();
@@ -62,8 +60,6 @@
             lbl_cantidad = new Label();
             lbl_nombre = new Label();
             gbx_metodo = new GroupBox();
-            rb_tarjeta = new RadioButton();
-            rb_efectivo = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)sc_venta).BeginInit();
             sc_venta.Panel1.SuspendLayout();
             sc_venta.Panel2.SuspendLayout();
@@ -72,7 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)dtv_productos).BeginInit();
             grp_busqueda.SuspendLayout();
             gbx_venta.SuspendLayout();
-            gbx_metodo.SuspendLayout();
             SuspendLayout();
             // 
             // sc_venta
@@ -288,8 +283,6 @@
             // grp_busqueda
             // 
             grp_busqueda.BackColor = SystemColors.InactiveBorder;
-            grp_busqueda.Controls.Add(rb_nombre);
-            grp_busqueda.Controls.Add(rb_codigo);
             grp_busqueda.Controls.Add(txt_busqueda);
             grp_busqueda.Location = new Point(3, 3);
             grp_busqueda.Name = "grp_busqueda";
@@ -298,33 +291,11 @@
             grp_busqueda.TabStop = false;
             grp_busqueda.Text = "busqueda";
             // 
-            // rb_nombre
-            // 
-            rb_nombre.AutoSize = true;
-            rb_nombre.Location = new Point(458, 32);
-            rb_nombre.Name = "rb_nombre";
-            rb_nombre.Size = new Size(103, 29);
-            rb_nombre.TabIndex = 5;
-            rb_nombre.Text = "Nombre";
-            rb_nombre.UseVisualStyleBackColor = true;
-            // 
-            // rb_codigo
-            // 
-            rb_codigo.AutoSize = true;
-            rb_codigo.Checked = true;
-            rb_codigo.Location = new Point(356, 32);
-            rb_codigo.Name = "rb_codigo";
-            rb_codigo.Size = new Size(96, 29);
-            rb_codigo.TabIndex = 4;
-            rb_codigo.TabStop = true;
-            rb_codigo.Text = "Codigo";
-            rb_codigo.UseVisualStyleBackColor = true;
-            // 
             // txt_busqueda
             // 
             txt_busqueda.Location = new Point(9, 30);
             txt_busqueda.Name = "txt_busqueda";
-            txt_busqueda.Size = new Size(341, 31);
+            txt_busqueda.Size = new Size(443, 31);
             txt_busqueda.TabIndex = 2;
             txt_busqueda.TextChanged += textBox1_TextChanged;
             // 
@@ -400,8 +371,6 @@
             // 
             // gbx_metodo
             // 
-            gbx_metodo.Controls.Add(rb_tarjeta);
-            gbx_metodo.Controls.Add(rb_efectivo);
             gbx_metodo.Location = new Point(11, 10);
             gbx_metodo.Name = "gbx_metodo";
             gbx_metodo.Size = new Size(433, 79);
@@ -409,28 +378,6 @@
             gbx_metodo.TabStop = false;
             gbx_metodo.Text = "Metodo de pago";
             gbx_metodo.Enter += gbx_metodo_Enter;
-            // 
-            // rb_tarjeta
-            // 
-            rb_tarjeta.AutoSize = true;
-            rb_tarjeta.Location = new Point(216, 25);
-            rb_tarjeta.Name = "rb_tarjeta";
-            rb_tarjeta.Size = new Size(87, 29);
-            rb_tarjeta.TabIndex = 7;
-            rb_tarjeta.Text = "Tarjeta";
-            rb_tarjeta.UseVisualStyleBackColor = true;
-            // 
-            // rb_efectivo
-            // 
-            rb_efectivo.AutoSize = true;
-            rb_efectivo.Checked = true;
-            rb_efectivo.Location = new Point(114, 25);
-            rb_efectivo.Name = "rb_efectivo";
-            rb_efectivo.Size = new Size(99, 29);
-            rb_efectivo.TabIndex = 6;
-            rb_efectivo.TabStop = true;
-            rb_efectivo.Text = "Efectivo";
-            rb_efectivo.UseVisualStyleBackColor = true;
             // 
             // frmVenta
             // 
@@ -454,8 +401,6 @@
             grp_busqueda.PerformLayout();
             gbx_venta.ResumeLayout(false);
             gbx_venta.PerformLayout();
-            gbx_metodo.ResumeLayout(false);
-            gbx_metodo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -491,11 +436,7 @@
         private TextBox txt_Subtotal;
         private TextBox txt_IVA;
         private TextBox txt_total;
-        private RadioButton rb_codigo;
         private Button btn_eliminar;
-        private RadioButton rb_nombre;
         private TextBox txt_nombre;
-        private RadioButton rb_tarjeta;
-        private RadioButton rb_efectivo;
     }
 }
