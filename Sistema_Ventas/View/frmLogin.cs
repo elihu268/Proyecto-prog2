@@ -19,7 +19,11 @@ namespace Sistema_Ventas.View
             InitializeComponent();
 
         }
-
+        /// <summary>
+        /// valida informacion y dirige la MDI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_iniciar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txt_usuario.Text))
@@ -44,7 +48,11 @@ namespace Sistema_Ventas.View
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-
+        /// <summary>
+        /// cierra ventana de incio de secion, cierra todo el programa
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_cerrar_Click(object sender, EventArgs e)
         {
             this.Close();

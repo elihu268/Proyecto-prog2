@@ -8,6 +8,11 @@ namespace Sistema_Ventas.Utilities
 {
     internal class Formas
     {
+        /// <summary>
+        /// funcion para inicializar formas con formatos especificos
+        /// </summary>
+        /// <param name="form_child"></param>
+        /// <param name="formparent"></param>
         internal static void InicializaForma(Form form_child, Form formparent)
         {
             //Inicializamos la forna

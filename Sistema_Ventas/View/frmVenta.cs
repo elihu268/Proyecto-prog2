@@ -24,11 +24,16 @@ namespace Sistema_Ventas.View
         {
             InicializaVentanaVenta();
         }
-
+        /// <summary>
+        ///funcion que da valores a controles especificos despues de su creacion
+        /// </summary>
         public void InicializaVentanaVenta()
         {
             PoblaComboMetodo();
         }
+        /// <summary>
+        /// duncion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
+        /// </summary>
         public void PoblaComboMetodo()
         {
             Dictionary<int, string> list_metodo = new Dictionary<int, string>()
@@ -84,6 +89,10 @@ namespace Sistema_Ventas.View
         {
             AgregarProducto();
         }
+        /// <summary>
+        /// metodo para validar que la cantidad halla sido puesta correctamente
+        /// </summary>
+        /// <returns>booleano si se cumple toda la validacion</returns>
         private bool AgregarProducto()
         {
             if (txt_cantidad.Text == "")
