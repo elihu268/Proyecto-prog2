@@ -53,7 +53,7 @@
             txt_descuento = new TextBox();
             txt_subtotal = new TextBox();
             cb_metodo = new ComboBox();
-            btn_terminar = new Button();
+            btn_cobrar = new Button();
             lbl_descuento = new Label();
             dgv_carrito = new DataGridView();
             clm_c_nombre = new DataGridViewTextBoxColumn();
@@ -66,6 +66,14 @@
             gpbox_cliente = new GroupBox();
             lbl_buscar_cliente = new Label();
             cb_clientes = new ComboBox();
+            lbl_seleccionar = new Label();
+            lbl_seleccionar_eli = new Label();
+            lbl_nombre_c = new Label();
+            lbl_apellido_p = new Label();
+            lbl_correo = new Label();
+            txt_nombre_prod = new TextBox();
+            txt_apellido = new TextBox();
+            txt_correo = new TextBox();
             lbl_cantidad = new Label();
             ((System.ComponentModel.ISupportInitialize)dgv_productos).BeginInit();
             gpBox_producto.SuspendLayout();
@@ -87,7 +95,7 @@
             // 
             dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_productos.Columns.AddRange(new DataGridViewColumn[] { clmCodigo, clm_nombre, clm_precio, clm_stock });
-            dgv_productos.Location = new Point(12, 260);
+            dgv_productos.Location = new Point(12, 315);
             dgv_productos.Name = "dgv_productos";
             dgv_productos.RowHeadersWidth = 62;
             dgv_productos.Size = new Size(668, 328);
@@ -124,6 +132,7 @@
             // gpBox_producto
             // 
             gpBox_producto.BackColor = SystemColors.InactiveBorder;
+            gpBox_producto.Controls.Add(lbl_seleccionar);
             gpBox_producto.Controls.Add(btn_agregar);
             gpBox_producto.Controls.Add(txt_cantidad);
             gpBox_producto.Controls.Add(txt_precio);
@@ -134,12 +143,12 @@
             gpBox_producto.Controls.Add(lbl_precio);
             gpBox_producto.Controls.Add(lbl_nombre);
             gpBox_producto.Controls.Add(btn_actualizar);
-            gpBox_producto.Location = new Point(12, 110);
+            gpBox_producto.Location = new Point(5, 165);
             gpBox_producto.Name = "gpBox_producto";
-            gpBox_producto.Size = new Size(663, 126);
+            gpBox_producto.Size = new Size(687, 505);
             gpBox_producto.TabIndex = 8;
             gpBox_producto.TabStop = false;
-            gpBox_producto.Text = "Producto";
+            gpBox_producto.Text = "Producto disponible";
             // 
             // btn_agregar
             // 
@@ -222,7 +231,7 @@
             // 
             // btn_eliminar
             // 
-            btn_eliminar.Location = new Point(53, 279);
+            btn_eliminar.Location = new Point(430, 33);
             btn_eliminar.Name = "btn_eliminar";
             btn_eliminar.Size = new Size(112, 34);
             btn_eliminar.TabIndex = 2;
@@ -232,13 +241,14 @@
             // gpbox_carrito
             // 
             gpbox_carrito.BackColor = SystemColors.InactiveBorder;
+            gpbox_carrito.Controls.Add(lbl_seleccionar_eli);
             gpbox_carrito.Controls.Add(lbl_metodo);
             gpbox_carrito.Controls.Add(txt_total);
             gpbox_carrito.Controls.Add(txt_IVA);
             gpbox_carrito.Controls.Add(txt_descuento);
             gpbox_carrito.Controls.Add(txt_subtotal);
             gpbox_carrito.Controls.Add(cb_metodo);
-            gpbox_carrito.Controls.Add(btn_terminar);
+            gpbox_carrito.Controls.Add(btn_cobrar);
             gpbox_carrito.Controls.Add(lbl_descuento);
             gpbox_carrito.Controls.Add(dgv_carrito);
             gpbox_carrito.Controls.Add(lbl_total);
@@ -246,9 +256,9 @@
             gpbox_carrito.Controls.Add(btn_eliminar);
             gpbox_carrito.Controls.Add(lbl_subtotal);
             gpbox_carrito.Controls.Add(btn_limpiar);
-            gpbox_carrito.Location = new Point(698, 26);
+            gpbox_carrito.Location = new Point(698, 165);
             gpbox_carrito.Name = "gpbox_carrito";
-            gpbox_carrito.Size = new Size(548, 562);
+            gpbox_carrito.Size = new Size(548, 505);
             gpbox_carrito.TabIndex = 7;
             gpbox_carrito.TabStop = false;
             gpbox_carrito.Text = "Carrito";
@@ -256,7 +266,7 @@
             // lbl_metodo
             // 
             lbl_metodo.AutoSize = true;
-            lbl_metodo.Location = new Point(179, 434);
+            lbl_metodo.Location = new Point(184, 455);
             lbl_metodo.Name = "lbl_metodo";
             lbl_metodo.Size = new Size(148, 25);
             lbl_metodo.TabIndex = 19;
@@ -265,7 +275,7 @@
             // txt_total
             // 
             txt_total.Enabled = false;
-            txt_total.Location = new Point(356, 380);
+            txt_total.Location = new Point(361, 401);
             txt_total.Name = "txt_total";
             txt_total.Size = new Size(150, 31);
             txt_total.TabIndex = 18;
@@ -273,7 +283,7 @@
             // txt_IVA
             // 
             txt_IVA.Enabled = false;
-            txt_IVA.Location = new Point(358, 346);
+            txt_IVA.Location = new Point(363, 367);
             txt_IVA.Name = "txt_IVA";
             txt_IVA.Size = new Size(150, 31);
             txt_IVA.TabIndex = 17;
@@ -281,7 +291,7 @@
             // txt_descuento
             // 
             txt_descuento.Enabled = false;
-            txt_descuento.Location = new Point(358, 307);
+            txt_descuento.Location = new Point(363, 328);
             txt_descuento.Name = "txt_descuento";
             txt_descuento.Size = new Size(150, 31);
             txt_descuento.TabIndex = 16;
@@ -289,7 +299,7 @@
             // txt_subtotal
             // 
             txt_subtotal.Enabled = false;
-            txt_subtotal.Location = new Point(358, 266);
+            txt_subtotal.Location = new Point(363, 287);
             txt_subtotal.Name = "txt_subtotal";
             txt_subtotal.Size = new Size(150, 31);
             txt_subtotal.TabIndex = 15;
@@ -298,25 +308,25 @@
             // 
             cb_metodo.DropDownStyle = ComboBoxStyle.DropDownList;
             cb_metodo.FormattingEnabled = true;
-            cb_metodo.Location = new Point(356, 431);
+            cb_metodo.Location = new Point(361, 452);
             cb_metodo.Name = "cb_metodo";
             cb_metodo.Size = new Size(150, 33);
             cb_metodo.TabIndex = 14;
             // 
-            // btn_terminar
+            // btn_cobrar
             // 
-            btn_terminar.Location = new Point(179, 502);
-            btn_terminar.Name = "btn_terminar";
-            btn_terminar.Size = new Size(198, 34);
-            btn_terminar.TabIndex = 13;
-            btn_terminar.Text = "Terminar compra";
-            btn_terminar.UseVisualStyleBackColor = true;
-            btn_terminar.Click += btn_terminar_Click;
+            btn_cobrar.Location = new Point(179, 502);
+            btn_cobrar.Name = "btn_cobrar";
+            btn_cobrar.Size = new Size(198, 34);
+            btn_cobrar.TabIndex = 13;
+            btn_cobrar.Text = "Cobrar";
+            btn_cobrar.UseVisualStyleBackColor = true;
+            btn_cobrar.Click += btn_terminar_Click;
             // 
             // lbl_descuento
             // 
             lbl_descuento.AutoSize = true;
-            lbl_descuento.Location = new Point(231, 310);
+            lbl_descuento.Location = new Point(236, 331);
             lbl_descuento.Name = "lbl_descuento";
             lbl_descuento.Size = new Size(96, 25);
             lbl_descuento.TabIndex = 12;
@@ -326,10 +336,10 @@
             // 
             dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_carrito.Columns.AddRange(new DataGridViewColumn[] { clm_c_nombre, clm_c_cantidad, clm_c_precio });
-            dgv_carrito.Location = new Point(16, 52);
+            dgv_carrito.Location = new Point(13, 73);
             dgv_carrito.Name = "dgv_carrito";
             dgv_carrito.RowHeadersWidth = 62;
-            dgv_carrito.Size = new Size(516, 208);
+            dgv_carrito.Size = new Size(526, 208);
             dgv_carrito.TabIndex = 11;
             // 
             // clm_c_nombre
@@ -357,7 +367,7 @@
             // lbl_total
             // 
             lbl_total.AutoSize = true;
-            lbl_total.Location = new Point(278, 383);
+            lbl_total.Location = new Point(283, 404);
             lbl_total.Name = "lbl_total";
             lbl_total.Size = new Size(49, 25);
             lbl_total.TabIndex = 10;
@@ -366,7 +376,7 @@
             // lbl_IVA
             // 
             lbl_IVA.AutoSize = true;
-            lbl_IVA.Location = new Point(288, 349);
+            lbl_IVA.Location = new Point(293, 370);
             lbl_IVA.Name = "lbl_IVA";
             lbl_IVA.Size = new Size(39, 25);
             lbl_IVA.TabIndex = 9;
@@ -375,7 +385,7 @@
             // lbl_subtotal
             // 
             lbl_subtotal.AutoSize = true;
-            lbl_subtotal.Location = new Point(248, 273);
+            lbl_subtotal.Location = new Point(253, 294);
             lbl_subtotal.Name = "lbl_subtotal";
             lbl_subtotal.Size = new Size(79, 25);
             lbl_subtotal.TabIndex = 8;
@@ -383,7 +393,7 @@
             // 
             // btn_limpiar
             // 
-            btn_limpiar.Location = new Point(53, 334);
+            btn_limpiar.Location = new Point(13, 309);
             btn_limpiar.Name = "btn_limpiar";
             btn_limpiar.Size = new Size(112, 34);
             btn_limpiar.TabIndex = 1;
@@ -393,14 +403,20 @@
             // gpbox_cliente
             // 
             gpbox_cliente.BackColor = SystemColors.InactiveBorder;
+            gpbox_cliente.Controls.Add(txt_correo);
+            gpbox_cliente.Controls.Add(txt_apellido);
+            gpbox_cliente.Controls.Add(txt_nombre_prod);
+            gpbox_cliente.Controls.Add(lbl_correo);
+            gpbox_cliente.Controls.Add(lbl_apellido_p);
+            gpbox_cliente.Controls.Add(lbl_nombre_c);
             gpbox_cliente.Controls.Add(lbl_buscar_cliente);
             gpbox_cliente.Controls.Add(cb_clientes);
-            gpbox_cliente.Location = new Point(12, 12);
+            gpbox_cliente.Location = new Point(12, 67);
             gpbox_cliente.Name = "gpbox_cliente";
-            gpbox_cliente.Size = new Size(663, 92);
+            gpbox_cliente.Size = new Size(1225, 92);
             gpbox_cliente.TabIndex = 6;
             gpbox_cliente.TabStop = false;
-            gpbox_cliente.Text = "Cliente";
+            gpbox_cliente.Text = "Cliente disponible";
             // 
             // lbl_buscar_cliente
             // 
@@ -422,12 +438,81 @@
             cb_clientes.Size = new Size(271, 33);
             cb_clientes.TabIndex = 15;
             // 
+            // lbl_seleccionar
+            // 
+            lbl_seleccionar.AutoSize = true;
+            lbl_seleccionar.Location = new Point(496, 122);
+            lbl_seleccionar.Name = "lbl_seleccionar";
+            lbl_seleccionar.Size = new Size(179, 25);
+            lbl_seleccionar.TabIndex = 22;
+            lbl_seleccionar.Text = "Click para seleccionar";
+            // 
+            // lbl_seleccionar_eli
+            // 
+            lbl_seleccionar_eli.AutoSize = true;
+            lbl_seleccionar_eli.Location = new Point(223, 38);
+            lbl_seleccionar_eli.Name = "lbl_seleccionar_eli";
+            lbl_seleccionar_eli.Size = new Size(201, 25);
+            lbl_seleccionar_eli.TabIndex = 23;
+            lbl_seleccionar_eli.Text = "Selecciona para eliminar";
+            // 
+            // lbl_nombre_c
+            // 
+            lbl_nombre_c.AutoSize = true;
+            lbl_nombre_c.Location = new Point(498, 35);
+            lbl_nombre_c.Name = "lbl_nombre_c";
+            lbl_nombre_c.Size = new Size(78, 25);
+            lbl_nombre_c.TabIndex = 17;
+            lbl_nombre_c.Text = "Nombre";
+            // 
+            // lbl_apellido_p
+            // 
+            lbl_apellido_p.AutoSize = true;
+            lbl_apellido_p.Location = new Point(709, 39);
+            lbl_apellido_p.Name = "lbl_apellido_p";
+            lbl_apellido_p.Size = new Size(93, 25);
+            lbl_apellido_p.TabIndex = 18;
+            lbl_apellido_p.Text = "Apellido P";
+            // 
+            // lbl_correo
+            // 
+            lbl_correo.AutoSize = true;
+            lbl_correo.Location = new Point(922, 33);
+            lbl_correo.Name = "lbl_correo";
+            lbl_correo.Size = new Size(66, 25);
+            lbl_correo.TabIndex = 19;
+            lbl_correo.Text = "Correo";
+            // 
+            // txt_nombre_prod
+            // 
+            txt_nombre_prod.Enabled = false;
+            txt_nombre_prod.Location = new Point(578, 32);
+            txt_nombre_prod.Name = "txt_nombre_prod";
+            txt_nombre_prod.Size = new Size(102, 31);
+            txt_nombre_prod.TabIndex = 20;
+            // 
+            // txt_apellido
+            // 
+            txt_apellido.Enabled = false;
+            txt_apellido.Location = new Point(797, 33);
+            txt_apellido.Name = "txt_apellido";
+            txt_apellido.Size = new Size(102, 31);
+            txt_apellido.TabIndex = 21;
+            // 
+            // txt_correo
+            // 
+            txt_correo.Enabled = false;
+            txt_correo.Location = new Point(987, 30);
+            txt_correo.Name = "txt_correo";
+            txt_correo.Size = new Size(232, 31);
+            txt_correo.TabIndex = 22;
+            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(1249, 612);
+            ClientSize = new Size(1249, 682);
             Controls.Add(dgv_productos);
             Controls.Add(gpBox_producto);
             Controls.Add(gpbox_carrito);
@@ -473,7 +558,7 @@
         private GroupBox gpbox_cliente;
         private GroupBox groupBox1;
         private Button btn_agregar;
-        private Button btn_terminar;
+        private Button btn_cobrar;
         private Label lbl_buscar_prod;
         private ComboBox cb_metodo;
         private Label lbl_buscar_cliente;
@@ -486,5 +571,13 @@
         private TextBox txt_IVA;
         private TextBox txt_descuento;
         private TextBox txt_subtotal;
+        private Label lbl_seleccionar;
+        private Label lbl_seleccionar_eli;
+        private TextBox txt_correo;
+        private TextBox txt_apellido;
+        private TextBox txt_nombre_prod;
+        private Label lbl_correo;
+        private Label lbl_apellido_p;
+        private Label lbl_nombre_c;
     }
 }

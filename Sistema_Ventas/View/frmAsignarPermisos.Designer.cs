@@ -38,12 +38,12 @@
             txt_buscar_rol = new TextBox();
             btn_editar = new Button();
             grbox_permisos = new GroupBox();
+            checkBox1 = new CheckBox();
             dataGridView2 = new DataGridView();
             clm_permiso = new DataGridViewTextBoxColumn();
             btn_eliminar = new Button();
             button1 = new Button();
             cbox_permisos = new ComboBox();
-            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -96,7 +96,7 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { clm_id, clm_rol });
-            dataGridView1.Location = new Point(22, 124);
+            dataGridView1.Location = new Point(22, 139);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(279, 225);
@@ -148,14 +148,24 @@
             grbox_permisos.TabStop = false;
             grbox_permisos.Text = "Permisos";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(121, 391);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(121, 29);
+            checkBox1.TabIndex = 19;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { clm_permiso });
-            dataGridView2.Location = new Point(38, 103);
+            dataGridView2.Location = new Point(440, 81);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.Size = new Size(496, 251);
+            dataGridView2.Size = new Size(215, 251);
             dataGridView2.TabIndex = 18;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
@@ -170,7 +180,7 @@
             // 
             btn_eliminar.BackColor = SystemColors.ActiveCaption;
             btn_eliminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_eliminar.Location = new Point(281, 361);
+            btn_eliminar.Location = new Point(502, 338);
             btn_eliminar.Name = "btn_eliminar";
             btn_eliminar.Size = new Size(153, 59);
             btn_eliminar.TabIndex = 4;
@@ -181,7 +191,7 @@
             // 
             button1.BackColor = SystemColors.ActiveCaption;
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(397, 19);
+            button1.Location = new Point(281, 177);
             button1.Name = "button1";
             button1.Size = new Size(153, 59);
             button1.TabIndex = 1;
@@ -193,20 +203,10 @@
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbox_permisos.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
             cbox_permisos.FormattingEnabled = true;
-            cbox_permisos.Location = new Point(137, 33);
+            cbox_permisos.Location = new Point(6, 81);
             cbox_permisos.Name = "cbox_permisos";
             cbox_permisos.Size = new Size(236, 33);
             cbox_permisos.TabIndex = 2;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(466, 418);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(121, 29);
-            checkBox1.TabIndex = 19;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
             // 
             // frmAsignarPermisos
             // 
