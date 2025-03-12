@@ -29,14 +29,16 @@
         private void InitializeComponent()
         {
             gbxBusquedaAuditoria = new GroupBox();
+            dtpFechaFin = new DateTimePicker();
+            stpFechaInicio = new DateTimePicker();
+            lbFechaFin = new Label();
+            lbFechaInicio = new Label();
             btnBuscarAuditoria = new Button();
             textBox1 = new TextBox();
             lbBusqueda = new Label();
-            lbFechaInicio = new Label();
-            lbFechaFin = new Label();
-            stpFechaInicio = new DateTimePicker();
-            dtpFechaFin = new DateTimePicker();
+            dgvAuditorias = new DataGridView();
             gbxBusquedaAuditoria.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAuditorias).BeginInit();
             SuspendLayout();
             // 
             // gbxBusquedaAuditoria
@@ -51,19 +53,57 @@
             gbxBusquedaAuditoria.Dock = DockStyle.Top;
             gbxBusquedaAuditoria.Location = new Point(0, 0);
             gbxBusquedaAuditoria.Name = "gbxBusquedaAuditoria";
-            gbxBusquedaAuditoria.Size = new Size(533, 85);
+            gbxBusquedaAuditoria.Size = new Size(519, 85);
             gbxBusquedaAuditoria.TabIndex = 0;
             gbxBusquedaAuditoria.TabStop = false;
             gbxBusquedaAuditoria.Text = "Busqueda de Auditorias";
             // 
+            // dtpFechaFin
+            // 
+            dtpFechaFin.Format = DateTimePickerFormat.Short;
+            dtpFechaFin.Location = new Point(302, 22);
+            dtpFechaFin.Name = "dtpFechaFin";
+            dtpFechaFin.Size = new Size(137, 23);
+            dtpFechaFin.TabIndex = 6;
+            // 
+            // stpFechaInicio
+            // 
+            stpFechaInicio.Format = DateTimePickerFormat.Short;
+            stpFechaInicio.Location = new Point(96, 22);
+            stpFechaInicio.Name = "stpFechaInicio";
+            stpFechaInicio.Size = new Size(137, 23);
+            stpFechaInicio.TabIndex = 5;
+            // 
+            // lbFechaFin
+            // 
+            lbFechaFin.AutoSize = true;
+            lbFechaFin.Location = new Point(239, 26);
+            lbFechaFin.Name = "lbFechaFin";
+            lbFechaFin.Size = new Size(57, 15);
+            lbFechaFin.TabIndex = 4;
+            lbFechaFin.Text = "Fecha Fin";
+            // 
+            // lbFechaInicio
+            // 
+            lbFechaInicio.AutoSize = true;
+            lbFechaInicio.Location = new Point(20, 26);
+            lbFechaInicio.Name = "lbFechaInicio";
+            lbFechaInicio.Size = new Size(70, 15);
+            lbFechaInicio.TabIndex = 3;
+            lbFechaInicio.Text = "Fecha Inicio";
+            // 
             // btnBuscarAuditoria
             // 
+            btnBuscarAuditoria.BackColor = SystemColors.ActiveCaption;
+            btnBuscarAuditoria.Image = Sistema_Ventas.Properties.Resources.search;
+            btnBuscarAuditoria.ImageAlign = ContentAlignment.MiddleLeft;
             btnBuscarAuditoria.Location = new Point(373, 53);
             btnBuscarAuditoria.Name = "btnBuscarAuditoria";
-            btnBuscarAuditoria.Size = new Size(82, 23);
+            btnBuscarAuditoria.Size = new Size(66, 23);
             btnBuscarAuditoria.TabIndex = 2;
             btnBuscarAuditoria.Text = "Buscar";
-            btnBuscarAuditoria.UseVisualStyleBackColor = true;
+            btnBuscarAuditoria.TextAlign = ContentAlignment.MiddleRight;
+            btnBuscarAuditoria.UseVisualStyleBackColor = false;
             // 
             // textBox1
             // 
@@ -81,50 +121,29 @@
             lbBusqueda.TabIndex = 0;
             lbBusqueda.Text = "Buscar Auditoria";
             // 
-            // lbFechaInicio
+            // dgvAuditorias
             // 
-            lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(20, 26);
-            lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(70, 15);
-            lbFechaInicio.TabIndex = 3;
-            lbFechaInicio.Text = "Fecha Inicio";
-            // 
-            // lbFechaFin
-            // 
-            lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(239, 26);
-            lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(57, 15);
-            lbFechaFin.TabIndex = 4;
-            lbFechaFin.Text = "Fecha Fin";
-            // 
-            // stpFechaInicio
-            // 
-            stpFechaInicio.Format = DateTimePickerFormat.Short;
-            stpFechaInicio.Location = new Point(96, 22);
-            stpFechaInicio.Name = "stpFechaInicio";
-            stpFechaInicio.Size = new Size(137, 23);
-            stpFechaInicio.TabIndex = 5;
-            // 
-            // dtpFechaFin
-            // 
-            dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(302, 22);
-            dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(137, 23);
-            dtpFechaFin.TabIndex = 6;
+            dgvAuditorias.BackgroundColor = SystemColors.Control;
+            dgvAuditorias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAuditorias.Dock = DockStyle.Fill;
+            dgvAuditorias.Location = new Point(0, 85);
+            dgvAuditorias.Name = "dgvAuditorias";
+            dgvAuditorias.Size = new Size(519, 393);
+            dgvAuditorias.TabIndex = 1;
             // 
             // frmAuditoria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(533, 450);
+            BackColor = SystemColors.GradientActiveCaption;
+            ClientSize = new Size(519, 478);
+            Controls.Add(dgvAuditorias);
             Controls.Add(gbxBusquedaAuditoria);
             Name = "frmAuditoria";
-            Text = "frmAuditoria";
+            Text = "Auditoria";
             gbxBusquedaAuditoria.ResumeLayout(false);
             gbxBusquedaAuditoria.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAuditorias).EndInit();
             ResumeLayout(false);
         }
 
@@ -138,5 +157,6 @@
         private DateTimePicker stpFechaInicio;
         private Label lbFechaFin;
         private Label lbFechaInicio;
+        private DataGridView dgvAuditorias;
     }
 }

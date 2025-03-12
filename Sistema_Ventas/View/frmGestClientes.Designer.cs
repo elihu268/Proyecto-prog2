@@ -28,43 +28,91 @@
         /// </summary>
         private void InitializeComponent()
         {
-            scClientes = new SplitContainer();
-            gbxActulizardatos = new GroupBox();
-            btnGuardar = new Button();
-            cbxEstatus = new ComboBox();
-            lbEstatus = new Label();
-            dtpNacimientoCliente = new DateTimePicker();
-            txtTelefonoCliente = new TextBox();
-            txtCorreoCliente = new TextBox();
-            txtNombreCliente = new TextBox();
-            lbTelefono = new Label();
-            lbNacimiento = new Label();
-            lbCorreo = new Label();
-            lbNombre = new Label();
-            gbxBusqueda = new GroupBox();
-            cbxtipoFecha = new ComboBox();
-            lbTipoFecha = new Label();
-            dtpFechaFin = new DateTimePicker();
-            dtpFechaInicio = new DateTimePicker();
-            lbFechaFin = new Label();
-            lbFechaInicio = new Label();
-            btnActualizar = new Button();
-            txtBusqueda = new TextBox();
-            lbBuscar = new Label();
-            gbxHerramientas = new GroupBox();
-            lbseleccione = new Label();
-            btnCargaMasiva = new Button();
-            btncollapse = new Button();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ofdClientes = new OpenFileDialog();
+            BottomToolStripPanel = new ToolStripPanel();
+            TopToolStripPanel = new ToolStripPanel();
+            RightToolStripPanel = new ToolStripPanel();
+            LeftToolStripPanel = new ToolStripPanel();
+            ContentPanel = new ToolStripContentPanel();
+            scClientes = new SplitContainer();
+            gbxHerramientas = new GroupBox();
+            btncollapse = new Button();
+            btnCargaMasiva = new Button();
+            lbseleccione = new Label();
+            gbxBusqueda = new GroupBox();
+            lbBuscar = new Label();
+            txtBusqueda = new TextBox();
+            btnActualizar = new Button();
+            lbFechaInicio = new Label();
+            lbFechaFin = new Label();
+            dtpFechaInicio = new DateTimePicker();
+            dtpFechaFin = new DateTimePicker();
+            lbTipoFecha = new Label();
+            cbxtipoFecha = new ComboBox();
+            gbxActulizardatos = new GroupBox();
+            lbNombre = new Label();
+            lbCorreo = new Label();
+            lbNacimiento = new Label();
+            lbTelefono = new Label();
+            txtNombreCliente = new TextBox();
+            txtCorreoCliente = new TextBox();
+            txtTelefonoCliente = new TextBox();
+            dtpNacimientoCliente = new DateTimePicker();
+            lbEstatus = new Label();
+            cbxEstatus = new ComboBox();
+            btnGuardar = new Button();
+            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
             scClientes.SuspendLayout();
-            gbxActulizardatos.SuspendLayout();
-            gbxBusqueda.SuspendLayout();
             gbxHerramientas.SuspendLayout();
+            gbxBusqueda.SuspendLayout();
+            gbxActulizardatos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
+            // 
+            // ofdClientes
+            // 
+            ofdClientes.FileName = "Carga Masiva de Clientes";
+            // 
+            // BottomToolStripPanel
+            // 
+            BottomToolStripPanel.Location = new Point(0, 0);
+            BottomToolStripPanel.Name = "BottomToolStripPanel";
+            BottomToolStripPanel.Orientation = Orientation.Horizontal;
+            BottomToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            BottomToolStripPanel.Size = new Size(0, 0);
+            // 
+            // TopToolStripPanel
+            // 
+            TopToolStripPanel.Location = new Point(0, 0);
+            TopToolStripPanel.Name = "TopToolStripPanel";
+            TopToolStripPanel.Orientation = Orientation.Horizontal;
+            TopToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            TopToolStripPanel.Size = new Size(0, 0);
+            // 
+            // RightToolStripPanel
+            // 
+            RightToolStripPanel.Location = new Point(0, 0);
+            RightToolStripPanel.Name = "RightToolStripPanel";
+            RightToolStripPanel.Orientation = Orientation.Horizontal;
+            RightToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            RightToolStripPanel.Size = new Size(0, 0);
+            // 
+            // LeftToolStripPanel
+            // 
+            LeftToolStripPanel.Location = new Point(0, 0);
+            LeftToolStripPanel.Name = "LeftToolStripPanel";
+            LeftToolStripPanel.Orientation = Orientation.Horizontal;
+            LeftToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            LeftToolStripPanel.Size = new Size(0, 0);
+            // 
+            // ContentPanel
+            // 
+            ContentPanel.AutoScroll = true;
+            ContentPanel.Size = new Size(839, 391);
             // 
             // scClientes
             // 
@@ -78,11 +126,162 @@
             // 
             // scClientes.Panel2
             // 
+            scClientes.Panel2.Controls.Add(dataGridView1);
             scClientes.Panel2.Controls.Add(gbxBusqueda);
             scClientes.Panel2.Controls.Add(gbxHerramientas);
             scClientes.Size = new Size(839, 416);
-            scClientes.SplitterDistance = 279;
+            scClientes.SplitterDistance = 270;
             scClientes.TabIndex = 0;
+            // 
+            // gbxHerramientas
+            // 
+            gbxHerramientas.Controls.Add(lbseleccione);
+            gbxHerramientas.Controls.Add(btnCargaMasiva);
+            gbxHerramientas.Controls.Add(btncollapse);
+            gbxHerramientas.Dock = DockStyle.Top;
+            gbxHerramientas.Location = new Point(0, 0);
+            gbxHerramientas.Name = "gbxHerramientas";
+            gbxHerramientas.Size = new Size(565, 48);
+            gbxHerramientas.TabIndex = 0;
+            gbxHerramientas.TabStop = false;
+            gbxHerramientas.Text = "Herramientas";
+            // 
+            // btncollapse
+            // 
+            btncollapse.BackColor = SystemColors.ActiveCaption;
+            btncollapse.Image = Sistema_Ventas.Properties.Resources.uploadUser1;
+            btncollapse.ImageAlign = ContentAlignment.MiddleLeft;
+            btncollapse.Location = new Point(9, 20);
+            btncollapse.Name = "btncollapse";
+            btncollapse.Size = new Size(106, 23);
+            btncollapse.TabIndex = 0;
+            btncollapse.Text = "Cargar Cliente";
+            btncollapse.TextAlign = ContentAlignment.MiddleRight;
+            btncollapse.UseVisualStyleBackColor = false;
+            btncollapse.Click += btncollapse_Click;
+            // 
+            // btnCargaMasiva
+            // 
+            btnCargaMasiva.BackColor = SystemColors.ActiveCaption;
+            btnCargaMasiva.Image = Sistema_Ventas.Properties.Resources.upload1;
+            btnCargaMasiva.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCargaMasiva.Location = new Point(130, 20);
+            btnCargaMasiva.Name = "btnCargaMasiva";
+            btnCargaMasiva.Size = new Size(92, 23);
+            btnCargaMasiva.TabIndex = 1;
+            btnCargaMasiva.Text = "Cargar Excel";
+            btnCargaMasiva.TextAlign = ContentAlignment.MiddleRight;
+            btnCargaMasiva.UseVisualStyleBackColor = false;
+            btnCargaMasiva.Click += btnCargaMasiva_Click;
+            // 
+            // lbseleccione
+            // 
+            lbseleccione.AutoSize = true;
+            lbseleccione.Location = new Point(242, 24);
+            lbseleccione.Name = "lbseleccione";
+            lbseleccione.Size = new Size(171, 15);
+            lbseleccione.TabIndex = 2;
+            lbseleccione.Text = "Seleccione un Archivo xlsx o xls";
+            // 
+            // gbxBusqueda
+            // 
+            gbxBusqueda.Controls.Add(cbxtipoFecha);
+            gbxBusqueda.Controls.Add(lbTipoFecha);
+            gbxBusqueda.Controls.Add(dtpFechaFin);
+            gbxBusqueda.Controls.Add(dtpFechaInicio);
+            gbxBusqueda.Controls.Add(lbFechaFin);
+            gbxBusqueda.Controls.Add(lbFechaInicio);
+            gbxBusqueda.Controls.Add(btnActualizar);
+            gbxBusqueda.Controls.Add(txtBusqueda);
+            gbxBusqueda.Controls.Add(lbBuscar);
+            gbxBusqueda.Dock = DockStyle.Top;
+            gbxBusqueda.Location = new Point(0, 48);
+            gbxBusqueda.Name = "gbxBusqueda";
+            gbxBusqueda.Size = new Size(565, 83);
+            gbxBusqueda.TabIndex = 1;
+            gbxBusqueda.TabStop = false;
+            gbxBusqueda.Text = "Busqueda de Clientes";
+            // 
+            // lbBuscar
+            // 
+            lbBuscar.AutoSize = true;
+            lbBuscar.Location = new Point(20, 57);
+            lbBuscar.Name = "lbBuscar";
+            lbBuscar.Size = new Size(82, 15);
+            lbBuscar.TabIndex = 0;
+            lbBuscar.Text = "Buscar Cliente";
+            // 
+            // txtBusqueda
+            // 
+            txtBusqueda.Location = new Point(108, 54);
+            txtBusqueda.MaxLength = 100;
+            txtBusqueda.Name = "txtBusqueda";
+            txtBusqueda.Size = new Size(253, 23);
+            txtBusqueda.TabIndex = 1;
+            // 
+            // btnActualizar
+            // 
+            btnActualizar.BackColor = SystemColors.ActiveCaption;
+            btnActualizar.Image = Sistema_Ventas.Properties.Resources.actualizar;
+            btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActualizar.Location = new Point(380, 54);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(85, 23);
+            btnActualizar.TabIndex = 2;
+            btnActualizar.Text = "Actulizar";
+            btnActualizar.TextAlign = ContentAlignment.MiddleRight;
+            btnActualizar.UseVisualStyleBackColor = false;
+            // 
+            // lbFechaInicio
+            // 
+            lbFechaInicio.AutoSize = true;
+            lbFechaInicio.Location = new Point(182, 34);
+            lbFechaInicio.Name = "lbFechaInicio";
+            lbFechaInicio.Size = new Size(70, 15);
+            lbFechaInicio.TabIndex = 13;
+            lbFechaInicio.Text = "Fecha Inicio";
+            // 
+            // lbFechaFin
+            // 
+            lbFechaFin.AutoSize = true;
+            lbFechaFin.Location = new Point(371, 33);
+            lbFechaFin.Name = "lbFechaFin";
+            lbFechaFin.Size = new Size(57, 15);
+            lbFechaFin.TabIndex = 14;
+            lbFechaFin.Text = "Fecha Fin";
+            // 
+            // dtpFechaInicio
+            // 
+            dtpFechaInicio.Format = DateTimePickerFormat.Short;
+            dtpFechaInicio.Location = new Point(255, 30);
+            dtpFechaInicio.Name = "dtpFechaInicio";
+            dtpFechaInicio.Size = new Size(110, 23);
+            dtpFechaInicio.TabIndex = 15;
+            // 
+            // dtpFechaFin
+            // 
+            dtpFechaFin.Format = DateTimePickerFormat.Short;
+            dtpFechaFin.Location = new Point(429, 29);
+            dtpFechaFin.Name = "dtpFechaFin";
+            dtpFechaFin.Size = new Size(110, 23);
+            dtpFechaFin.TabIndex = 16;
+            // 
+            // lbTipoFecha
+            // 
+            lbTipoFecha.AutoSize = true;
+            lbTipoFecha.Location = new Point(18, 33);
+            lbTipoFecha.Name = "lbTipoFecha";
+            lbTipoFecha.Size = new Size(65, 15);
+            lbTipoFecha.TabIndex = 17;
+            lbTipoFecha.Text = "Tipo Fecha";
+            // 
+            // cbxtipoFecha
+            // 
+            cbxtipoFecha.FormattingEnabled = true;
+            cbxtipoFecha.Location = new Point(89, 31);
+            cbxtipoFecha.Name = "cbxtipoFecha";
+            cbxtipoFecha.Size = new Size(87, 23);
+            cbxtipoFecha.TabIndex = 18;
             // 
             // gbxActulizardatos
             // 
@@ -100,96 +299,10 @@
             gbxActulizardatos.Dock = DockStyle.Fill;
             gbxActulizardatos.Location = new Point(0, 0);
             gbxActulizardatos.Name = "gbxActulizardatos";
-            gbxActulizardatos.Size = new Size(279, 416);
+            gbxActulizardatos.Size = new Size(270, 416);
             gbxActulizardatos.TabIndex = 0;
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
-            // 
-            // btnGuardar
-            // 
-            btnGuardar.Location = new Point(149, 307);
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(75, 23);
-            btnGuardar.TabIndex = 20;
-            btnGuardar.Text = "Guardar";
-            btnGuardar.UseVisualStyleBackColor = true;
-            btnGuardar.Click += btnGuardar_Click;
-            // 
-            // cbxEstatus
-            // 
-            cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(12, 251);
-            cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(121, 23);
-            cbxEstatus.TabIndex = 19;
-            // 
-            // lbEstatus
-            // 
-            lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(14, 233);
-            lbEstatus.Name = "lbEstatus";
-            lbEstatus.Size = new Size(44, 15);
-            lbEstatus.TabIndex = 18;
-            lbEstatus.Text = "Estatus";
-            // 
-            // dtpNacimientoCliente
-            // 
-            dtpNacimientoCliente.Format = DateTimePickerFormat.Short;
-            dtpNacimientoCliente.Location = new Point(12, 207);
-            dtpNacimientoCliente.Name = "dtpNacimientoCliente";
-            dtpNacimientoCliente.Size = new Size(200, 23);
-            dtpNacimientoCliente.TabIndex = 17;
-            // 
-            // txtTelefonoCliente
-            // 
-            txtTelefonoCliente.Location = new Point(9, 153);
-            txtTelefonoCliente.MaxLength = 15;
-            txtTelefonoCliente.Name = "txtTelefonoCliente";
-            txtTelefonoCliente.Size = new Size(201, 23);
-            txtTelefonoCliente.TabIndex = 16;
-            // 
-            // txtCorreoCliente
-            // 
-            txtCorreoCliente.Location = new Point(9, 109);
-            txtCorreoCliente.MaxLength = 15;
-            txtCorreoCliente.Name = "txtCorreoCliente";
-            txtCorreoCliente.Size = new Size(206, 23);
-            txtCorreoCliente.TabIndex = 15;
-            // 
-            // txtNombreCliente
-            // 
-            txtNombreCliente.Location = new Point(12, 58);
-            txtNombreCliente.MaxLength = 100;
-            txtNombreCliente.Name = "txtNombreCliente";
-            txtNombreCliente.Size = new Size(203, 23);
-            txtNombreCliente.TabIndex = 14;
-            // 
-            // lbTelefono
-            // 
-            lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(14, 135);
-            lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(53, 15);
-            lbTelefono.TabIndex = 13;
-            lbTelefono.Text = "Telefono";
-            // 
-            // lbNacimiento
-            // 
-            lbNacimiento.AutoSize = true;
-            lbNacimiento.Location = new Point(14, 182);
-            lbNacimiento.Name = "lbNacimiento";
-            lbNacimiento.Size = new Size(119, 15);
-            lbNacimiento.TabIndex = 12;
-            lbNacimiento.Text = "Fecha de Nacimiento";
-            // 
-            // lbCorreo
-            // 
-            lbCorreo.AutoSize = true;
-            lbCorreo.Location = new Point(9, 84);
-            lbCorreo.Name = "lbCorreo";
-            lbCorreo.Size = new Size(43, 15);
-            lbCorreo.TabIndex = 11;
-            lbCorreo.Text = "Correo";
             // 
             // lbNombre
             // 
@@ -200,170 +313,141 @@
             lbNombre.TabIndex = 10;
             lbNombre.Text = "Nombre Completo";
             // 
-            // gbxBusqueda
+            // lbCorreo
             // 
-            gbxBusqueda.Controls.Add(cbxtipoFecha);
-            gbxBusqueda.Controls.Add(lbTipoFecha);
-            gbxBusqueda.Controls.Add(dtpFechaFin);
-            gbxBusqueda.Controls.Add(dtpFechaInicio);
-            gbxBusqueda.Controls.Add(lbFechaFin);
-            gbxBusqueda.Controls.Add(lbFechaInicio);
-            gbxBusqueda.Controls.Add(btnActualizar);
-            gbxBusqueda.Controls.Add(txtBusqueda);
-            gbxBusqueda.Controls.Add(lbBuscar);
-            gbxBusqueda.Location = new Point(0, 49);
-            gbxBusqueda.Name = "gbxBusqueda";
-            gbxBusqueda.Size = new Size(556, 83);
-            gbxBusqueda.TabIndex = 1;
-            gbxBusqueda.TabStop = false;
-            gbxBusqueda.Text = "Busqueda de Clientes";
+            lbCorreo.AutoSize = true;
+            lbCorreo.Location = new Point(9, 84);
+            lbCorreo.Name = "lbCorreo";
+            lbCorreo.Size = new Size(43, 15);
+            lbCorreo.TabIndex = 11;
+            lbCorreo.Text = "Correo";
             // 
-            // cbxtipoFecha
+            // lbNacimiento
             // 
-            cbxtipoFecha.FormattingEnabled = true;
-            cbxtipoFecha.Location = new Point(89, 31);
-            cbxtipoFecha.Name = "cbxtipoFecha";
-            cbxtipoFecha.Size = new Size(87, 23);
-            cbxtipoFecha.TabIndex = 18;
+            lbNacimiento.AutoSize = true;
+            lbNacimiento.Location = new Point(14, 182);
+            lbNacimiento.Name = "lbNacimiento";
+            lbNacimiento.Size = new Size(119, 15);
+            lbNacimiento.TabIndex = 12;
+            lbNacimiento.Text = "Fecha de Nacimiento";
             // 
-            // lbTipoFecha
+            // lbTelefono
             // 
-            lbTipoFecha.AutoSize = true;
-            lbTipoFecha.Location = new Point(18, 33);
-            lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(65, 15);
-            lbTipoFecha.TabIndex = 17;
-            lbTipoFecha.Text = "Tipo Fecha";
+            lbTelefono.AutoSize = true;
+            lbTelefono.Location = new Point(14, 135);
+            lbTelefono.Name = "lbTelefono";
+            lbTelefono.Size = new Size(53, 15);
+            lbTelefono.TabIndex = 13;
+            lbTelefono.Text = "Telefono";
             // 
-            // dtpFechaFin
+            // txtNombreCliente
             // 
-            dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(429, 29);
-            dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(110, 23);
-            dtpFechaFin.TabIndex = 16;
+            txtNombreCliente.Location = new Point(12, 58);
+            txtNombreCliente.MaxLength = 100;
+            txtNombreCliente.Name = "txtNombreCliente";
+            txtNombreCliente.Size = new Size(203, 23);
+            txtNombreCliente.TabIndex = 14;
             // 
-            // dtpFechaInicio
+            // txtCorreoCliente
             // 
-            dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(255, 30);
-            dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(110, 23);
-            dtpFechaInicio.TabIndex = 15;
+            txtCorreoCliente.Location = new Point(9, 109);
+            txtCorreoCliente.MaxLength = 15;
+            txtCorreoCliente.Name = "txtCorreoCliente";
+            txtCorreoCliente.Size = new Size(206, 23);
+            txtCorreoCliente.TabIndex = 15;
             // 
-            // lbFechaFin
+            // txtTelefonoCliente
             // 
-            lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(371, 33);
-            lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(57, 15);
-            lbFechaFin.TabIndex = 14;
-            lbFechaFin.Text = "Fecha Fin";
+            txtTelefonoCliente.Location = new Point(9, 153);
+            txtTelefonoCliente.MaxLength = 15;
+            txtTelefonoCliente.Name = "txtTelefonoCliente";
+            txtTelefonoCliente.Size = new Size(201, 23);
+            txtTelefonoCliente.TabIndex = 16;
             // 
-            // lbFechaInicio
+            // dtpNacimientoCliente
             // 
-            lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(182, 34);
-            lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(70, 15);
-            lbFechaInicio.TabIndex = 13;
-            lbFechaInicio.Text = "Fecha Inicio";
+            dtpNacimientoCliente.Format = DateTimePickerFormat.Short;
+            dtpNacimientoCliente.Location = new Point(12, 207);
+            dtpNacimientoCliente.Name = "dtpNacimientoCliente";
+            dtpNacimientoCliente.Size = new Size(200, 23);
+            dtpNacimientoCliente.TabIndex = 17;
             // 
-            // btnActualizar
+            // lbEstatus
             // 
-            btnActualizar.Location = new Point(380, 54);
-            btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(75, 23);
-            btnActualizar.TabIndex = 2;
-            btnActualizar.Text = "Actulizar";
-            btnActualizar.UseVisualStyleBackColor = true;
+            lbEstatus.AutoSize = true;
+            lbEstatus.Location = new Point(14, 233);
+            lbEstatus.Name = "lbEstatus";
+            lbEstatus.Size = new Size(44, 15);
+            lbEstatus.TabIndex = 18;
+            lbEstatus.Text = "Estatus";
             // 
-            // txtBusqueda
+            // cbxEstatus
             // 
-            txtBusqueda.Location = new Point(108, 54);
-            txtBusqueda.MaxLength = 100;
-            txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(253, 23);
-            txtBusqueda.TabIndex = 1;
+            cbxEstatus.FormattingEnabled = true;
+            cbxEstatus.Location = new Point(12, 251);
+            cbxEstatus.Name = "cbxEstatus";
+            cbxEstatus.Size = new Size(121, 23);
+            cbxEstatus.TabIndex = 19;
             // 
-            // lbBuscar
+            // btnGuardar
             // 
-            lbBuscar.AutoSize = true;
-            lbBuscar.Location = new Point(20, 57);
-            lbBuscar.Name = "lbBuscar";
-            lbBuscar.Size = new Size(82, 15);
-            lbBuscar.TabIndex = 0;
-            lbBuscar.Text = "Buscar Cliente";
+            btnGuardar.BackColor = SystemColors.ActiveCaption;
+            btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
+            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGuardar.Location = new Point(149, 307);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(79, 31);
+            btnGuardar.TabIndex = 20;
+            btnGuardar.Text = "Guardar";
+            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
+            btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click;
             // 
-            // gbxHerramientas
+            // dataGridView1
             // 
-            gbxHerramientas.Controls.Add(lbseleccione);
-            gbxHerramientas.Controls.Add(btnCargaMasiva);
-            gbxHerramientas.Controls.Add(btncollapse);
-            gbxHerramientas.Location = new Point(0, 0);
-            gbxHerramientas.Name = "gbxHerramientas";
-            gbxHerramientas.Size = new Size(557, 48);
-            gbxHerramientas.TabIndex = 0;
-            gbxHerramientas.TabStop = false;
-            gbxHerramientas.Text = "Herramientas";
-            // 
-            // lbseleccione
-            // 
-            lbseleccione.AutoSize = true;
-            lbseleccione.Location = new Point(208, 24);
-            lbseleccione.Name = "lbseleccione";
-            lbseleccione.Size = new Size(171, 15);
-            lbseleccione.TabIndex = 2;
-            lbseleccione.Text = "Seleccione un Archivo xlsx o xls";
-            // 
-            // btnCargaMasiva
-            // 
-            btnCargaMasiva.Location = new Point(108, 20);
-            btnCargaMasiva.Name = "btnCargaMasiva";
-            btnCargaMasiva.Size = new Size(80, 23);
-            btnCargaMasiva.TabIndex = 1;
-            btnCargaMasiva.Text = "Cargar Excel";
-            btnCargaMasiva.UseVisualStyleBackColor = true;
-            btnCargaMasiva.Click += btnCargaMasiva_Click;
-            // 
-            // btncollapse
-            // 
-            btncollapse.Location = new Point(9, 20);
-            btncollapse.Name = "btncollapse";
-            btncollapse.Size = new Size(93, 23);
-            btncollapse.TabIndex = 0;
-            btncollapse.Text = "Cargar Cliente";
-            btncollapse.UseVisualStyleBackColor = true;
-            btncollapse.Click += btncollapse_Click;
-            // 
-            // ofdClientes
-            // 
-            ofdClientes.FileName = "Carga Masiva de Clientes";
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.BackgroundColor = SystemColors.Control;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 131);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(565, 285);
+            dataGridView1.TabIndex = 2;
             // 
             // frmGestClientes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(839, 416);
             Controls.Add(scClientes);
             Name = "frmGestClientes";
-            Text = "frmGestClientes";
+            Text = "Gestion de Clientes";
             Load += frmGestClientes_Load;
             scClientes.Panel1.ResumeLayout(false);
             scClientes.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)scClientes).EndInit();
             scClientes.ResumeLayout(false);
-            gbxActulizardatos.ResumeLayout(false);
-            gbxActulizardatos.PerformLayout();
-            gbxBusqueda.ResumeLayout(false);
-            gbxBusqueda.PerformLayout();
             gbxHerramientas.ResumeLayout(false);
             gbxHerramientas.PerformLayout();
+            gbxBusqueda.ResumeLayout(false);
+            gbxBusqueda.PerformLayout();
+            gbxActulizardatos.ResumeLayout(false);
+            gbxActulizardatos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private OpenFileDialog ofdClientes;
+        private ToolStripPanel BottomToolStripPanel;
+        private ToolStripPanel TopToolStripPanel;
+        private ToolStripPanel RightToolStripPanel;
+        private ToolStripPanel LeftToolStripPanel;
+        private ToolStripContentPanel ContentPanel;
         private SplitContainer scClientes;
         private GroupBox gbxActulizardatos;
         private Button btnGuardar;
@@ -377,21 +461,20 @@
         private Label lbNacimiento;
         private Label lbCorreo;
         private Label lbNombre;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private GroupBox gbxHerramientas;
-        private Button btnCargaMasiva;
-        private Button btncollapse;
-        private Label lbseleccione;
         private GroupBox gbxBusqueda;
-        private Button btnActualizar;
-        private TextBox txtBusqueda;
-        private Label lbBuscar;
         private ComboBox cbxtipoFecha;
         private Label lbTipoFecha;
         private DateTimePicker dtpFechaFin;
         private DateTimePicker dtpFechaInicio;
         private Label lbFechaFin;
         private Label lbFechaInicio;
-        private OpenFileDialog ofdClientes;
+        private Button btnActualizar;
+        private TextBox txtBusqueda;
+        private Label lbBuscar;
+        private GroupBox gbxHerramientas;
+        private Label lbseleccione;
+        private Button btnCargaMasiva;
+        private Button btncollapse;
+        private DataGridView dataGridView1;
     }
 }
