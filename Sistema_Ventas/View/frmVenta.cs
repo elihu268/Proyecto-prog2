@@ -42,16 +42,17 @@ namespace Sistema_Ventas.View
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (rb_codigo.Checked==true)
-            {
-                //corre un filtro para saber si exite el codigo
-                Utilities.Validaciones.EsUnNumeroEntero(txt_busqueda.Text);
-                
-            }
-            else
-            {
 
-            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void sp_efectivo_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
         }
     }
 }
