@@ -54,5 +54,10 @@ namespace Sistema_Ventas.View
         {
 
         }
+
+        private void btn_terminar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
