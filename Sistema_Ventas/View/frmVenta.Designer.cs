@@ -413,6 +413,7 @@
             // 
             // cb_clientes
             // 
+            cb_clientes.AutoCompleteCustomSource.AddRange(new string[] { "Cliente general" });
             cb_clientes.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb_clientes.AutoCompleteSource = AutoCompleteSource.ListItems;
             cb_clientes.FormattingEnabled = true;

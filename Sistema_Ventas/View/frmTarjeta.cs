@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace Sistema_Ventas.View
 {
-    public partial class frmAsignarPermisos : Form
+    public partial class frmTarjeta : Form
     {
-        public frmAsignarPermisos()
+        public frmTarjeta()
         {
             InitializeComponent();
-        }
-
-        private void btn_seleccionar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
