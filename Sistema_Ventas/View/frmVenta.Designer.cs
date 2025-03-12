@@ -210,9 +210,11 @@
             // 
             // btn_actualizar
             // 
-            btn_actualizar.Location = new Point(524, 24);
+            btn_actualizar.Image = Properties.Resources.actualizar;
+            btn_actualizar.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_actualizar.Location = new Point(505, 24);
             btn_actualizar.Name = "btn_actualizar";
-            btn_actualizar.Size = new Size(112, 34);
+            btn_actualizar.Size = new Size(131, 34);
             btn_actualizar.TabIndex = 0;
             btn_actualizar.Text = "Actualizar";
             btn_actualizar.UseVisualStyleBackColor = true;
