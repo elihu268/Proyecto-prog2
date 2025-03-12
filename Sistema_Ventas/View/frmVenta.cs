@@ -77,7 +77,7 @@ namespace Sistema_Ventas.View
 
         private void btn_terminar_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btn_agregar_Click(object sender, EventArgs e)
