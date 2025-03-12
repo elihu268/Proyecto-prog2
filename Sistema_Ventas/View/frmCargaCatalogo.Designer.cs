@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             btnCargaCatalogo = new Button();
-            btnGuardar = new Button();
             btnActualizar = new Button();
             dgvCatalogo = new DataGridView();
             idProducto = new DataGridViewTextBoxColumn();
@@ -49,28 +48,13 @@
             btnCargaCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
             btnCargaCatalogo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCargaCatalogo.Location = new Point(319, 13);
+            btnCargaCatalogo.Location = new Point(287, 12);
             btnCargaCatalogo.Name = "btnCargaCatalogo";
-            btnCargaCatalogo.Size = new Size(253, 37);
+            btnCargaCatalogo.Size = new Size(228, 34);
             btnCargaCatalogo.TabIndex = 1;
             btnCargaCatalogo.Text = "Carga de Catalogo";
             btnCargaCatalogo.UseVisualStyleBackColor = false;
             btnCargaCatalogo.Click += btnCargaCatalogo_Click;
-            // 
-            // btnGuardar
-            // 
-            btnGuardar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnGuardar.BackColor = SystemColors.ActiveCaption;
-            btnGuardar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnGuardar.Image = Properties.Resources.guardar;
-            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(319, 57);
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(114, 37);
-            btnGuardar.TabIndex = 2;
-            btnGuardar.Text = "Guardar";
-            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
-            btnGuardar.UseVisualStyleBackColor = false;
             // 
             // btnActualizar
             // 
@@ -79,9 +63,9 @@
             btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(440, 57);
+            btnActualizar.Location = new Point(338, 52);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(132, 37);
+            btnActualizar.Size = new Size(119, 34);
             btnActualizar.TabIndex = 3;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -93,10 +77,10 @@
             dgvCatalogo.BackgroundColor = SystemColors.ActiveCaption;
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCatalogo.Columns.AddRange(new DataGridViewColumn[] { idProducto, codProducto, nombre, precio, descripcion, existencia });
-            dgvCatalogo.Location = new Point(13, 100);
+            dgvCatalogo.Location = new Point(12, 92);
             dgvCatalogo.Name = "dgvCatalogo";
             dgvCatalogo.RowHeadersWidth = 62;
-            dgvCatalogo.Size = new Size(862, 376);
+            dgvCatalogo.Size = new Size(776, 346);
             dgvCatalogo.TabIndex = 4;
             // 
             // idProducto
@@ -148,23 +132,22 @@
             // pbCatalogo
             // 
             pbCatalogo.Image = Properties.Resources.catalogo1;
-            pbCatalogo.Location = new Point(127, 12);
+            pbCatalogo.Location = new Point(114, 11);
             pbCatalogo.Name = "pbCatalogo";
-            pbCatalogo.Size = new Size(108, 81);
+            pbCatalogo.Size = new Size(97, 75);
             pbCatalogo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCatalogo.TabIndex = 5;
             pbCatalogo.TabStop = false;
             // 
             // frmCargaCatalogo
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(889, 489);
+            ClientSize = new Size(800, 450);
             Controls.Add(pbCatalogo);
             Controls.Add(dgvCatalogo);
             Controls.Add(btnActualizar);
-            Controls.Add(btnGuardar);
             Controls.Add(btnCargaCatalogo);
             Name = "frmCargaCatalogo";
             Text = "frmCargaCatalogo";
@@ -176,7 +159,6 @@
 
         #endregion
         private Button btnCargaCatalogo;
-        private Button btnGuardar;
         private Button btnActualizar;
         private DataGridView dgvCatalogo;
         private OpenFileDialog ofdCatalogo;
