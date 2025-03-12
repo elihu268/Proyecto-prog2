@@ -160,6 +160,7 @@
             // 
             // txt_precio
             // 
+            txt_precio.Enabled = false;
             txt_precio.Location = new Point(264, 75);
             txt_precio.Name = "txt_precio";
             txt_precio.Size = new Size(84, 31);
@@ -167,6 +168,7 @@
             // 
             // txt_nombre
             // 
+            txt_nombre.Enabled = false;
             txt_nombre.Location = new Point(90, 73);
             txt_nombre.Name = "txt_nombre";
             txt_nombre.Size = new Size(102, 31);
@@ -260,6 +262,7 @@
             // 
             // txt_total
             // 
+            txt_total.Enabled = false;
             txt_total.Location = new Point(356, 380);
             txt_total.Name = "txt_total";
             txt_total.Size = new Size(150, 31);
@@ -267,6 +270,7 @@
             // 
             // txt_IVA
             // 
+            txt_IVA.Enabled = false;
             txt_IVA.Location = new Point(358, 346);
             txt_IVA.Name = "txt_IVA";
             txt_IVA.Size = new Size(150, 31);
@@ -274,6 +278,7 @@
             // 
             // txt_descuento
             // 
+            txt_descuento.Enabled = false;
             txt_descuento.Location = new Point(358, 307);
             txt_descuento.Name = "txt_descuento";
             txt_descuento.Size = new Size(150, 31);
@@ -281,6 +286,7 @@
             // 
             // txt_subtotal
             // 
+            txt_subtotal.Enabled = false;
             txt_subtotal.Location = new Point(358, 266);
             txt_subtotal.Name = "txt_subtotal";
             txt_subtotal.Size = new Size(150, 31);
@@ -290,7 +296,7 @@
             // 
             cb_metodo.DropDownStyle = ComboBoxStyle.DropDownList;
             cb_metodo.FormattingEnabled = true;
-            cb_metodo.Location = new Point(356, 426);
+            cb_metodo.Location = new Point(356, 431);
             cb_metodo.Name = "cb_metodo";
             cb_metodo.Size = new Size(150, 33);
             cb_metodo.TabIndex = 14;
@@ -405,6 +411,8 @@
             // 
             // cb_clientes
             // 
+            cb_clientes.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cb_clientes.AutoCompleteSource = AutoCompleteSource.ListItems;
             cb_clientes.FormattingEnabled = true;
             cb_clientes.Location = new Point(118, 27);
             cb_clientes.Name = "cb_clientes";
