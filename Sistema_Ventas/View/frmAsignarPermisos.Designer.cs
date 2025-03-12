@@ -141,7 +141,7 @@
             // 
             btn_eliminar.BackColor = SystemColors.ActiveCaption;
             btn_eliminar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_eliminar.Location = new Point(360, 296);
+            btn_eliminar.Location = new Point(281, 361);
             btn_eliminar.Name = "btn_eliminar";
             btn_eliminar.Size = new Size(153, 59);
             btn_eliminar.TabIndex = 4;
@@ -189,10 +189,10 @@
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { clm_permiso });
-            dataGridView2.Location = new Point(84, 193);
+            dataGridView2.Location = new Point(26, 158);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.Size = new Size(212, 225);
+            dataGridView2.Size = new Size(213, 251);
             dataGridView2.TabIndex = 18;
             // 
             // clm_permiso

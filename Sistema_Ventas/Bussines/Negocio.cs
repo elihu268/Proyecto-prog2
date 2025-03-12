@@ -16,5 +16,12 @@ namespace Sistema_Ventas.Bussines
                 return Validaciones.EsCorreoValido(correo);
             }
         }
+        internal class CompraNegocio
+        {
+            internal static bool EsCantidadValida(string cantidad)
+            {
+                return Validaciones.EsMayorACero(cantidad);
+            }
+        }
     }
 }

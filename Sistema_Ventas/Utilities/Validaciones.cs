@@ -15,12 +15,22 @@ namespace Sistema_Ventas.Utilities
             string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(correo, patron);
         }
-        public static bool EsUnNumeroEntero(String numeroEntero)
+       
+        public static bool EsMayorACero(String numero)
         {
             int resultado;
-            return int.TryParse(numeroEntero, out resultado);
-              
+            if (int.TryParse(numero, out resultado))
+            {
+                return resultado > 0;
+            }
+            return false; 
         }
-        
+
+        /*public static bool EsUnNumeroEntero(String numeroEntero)
+       {
+           int resultado;
+
+           return int.TryParse(numeroEntero, out resultado); 
+       }*/
     }
 }
