@@ -149,7 +149,7 @@
             btn_agregar.TabIndex = 21;
             btn_agregar.Text = "Agregar";
             btn_agregar.UseVisualStyleBackColor = true;
-            btn_agregar.Click += btn_actualizar_Click;
+            btn_agregar.Click += btn_agregar_Click;
             // 
             // txt_cantidad
             // 
@@ -214,6 +214,7 @@
             btn_actualizar.TabIndex = 0;
             btn_actualizar.Text = "Actualizar";
             btn_actualizar.UseVisualStyleBackColor = true;
+            btn_actualizar.Click += btn_actualizar_Click_;
             // 
             // btn_eliminar
             // 

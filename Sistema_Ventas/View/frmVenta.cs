@@ -44,7 +44,7 @@ namespace Sistema_Ventas.View
             cb_metodo.SelectedValue = 0;//valor inicializado
         }
 
-       
+
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
         {
 
@@ -80,9 +80,9 @@ namespace Sistema_Ventas.View
 
         }
 
-        private void btn_actualizar_Click(object sender, EventArgs e)
+        private void btn_agregar_Click(object sender, EventArgs e)
         {
-           
+            AgregarProducto();
         }
         private bool AgregarProducto()
         {
@@ -93,10 +93,15 @@ namespace Sistema_Ventas.View
             }
             if (!Bussines.Negocio.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
             {
-                MessageBox.Show("solo se aceptan numeros enteros positivos", "informacion del sistema", MessageBoxButtons.OK);
+                MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK);
                 return false;
             }
             return true;
+        }
+
+        private void btn_actualizar_Click_(object sender, EventArgs e)
+        {
+
         }
     }
 }
