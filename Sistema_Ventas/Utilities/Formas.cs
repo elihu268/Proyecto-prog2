@@ -13,13 +13,13 @@ namespace Sistema_Ventas.Utilities
         /// </summary>
         /// <param name="form_child"></param>
         /// <param name="formparent"></param>
-        internal static void InicializaForma(Form form_child, Form formparent)
+        internal static void InicializarForma(Form form_child, Form form_parent)
         {
             //Inicializamos la forna
 
 
             //Propiedades basicas. 
-            form_child.MdiParent = formparent; // Asignar el padre MDI 
+            form_child.MdiParent = form_parent; // Asignar el padre MDI 
             form_child.FormBorderStyle = FormBorderStyle.Sizable; // Permitir redimensionar 
             form_child.MaximizeBox = true; // Permitir maximizar 
             form_child.MinimizeBox = true; // Permitir minimizar 

@@ -1,4 +1,5 @@
 ﻿using Sistema_Ventas.Bussines;
+using Sistema_Ventas.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,10 @@ namespace PuntodeVenta.View
 {
     public partial class frmGestUsuario : Form
     {
-        public frmGestUsuario()
+        public frmGestUsuario(Form parent)
         {
             InitializeComponent();
+            Formas.InicializarForma(this, parent);
         }
 
         private void frmGestUsuario_Load(object sender, EventArgs e)
