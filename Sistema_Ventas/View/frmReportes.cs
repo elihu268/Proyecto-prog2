@@ -162,5 +162,10 @@ namespace PuntodeVenta.View
         {
             // Lógica para generar reporte (pendiente de implementar)
         }
+
+        private void gbxFiltroVentas_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
