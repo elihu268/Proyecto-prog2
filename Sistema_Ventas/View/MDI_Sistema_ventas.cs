@@ -17,6 +17,11 @@ namespace DiseñoForms.View
         public MDI_Sistema_ventas()
         {
             InitializeComponent();
+            AjustarFondoMDI();
+        }
+
+        public void AjustarFondoMDI()
+        {
             // Ajusta la imagen al tamaño del formulario
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
@@ -152,10 +157,6 @@ namespace DiseñoForms.View
             AbreVentanaHija("frmasignarpermisos");
         }
 
-        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
-        {
-
-        }
 
 
         //private void estudiantesToolStripMenuItem_Click(object sender, EventArgs e)

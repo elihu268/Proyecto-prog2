@@ -227,7 +227,7 @@
             lbTelefono.AutoSize = true;
             lbTelefono.Location = new Point(8, 135);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(53, 15);
+            lbTelefono.Size = new Size(52, 15);
             lbTelefono.TabIndex = 13;
             lbTelefono.Text = "Telefono";
             // 
@@ -324,7 +324,7 @@
             lbTipoFecha.AutoSize = true;
             lbTipoFecha.Location = new Point(18, 28);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(65, 15);
+            lbTipoFecha.Size = new Size(64, 15);
             lbTipoFecha.TabIndex = 17;
             lbTipoFecha.Text = "Tipo Fecha";
             // 
@@ -372,7 +372,7 @@
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(95, 30);
             btnActualizar.TabIndex = 2;
-            btnActualizar.Text = "Actulizar";
+            btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
             btnActualizar.UseVisualStyleBackColor = false;
             // 
@@ -411,7 +411,7 @@
             lbseleccione.AutoSize = true;
             lbseleccione.Location = new Point(242, 24);
             lbseleccione.Name = "lbseleccione";
-            lbseleccione.Size = new Size(171, 15);
+            lbseleccione.Size = new Size(174, 15);
             lbseleccione.TabIndex = 2;
             lbseleccione.Text = "Seleccione un Archivo xlsx o xls";
             // 

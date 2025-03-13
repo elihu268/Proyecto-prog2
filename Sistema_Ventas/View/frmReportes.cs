@@ -28,7 +28,6 @@ namespace PuntodeVenta.View
 
         public void InicializaVentanaReportes()
         {
-
             PoblaComboNomCliente();
             PoblaComboNomProducto();
         }

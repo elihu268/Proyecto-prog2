@@ -213,7 +213,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema de ventas TEC";
             WindowState = FormWindowState.Maximized;
-            Load += MDI_Sistema_ventas_Load;
             menuStripMDI.ResumeLayout(false);
             menuStripMDI.PerformLayout();
             ResumeLayout(false);
