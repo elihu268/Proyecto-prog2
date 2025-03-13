@@ -42,7 +42,7 @@
             lblDescripcion = new Label();
             lblCodigo = new Label();
             lblIdRol = new Label();
-            dgvRol = new DataGridView();
+            dgvRoles = new DataGridView();
             gbxBusquedaRol = new GroupBox();
             cbxTipoFecha = new ComboBox();
             lblTipoFecha = new Label();
@@ -64,7 +64,7 @@
             gbxAltaEdicionRol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvRol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
             gbxBusquedaRol.SuspendLayout();
             gbxHerramienta.SuspendLayout();
             SuspendLayout();
@@ -81,7 +81,7 @@
             // 
             // scRoles.Panel2
             // 
-            scRoles.Panel2.Controls.Add(dgvRol);
+            scRoles.Panel2.Controls.Add(dgvRoles);
             scRoles.Panel2.Controls.Add(gbxBusquedaRol);
             scRoles.Panel2.Controls.Add(gbxHerramienta);
             scRoles.Size = new Size(815, 340);
@@ -205,15 +205,17 @@
             lblIdRol.TabIndex = 10;
             lblIdRol.Text = "ID del rol:";
             // 
-            // dgvRol
+            // dgvRoles
             // 
-            dgvRol.BackgroundColor = SystemColors.Control;
-            dgvRol.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRol.Dock = DockStyle.Right;
-            dgvRol.Location = new Point(0, 141);
-            dgvRol.Name = "dgvRol";
-            dgvRol.Size = new Size(589, 199);
-            dgvRol.TabIndex = 14;
+            dgvRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvRoles.BackgroundColor = SystemColors.ActiveCaption;
+            dgvRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRoles.Location = new Point(0, 136);
+            dgvRoles.Margin = new Padding(2);
+            dgvRoles.Name = "dgvRoles";
+            dgvRoles.RowHeadersWidth = 62;
+            dgvRoles.Size = new Size(590, 204);
+            dgvRoles.TabIndex = 14;
             // 
             // gbxBusquedaRol
             // 
@@ -382,7 +384,7 @@
             gbxAltaEdicionRol.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).EndInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvRol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
             gbxBusquedaRol.ResumeLayout(false);
             gbxBusquedaRol.PerformLayout();
             gbxHerramienta.ResumeLayout(false);
@@ -419,6 +421,6 @@
         private NumericUpDown numIdRol;
         private PictureBox picBoxFormato;
         private ToolTip toolTipCodigo;
-        private DataGridView dgvRol;
+        private DataGridView dgvRoles;
     }
 }
