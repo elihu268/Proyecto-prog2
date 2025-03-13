@@ -43,6 +43,7 @@
             lbTelefono = new Label();
             lbCorreo = new Label();
             lbNombre = new Label();
+            dataGridView1 = new DataGridView();
             gbxBusqueda = new GroupBox();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
@@ -58,15 +59,14 @@
             btnCarga = new Button();
             btncargaUsuario = new Button();
             ofdArchivo = new OpenFileDialog();
-            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
             scUsuarios.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gbxBusqueda.SuspendLayout();
             gbxherramientas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // scUsuarios
@@ -131,11 +131,12 @@
             // btnGuardar
             // 
             btnGuardar.BackColor = SystemColors.ActiveCaption;
+            btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
             btnGuardar.Location = new Point(165, 329);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(77, 30);
+            btnGuardar.Size = new Size(88, 30);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
@@ -231,6 +232,16 @@
             lbNombre.TabIndex = 14;
             lbNombre.Text = "Nombre Completo";
             // 
+            // dataGridView1
+            // 
+            dataGridView1.BackgroundColor = SystemColors.Control;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 131);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(580, 270);
+            dataGridView1.TabIndex = 2;
+            // 
             // gbxBusqueda
             // 
             gbxBusqueda.BackColor = SystemColors.GradientActiveCaption;
@@ -244,7 +255,7 @@
             gbxBusqueda.Controls.Add(txtBusqueda);
             gbxBusqueda.Controls.Add(lbBusqueda);
             gbxBusqueda.Dock = DockStyle.Top;
-            gbxBusqueda.Location = new Point(0, 63);
+            gbxBusqueda.Location = new Point(0, 57);
             gbxBusqueda.Name = "gbxBusqueda";
             gbxBusqueda.Size = new Size(580, 74);
             gbxBusqueda.TabIndex = 1;
@@ -280,7 +291,7 @@
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
             dtpFechaInicio.Location = new Point(282, 17);
-            dtpFechaInicio.Margin = new Padding(2, 2, 2, 2);
+            dtpFechaInicio.Margin = new Padding(2);
             dtpFechaInicio.Name = "dtpFechaInicio";
             dtpFechaInicio.Size = new Size(78, 23);
             dtpFechaInicio.TabIndex = 9;
@@ -306,11 +317,12 @@
             // btnBuscar
             // 
             btnBuscar.BackColor = SystemColors.ActiveCaption;
+            btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
             btnBuscar.Location = new Point(449, 44);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(94, 24);
+            btnBuscar.Size = new Size(94, 30);
             btnBuscar.TabIndex = 2;
             btnBuscar.Text = "Actualizar";
             btnBuscar.TextAlign = ContentAlignment.MiddleRight;
@@ -342,7 +354,7 @@
             gbxherramientas.Dock = DockStyle.Top;
             gbxherramientas.Location = new Point(0, 0);
             gbxherramientas.Name = "gbxherramientas";
-            gbxherramientas.Size = new Size(580, 63);
+            gbxherramientas.Size = new Size(580, 57);
             gbxherramientas.TabIndex = 0;
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
@@ -350,7 +362,7 @@
             // lbCargaMasiva
             // 
             lbCargaMasiva.AutoSize = true;
-            lbCargaMasiva.Location = new Point(229, 22);
+            lbCargaMasiva.Location = new Point(258, 19);
             lbCargaMasiva.Margin = new Padding(2, 0, 2, 0);
             lbCargaMasiva.Name = "lbCargaMasiva";
             lbCargaMasiva.Size = new Size(86, 15);
@@ -360,11 +372,12 @@
             // btnCarga
             // 
             btnCarga.BackColor = SystemColors.ActiveCaption;
+            btnCarga.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCarga.Image = Sistema_Ventas.Properties.Resources.upload1;
             btnCarga.ImageAlign = ContentAlignment.MiddleLeft;
             btnCarga.Location = new Point(127, 18);
             btnCarga.Name = "btnCarga";
-            btnCarga.Size = new Size(97, 23);
+            btnCarga.Size = new Size(104, 30);
             btnCarga.TabIndex = 1;
             btnCarga.Text = "Carga Masiva";
             btnCarga.TextAlign = ContentAlignment.MiddleRight;
@@ -374,11 +387,12 @@
             // btncargaUsuario
             // 
             btncargaUsuario.BackColor = SystemColors.ActiveCaption;
+            btncargaUsuario.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btncargaUsuario.Image = Sistema_Ventas.Properties.Resources.uploadUser1;
             btncargaUsuario.ImageAlign = ContentAlignment.MiddleLeft;
             btncargaUsuario.Location = new Point(6, 18);
             btncargaUsuario.Name = "btncargaUsuario";
-            btncargaUsuario.Size = new Size(115, 23);
+            btncargaUsuario.Size = new Size(115, 30);
             btncargaUsuario.TabIndex = 0;
             btncargaUsuario.Text = "Cargar Usuario";
             btncargaUsuario.TextAlign = ContentAlignment.MiddleRight;
@@ -388,16 +402,6 @@
             // ofdArchivo
             // 
             ofdArchivo.FileName = "Carga Masiva de Usuarios";
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.BackgroundColor = SystemColors.Control;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 137);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(580, 264);
-            dataGridView1.TabIndex = 2;
             // 
             // frmGestUsuario
             // 
@@ -415,11 +419,11 @@
             scUsuarios.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             gbxBusqueda.ResumeLayout(false);
             gbxBusqueda.PerformLayout();
             gbxherramientas.ResumeLayout(false);
             gbxherramientas.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 

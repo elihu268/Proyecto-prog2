@@ -42,6 +42,7 @@ namespace PuntodeVenta.View
             cbxEstatus.ValueMember = "Key"; // lo que se guarda como seleccionado 0,1,2
 
             cbxEstatus.SelectedValue = 1;
+            cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private void PoblaTipoFecha()
         {
@@ -55,6 +56,7 @@ namespace PuntodeVenta.View
             cbxtipoFecha.DisplayMember = "Value";
             cbxtipoFecha.ValueMember = "Key";
             cbxtipoFecha.SelectedValue = 1;
+            cbxtipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private void PoblaRoles()
         {
@@ -68,6 +70,7 @@ namespace PuntodeVenta.View
             cbxRoles.DisplayMember = "Value";
             cbxRoles.ValueMember = "Key";
             cbxRoles.SelectedValue = 2;
+            cbxRoles.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private bool DatosVacios()
         {
