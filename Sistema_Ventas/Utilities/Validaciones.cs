@@ -35,11 +35,15 @@ namespace Sistema_Ventas.Utilities
             return false; 
         }
 
-        /*public static bool EsUnNumeroEntero(String numeroEntero)
-       {
-           int resultado;
-
-           return int.TryParse(numeroEntero, out resultado); 
-       }*/
+        /// <summary>
+        /// validar que el string sea un codigo valido para rol
+        /// </summary>
+        /// <param name="codigo"> recepcion de cadena</param>
+        /// <returns>retorna verdadero si es un formato de codigo de rol</returns>
+        public static bool EsCodigoRolValido(string codigo)
+        {
+            string patron = @"^[A-Z]{2,4}-\d{3,4}$";
+            return Regex.IsMatch(codigo, patron);
+        }
     }
 }

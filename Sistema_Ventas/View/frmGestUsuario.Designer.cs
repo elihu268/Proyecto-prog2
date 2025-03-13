@@ -210,7 +210,7 @@
             lbTelefono.AutoSize = true;
             lbTelefono.Location = new Point(15, 131);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(53, 15);
+            lbTelefono.Size = new Size(52, 15);
             lbTelefono.TabIndex = 16;
             lbTelefono.Text = "Telefono";
             // 
@@ -236,7 +236,7 @@
             // 
             dataGridView1.BackgroundColor = SystemColors.Control;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Dock = DockStyle.Right;
             dataGridView1.Location = new Point(0, 131);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(580, 270);
@@ -275,7 +275,7 @@
             lbTipoFecha.AutoSize = true;
             lbTipoFecha.Location = new Point(12, 19);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(65, 15);
+            lbTipoFecha.Size = new Size(64, 15);
             lbTipoFecha.TabIndex = 11;
             lbTipoFecha.Text = "Tipo Fecha";
             // 

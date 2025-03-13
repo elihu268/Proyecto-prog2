@@ -100,8 +100,7 @@ namespace DiseñoForms.View
                     childForm = new frmResumenVentas(this);
                     break;
                 case "frmconfiguracionroles":
-                    childForm = new frmCargaCatalogo(this);
-                    //childForm = new frmConfiguracionRoles(this);
+                    childForm = new frmConfiguracionRoles(this);
                     break;
                 case "frmasignarpermisos":
                     childForm = new frmAsignarPermisos(this);
@@ -155,6 +154,11 @@ namespace DiseñoForms.View
         private void permisosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmasignarpermisos");
+        }
+
+        private void seguridadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
 

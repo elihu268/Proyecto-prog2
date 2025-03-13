@@ -128,18 +128,19 @@
             seguridadToolStripMenuItem.Name = "seguridadToolStripMenuItem";
             seguridadToolStripMenuItem.Size = new Size(72, 20);
             seguridadToolStripMenuItem.Text = "Seguridad";
+            seguridadToolStripMenuItem.Click += seguridadToolStripMenuItem_Click;
             // 
             // rolesToolStripMenuItem
             // 
             rolesToolStripMenuItem.Name = "rolesToolStripMenuItem";
-            rolesToolStripMenuItem.Size = new Size(122, 22);
+            rolesToolStripMenuItem.Size = new Size(180, 22);
             rolesToolStripMenuItem.Text = "Roles";
             rolesToolStripMenuItem.Click += rolesToolStripMenuItem_Click;
             // 
             // permisosToolStripMenuItem
             // 
             permisosToolStripMenuItem.Name = "permisosToolStripMenuItem";
-            permisosToolStripMenuItem.Size = new Size(122, 22);
+            permisosToolStripMenuItem.Size = new Size(180, 22);
             permisosToolStripMenuItem.Text = "Permisos";
             permisosToolStripMenuItem.Click += permisosToolStripMenuItem_Click;
             // 

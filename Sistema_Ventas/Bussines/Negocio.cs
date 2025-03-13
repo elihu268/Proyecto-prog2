@@ -23,5 +23,12 @@ namespace Sistema_Ventas.Bussines
                 return Validaciones.EsMayorACero(cantidad);
             }
         }
+        internal class RolNegocio
+        {
+            internal static bool EsCodigoValido(string codigo)
+            {
+                return Validaciones.EsCodigoRolValido(codigo);
+            }
+        }
     }
 }

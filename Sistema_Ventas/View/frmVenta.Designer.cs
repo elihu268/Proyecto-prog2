@@ -353,7 +353,6 @@
             // 
             btn_cobrar.BackColor = SystemColors.ActiveCaption;
             btn_cobrar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_cobrar.Image = Properties.Resources.pagar;
             btn_cobrar.ImageAlign = ContentAlignment.MiddleLeft;
             btn_cobrar.Location = new Point(179, 491);
             btn_cobrar.Name = "btn_cobrar";
