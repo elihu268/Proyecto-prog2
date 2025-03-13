@@ -111,7 +111,7 @@ namespace Sistema_Ventas.View
         /// <returns>falso si la inforacion ingresada no es valida</returns>
         private bool SeleccionBusquedaCliente()
         {
-            if (Utilities.Validaciones.CadenaVacia(cb_clientes.Text))
+            if (cb_clientes.Text=="")
             {
                 MessageBox.Show("Seleccione un cliente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -130,7 +130,7 @@ namespace Sistema_Ventas.View
         /// <returns>booleano si se cumple toda la validacion</returns>
         private bool AgregarProducto()
         {
-            if (Utilities.Validaciones.CadenaVacia(txt_cantidad.Text))
+            if (txt_cantidad.Text=="")
             {
                 MessageBox.Show("porfavor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
