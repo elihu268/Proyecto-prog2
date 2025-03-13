@@ -53,5 +53,20 @@ namespace Sistema_Ventas.View
         {
             AsignarPermiso();
         }
+
+        private void btn_ver_Click(object sender, EventArgs e)
+        {
+            if (sc_asignacion.Panel1Collapsed)//si esta colapsado
+            {
+                //entonces no colapsar
+                sc_asignacion.Panel1Collapsed = false;
+                sc_asignacion.Text = "ocultar permisos asignados";
+            }
+            else
+            {
+                sc_asignacion.Panel1Collapsed = true;
+                btn_ver.Text = "mostrar permisos asignados";
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAsignarPermisos));
-            splitContainer1 = new SplitContainer();
+            sc_asignacion = new SplitContainer();
             grbox_lista_permisos = new GroupBox();
             lbl_rol = new Label();
             txt_rol = new TextBox();
@@ -47,32 +47,32 @@
             txt_buscar_rol = new TextBox();
             cbox_permisos = new ComboBox();
             lblt_titulo = new Label();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)sc_asignacion).BeginInit();
+            sc_asignacion.Panel1.SuspendLayout();
+            sc_asignacion.Panel2.SuspendLayout();
+            sc_asignacion.SuspendLayout();
             grbox_lista_permisos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)fgb_permisos).BeginInit();
             grbox_permisos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_rol).BeginInit();
             SuspendLayout();
             // 
-            // splitContainer1
+            // sc_asignacion
             // 
-            splitContainer1.Location = new Point(-2, 59);
-            splitContainer1.Name = "splitContainer1";
+            sc_asignacion.Location = new Point(-2, 59);
+            sc_asignacion.Name = "sc_asignacion";
             // 
-            // splitContainer1.Panel1
+            // sc_asignacion.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(grbox_lista_permisos);
-            splitContainer1.Panel1.Paint += splitContainer1_Panel1_Paint;
+            sc_asignacion.Panel1.Controls.Add(grbox_lista_permisos);
+            sc_asignacion.Panel1.Paint += splitContainer1_Panel1_Paint;
             // 
-            // splitContainer1.Panel2
+            // sc_asignacion.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(grbox_permisos);
-            splitContainer1.Size = new Size(1079, 483);
-            splitContainer1.SplitterDistance = 357;
-            splitContainer1.TabIndex = 6;
+            sc_asignacion.Panel2.Controls.Add(grbox_permisos);
+            sc_asignacion.Size = new Size(1079, 483);
+            sc_asignacion.SplitterDistance = 357;
+            sc_asignacion.TabIndex = 6;
             // 
             // grbox_lista_permisos
             // 
@@ -161,7 +161,7 @@
             // lbl_selec_permiso
             // 
             lbl_selec_permiso.AutoSize = true;
-            lbl_selec_permiso.Location = new Point(406, 27);
+            lbl_selec_permiso.Location = new Point(372, 27);
             lbl_selec_permiso.Name = "lbl_selec_permiso";
             lbl_selec_permiso.Size = new Size(179, 25);
             lbl_selec_permiso.TabIndex = 19;
@@ -186,6 +186,7 @@
             btn_ver.TabIndex = 15;
             btn_ver.Text = "Ver permisos asignados";
             btn_ver.UseVisualStyleBackColor = false;
+            btn_ver.Click += btn_ver_Click;
             // 
             // dgv_rol
             // 
@@ -235,7 +236,7 @@
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbox_permisos.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
             cbox_permisos.FormattingEnabled = true;
-            cbox_permisos.Location = new Point(372, 95);
+            cbox_permisos.Location = new Point(372, 65);
             cbox_permisos.Name = "cbox_permisos";
             cbox_permisos.Size = new Size(270, 33);
             cbox_permisos.TabIndex = 2;
@@ -260,14 +261,14 @@
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1083, 554);
             Controls.Add(lblt_titulo);
-            Controls.Add(splitContainer1);
+            Controls.Add(sc_asignacion);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmAsignarPermisos";
             Text = "Permisos";
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
+            sc_asignacion.Panel1.ResumeLayout(false);
+            sc_asignacion.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)sc_asignacion).EndInit();
+            sc_asignacion.ResumeLayout(false);
             grbox_lista_permisos.ResumeLayout(false);
             grbox_lista_permisos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)fgb_permisos).EndInit();
@@ -279,7 +280,7 @@
 
         #endregion
 
-        private SplitContainer splitContainer1;
+        private SplitContainer sc_asignacion;
         private GroupBox grbox_lista_permisos;
         private GroupBox grbox_permisos;
         private Button btn_ver;
