@@ -366,7 +366,7 @@
             btn_cobrar.Name = "btn_cobrar";
             btn_cobrar.Size = new Size(198, 45);
             btn_cobrar.TabIndex = 13;
-            btn_cobrar.Text = "Cobrar";
+            btn_cobrar.Text = "Terminar compra";
             btn_cobrar.UseVisualStyleBackColor = false;
             btn_cobrar.Click += btn_terminar_Click;
             // 
@@ -577,6 +577,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(1285, 749);
+            MinimizeBox = false;
             MinimumSize = new Size(1285, 749);
             Name = "frmVenta";
             Text = "Venta";

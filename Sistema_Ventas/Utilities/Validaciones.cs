@@ -45,5 +45,14 @@ namespace Sistema_Ventas.Utilities
             string patron = @"^[A-Z]{2,4}-\d{3,4}$";
             return Regex.IsMatch(codigo, patron);
         }
+
+        public static bool CadenaVacia(string cadena)
+        {
+            if (cadena == "")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

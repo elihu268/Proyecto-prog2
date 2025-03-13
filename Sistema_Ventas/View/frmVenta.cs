@@ -32,7 +32,7 @@ namespace Sistema_Ventas.View
             PoblaComboMetodo();
             PoblacomboCliente();
 
-            }
+        }
         /// <summary>
         /// duncion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
         /// </summary>
@@ -85,7 +85,7 @@ namespace Sistema_Ventas.View
 
         private void btn_terminar_Click(object sender, EventArgs e)
         {
-
+            TerminarCompra();
         }
 
         private void btn_agregar_Click(object sender, EventArgs e)
@@ -93,12 +93,24 @@ namespace Sistema_Ventas.View
             AgregarProducto();
         }
         /// <summary>
+        /// metodo para registrar datos de compra,cliente
+        /// </summary>no permite pagar si no se cumplen condiciones
+        /// <returns>retorna verdadeo si se cumplen condiciones</returns>
+        private bool TerminarCompra()
+        {
+            if (Utilities.Validaciones.CadenaVacia(cb_clientes.Text))
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
         /// metodo para validar que la cantidad halla sido puesta correctamente
         /// </summary>
         /// <returns>booleano si se cumple toda la validacion</returns>
         private bool AgregarProducto()
         {
-            if (txt_cantidad.Text == "")
+            if (Utilities.Validaciones.CadenaVacia(txt_cantidad.Text))
             {
                 MessageBox.Show("porfavor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK);
                 return false;
@@ -118,8 +130,9 @@ namespace Sistema_Ventas.View
 
         private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
             
+
+
         }
         private void PoblacomboCliente()
         {
@@ -128,11 +141,16 @@ namespace Sistema_Ventas.View
             //key,value
             { 0, "cliente general" }
         };
-        cb_clientes.DataSource = new BindingSource(list_cliente, null);
+            cb_clientes.DataSource = new BindingSource(list_cliente, null);
             //es la fuente de datos que seria la lista atraves del objeto binding
             cb_clientes.DisplayMember = "value";//lo que muestra
             cb_clientes.ValueMember = "key";//con la que se enlaza a la base de datos
             cb_clientes.SelectedValue = 0;//valor inicializado
+        }
+
+        private void gpbox_cliente_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

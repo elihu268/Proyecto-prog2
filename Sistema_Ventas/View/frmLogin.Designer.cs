@@ -123,7 +123,10 @@
             Controls.Add(pictureBox1);
             Controls.Add(lbl_password);
             Controls.Add(lbl_usuario);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmLogin";
             Text = "inicio de sesion";
             Load += frmLogin_Load;
