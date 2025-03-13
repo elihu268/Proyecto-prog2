@@ -126,13 +126,13 @@ namespace Sistema_Ventas.View
             Dictionary<int, string> list_cliente = new Dictionary<int, string>()
             {
             //key,value
-            { 0, "cliente" }
+            { 0, "cliente general" }
         };
-        cb_metodo.DataSource = new BindingSource(list_cliente, null);
-        //es la fuente de datos que seria la lista atraves del objeto binding
-        cb_metodo.DisplayMember = "value";//lo que muestra
-            cb_metodo.ValueMember = "key";//con la que se enlaza a la base de datos
-            cb_metodo.SelectedValue = 0;//valor inicializado
+        cb_clientes.DataSource = new BindingSource(list_cliente, null);
+            //es la fuente de datos que seria la lista atraves del objeto binding
+            cb_clientes.DisplayMember = "value";//lo que muestra
+            cb_clientes.ValueMember = "key";//con la que se enlaza a la base de datos
+            cb_clientes.SelectedValue = 0;//valor inicializado
         }
     }
 }

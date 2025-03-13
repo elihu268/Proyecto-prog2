@@ -161,12 +161,14 @@ namespace DiseñoForms.View
 
         }
 
+        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
+        {
+
+        }
 
 
-        //private void estudiantesToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    AbreVentanaHija("frmestudiantes");
-        //}
+
+      
     }
 
 }

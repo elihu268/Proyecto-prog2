@@ -180,6 +180,7 @@
             // txt_cantidad
             // 
             txt_cantidad.Location = new Point(443, 75);
+            txt_cantidad.MaxLength = 4;
             txt_cantidad.Name = "txt_cantidad";
             txt_cantidad.Size = new Size(53, 31);
             txt_cantidad.TabIndex = 20;
@@ -188,6 +189,7 @@
             // 
             txt_precio.Enabled = false;
             txt_precio.Location = new Point(264, 75);
+            txt_precio.MaxLength = 5;
             txt_precio.Name = "txt_precio";
             txt_precio.Size = new Size(84, 31);
             txt_precio.TabIndex = 19;
@@ -196,6 +198,7 @@
             // 
             txt_nombre.Enabled = false;
             txt_nombre.Location = new Point(90, 73);
+            txt_nombre.MaxLength = 30;
             txt_nombre.Name = "txt_nombre";
             txt_nombre.Size = new Size(102, 31);
             txt_nombre.TabIndex = 18;
@@ -212,6 +215,7 @@
             // txt_buscar
             // 
             txt_buscar.Location = new Point(99, 27);
+            txt_buscar.MaxLength = 100;
             txt_buscar.Name = "txt_buscar";
             txt_buscar.Size = new Size(290, 31);
             txt_buscar.TabIndex = 0;
@@ -311,6 +315,7 @@
             // 
             txt_total.Enabled = false;
             txt_total.Location = new Point(361, 401);
+            txt_total.MaxLength = 6;
             txt_total.Name = "txt_total";
             txt_total.Size = new Size(150, 31);
             txt_total.TabIndex = 18;
@@ -319,6 +324,7 @@
             // 
             txt_IVA.Enabled = false;
             txt_IVA.Location = new Point(363, 367);
+            txt_IVA.MaxLength = 5;
             txt_IVA.Name = "txt_IVA";
             txt_IVA.Size = new Size(150, 31);
             txt_IVA.TabIndex = 17;
@@ -327,6 +333,7 @@
             // 
             txt_descuento.Enabled = false;
             txt_descuento.Location = new Point(363, 328);
+            txt_descuento.MaxLength = 5;
             txt_descuento.Name = "txt_descuento";
             txt_descuento.Size = new Size(150, 31);
             txt_descuento.TabIndex = 16;
@@ -335,6 +342,7 @@
             // 
             txt_subtotal.Enabled = false;
             txt_subtotal.Location = new Point(363, 287);
+            txt_subtotal.MaxLength = 6;
             txt_subtotal.Name = "txt_subtotal";
             txt_subtotal.Size = new Size(150, 31);
             txt_subtotal.TabIndex = 15;
@@ -352,6 +360,7 @@
             // 
             btn_cobrar.BackColor = SystemColors.ActiveCaption;
             btn_cobrar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_cobrar.Image = Properties.Resources.pagar1;
             btn_cobrar.ImageAlign = ContentAlignment.MiddleLeft;
             btn_cobrar.Location = new Point(179, 491);
             btn_cobrar.Name = "btn_cobrar";
@@ -467,6 +476,7 @@
             // 
             txt_correo.Enabled = false;
             txt_correo.Location = new Point(987, 30);
+            txt_correo.MaxLength = 100;
             txt_correo.Name = "txt_correo";
             txt_correo.Size = new Size(232, 31);
             txt_correo.TabIndex = 22;
@@ -475,6 +485,7 @@
             // 
             txt_apellido.Enabled = false;
             txt_apellido.Location = new Point(797, 33);
+            txt_apellido.MaxLength = 30;
             txt_apellido.Name = "txt_apellido";
             txt_apellido.Size = new Size(102, 31);
             txt_apellido.TabIndex = 21;
@@ -483,6 +494,7 @@
             // 
             txt_nombre_prod.Enabled = false;
             txt_nombre_prod.Location = new Point(578, 32);
+            txt_nombre_prod.MaxLength = 30;
             txt_nombre_prod.Name = "txt_nombre_prod";
             txt_nombre_prod.Size = new Size(102, 31);
             txt_nombre_prod.TabIndex = 20;
@@ -531,6 +543,7 @@
             cb_clientes.FormattingEnabled = true;
             cb_clientes.Items.AddRange(new object[] { "cliente general" });
             cb_clientes.Location = new Point(118, 30);
+            cb_clientes.MaxLength = 100;
             cb_clientes.Name = "cb_clientes";
             cb_clientes.Size = new Size(271, 33);
             cb_clientes.TabIndex = 15;
@@ -561,6 +574,8 @@
             Controls.Add(gpbox_carrito);
             Controls.Add(gpbox_cliente);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(1285, 749);
+            MinimumSize = new Size(1285, 749);
             Name = "frmVenta";
             Text = "Venta";
             Load += frmVenta_Load;
