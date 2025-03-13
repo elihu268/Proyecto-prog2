@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Ventas.Bussines.Negocio;
@@ -64,7 +65,7 @@ namespace PuntodeVenta.View
             {
                 {1, "Administrador" },
                 {2, "Vendedor" },
-                {3, "xd" }
+                {3, " " }
             };
             cbxRoles.DataSource = new BindingSource(list_roles, null);
             cbxRoles.DisplayMember = "Value";
@@ -94,6 +95,8 @@ namespace PuntodeVenta.View
         }
         private bool GuardarUsuario()
         {
+            lbconfirmcontraAlert.Text = " ";
+            lbcontraalert.Text = " ";
             if (DatosVacios())
             {
                 MessageBox.Show("Favor de llenar los datos Obligatorios. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -102,6 +105,11 @@ namespace PuntodeVenta.View
             if (!DatosValidos())
             {
                 return false;
+            }
+            if (!ValidarContrasenas())
+            {
+                return false;
+
             }
             return true;
         }
@@ -119,7 +127,7 @@ namespace PuntodeVenta.View
             if (scUsuarios.Panel1Collapsed)
             {
                 scUsuarios.Panel1Collapsed = false;
-                btncargaUsuario.Text = "Ocultar";
+                btncargaUsuario.Text = "Ocultar Captura";
             }
             else
             {
@@ -151,9 +159,46 @@ namespace PuntodeVenta.View
                 }
             }
         }
+        private bool ValidarContrasenas()
+        {
+            if (txtContrasena.Text != txtConfContrasena.Text)
+            {
+                lbcontraalert.Text = "La contrasenas no coinciden";
+                lbconfirmcontraAlert.Text = "La contrasenas no coinciden";
+                return false;
+            }
+            if (txtContrasena.Text.Length < 8)
+            {
+                lbcontraalert.Text = "La contrasena debe tener almenos 8 caracteres";
+                return false;
+            }
+            if (!Regex.IsMatch(txtContrasena.Text, @"[A-Z]"))
+            {
+                lbcontraalert.Text = "La contrasena debe contener una letra mayuscula";
+                return false;
+            }
+            if (!Regex.IsMatch(txtContrasena.Text, @"[a-z]"))
+            {
+                lbcontraalert.Text = "La contrasena debe contener una letra minuscula";
+                return false;
+            }
+            if (!Regex.IsMatch(txtContrasena.Text, @"\d"))
+            {
+                lbcontraalert.Text = "La contrasena debe contener un numero";
+                return false;
+            }
+            if (!Regex.IsMatch(txtContrasena.Text, @"[\W_]"))
+            {
+                lbcontraalert.Text = "La contrasena debe contener un caracter especial";
+                return false;
+            }
+            return true;
+        }
+
+
         private bool Datosbusqueda()
         {
-            if(cbxtipoFecha.Text == ""|| dtpFechaInicio.Text =="" || dtpFechaFin.Text == "")
+            if (cbxtipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "")
             {
                 MessageBox.Show("Seleccione una fecha", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -162,6 +207,6 @@ namespace PuntodeVenta.View
         }
 
 
-        
+
     }
 }

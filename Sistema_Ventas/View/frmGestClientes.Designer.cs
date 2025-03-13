@@ -128,8 +128,7 @@
             // 
             // scClientes
             // 
-            scClientes.Location = new Point(0, 60);
-            scClientes.Margin = new Padding(4, 5, 4, 5);
+            scClientes.Location = new Point(0, 36);
             scClientes.Name = "scClientes";
             // 
             // scClientes.Panel1
@@ -141,9 +140,8 @@
             scClientes.Panel2.Controls.Add(dataGridView1);
             scClientes.Panel2.Controls.Add(gbxBusqueda);
             scClientes.Panel2.Controls.Add(gbxHerramientas);
-            scClientes.Size = new Size(1199, 782);
-            scClientes.SplitterDistance = 385;
-            scClientes.SplitterWidth = 6;
+            scClientes.Size = new Size(839, 469);
+            scClientes.SplitterDistance = 269;
             scClientes.TabIndex = 0;
             // 
             // gbxActulizardatos
@@ -168,67 +166,59 @@
             gbxActulizardatos.Dock = DockStyle.Fill;
             gbxActulizardatos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxActulizardatos.Location = new Point(0, 0);
-            gbxActulizardatos.Margin = new Padding(4, 5, 4, 5);
             gbxActulizardatos.Name = "gbxActulizardatos";
-            gbxActulizardatos.Padding = new Padding(4, 5, 4, 5);
-            gbxActulizardatos.Size = new Size(385, 782);
+            gbxActulizardatos.Size = new Size(269, 469);
             gbxActulizardatos.TabIndex = 0;
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
             // 
             // txtrfcCliente
             // 
-            txtrfcCliente.Location = new Point(19, 625);
-            txtrfcCliente.Margin = new Padding(4, 5, 4, 5);
+            txtrfcCliente.Location = new Point(13, 375);
             txtrfcCliente.Name = "txtrfcCliente";
-            txtrfcCliente.Size = new Size(188, 31);
+            txtrfcCliente.Size = new Size(133, 23);
             txtrfcCliente.TabIndex = 29;
             // 
             // dtpfechaRegistroCliente
             // 
             dtpfechaRegistroCliente.Format = DateTimePickerFormat.Short;
-            dtpfechaRegistroCliente.Location = new Point(11, 562);
-            dtpfechaRegistroCliente.Margin = new Padding(4, 5, 4, 5);
+            dtpfechaRegistroCliente.Location = new Point(10, 335);
             dtpfechaRegistroCliente.Name = "dtpfechaRegistroCliente";
-            dtpfechaRegistroCliente.Size = new Size(284, 31);
+            dtpfechaRegistroCliente.Size = new Size(200, 23);
             dtpfechaRegistroCliente.TabIndex = 28;
             // 
             // cbxTipoCliente
             // 
             cbxTipoCliente.FormattingEnabled = true;
-            cbxTipoCliente.Location = new Point(11, 493);
-            cbxTipoCliente.Margin = new Padding(4, 5, 4, 5);
+            cbxTipoCliente.Location = new Point(10, 293);
             cbxTipoCliente.Name = "cbxTipoCliente";
-            cbxTipoCliente.Size = new Size(171, 33);
+            cbxTipoCliente.Size = new Size(121, 23);
             cbxTipoCliente.TabIndex = 27;
             // 
             // lbfrcCliente
             // 
             lbfrcCliente.AutoSize = true;
-            lbfrcCliente.Location = new Point(17, 602);
-            lbfrcCliente.Margin = new Padding(4, 0, 4, 0);
+            lbfrcCliente.Location = new Point(12, 361);
             lbfrcCliente.Name = "lbfrcCliente";
-            lbfrcCliente.Size = new Size(43, 25);
+            lbfrcCliente.Size = new Size(27, 15);
             lbfrcCliente.TabIndex = 26;
             lbfrcCliente.Text = "RFC";
             // 
             // lbfechaRegistroCli
             // 
             lbfechaRegistroCli.AutoSize = true;
-            lbfechaRegistroCli.Location = new Point(16, 532);
-            lbfechaRegistroCli.Margin = new Padding(4, 0, 4, 0);
+            lbfechaRegistroCli.Location = new Point(6, 319);
             lbfechaRegistroCli.Name = "lbfechaRegistroCli";
-            lbfechaRegistroCli.Size = new Size(159, 25);
+            lbfechaRegistroCli.Size = new Size(100, 15);
             lbfechaRegistroCli.TabIndex = 25;
             lbfechaRegistroCli.Text = "Fecha de Registro";
             // 
             // lbtipoCliente
             // 
             lbtipoCliente.AutoSize = true;
-            lbtipoCliente.Location = new Point(14, 463);
-            lbtipoCliente.Margin = new Padding(4, 0, 4, 0);
+            lbtipoCliente.Location = new Point(10, 278);
             lbtipoCliente.Name = "lbtipoCliente";
-            lbtipoCliente.Size = new Size(139, 25);
+            lbtipoCliente.Size = new Size(86, 15);
             lbtipoCliente.TabIndex = 24;
             lbtipoCliente.Text = "Tipo de Cliente";
             // 
@@ -238,10 +228,9 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(269, 610);
-            btnGuardar.Margin = new Padding(4, 5, 4, 5);
+            btnGuardar.Location = new Point(184, 423);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(113, 52);
+            btnGuardar.Size = new Size(79, 31);
             btnGuardar.TabIndex = 20;
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
@@ -251,95 +240,85 @@
             // cbxEstatus
             // 
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(14, 418);
-            cbxEstatus.Margin = new Padding(4, 5, 4, 5);
+            cbxEstatus.Location = new Point(10, 251);
             cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(171, 33);
+            cbxEstatus.Size = new Size(121, 23);
             cbxEstatus.TabIndex = 19;
             // 
             // lbEstatus
             // 
             lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(11, 388);
-            lbEstatus.Margin = new Padding(4, 0, 4, 0);
+            lbEstatus.Location = new Point(8, 233);
             lbEstatus.Name = "lbEstatus";
-            lbEstatus.Size = new Size(71, 25);
+            lbEstatus.Size = new Size(44, 15);
             lbEstatus.TabIndex = 18;
             lbEstatus.Text = "Estatus";
             // 
             // dtpNacimientoCliente
             // 
             dtpNacimientoCliente.Format = DateTimePickerFormat.Short;
-            dtpNacimientoCliente.Location = new Point(14, 345);
-            dtpNacimientoCliente.Margin = new Padding(4, 5, 4, 5);
+            dtpNacimientoCliente.Location = new Point(10, 207);
             dtpNacimientoCliente.Name = "dtpNacimientoCliente";
-            dtpNacimientoCliente.Size = new Size(284, 31);
+            dtpNacimientoCliente.Size = new Size(206, 23);
             dtpNacimientoCliente.TabIndex = 17;
             // 
             // txtTelefonoCliente
             // 
-            txtTelefonoCliente.Location = new Point(14, 255);
-            txtTelefonoCliente.Margin = new Padding(4, 5, 4, 5);
+            txtTelefonoCliente.Location = new Point(10, 153);
             txtTelefonoCliente.MaxLength = 15;
             txtTelefonoCliente.Name = "txtTelefonoCliente";
-            txtTelefonoCliente.Size = new Size(285, 31);
+            txtTelefonoCliente.Size = new Size(201, 23);
             txtTelefonoCliente.TabIndex = 16;
             // 
             // txtCorreoCliente
             // 
-            txtCorreoCliente.Location = new Point(14, 182);
-            txtCorreoCliente.Margin = new Padding(4, 5, 4, 5);
+            txtCorreoCliente.Location = new Point(10, 109);
             txtCorreoCliente.MaxLength = 15;
             txtCorreoCliente.Name = "txtCorreoCliente";
-            txtCorreoCliente.Size = new Size(293, 31);
+            txtCorreoCliente.Size = new Size(206, 23);
             txtCorreoCliente.TabIndex = 15;
             // 
             // txtNombreCliente
             // 
-            txtNombreCliente.Location = new Point(14, 97);
-            txtNombreCliente.Margin = new Padding(4, 5, 4, 5);
+            txtNombreCliente.Location = new Point(10, 58);
             txtNombreCliente.MaxLength = 100;
             txtNombreCliente.Name = "txtNombreCliente";
-            txtNombreCliente.Size = new Size(288, 31);
+            txtNombreCliente.Size = new Size(203, 23);
             txtNombreCliente.TabIndex = 14;
             // 
             // lbTelefono
             // 
             lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(11, 225);
-            lbTelefono.Margin = new Padding(4, 0, 4, 0);
+            lbTelefono.Location = new Point(8, 135);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(84, 25);
+            lbTelefono.Size = new Size(53, 15);
             lbTelefono.TabIndex = 13;
             lbTelefono.Text = "Telefono";
             // 
             // lbNacimiento
             // 
             lbNacimiento.AutoSize = true;
-            lbNacimiento.Location = new Point(11, 303);
-            lbNacimiento.Margin = new Padding(4, 0, 4, 0);
+            lbNacimiento.Location = new Point(8, 182);
             lbNacimiento.Name = "lbNacimiento";
-            lbNacimiento.Size = new Size(185, 25);
+            lbNacimiento.Size = new Size(119, 15);
             lbNacimiento.TabIndex = 12;
             lbNacimiento.Text = "Fecha de Nacimiento";
             // 
             // lbCorreo
             // 
             lbCorreo.AutoSize = true;
-            lbCorreo.Location = new Point(11, 140);
-            lbCorreo.Margin = new Padding(4, 0, 4, 0);
+            lbCorreo.Location = new Point(8, 84);
             lbCorreo.Name = "lbCorreo";
-            lbCorreo.Size = new Size(69, 25);
+            lbCorreo.Size = new Size(42, 15);
             lbCorreo.TabIndex = 11;
             lbCorreo.Text = "Correo";
             // 
             // lbNombre
             // 
             lbNombre.AutoSize = true;
-            lbNombre.Location = new Point(11, 55);
-            lbNombre.Margin = new Padding(4, 0, 4, 0);
+            lbNombre.Location = new Point(8, 33);
             lbNombre.Name = "lbNombre";
-            lbNombre.Size = new Size(168, 25);
+            lbNombre.Size = new Size(106, 15);
             lbNombre.TabIndex = 10;
             lbNombre.Text = "Nombre Completo";
             // 
@@ -352,12 +331,11 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Correo, Telefono, Estatus });
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 235);
-            dataGridView1.Margin = new Padding(4, 5, 4, 5);
+            dataGridView1.Location = new Point(0, 141);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(808, 547);
+            dataGridView1.Size = new Size(566, 328);
             dataGridView1.TabIndex = 2;
             // 
             // Nombre
@@ -405,11 +383,9 @@
             gbxBusqueda.Controls.Add(lbBuscar);
             gbxBusqueda.Dock = DockStyle.Top;
             gbxBusqueda.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbxBusqueda.Location = new Point(0, 80);
-            gbxBusqueda.Margin = new Padding(4, 5, 4, 5);
+            gbxBusqueda.Location = new Point(0, 48);
             gbxBusqueda.Name = "gbxBusqueda";
-            gbxBusqueda.Padding = new Padding(4, 5, 4, 5);
-            gbxBusqueda.Size = new Size(808, 155);
+            gbxBusqueda.Size = new Size(566, 93);
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda de Clientes";
@@ -417,57 +393,51 @@
             // cbxtipoFecha
             // 
             cbxtipoFecha.FormattingEnabled = true;
-            cbxtipoFecha.Location = new Point(127, 42);
-            cbxtipoFecha.Margin = new Padding(4, 5, 4, 5);
+            cbxtipoFecha.Location = new Point(89, 25);
             cbxtipoFecha.Name = "cbxtipoFecha";
-            cbxtipoFecha.Size = new Size(123, 33);
+            cbxtipoFecha.Size = new Size(87, 23);
             cbxtipoFecha.TabIndex = 18;
             // 
             // lbTipoFecha
             // 
             lbTipoFecha.AutoSize = true;
-            lbTipoFecha.Location = new Point(26, 47);
-            lbTipoFecha.Margin = new Padding(4, 0, 4, 0);
+            lbTipoFecha.Location = new Point(18, 28);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(100, 25);
+            lbTipoFecha.Size = new Size(65, 15);
             lbTipoFecha.TabIndex = 17;
             lbTipoFecha.Text = "Tipo Fecha";
             // 
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(613, 42);
-            dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaFin.Location = new Point(429, 25);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(155, 31);
+            dtpFechaFin.Size = new Size(110, 23);
             dtpFechaFin.TabIndex = 16;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(364, 42);
-            dtpFechaInicio.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaInicio.Location = new Point(255, 25);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(155, 31);
+            dtpFechaInicio.Size = new Size(110, 23);
             dtpFechaInicio.TabIndex = 15;
             // 
             // lbFechaFin
             // 
             lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(530, 47);
-            lbFechaFin.Margin = new Padding(4, 0, 4, 0);
+            lbFechaFin.Location = new Point(371, 28);
             lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(88, 25);
+            lbFechaFin.Size = new Size(57, 15);
             lbFechaFin.TabIndex = 14;
             lbFechaFin.Text = "Fecha Fin";
             // 
             // lbFechaInicio
             // 
             lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(260, 47);
-            lbFechaInicio.Margin = new Padding(4, 0, 4, 0);
+            lbFechaInicio.Location = new Point(182, 28);
             lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(108, 25);
+            lbFechaInicio.Size = new Size(71, 15);
             lbFechaInicio.TabIndex = 13;
             lbFechaInicio.Text = "Fecha Inicio";
             // 
@@ -477,10 +447,9 @@
             btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(543, 92);
-            btnActualizar.Margin = new Padding(4, 5, 4, 5);
+            btnActualizar.Location = new Point(380, 55);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(136, 50);
+            btnActualizar.Size = new Size(95, 30);
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -488,20 +457,18 @@
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(154, 90);
-            txtBusqueda.Margin = new Padding(4, 5, 4, 5);
+            txtBusqueda.Location = new Point(108, 54);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(360, 31);
+            txtBusqueda.Size = new Size(253, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBuscar
             // 
             lbBuscar.AutoSize = true;
-            lbBuscar.Location = new Point(29, 97);
-            lbBuscar.Margin = new Padding(4, 0, 4, 0);
+            lbBuscar.Location = new Point(20, 58);
             lbBuscar.Name = "lbBuscar";
-            lbBuscar.Size = new Size(130, 25);
+            lbBuscar.Size = new Size(81, 15);
             lbBuscar.TabIndex = 0;
             lbBuscar.Text = "Buscar Cliente";
             // 
@@ -513,10 +480,8 @@
             gbxHerramientas.Dock = DockStyle.Top;
             gbxHerramientas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxHerramientas.Location = new Point(0, 0);
-            gbxHerramientas.Margin = new Padding(4, 5, 4, 5);
             gbxHerramientas.Name = "gbxHerramientas";
-            gbxHerramientas.Padding = new Padding(4, 5, 4, 5);
-            gbxHerramientas.Size = new Size(808, 80);
+            gbxHerramientas.Size = new Size(566, 48);
             gbxHerramientas.TabIndex = 0;
             gbxHerramientas.TabStop = false;
             gbxHerramientas.Text = "Herramientas";
@@ -524,10 +489,9 @@
             // lbseleccione
             // 
             lbseleccione.AutoSize = true;
-            lbseleccione.Location = new Point(346, 40);
-            lbseleccione.Margin = new Padding(4, 0, 4, 0);
+            lbseleccione.Location = new Point(242, 24);
             lbseleccione.Name = "lbseleccione";
-            lbseleccione.Size = new Size(273, 25);
+            lbseleccione.Size = new Size(175, 15);
             lbseleccione.TabIndex = 2;
             lbseleccione.Text = "Seleccione un Archivo xlsx o xls";
             // 
@@ -537,10 +501,9 @@
             btnCargaMasiva.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCargaMasiva.Image = Sistema_Ventas.Properties.Resources.upload1;
             btnCargaMasiva.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCargaMasiva.Location = new Point(186, 33);
-            btnCargaMasiva.Margin = new Padding(4, 5, 4, 5);
+            btnCargaMasiva.Location = new Point(130, 20);
             btnCargaMasiva.Name = "btnCargaMasiva";
-            btnCargaMasiva.Size = new Size(139, 38);
+            btnCargaMasiva.Size = new Size(97, 23);
             btnCargaMasiva.TabIndex = 1;
             btnCargaMasiva.Text = "Cargar Excel";
             btnCargaMasiva.TextAlign = ContentAlignment.MiddleRight;
@@ -553,10 +516,9 @@
             btncollapse.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btncollapse.Image = Sistema_Ventas.Properties.Resources.uploadUser1;
             btncollapse.ImageAlign = ContentAlignment.MiddleLeft;
-            btncollapse.Location = new Point(13, 33);
-            btncollapse.Margin = new Padding(4, 5, 4, 5);
+            btncollapse.Location = new Point(9, 20);
             btncollapse.Name = "btncollapse";
-            btncollapse.Size = new Size(151, 38);
+            btncollapse.Size = new Size(106, 23);
             btncollapse.TabIndex = 0;
             btncollapse.Text = "Cargar Cliente";
             btncollapse.TextAlign = ContentAlignment.MiddleRight;
@@ -570,23 +532,21 @@
             lbtitle.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbtitle.ForeColor = SystemColors.ActiveCaptionText;
             lbtitle.Location = new Point(0, 0);
-            lbtitle.Margin = new Padding(4, 0, 4, 0);
             lbtitle.Name = "lbtitle";
-            lbtitle.Size = new Size(1199, 55);
+            lbtitle.Size = new Size(839, 33);
             lbtitle.TabIndex = 1;
             lbtitle.Text = "Gestion de Clientes";
             lbtitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // frmGestClientes
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(1199, 837);
+            ClientSize = new Size(839, 502);
             Controls.Add(lbtitle);
             Controls.Add(scClientes);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 5, 4, 5);
             Name = "frmGestClientes";
             Text = "Gestion de Clientes";
             Load += frmGestClientes_Load;

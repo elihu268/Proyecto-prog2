@@ -61,9 +61,8 @@ namespace PuntodeVenta.View
         {
             Dictionary<int, string> list_tipoclinte = new Dictionary<int, string>
             {
-                {1," " },
-                {2," " },
-                {3," " }
+                {1,"Fisico" },
+                {2,"Moral" }
             };
             cbxTipoCliente.DataSource = new BindingSource(list_tipoclinte, null);
             cbxTipoCliente.DisplayMember = "Value";
@@ -87,6 +86,11 @@ namespace PuntodeVenta.View
             if (!UsuariosNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
             {
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (!ClientesNegocio.ValidarRFC(txtrfcCliente.Text.Trim()))
+            {
+                MessageBox.Show("El RFC no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;
@@ -118,7 +122,7 @@ namespace PuntodeVenta.View
             if (scClientes.Panel1Collapsed)
             {
                 scClientes.Panel1Collapsed = false;
-                btncollapse.Text = "Ocultar";
+                btncollapse.Text = "Ocultar Captura";
             }
             else
             {
