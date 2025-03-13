@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MDI_Sistema_ventas));
-            menuStrip1 = new MenuStrip();
             usuariosToolStripMenuItem = new ToolStripMenuItem();
             geUsuariosToolStripMenuItem = new ToolStripMenuItem();
             auditoriasToolStripMenuItem = new ToolStripMenuItem();
@@ -49,19 +48,9 @@
             mosaicoVerticalToolStripMenuItem = new ToolStripMenuItem();
             aplicacionToolStripMenuItem = new ToolStripMenuItem();
             salirToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1.SuspendLayout();
+            menuStripMDI = new MenuStrip();
+            menuStripMDI.SuspendLayout();
             SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { usuariosToolStripMenuItem, clientesVentasToolStripMenuItem, estadisticaAnalisisToolStripMenuItem, seguridadToolStripMenuItem, ventanasToolStripMenuItem, aplicacionToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(1199, 24);
-            menuStrip1.TabIndex = 2;
-            menuStrip1.Text = "menuStrip1";
             // 
             // usuariosToolStripMenuItem
             // 
@@ -73,14 +62,14 @@
             // geUsuariosToolStripMenuItem
             // 
             geUsuariosToolStripMenuItem.Name = "geUsuariosToolStripMenuItem";
-            geUsuariosToolStripMenuItem.Size = new Size(180, 22);
+            geUsuariosToolStripMenuItem.Size = new Size(177, 22);
             geUsuariosToolStripMenuItem.Text = "Gestión de usuarios";
             geUsuariosToolStripMenuItem.Click += geUsuariosToolStripMenuItem_Click;
             // 
             // auditoriasToolStripMenuItem
             // 
             auditoriasToolStripMenuItem.Name = "auditoriasToolStripMenuItem";
-            auditoriasToolStripMenuItem.Size = new Size(180, 22);
+            auditoriasToolStripMenuItem.Size = new Size(177, 22);
             auditoriasToolStripMenuItem.Text = "Auditorías";
             auditoriasToolStripMenuItem.Click += auditoriasToolStripMenuItem_Click;
             // 
@@ -196,41 +185,45 @@
             salirToolStripMenuItem.Text = "Salir";
             salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
             // 
+            // menuStripMDI
+            // 
+            menuStripMDI.ImageScalingSize = new Size(20, 20);
+            menuStripMDI.Items.AddRange(new ToolStripItem[] { usuariosToolStripMenuItem, clientesVentasToolStripMenuItem, estadisticaAnalisisToolStripMenuItem, seguridadToolStripMenuItem, ventanasToolStripMenuItem, aplicacionToolStripMenuItem });
+            menuStripMDI.Location = new Point(0, 0);
+            menuStripMDI.Name = "menuStripMDI";
+            menuStripMDI.Padding = new Padding(5, 2, 0, 2);
+            menuStripMDI.Size = new Size(1284, 24);
+            menuStripMDI.TabIndex = 2;
+            menuStripMDI.Text = "menuStripMDI";
+            // 
             // MDI_Sistema_ventas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.HotTrack;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(1199, 562);
-            Controls.Add(menuStrip1);
+            BackColor = SystemColors.Control;
+            BackgroundImage = Sistema_Ventas.Properties.Resources.fondo_MDI;
+            ClientSize = new Size(1284, 661);
+            Controls.Add(menuStripMDI);
+            ForeColor = SystemColors.ControlText;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
-            MainMenuStrip = menuStrip1;
+            MainMenuStrip = menuStripMDI;
             Margin = new Padding(3, 2, 3, 2);
             Name = "MDI_Sistema_ventas";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema de ventas TEC";
+            WindowState = FormWindowState.Maximized;
             Load += MDI_Sistema_ventas_Load;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            menuStripMDI.ResumeLayout(false);
+            menuStripMDI.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem aplicacionToolStripMenuItem;
-        private ToolStripMenuItem salirToolStripMenuItem;
-        private ToolStripMenuItem seguridadToolStripMenuItem;
-        private ToolStripMenuItem rolesToolStripMenuItem;
-        private ToolStripMenuItem ventanasToolStripMenuItem;
-        private ToolStripMenuItem cascadaToolStripMenuItem;
-        private ToolStripMenuItem mosaicoHorizontalToolStripMenuItem;
-        private ToolStripMenuItem mosaicoVerticalToolStripMenuItem;
         private ToolStripMenuItem usuariosToolStripMenuItem;
         private ToolStripMenuItem geUsuariosToolStripMenuItem;
-        private ToolStripMenuItem permisosToolStripMenuItem;
         private ToolStripMenuItem auditoriasToolStripMenuItem;
         private ToolStripMenuItem clientesVentasToolStripMenuItem;
         private ToolStripMenuItem geClientesToolStripMenuItem;
@@ -239,5 +232,15 @@
         private ToolStripMenuItem estadisticaAnalisisToolStripMenuItem;
         private ToolStripMenuItem reportesToolStripMenuItem;
         private ToolStripMenuItem apiVentasToolStripMenuItem;
+        private ToolStripMenuItem seguridadToolStripMenuItem;
+        private ToolStripMenuItem rolesToolStripMenuItem;
+        private ToolStripMenuItem permisosToolStripMenuItem;
+        private ToolStripMenuItem ventanasToolStripMenuItem;
+        private ToolStripMenuItem cascadaToolStripMenuItem;
+        private ToolStripMenuItem mosaicoHorizontalToolStripMenuItem;
+        private ToolStripMenuItem mosaicoVerticalToolStripMenuItem;
+        private ToolStripMenuItem aplicacionToolStripMenuItem;
+        private ToolStripMenuItem salirToolStripMenuItem;
+        private MenuStrip menuStripMDI;
     }
 }

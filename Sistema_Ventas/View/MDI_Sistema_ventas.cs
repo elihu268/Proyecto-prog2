@@ -17,6 +17,8 @@ namespace DiseñoForms.View
         public MDI_Sistema_ventas()
         {
             InitializeComponent();
+            // Ajusta la imagen al tamaño del formulario
+            this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
