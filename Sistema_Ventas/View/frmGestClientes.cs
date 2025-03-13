@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Ventas.Bussines;
 using static Sistema_Ventas.Bussines.Negocio;
 using Sistema_Ventas.Utilities;
 
