@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCargaCatalogo));
             btnCargaCatalogo = new Button();
             btnActualizar = new Button();
             dgvCatalogo = new DataGridView();
@@ -48,9 +49,9 @@
             btnCargaCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
             btnCargaCatalogo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCargaCatalogo.Location = new Point(287, 12);
+            btnCargaCatalogo.Location = new Point(319, 13);
             btnCargaCatalogo.Name = "btnCargaCatalogo";
-            btnCargaCatalogo.Size = new Size(228, 34);
+            btnCargaCatalogo.Size = new Size(253, 37);
             btnCargaCatalogo.TabIndex = 1;
             btnCargaCatalogo.Text = "Carga de Catalogo";
             btnCargaCatalogo.UseVisualStyleBackColor = false;
@@ -63,9 +64,9 @@
             btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(338, 52);
+            btnActualizar.Location = new Point(376, 57);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(119, 34);
+            btnActualizar.Size = new Size(132, 37);
             btnActualizar.TabIndex = 3;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -77,10 +78,11 @@
             dgvCatalogo.BackgroundColor = SystemColors.ActiveCaption;
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCatalogo.Columns.AddRange(new DataGridViewColumn[] { idProducto, codProducto, nombre, precio, descripcion, existencia });
-            dgvCatalogo.Location = new Point(12, 92);
+            dgvCatalogo.Enabled = false;
+            dgvCatalogo.Location = new Point(13, 100);
             dgvCatalogo.Name = "dgvCatalogo";
             dgvCatalogo.RowHeadersWidth = 62;
-            dgvCatalogo.Size = new Size(776, 346);
+            dgvCatalogo.Size = new Size(862, 376);
             dgvCatalogo.TabIndex = 4;
             // 
             // idProducto
@@ -132,25 +134,26 @@
             // pbCatalogo
             // 
             pbCatalogo.Image = Properties.Resources.catalogo1;
-            pbCatalogo.Location = new Point(114, 11);
+            pbCatalogo.Location = new Point(127, 12);
             pbCatalogo.Name = "pbCatalogo";
-            pbCatalogo.Size = new Size(97, 75);
+            pbCatalogo.Size = new Size(108, 82);
             pbCatalogo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCatalogo.TabIndex = 5;
             pbCatalogo.TabStop = false;
             // 
             // frmCargaCatalogo
             // 
-            AutoScaleDimensions = new SizeF(9F, 23F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(889, 489);
             Controls.Add(pbCatalogo);
             Controls.Add(dgvCatalogo);
             Controls.Add(btnActualizar);
             Controls.Add(btnCargaCatalogo);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmCargaCatalogo";
-            Text = "frmCargaCatalogo";
+            Text = "Carga de catalogo";
             Load += frmCatalogo_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCatalogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbCatalogo).EndInit();
