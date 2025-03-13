@@ -209,5 +209,9 @@ namespace DiseñoForms.View
             AbreVentanaHija("frmasignarpermisos");
         }
 
+        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

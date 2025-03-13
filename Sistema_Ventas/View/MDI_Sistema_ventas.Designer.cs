@@ -200,8 +200,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
-            BackgroundImage = Sistema_Ventas.Properties.Resources.fondo_MDI;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1834, 1050);
             Controls.Add(menuStripMDI);
             ForeColor = SystemColors.ControlText;
@@ -213,6 +212,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema de ventas TEC";
             WindowState = FormWindowState.Maximized;
+            Load += MDI_Sistema_ventas_Load;
             menuStripMDI.ResumeLayout(false);
             menuStripMDI.PerformLayout();
             ResumeLayout(false);
