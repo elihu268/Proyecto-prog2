@@ -89,8 +89,7 @@ namespace DiseñoForms.View
                     childForm = new frmCargaCatalogo(this);
                     break;
                 case "frmreportes":
-                    childForm = new frmCargaCatalogo(this);
-                    //childForm = new frmReportes(this);
+                    childForm = new frmReportes(this);
                     break;
                 case "frmresumenventas":
                     childForm = new frmResumenVentas(this);
