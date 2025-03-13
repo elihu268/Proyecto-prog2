@@ -573,7 +573,9 @@
             Controls.Add(gpBox_producto);
             Controls.Add(gpbox_carrito);
             Controls.Add(gpbox_cliente);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             MaximumSize = new Size(1285, 749);
             MinimumSize = new Size(1285, 749);
             Name = "frmVenta";
