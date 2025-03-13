@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAuditoria));
             gbxBusquedaAuditoria = new GroupBox();
             dtpFechaFin = new DateTimePicker();
             stpFechaInicio = new DateTimePicker();
@@ -51,9 +52,12 @@
             gbxBusquedaAuditoria.Controls.Add(textBox1);
             gbxBusquedaAuditoria.Controls.Add(lbBusqueda);
             gbxBusquedaAuditoria.Dock = DockStyle.Top;
+            gbxBusquedaAuditoria.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxBusquedaAuditoria.Location = new Point(0, 0);
+            gbxBusquedaAuditoria.Margin = new Padding(4, 5, 4, 5);
             gbxBusquedaAuditoria.Name = "gbxBusquedaAuditoria";
-            gbxBusquedaAuditoria.Size = new Size(519, 85);
+            gbxBusquedaAuditoria.Padding = new Padding(4, 5, 4, 5);
+            gbxBusquedaAuditoria.Size = new Size(741, 142);
             gbxBusquedaAuditoria.TabIndex = 0;
             gbxBusquedaAuditoria.TabStop = false;
             gbxBusquedaAuditoria.Text = "Busqueda de Auditorias";
@@ -61,34 +65,38 @@
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(302, 22);
+            dtpFechaFin.Location = new Point(431, 37);
+            dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(137, 23);
+            dtpFechaFin.Size = new Size(194, 31);
             dtpFechaFin.TabIndex = 6;
             // 
             // stpFechaInicio
             // 
             stpFechaInicio.Format = DateTimePickerFormat.Short;
-            stpFechaInicio.Location = new Point(96, 22);
+            stpFechaInicio.Location = new Point(137, 37);
+            stpFechaInicio.Margin = new Padding(4, 5, 4, 5);
             stpFechaInicio.Name = "stpFechaInicio";
-            stpFechaInicio.Size = new Size(137, 23);
+            stpFechaInicio.Size = new Size(194, 31);
             stpFechaInicio.TabIndex = 5;
             // 
             // lbFechaFin
             // 
             lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(239, 26);
+            lbFechaFin.Location = new Point(341, 43);
+            lbFechaFin.Margin = new Padding(4, 0, 4, 0);
             lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(57, 15);
+            lbFechaFin.Size = new Size(88, 25);
             lbFechaFin.TabIndex = 4;
             lbFechaFin.Text = "Fecha Fin";
             // 
             // lbFechaInicio
             // 
             lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(20, 26);
+            lbFechaInicio.Location = new Point(29, 43);
+            lbFechaInicio.Margin = new Padding(4, 0, 4, 0);
             lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(70, 15);
+            lbFechaInicio.Size = new Size(108, 25);
             lbFechaInicio.TabIndex = 3;
             lbFechaInicio.Text = "Fecha Inicio";
             // 
@@ -97,9 +105,10 @@
             btnBuscarAuditoria.BackColor = SystemColors.ActiveCaption;
             btnBuscarAuditoria.Image = Sistema_Ventas.Properties.Resources.search;
             btnBuscarAuditoria.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscarAuditoria.Location = new Point(373, 53);
+            btnBuscarAuditoria.Location = new Point(533, 88);
+            btnBuscarAuditoria.Margin = new Padding(4, 5, 4, 5);
             btnBuscarAuditoria.Name = "btnBuscarAuditoria";
-            btnBuscarAuditoria.Size = new Size(66, 23);
+            btnBuscarAuditoria.Size = new Size(94, 38);
             btnBuscarAuditoria.TabIndex = 2;
             btnBuscarAuditoria.Text = "Buscar";
             btnBuscarAuditoria.TextAlign = ContentAlignment.MiddleRight;
@@ -107,17 +116,19 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(120, 54);
+            textBox1.Location = new Point(171, 90);
+            textBox1.Margin = new Padding(4, 5, 4, 5);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(247, 23);
+            textBox1.Size = new Size(351, 31);
             textBox1.TabIndex = 1;
             // 
             // lbBusqueda
             // 
             lbBusqueda.AutoSize = true;
-            lbBusqueda.Location = new Point(20, 54);
+            lbBusqueda.Location = new Point(29, 90);
+            lbBusqueda.Margin = new Padding(4, 0, 4, 0);
             lbBusqueda.Name = "lbBusqueda";
-            lbBusqueda.Size = new Size(94, 15);
+            lbBusqueda.Size = new Size(149, 25);
             lbBusqueda.TabIndex = 0;
             lbBusqueda.Text = "Buscar Auditoria";
             // 
@@ -126,19 +137,23 @@
             dgvAuditorias.BackgroundColor = SystemColors.Control;
             dgvAuditorias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAuditorias.Dock = DockStyle.Fill;
-            dgvAuditorias.Location = new Point(0, 85);
+            dgvAuditorias.Location = new Point(0, 142);
+            dgvAuditorias.Margin = new Padding(4, 5, 4, 5);
             dgvAuditorias.Name = "dgvAuditorias";
-            dgvAuditorias.Size = new Size(519, 393);
+            dgvAuditorias.RowHeadersWidth = 62;
+            dgvAuditorias.Size = new Size(741, 655);
             dgvAuditorias.TabIndex = 1;
             // 
             // frmAuditoria
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(519, 478);
+            ClientSize = new Size(741, 797);
             Controls.Add(dgvAuditorias);
             Controls.Add(gbxBusquedaAuditoria);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 5, 4, 5);
             Name = "frmAuditoria";
             Text = "Auditoria";
             gbxBusquedaAuditoria.ResumeLayout(false);
