@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Ventas.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,10 @@ namespace Sistema_Ventas.View
 {
     public partial class frmResumenVentas : Form
     {
-        public frmResumenVentas()
+        public frmResumenVentas(Form parent)
         {
             InitializeComponent();
+            Formas.InicializarForma(this, parent);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

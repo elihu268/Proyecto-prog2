@@ -10,14 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Ventas.Bussines;
 using static Sistema_Ventas.Bussines.Negocio;
+using Sistema_Ventas.Utilities;
 
 namespace PuntodeVenta.View
 {
     public partial class frmGestClientes : Form
     {
-        public frmGestClientes()
+        public frmGestClientes(Form parent)
         {
             InitializeComponent();
+            Formas.InicializarForma(this, parent);
         }
 
         private void frmGestClientes_Load(object sender, EventArgs e)

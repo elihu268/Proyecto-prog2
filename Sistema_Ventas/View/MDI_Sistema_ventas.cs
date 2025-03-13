@@ -1,4 +1,5 @@
 ﻿using PuntodeVenta.View;
+using Sistema_Ventas.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,6 +74,32 @@ namespace DiseñoForms.View
                 case "frmgestusuario":
                     childForm = new frmGestUsuario(this);
                     break;
+                case "frmauditoria":
+                    childForm = new frmAuditoria(this);
+                    break;
+                case "frmgestclientes":
+                    childForm = new frmGestClientes(this);
+                    break;
+                case "frmventa":
+                    childForm = new frmVenta(this);
+                    break;
+                case "frmcargacatalogo":
+                    childForm = new frmCargaCatalogo(this);
+                    break;
+                case "frmreportes":
+                    childForm = new frmCargaCatalogo(this);
+                    //childForm = new frmReportes(this);
+                    break;
+                case "frmresumenventas":
+                    childForm = new frmResumenVentas(this);
+                    break;
+                case "frmconfiguracionroles":
+                    childForm = new frmCargaCatalogo(this);
+                    //childForm = new frmConfiguracionRoles(this);
+                    break;
+                case "frmasignarpermisos":
+                    childForm = new frmAsignarPermisos(this);
+                    break;
                 default:
                     return;
             }
@@ -86,40 +113,45 @@ namespace DiseñoForms.View
 
         private void auditoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbreVentanaHija("frmestudiantes");
+            AbreVentanaHija("frmauditoria");
         }
 
         private void geClientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmgestclientes");
         }
 
         private void geVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmventa");
         }
 
         private void cargaCatalogosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmcargacatalogo");
         }
 
         private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmreportes");
         }
 
         private void apiVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmresumenventas");
         }
 
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbreVentanaHija("frmconfiguracionroles");
         }
 
         private void permisosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbreVentanaHija("frmasignarpermisos");
+        }
+
+        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
         {
 
         }

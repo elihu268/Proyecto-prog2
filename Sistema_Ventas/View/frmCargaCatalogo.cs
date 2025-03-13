@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Ventas.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,10 @@ namespace Sistema_Ventas.View
 {
     public partial class frmCargaCatalogo : Form
     {
-        public frmCargaCatalogo()
+        public frmCargaCatalogo(Form parent)
         {
             InitializeComponent();
+            Formas.InicializarForma(this, parent);
         }
 
         private void frmCatalogo_Load(object sender, EventArgs e)

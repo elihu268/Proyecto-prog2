@@ -17,7 +17,7 @@ namespace Sistema_Ventas.View
         public frmVenta(Form parent)
         {
             InitializeComponent();
-            Formas.InicializaForma(this, parent);
+            Formas.InicializarForma(this, parent);
         }
 
         private void frmVenta_Load(object sender, EventArgs e)

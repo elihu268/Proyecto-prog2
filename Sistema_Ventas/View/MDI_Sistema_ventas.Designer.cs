@@ -94,21 +94,21 @@
             // geClientesToolStripMenuItem
             // 
             geClientesToolStripMenuItem.Name = "geClientesToolStripMenuItem";
-            geClientesToolStripMenuItem.Size = new Size(180, 22);
+            geClientesToolStripMenuItem.Size = new Size(175, 22);
             geClientesToolStripMenuItem.Text = "Gestión de clientes";
             geClientesToolStripMenuItem.Click += geClientesToolStripMenuItem_Click;
             // 
             // geVentasToolStripMenuItem
             // 
             geVentasToolStripMenuItem.Name = "geVentasToolStripMenuItem";
-            geVentasToolStripMenuItem.Size = new Size(180, 22);
+            geVentasToolStripMenuItem.Size = new Size(175, 22);
             geVentasToolStripMenuItem.Text = "Gestión de ventas";
             geVentasToolStripMenuItem.Click += geVentasToolStripMenuItem_Click;
             // 
             // cargaCatalogosToolStripMenuItem
             // 
             cargaCatalogosToolStripMenuItem.Name = "cargaCatalogosToolStripMenuItem";
-            cargaCatalogosToolStripMenuItem.Size = new Size(180, 22);
+            cargaCatalogosToolStripMenuItem.Size = new Size(175, 22);
             cargaCatalogosToolStripMenuItem.Text = "Carga de catálogos";
             cargaCatalogosToolStripMenuItem.Click += cargaCatalogosToolStripMenuItem_Click;
             // 
@@ -143,14 +143,14 @@
             // rolesToolStripMenuItem
             // 
             rolesToolStripMenuItem.Name = "rolesToolStripMenuItem";
-            rolesToolStripMenuItem.Size = new Size(180, 22);
+            rolesToolStripMenuItem.Size = new Size(122, 22);
             rolesToolStripMenuItem.Text = "Roles";
             rolesToolStripMenuItem.Click += rolesToolStripMenuItem_Click;
             // 
             // permisosToolStripMenuItem
             // 
             permisosToolStripMenuItem.Name = "permisosToolStripMenuItem";
-            permisosToolStripMenuItem.Size = new Size(180, 22);
+            permisosToolStripMenuItem.Size = new Size(122, 22);
             permisosToolStripMenuItem.Text = "Permisos";
             permisosToolStripMenuItem.Click += permisosToolStripMenuItem_Click;
             // 
@@ -210,6 +210,7 @@
             Name = "MDI_Sistema_ventas";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema de ventas TEC";
+            Load += MDI_Sistema_ventas_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

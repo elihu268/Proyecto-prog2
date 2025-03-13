@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Ventas.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,10 @@ namespace PuntodeVenta.View
 {
     public partial class frmAuditoria: Form
     {
-        public frmAuditoria()
+        public frmAuditoria(Form parent)
         {
             InitializeComponent();
+            Formas.InicializarForma(this, parent);
         }
     }
 }
