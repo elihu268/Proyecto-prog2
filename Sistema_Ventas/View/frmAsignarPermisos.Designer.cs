@@ -59,6 +59,7 @@
             // 
             // sc_asignacion
             // 
+            sc_asignacion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             sc_asignacion.Location = new Point(-2, 59);
             sc_asignacion.Name = "sc_asignacion";
             // 
@@ -184,7 +185,7 @@
             btn_ver.Name = "btn_ver";
             btn_ver.Size = new Size(198, 61);
             btn_ver.TabIndex = 15;
-            btn_ver.Text = "Ver permisos asignados";
+            btn_ver.Text = "Mostrar permisos asignados";
             btn_ver.UseVisualStyleBackColor = false;
             btn_ver.Click += btn_ver_Click;
             // 
@@ -265,6 +266,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmAsignarPermisos";
             Text = "Permisos";
+            Load += frmAsignarPermisos_Load;
             sc_asignacion.Panel1.ResumeLayout(false);
             sc_asignacion.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)sc_asignacion).EndInit();

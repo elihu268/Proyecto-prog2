@@ -60,13 +60,22 @@ namespace Sistema_Ventas.View
             {
                 //entonces no colapsar
                 sc_asignacion.Panel1Collapsed = false;
-                sc_asignacion.Text = "ocultar permisos asignados";
+                btn_ver.Text = "ocultar permisos asignados";
             }
             else
             {
                 sc_asignacion.Panel1Collapsed = true;
                 btn_ver.Text = "mostrar permisos asignados";
             }
+        }
+
+        private void frmAsignarPermisos_Load(object sender, EventArgs e)
+        {
+            InicializarVentanaPermisos();
+        }
+        private void InicializarVentanaPermisos()
+        {
+            sc_asignacion.Panel1Collapsed = true;
         }
     }
 }
