@@ -133,7 +133,6 @@
             // 
             // gpBox_producto
             // 
-            gpBox_producto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             gpBox_producto.BackColor = SystemColors.InactiveBorder;
             gpBox_producto.Controls.Add(dgv_productos);
             gpBox_producto.Controls.Add(lbl_seleccionar);
@@ -264,7 +263,7 @@
             // 
             // gpbox_carrito
             // 
-            gpbox_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gpbox_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             gpbox_carrito.BackColor = SystemColors.InactiveBorder;
             gpbox_carrito.Controls.Add(lbl_seleccionar_eli);
             gpbox_carrito.Controls.Add(lbl_metodo);
