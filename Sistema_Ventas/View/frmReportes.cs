@@ -47,7 +47,7 @@ namespace PuntodeVenta.View
             cbxNomCliente.DisplayMember = "Value";
             cbxNomCliente.ValueMember = "Key";
 
-            cbxNomCliente.SelectedValue = 2;
+            cbxNomCliente.SelectedValue = 1;
         }
 
         private void PoblaComboNomProducto()
@@ -64,7 +64,7 @@ namespace PuntodeVenta.View
             cbxNomProducto.DisplayMember = "Value";
             cbxNomProducto.ValueMember = "Key";
 
-            cbxNomProducto.SelectedValue = 2;
+            cbxNomProducto.SelectedValue = 1;
         }
 
         private void cbCliente_CheckedChanged(object sender, EventArgs e)
