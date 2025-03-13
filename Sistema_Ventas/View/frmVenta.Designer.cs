@@ -529,10 +529,12 @@
             cb_clientes.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb_clientes.AutoCompleteSource = AutoCompleteSource.ListItems;
             cb_clientes.FormattingEnabled = true;
+            cb_clientes.Items.AddRange(new object[] { "cliente general" });
             cb_clientes.Location = new Point(118, 30);
             cb_clientes.Name = "cb_clientes";
             cb_clientes.Size = new Size(271, 33);
             cb_clientes.TabIndex = 15;
+            cb_clientes.SelectedIndexChanged += cb_clientes_SelectedIndexChanged;
             // 
             // lbl_titulo
             // 

@@ -30,7 +30,9 @@ namespace Sistema_Ventas.View
         public void InicializaVentanaVenta()
         {
             PoblaComboMetodo();
-        }
+            PoblacomboCliente();
+
+            }
         /// <summary>
         /// duncion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
         /// </summary>
@@ -47,6 +49,7 @@ namespace Sistema_Ventas.View
             cb_metodo.DisplayMember = "value";//lo que muestra
             cb_metodo.ValueMember = "key";//con la que se enlaza a la base de datos
             cb_metodo.SelectedValue = 0;//valor inicializado
+
         }
 
 
@@ -82,7 +85,7 @@ namespace Sistema_Ventas.View
 
         private void btn_terminar_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btn_agregar_Click(object sender, EventArgs e)
@@ -111,6 +114,25 @@ namespace Sistema_Ventas.View
         private void btn_actualizar_Click_(object sender, EventArgs e)
         {
 
+        }
+
+        private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+            
+        }
+        private void PoblacomboCliente()
+        {
+            Dictionary<int, string> list_cliente = new Dictionary<int, string>()
+            {
+            //key,value
+            { 0, "cliente" }
+        };
+        cb_metodo.DataSource = new BindingSource(list_cliente, null);
+        //es la fuente de datos que seria la lista atraves del objeto binding
+        cb_metodo.DisplayMember = "value";//lo que muestra
+            cb_metodo.ValueMember = "key";//con la que se enlaza a la base de datos
+            cb_metodo.SelectedValue = 0;//valor inicializado
         }
     }
 }
