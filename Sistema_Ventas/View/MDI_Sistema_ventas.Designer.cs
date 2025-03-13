@@ -128,7 +128,6 @@
             seguridadToolStripMenuItem.Name = "seguridadToolStripMenuItem";
             seguridadToolStripMenuItem.Size = new Size(109, 29);
             seguridadToolStripMenuItem.Text = "Seguridad";
-            seguridadToolStripMenuItem.Click += seguridadToolStripMenuItem_Click;
             // 
             // rolesToolStripMenuItem
             // 
@@ -214,7 +213,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema de ventas TEC";
             WindowState = FormWindowState.Maximized;
-            Load += MDI_Sistema_ventas_Load;
             menuStripMDI.ResumeLayout(false);
             menuStripMDI.PerformLayout();
             ResumeLayout(false);

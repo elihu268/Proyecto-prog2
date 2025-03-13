@@ -12,35 +12,56 @@ using System.Windows.Forms;
 
 namespace DiseñoForms.View
 {
+    /// <summary>
+    /// Formulario principal MDI para el sistema de ventas
+    /// </summary>
     public partial class MDI_Sistema_ventas : Form
     {
+        /// <summary>
+        /// Inicializa el formulario MDI principal
+        /// </summary>
         public MDI_Sistema_ventas()
         {
             InitializeComponent();
             AjustarFondoMDI();
         }
 
+        /// <summary>
+        /// Configura el fondo del formulario principal
+        /// </summary>
         public void AjustarFondoMDI()
         {
             // Ajusta la imagen al tamaño del formulario
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
+        /// <summary>
+        /// Evento para salir de la aplicación
+        /// </summary>
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Organiza las ventanas hijas en cascada
+        /// </summary>
         private void cascadaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.Cascade);
         }
 
+        /// <summary>
+        /// Organiza las ventanas hijas en mosaico horizontal
+        /// </summary>
         private void mosaicohorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
         }
 
+        /// <summary>
+        /// Organiza las ventanas hijas en mosaico vertical
+        /// </summary>
         private void mosaicoVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileVertical);
@@ -61,20 +82,24 @@ namespace DiseñoForms.View
             this.LayoutMdi(MdiLayout.TileVertical);
         }
 
+        /// <summary>
+        /// Abre o activa una ventana hija dentro del MDI
+        /// </summary>
+        /// <param name="nombre_forma">Nombre del formulario a abrir</param>
         private void AbreVentanaHija(string nombre_forma)
         {
+            // Busca si la ventana ya está abierta
             foreach (Form form in this.MdiChildren)
             {
                 if (form.Name.ToLower() == nombre_forma)
                 {
-                    // Si la ventana ya está abierta, traerla al frente y restaurarla si estaba minimizada
                     form.WindowState = FormWindowState.Normal;
                     form.BringToFront();
                     return;
                 }
             }
 
-            // Si no está abierta, crear y mostrar una nueva instancia
+            // Crea nueva instancia si no existe
             Form childForm;
             switch (nombre_forma.ToLower())
             {
@@ -111,64 +136,78 @@ namespace DiseñoForms.View
             childForm.Show();
         }
 
+        // Grupo de eventos para abrir diferentes módulos
+        /// <summary>
+        /// Abre el módulo de gestión de usuarios
+        /// </summary>
         private void geUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmgestusuario");
         }
 
+        /// <summary>
+        /// Abre el módulo de auditorías
+        /// </summary>
         private void auditoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmauditoria");
         }
 
+        /// <summary>
+        /// Abre el módulo de gestión de clientes
+        /// </summary>
         private void geClientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmgestclientes");
         }
 
+        /// <summary>
+        /// Abre el módulo de ventas
+        /// </summary>
         private void geVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmventa");
         }
 
+        /// <summary>
+        /// Abre el módulo de carga de catálogos
+        /// </summary>
         private void cargaCatalogosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmcargacatalogo");
         }
 
+        /// <summary>
+        /// Abre el módulo de reportes
+        /// </summary>
         private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmreportes");
         }
 
+        /// <summary>
+        /// Abre el módulo de resumen de ventas
+        /// </summary>
         private void apiVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmresumenventas");
         }
 
+        /// <summary>
+        /// Abre el módulo de configuración de roles
+        /// </summary>
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmconfiguracionroles");
         }
 
+        /// <summary>
+        /// Abre el módulo de asignación de permisos
+        /// </summary>
         private void permisosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbreVentanaHija("frmasignarpermisos");
         }
 
-        private void seguridadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-      
     }
-
 }

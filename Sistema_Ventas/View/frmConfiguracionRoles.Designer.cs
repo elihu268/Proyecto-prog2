@@ -323,7 +323,6 @@
             lblBuscar.Size = new Size(70, 15);
             lblBuscar.TabIndex = 0;
             lblBuscar.Text = "Buscar roles";
-            lblBuscar.Click += lblBuscar_Click;
             // 
             // gbxHerramienta
             // 
