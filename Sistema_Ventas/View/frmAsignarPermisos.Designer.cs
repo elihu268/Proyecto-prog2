@@ -44,9 +44,9 @@
             clm_rol = new DataGridViewTextBoxColumn();
             lbl_buscar = new Label();
             txt_buscar_rol = new TextBox();
-            btn_agregar = new Button();
             cbox_permisos = new ComboBox();
             lblt_titulo = new Label();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -129,13 +129,13 @@
             // grbox_permisos
             // 
             grbox_permisos.BackColor = SystemColors.InactiveBorder;
+            grbox_permisos.Controls.Add(button1);
             grbox_permisos.Controls.Add(lbl_selec_permiso);
             grbox_permisos.Controls.Add(lbl_seleccionar);
             grbox_permisos.Controls.Add(btn_ver);
             grbox_permisos.Controls.Add(dgv_rol);
             grbox_permisos.Controls.Add(lbl_buscar);
             grbox_permisos.Controls.Add(txt_buscar_rol);
-            grbox_permisos.Controls.Add(btn_agregar);
             grbox_permisos.Controls.Add(cbox_permisos);
             grbox_permisos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grbox_permisos.Location = new Point(20, 3);
@@ -214,7 +214,9 @@
             txt_buscar_rol.Name = "txt_buscar_rol";
             txt_buscar_rol.Size = new Size(236, 31);
             txt_buscar_rol.TabIndex = 16;
-            
+            // 
+            // cbox_permisos
+            // 
             cbox_permisos.AutoCompleteCustomSource.AddRange(new string[] { "Cobrar" });
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbox_permisos.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
@@ -236,6 +238,17 @@
             lblt_titulo.TabIndex = 7;
             lblt_titulo.Text = "Asignacion de permisos";
             lblt_titulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ActiveCaption;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(406, 416);
+            button1.Name = "button1";
+            button1.Size = new Size(198, 51);
+            button1.TabIndex = 20;
+            button1.Text = "Agregar";
+            button1.UseVisualStyleBackColor = false;
             // 
             // frmAsignarPermisos
             // 
@@ -265,7 +278,6 @@
 
         private SplitContainer splitContainer1;
         private GroupBox grbox_lista_permisos;
-        private Button btn_agregar;
         private GroupBox grbox_permisos;
         private Button btn_ver;
         private DataGridView dgv_rol;
@@ -281,5 +293,6 @@
         private Label lbl_seleccionar;
         private Label lbl_rol;
         private TextBox txt_rol;
+        private Button button1;
     }
 }
