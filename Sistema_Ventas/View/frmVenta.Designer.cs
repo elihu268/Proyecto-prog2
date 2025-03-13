@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Label lbl_cantidad;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVenta));
             dgv_productos = new DataGridView();
@@ -75,6 +76,8 @@
             lbl_buscar_cliente = new Label();
             cb_clientes = new ComboBox();
             lbl_titulo = new Label();
+            toolTip_buscar_cli = new ToolTip(components);
+            toolTip_limpar = new ToolTip(components);
             lbl_cantidad = new Label();
             ((System.ComponentModel.ISupportInitialize)dgv_productos).BeginInit();
             gpBox_producto.SuspendLayout();
@@ -450,6 +453,7 @@
             btn_limpiar.Size = new Size(144, 46);
             btn_limpiar.TabIndex = 1;
             btn_limpiar.Text = "Limpiar";
+            toolTip_limpar.SetToolTip(btn_limpiar, "Eliminar productor seleccionados");
             btn_limpiar.UseVisualStyleBackColor = false;
             // 
             // gpbox_cliente
@@ -547,6 +551,7 @@
             cb_clientes.Name = "cb_clientes";
             cb_clientes.Size = new Size(271, 33);
             cb_clientes.TabIndex = 15;
+            toolTip_buscar_cli.SetToolTip(cb_clientes, "busqueda por correo");
             cb_clientes.SelectedIndexChanged += cb_clientes_SelectedIndexChanged;
             // 
             // lbl_titulo
@@ -641,5 +646,7 @@
         private Label lbl_apellido_p;
         private Label lbl_nombre_c;
         private Label lbl_titulo;
+        private ToolTip toolTip_buscar_cli;
+        private ToolTip toolTip_limpar;
     }
 }
