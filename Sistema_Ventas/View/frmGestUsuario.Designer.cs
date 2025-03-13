@@ -93,7 +93,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.BackColor = SystemColors.GradientActiveCaption;
+            groupBox1.BackColor = SystemColors.GradientInactiveCaption;
             groupBox1.Controls.Add(cbxRoles);
             groupBox1.Controls.Add(lbRol);
             groupBox1.Controls.Add(btnGuardar);
@@ -265,7 +265,7 @@
             // 
             // gbxBusqueda
             // 
-            gbxBusqueda.BackColor = SystemColors.GradientActiveCaption;
+            gbxBusqueda.BackColor = SystemColors.GradientInactiveCaption;
             gbxBusqueda.Controls.Add(cbxtipoFecha);
             gbxBusqueda.Controls.Add(lbTipoFecha);
             gbxBusqueda.Controls.Add(dtpFechaFin);
@@ -378,7 +378,7 @@
             // 
             // gbxherramientas
             // 
-            gbxherramientas.BackColor = SystemColors.GradientActiveCaption;
+            gbxherramientas.BackColor = SystemColors.GradientInactiveCaption;
             gbxherramientas.Controls.Add(lbCargaMasiva);
             gbxherramientas.Controls.Add(btnCarga);
             gbxherramientas.Controls.Add(btncargaUsuario);
