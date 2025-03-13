@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sistema_Ventas.Utilities
 {
@@ -25,7 +26,7 @@ namespace Sistema_Ventas.Utilities
        /// </summary>
        /// <param name="numero">recibe una cadena</param>
        /// <returns>retorna falso si no es entero o tambien si es menor a 0</returns>
-        public static bool EsMayorACero(String numero)
+        public static bool EsMayorACero(string numero)
         {
             int resultado;
             if (int.TryParse(numero, out resultado))
@@ -45,7 +46,11 @@ namespace Sistema_Ventas.Utilities
             string patron = @"^[A-Z]{2,4}-\d{3,4}$";
             return Regex.IsMatch(codigo, patron);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cadena"></param>
+        /// <returns></returns>
         public static bool CadenaVacia(string cadena)
         {
             if (cadena == "")
@@ -53,6 +58,16 @@ namespace Sistema_Ventas.Utilities
                 return true;
             }
             return false;
+        }
+        /// <summary>
+        /// metodo para saber si es un numero
+        /// </summary>
+        /// <param name="cadena">intenta pasar una cadena a numero</param>
+        /// <returns>si es numero retorna verdadero</returns>
+        public static bool EsUnNumero(string cadena)
+        {
+            int resultado;
+            return (int.TryParse(cadena, out resultado));
         }
     }
 }

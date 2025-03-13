@@ -98,8 +98,28 @@ namespace Sistema_Ventas.View
         /// <returns>retorna verdadeo si se cumplen condiciones</returns>
         private bool TerminarCompra()
         {
+            if (!SeleccionBusquedaCliente())
+            {
+                return false;
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// metodo para validar seleccion de busqueda
+        /// </summary>
+        /// <returns>falso si la inforacion ingresada no es valida</returns>
+        private bool SeleccionBusquedaCliente()
+        {
             if (Utilities.Validaciones.CadenaVacia(cb_clientes.Text))
             {
+                MessageBox.Show("Seleccione un cliente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (Utilities.Validaciones.EsUnNumero(cb_clientes.Text))
+            {
+                MessageBox.Show("cliente no valido..", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                 return false;
             }
             return true;
@@ -112,12 +132,12 @@ namespace Sistema_Ventas.View
         {
             if (Utilities.Validaciones.CadenaVacia(txt_cantidad.Text))
             {
-                MessageBox.Show("porfavor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK);
+                MessageBox.Show("porfavor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (!Bussines.Negocio.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
             {
-                MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK);
+                MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;
@@ -131,8 +151,6 @@ namespace Sistema_Ventas.View
         private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-
-
         }
         private void PoblacomboCliente()
         {
