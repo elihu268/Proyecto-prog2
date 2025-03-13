@@ -49,9 +49,9 @@
             btnCargaCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
             btnCargaCatalogo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCargaCatalogo.Location = new Point(319, 13);
+            btnCargaCatalogo.Location = new Point(319, 2);
             btnCargaCatalogo.Name = "btnCargaCatalogo";
-            btnCargaCatalogo.Size = new Size(253, 37);
+            btnCargaCatalogo.Size = new Size(253, 48);
             btnCargaCatalogo.TabIndex = 1;
             btnCargaCatalogo.Text = "Carga de Catalogo";
             btnCargaCatalogo.UseVisualStyleBackColor = false;
@@ -64,9 +64,9 @@
             btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(376, 57);
+            btnActualizar.Location = new Point(354, 56);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(132, 37);
+            btnActualizar.Size = new Size(174, 37);
             btnActualizar.TabIndex = 3;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
