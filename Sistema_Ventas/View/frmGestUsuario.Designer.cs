@@ -114,7 +114,7 @@
             // cbxRoles
             // 
             cbxRoles.FormattingEnabled = true;
-            cbxRoles.Location = new Point(20, 289);
+            cbxRoles.Location = new Point(15, 260);
             cbxRoles.Name = "cbxRoles";
             cbxRoles.Size = new Size(121, 23);
             cbxRoles.TabIndex = 27;
@@ -122,7 +122,7 @@
             // lbRol
             // 
             lbRol.AutoSize = true;
-            lbRol.Location = new Point(15, 271);
+            lbRol.Location = new Point(15, 240);
             lbRol.Name = "lbRol";
             lbRol.Size = new Size(24, 15);
             lbRol.TabIndex = 26;
@@ -146,7 +146,7 @@
             // cbxEstatus
             // 
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(20, 240);
+            cbxEstatus.Location = new Point(15, 215);
             cbxEstatus.Name = "cbxEstatus";
             cbxEstatus.Size = new Size(135, 23);
             cbxEstatus.TabIndex = 23;
@@ -155,7 +155,7 @@
             // 
             dtpNacimiento.Format = DateTimePickerFormat.Short;
             dtpNacimiento.ImeMode = ImeMode.NoControl;
-            dtpNacimiento.Location = new Point(15, 196);
+            dtpNacimiento.Location = new Point(15, 170);
             dtpNacimiento.Name = "dtpNacimiento";
             dtpNacimiento.Size = new Size(200, 23);
             dtpNacimiento.TabIndex = 22;
@@ -163,7 +163,7 @@
             // txtTelefono
             // 
             txtTelefono.Cursor = Cursors.IBeam;
-            txtTelefono.Location = new Point(15, 149);
+            txtTelefono.Location = new Point(15, 130);
             txtTelefono.MaxLength = 15;
             txtTelefono.Name = "txtTelefono";
             txtTelefono.Size = new Size(227, 23);
@@ -181,7 +181,7 @@
             // txtNombre
             // 
             txtNombre.Cursor = Cursors.IBeam;
-            txtNombre.Location = new Point(15, 37);
+            txtNombre.Location = new Point(16, 37);
             txtNombre.MaxLength = 100;
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(225, 23);
@@ -190,7 +190,7 @@
             // lbEstatus
             // 
             lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(13, 222);
+            lbEstatus.Location = new Point(13, 198);
             lbEstatus.Name = "lbEstatus";
             lbEstatus.Size = new Size(44, 15);
             lbEstatus.TabIndex = 18;
@@ -199,7 +199,7 @@
             // lbfechaNacimiento
             // 
             lbfechaNacimiento.AutoSize = true;
-            lbfechaNacimiento.Location = new Point(18, 178);
+            lbfechaNacimiento.Location = new Point(18, 155);
             lbfechaNacimiento.Name = "lbfechaNacimiento";
             lbfechaNacimiento.Size = new Size(119, 15);
             lbfechaNacimiento.TabIndex = 17;
@@ -208,9 +208,9 @@
             // lbTelefono
             // 
             lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(15, 131);
+            lbTelefono.Location = new Point(15, 115);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(52, 15);
+            lbTelefono.Size = new Size(53, 15);
             lbTelefono.TabIndex = 16;
             lbTelefono.Text = "Telefono";
             // 
@@ -226,7 +226,7 @@
             // lbNombre
             // 
             lbNombre.AutoSize = true;
-            lbNombre.Location = new Point(15, 19);
+            lbNombre.Location = new Point(13, 19);
             lbNombre.Name = "lbNombre";
             lbNombre.Size = new Size(107, 15);
             lbNombre.TabIndex = 14;
@@ -275,7 +275,7 @@
             lbTipoFecha.AutoSize = true;
             lbTipoFecha.Location = new Point(12, 19);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(64, 15);
+            lbTipoFecha.Size = new Size(65, 15);
             lbTipoFecha.TabIndex = 11;
             lbTipoFecha.Text = "Tipo Fecha";
             // 

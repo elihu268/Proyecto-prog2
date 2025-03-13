@@ -27,6 +27,7 @@ namespace PuntodeVenta.View
             scClientes.Panel1Collapsed = true;
             PoblaComboEstatus();
             PoblaTipoFecha();
+            PoblaTipoCliente();
         }
         private void PoblaComboEstatus()
         {
@@ -56,6 +57,20 @@ namespace PuntodeVenta.View
             cbxtipoFecha.ValueMember = "Key";
             cbxtipoFecha.SelectedValue = 1;
             cbxtipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+        private void PoblaTipoCliente()
+        {
+            Dictionary<int, string> list_tipoclinte = new Dictionary<int, string>
+            {
+                {1," " },
+                {2," " },
+                {3," " }
+            };
+            cbxTipoCliente.DataSource = new BindingSource(list_tipoclinte, null);
+            cbxTipoCliente.DisplayMember = "Value";
+            cbxTipoCliente.ValueMember = "Key";
+            cbxTipoCliente.SelectedValue = 1;
+            cbxTipoCliente.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private bool DatosVacios()
         {
