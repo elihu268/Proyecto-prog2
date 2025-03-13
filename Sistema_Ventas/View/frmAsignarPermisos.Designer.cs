@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAsignarPermisos));
             splitContainer1 = new SplitContainer();
-            grbox_Rol = new GroupBox();
+            grbox_lista_permisos = new GroupBox();
             lbl_buscar = new Label();
-            dataGridView1 = new DataGridView();
+            dgv_permisos = new DataGridView();
             clm_id = new DataGridViewTextBoxColumn();
             clm_rol = new DataGridViewTextBoxColumn();
             txt_buscar_rol = new TextBox();
@@ -48,8 +48,8 @@
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
-            grbox_Rol.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            grbox_lista_permisos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_permisos).BeginInit();
             grbox_permisos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -61,46 +61,47 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(grbox_Rol);
+            splitContainer1.Panel1.Controls.Add(grbox_lista_permisos);
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(grbox_permisos);
-            splitContainer1.Size = new Size(1073, 541);
-            splitContainer1.SplitterDistance = 356;
+            splitContainer1.Size = new Size(1079, 541);
+            splitContainer1.SplitterDistance = 357;
             splitContainer1.TabIndex = 6;
             // 
-            // grbox_Rol
+            // grbox_lista_permisos
             // 
-            grbox_Rol.Controls.Add(lbl_buscar);
-            grbox_Rol.Controls.Add(dataGridView1);
-            grbox_Rol.Controls.Add(txt_buscar_rol);
-            grbox_Rol.Controls.Add(btn_editar);
-            grbox_Rol.Location = new Point(5, 11);
-            grbox_Rol.Name = "grbox_Rol";
-            grbox_Rol.Size = new Size(348, 527);
-            grbox_Rol.TabIndex = 1;
-            grbox_Rol.TabStop = false;
-            grbox_Rol.Text = "Rol";
+            grbox_lista_permisos.BackColor = SystemColors.InactiveBorder;
+            grbox_lista_permisos.Controls.Add(dgv_permisos);
+            grbox_lista_permisos.Controls.Add(btn_editar);
+            grbox_lista_permisos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            grbox_lista_permisos.Location = new Point(5, 11);
+            grbox_lista_permisos.Name = "grbox_lista_permisos";
+            grbox_lista_permisos.Size = new Size(348, 527);
+            grbox_lista_permisos.TabIndex = 1;
+            grbox_lista_permisos.TabStop = false;
+            grbox_lista_permisos.Text = "Permisos asignados";
             // 
             // lbl_buscar
             // 
             lbl_buscar.AutoSize = true;
-            lbl_buscar.Location = new Point(22, 40);
+            lbl_buscar.Location = new Point(248, 113);
             lbl_buscar.Name = "lbl_buscar";
             lbl_buscar.Size = new Size(63, 25);
             lbl_buscar.TabIndex = 17;
             lbl_buscar.Text = "Buscar";
             // 
-            // dataGridView1
+            // dgv_permisos
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { clm_id, clm_rol });
-            dataGridView1.Location = new Point(22, 139);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(279, 225);
-            dataGridView1.TabIndex = 14;
+            dgv_permisos.BackgroundColor = SystemColors.GradientInactiveCaption;
+            dgv_permisos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_permisos.Columns.AddRange(new DataGridViewColumn[] { clm_id, clm_rol });
+            dgv_permisos.Location = new Point(22, 85);
+            dgv_permisos.Name = "dgv_permisos";
+            dgv_permisos.RowHeadersWidth = 62;
+            dgv_permisos.Size = new Size(279, 279);
+            dgv_permisos.TabIndex = 14;
             // 
             // clm_id
             // 
@@ -118,7 +119,7 @@
             // 
             // txt_buscar_rol
             // 
-            txt_buscar_rol.Location = new Point(22, 87);
+            txt_buscar_rol.Location = new Point(121, 156);
             txt_buscar_rol.Name = "txt_buscar_rol";
             txt_buscar_rol.Size = new Size(236, 31);
             txt_buscar_rol.TabIndex = 16;
@@ -136,8 +137,10 @@
             // 
             // grbox_permisos
             // 
+            grbox_permisos.Controls.Add(lbl_buscar);
             grbox_permisos.Controls.Add(checkBox1);
             grbox_permisos.Controls.Add(dataGridView2);
+            grbox_permisos.Controls.Add(txt_buscar_rol);
             grbox_permisos.Controls.Add(btn_eliminar);
             grbox_permisos.Controls.Add(button1);
             grbox_permisos.Controls.Add(cbox_permisos);
@@ -222,9 +225,8 @@
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
-            grbox_Rol.ResumeLayout(false);
-            grbox_Rol.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            grbox_lista_permisos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgv_permisos).EndInit();
             grbox_permisos.ResumeLayout(false);
             grbox_permisos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
@@ -234,11 +236,11 @@
         #endregion
 
         private SplitContainer splitContainer1;
-        private GroupBox grbox_Rol;
+        private GroupBox grbox_lista_permisos;
         private Button button1;
         private GroupBox grbox_permisos;
         private Button btn_editar;
-        private DataGridView dataGridView1;
+        private DataGridView dgv_permisos;
         private Button btn_eliminar;
         private ComboBox cbox_permisos;
         private TextBox txt_buscar_rol;
