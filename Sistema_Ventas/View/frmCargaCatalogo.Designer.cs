@@ -81,6 +81,7 @@
             dgvCatalogo.Enabled = false;
             dgvCatalogo.Location = new Point(13, 100);
             dgvCatalogo.Name = "dgvCatalogo";
+            dgvCatalogo.ReadOnly = true;
             dgvCatalogo.RowHeadersWidth = 62;
             dgvCatalogo.Size = new Size(862, 376);
             dgvCatalogo.TabIndex = 4;
@@ -90,6 +91,7 @@
             idProducto.HeaderText = "ID";
             idProducto.MinimumWidth = 8;
             idProducto.Name = "idProducto";
+            idProducto.ReadOnly = true;
             idProducto.Width = 150;
             // 
             // codProducto
@@ -97,6 +99,7 @@
             codProducto.HeaderText = "Codigo";
             codProducto.MinimumWidth = 8;
             codProducto.Name = "codProducto";
+            codProducto.ReadOnly = true;
             codProducto.Width = 150;
             // 
             // nombre
@@ -104,6 +107,7 @@
             nombre.HeaderText = "Nombre";
             nombre.MinimumWidth = 8;
             nombre.Name = "nombre";
+            nombre.ReadOnly = true;
             nombre.Width = 150;
             // 
             // precio
@@ -111,6 +115,7 @@
             precio.HeaderText = "Precio";
             precio.MinimumWidth = 8;
             precio.Name = "precio";
+            precio.ReadOnly = true;
             precio.Width = 150;
             // 
             // descripcion
@@ -118,6 +123,7 @@
             descripcion.HeaderText = "Descripcion";
             descripcion.MinimumWidth = 8;
             descripcion.Name = "descripcion";
+            descripcion.ReadOnly = true;
             descripcion.Width = 150;
             // 
             // existencia
@@ -125,6 +131,7 @@
             existencia.HeaderText = "Existencia";
             existencia.MinimumWidth = 8;
             existencia.Name = "existencia";
+            existencia.ReadOnly = true;
             existencia.Width = 150;
             // 
             // ofdCatalogo

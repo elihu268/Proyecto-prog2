@@ -116,6 +116,7 @@
             fgb_permisos.GridColor = SystemColors.InactiveBorder;
             fgb_permisos.Location = new Point(53, 121);
             fgb_permisos.Name = "fgb_permisos";
+            fgb_permisos.ReadOnly = true;
             fgb_permisos.RowHeadersWidth = 62;
             fgb_permisos.Size = new Size(215, 301);
             fgb_permisos.TabIndex = 18;
@@ -126,6 +127,7 @@
             clm_permiso.HeaderText = "permiso";
             clm_permiso.MinimumWidth = 8;
             clm_permiso.Name = "clm_permiso";
+            clm_permiso.ReadOnly = true;
             clm_permiso.Width = 150;
             // 
             // grbox_permisos
@@ -196,6 +198,7 @@
             dgv_rol.Columns.AddRange(new DataGridViewColumn[] { clm_id, clm_rol });
             dgv_rol.Location = new Point(19, 131);
             dgv_rol.Name = "dgv_rol";
+            dgv_rol.ReadOnly = true;
             dgv_rol.RowHeadersWidth = 62;
             dgv_rol.Size = new Size(269, 266);
             dgv_rol.TabIndex = 14;
@@ -205,6 +208,7 @@
             clm_id.HeaderText = "Id";
             clm_id.MinimumWidth = 8;
             clm_id.Name = "clm_id";
+            clm_id.ReadOnly = true;
             clm_id.Width = 150;
             // 
             // clm_rol
@@ -212,6 +216,7 @@
             clm_rol.HeaderText = "Rol";
             clm_rol.MinimumWidth = 8;
             clm_rol.Name = "clm_rol";
+            clm_rol.ReadOnly = true;
             clm_rol.Width = 150;
             // 
             // lbl_buscar

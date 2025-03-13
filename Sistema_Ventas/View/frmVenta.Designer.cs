@@ -102,6 +102,7 @@
             dgv_productos.Columns.AddRange(new DataGridViewColumn[] { clmCodigo, clm_nombre, clm_precio, clm_stock });
             dgv_productos.Location = new Point(7, 167);
             dgv_productos.Name = "dgv_productos";
+            dgv_productos.ReadOnly = true;
             dgv_productos.RowHeadersWidth = 62;
             dgv_productos.Size = new Size(654, 349);
             dgv_productos.TabIndex = 9;
@@ -111,6 +112,7 @@
             clmCodigo.HeaderText = "Codigo";
             clmCodigo.MinimumWidth = 8;
             clmCodigo.Name = "clmCodigo";
+            clmCodigo.ReadOnly = true;
             clmCodigo.Width = 150;
             // 
             // clm_nombre
@@ -118,6 +120,7 @@
             clm_nombre.HeaderText = "Nombre";
             clm_nombre.MinimumWidth = 8;
             clm_nombre.Name = "clm_nombre";
+            clm_nombre.ReadOnly = true;
             clm_nombre.Width = 150;
             // 
             // clm_precio
@@ -125,6 +128,7 @@
             clm_precio.HeaderText = "Precio";
             clm_precio.MinimumWidth = 8;
             clm_precio.Name = "clm_precio";
+            clm_precio.ReadOnly = true;
             clm_precio.Width = 150;
             // 
             // clm_stock
@@ -132,6 +136,7 @@
             clm_stock.HeaderText = "Stock";
             clm_stock.MinimumWidth = 8;
             clm_stock.Name = "clm_stock";
+            clm_stock.ReadOnly = true;
             clm_stock.Width = 150;
             // 
             // gpBox_producto
@@ -389,6 +394,7 @@
             dgv_carrito.Columns.AddRange(new DataGridViewColumn[] { clm_c_nombre, clm_c_cantidad, clm_c_precio });
             dgv_carrito.Location = new Point(26, 73);
             dgv_carrito.Name = "dgv_carrito";
+            dgv_carrito.ReadOnly = true;
             dgv_carrito.RowHeadersWidth = 62;
             dgv_carrito.Size = new Size(507, 208);
             dgv_carrito.TabIndex = 11;
@@ -398,6 +404,7 @@
             clm_c_nombre.HeaderText = "nombre";
             clm_c_nombre.MinimumWidth = 8;
             clm_c_nombre.Name = "clm_c_nombre";
+            clm_c_nombre.ReadOnly = true;
             clm_c_nombre.Width = 150;
             // 
             // clm_c_cantidad
@@ -405,6 +412,7 @@
             clm_c_cantidad.HeaderText = "cantidad";
             clm_c_cantidad.MinimumWidth = 8;
             clm_c_cantidad.Name = "clm_c_cantidad";
+            clm_c_cantidad.ReadOnly = true;
             clm_c_cantidad.Width = 150;
             // 
             // clm_c_precio

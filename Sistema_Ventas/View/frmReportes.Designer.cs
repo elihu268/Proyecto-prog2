@@ -239,6 +239,7 @@
             dgvReporteVentas.Columns.AddRange(new DataGridViewColumn[] { idVt, fechaVt, clienteVt, productoVt, cantidadVt, precioUniVt });
             dgvReporteVentas.Location = new Point(0, 361);
             dgvReporteVentas.Name = "dgvReporteVentas";
+            dgvReporteVentas.ReadOnly = true;
             dgvReporteVentas.RowHeadersWidth = 62;
             dgvReporteVentas.Size = new Size(838, 437);
             dgvReporteVentas.TabIndex = 5;
@@ -250,6 +251,7 @@
             idVt.HeaderText = "ID";
             idVt.MinimumWidth = 10;
             idVt.Name = "idVt";
+            idVt.ReadOnly = true;
             // 
             // fechaVt
             // 
@@ -257,6 +259,7 @@
             fechaVt.HeaderText = "Fecha";
             fechaVt.MinimumWidth = 10;
             fechaVt.Name = "fechaVt";
+            fechaVt.ReadOnly = true;
             // 
             // clienteVt
             // 
@@ -264,6 +267,7 @@
             clienteVt.HeaderText = "Cliente";
             clienteVt.MinimumWidth = 10;
             clienteVt.Name = "clienteVt";
+            clienteVt.ReadOnly = true;
             // 
             // productoVt
             // 
@@ -271,6 +275,7 @@
             productoVt.HeaderText = "Producto";
             productoVt.MinimumWidth = 10;
             productoVt.Name = "productoVt";
+            productoVt.ReadOnly = true;
             // 
             // cantidadVt
             // 
@@ -278,6 +283,7 @@
             cantidadVt.HeaderText = "Cantidad";
             cantidadVt.MinimumWidth = 10;
             cantidadVt.Name = "cantidadVt";
+            cantidadVt.ReadOnly = true;
             // 
             // precioUniVt
             // 
@@ -285,6 +291,7 @@
             precioUniVt.HeaderText = "Precio Unitario";
             precioUniVt.MinimumWidth = 10;
             precioUniVt.Name = "precioUniVt";
+            precioUniVt.ReadOnly = true;
             // 
             // frmReportes
             // 

@@ -51,6 +51,7 @@
             dgvResumVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvResumVentas.Location = new Point(13, 183);
             dgvResumVentas.Name = "dgvResumVentas";
+            dgvResumVentas.ReadOnly = true;
             dgvResumVentas.RowHeadersWidth = 62;
             dgvResumVentas.Size = new Size(862, 293);
             dgvResumVentas.TabIndex = 1;
