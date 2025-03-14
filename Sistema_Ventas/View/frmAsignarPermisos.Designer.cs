@@ -164,7 +164,7 @@
             // lbl_selec_permiso
             // 
             lbl_selec_permiso.AutoSize = true;
-            lbl_selec_permiso.Location = new Point(372, 27);
+            lbl_selec_permiso.Location = new Point(372, 92);
             lbl_selec_permiso.Name = "lbl_selec_permiso";
             lbl_selec_permiso.Size = new Size(179, 25);
             lbl_selec_permiso.TabIndex = 19;
@@ -242,7 +242,7 @@
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbox_permisos.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbox_permisos.FormattingEnabled = true;
-            cbox_permisos.Location = new Point(372, 65);
+            cbox_permisos.Location = new Point(372, 131);
             cbox_permisos.Name = "cbox_permisos";
             cbox_permisos.Size = new Size(270, 33);
             cbox_permisos.TabIndex = 2;
