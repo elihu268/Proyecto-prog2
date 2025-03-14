@@ -33,7 +33,7 @@ namespace DiseñoForms.View
         public void AjustarFondoMDI()
         {
             // Ajusta la imagen al tamaño del formulario
-            this.BackgroundImage = Resources.usuario;
+            //this.BackgroundImage = Resources.;
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
