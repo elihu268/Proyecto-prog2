@@ -55,6 +55,7 @@
             // 
             // gbxFiltroVentas
             // 
+            gbxFiltroVentas.BackColor = SystemColors.GradientInactiveCaption;
             gbxFiltroVentas.Controls.Add(cbFecha);
             gbxFiltroVentas.Controls.Add(lblNomProducto);
             gbxFiltroVentas.Controls.Add(cbxNomProducto);
