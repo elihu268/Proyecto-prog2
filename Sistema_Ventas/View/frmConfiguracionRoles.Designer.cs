@@ -380,7 +380,7 @@
             btnColapsar.Location = new Point(13, 33);
             btnColapsar.Margin = new Padding(4, 5, 4, 5);
             btnColapsar.Name = "btnColapsar";
-            btnColapsar.Size = new Size(88, 38);
+            btnColapsar.Size = new Size(191, 38);
             btnColapsar.TabIndex = 0;
             btnColapsar.Text = "Mostrar captura";
             btnColapsar.TextAlign = ContentAlignment.MiddleRight;
