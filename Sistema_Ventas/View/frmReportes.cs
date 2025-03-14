@@ -167,5 +167,10 @@ namespace PuntodeVenta.View
         {
 
         }
+
+        private void cbxNomProducto_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

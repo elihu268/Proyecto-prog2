@@ -71,10 +71,8 @@
             gbxFiltroVentas.Dock = DockStyle.Top;
             gbxFiltroVentas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxFiltroVentas.Location = new Point(0, 0);
-            gbxFiltroVentas.Margin = new Padding(4, 5, 4, 5);
             gbxFiltroVentas.Name = "gbxFiltroVentas";
-            gbxFiltroVentas.Padding = new Padding(4, 5, 4, 5);
-            gbxFiltroVentas.Size = new Size(838, 328);
+            gbxFiltroVentas.Size = new Size(587, 197);
             gbxFiltroVentas.TabIndex = 0;
             gbxFiltroVentas.TabStop = false;
             gbxFiltroVentas.Text = "Filtrado de ventas";
@@ -84,10 +82,9 @@
             // 
             cbFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             cbFecha.AutoSize = true;
-            cbFecha.Location = new Point(314, 145);
-            cbFecha.Margin = new Padding(4, 5, 4, 5);
+            cbFecha.Location = new Point(220, 87);
             cbFecha.Name = "cbFecha";
-            cbFecha.Size = new Size(228, 29);
+            cbFecha.Size = new Size(146, 19);
             cbFecha.TabIndex = 24;
             cbFecha.Text = "Por intervalo de fechas";
             cbFecha.UseVisualStyleBackColor = true;
@@ -98,10 +95,9 @@
             lblNomProducto.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblNomProducto.AutoSize = true;
             lblNomProducto.Enabled = false;
-            lblNomProducto.Location = new Point(477, 73);
-            lblNomProducto.Margin = new Padding(4, 0, 4, 0);
+            lblNomProducto.Location = new Point(317, 44);
             lblNomProducto.Name = "lblNomProducto";
-            lblNomProducto.Size = new Size(117, 50);
+            lblNomProducto.Size = new Size(73, 30);
             lblNomProducto.TabIndex = 23;
             lblNomProducto.Text = "Nombre del \r\nproducto";
             // 
@@ -111,20 +107,19 @@
             cbxNomProducto.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxNomProducto.Enabled = false;
             cbxNomProducto.FormattingEnabled = true;
-            cbxNomProducto.Location = new Point(589, 78);
-            cbxNomProducto.Margin = new Padding(4, 5, 4, 5);
+            cbxNomProducto.Location = new Point(395, 47);
             cbxNomProducto.Name = "cbxNomProducto";
-            cbxNomProducto.Size = new Size(213, 33);
+            cbxNomProducto.Size = new Size(180, 23);
             cbxNomProducto.TabIndex = 22;
+            cbxNomProducto.SelectedIndexChanged += cbxNomProducto_SelectedIndexChanged_1;
             // 
             // cbProducto
             // 
             cbProducto.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             cbProducto.AutoSize = true;
-            cbProducto.Location = new Point(465, 37);
-            cbProducto.Margin = new Padding(4, 5, 4, 5);
+            cbProducto.Location = new Point(316, 22);
             cbProducto.Name = "cbProducto";
-            cbProducto.Size = new Size(135, 29);
+            cbProducto.Size = new Size(87, 19);
             cbProducto.TabIndex = 21;
             cbProducto.Text = "Por artículo";
             cbProducto.UseVisualStyleBackColor = true;
@@ -134,10 +129,9 @@
             // 
             lblNomCliente.AutoSize = true;
             lblNomCliente.Enabled = false;
-            lblNomCliente.Location = new Point(29, 73);
-            lblNomCliente.Margin = new Padding(4, 0, 4, 0);
+            lblNomCliente.Location = new Point(20, 44);
             lblNomCliente.Name = "lblNomCliente";
-            lblNomCliente.Size = new Size(117, 50);
+            lblNomCliente.Size = new Size(73, 30);
             lblNomCliente.TabIndex = 20;
             lblNomCliente.Text = "Nombre del \r\ncliente";
             // 
@@ -146,20 +140,18 @@
             cbxNomCliente.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxNomCliente.Enabled = false;
             cbxNomCliente.FormattingEnabled = true;
-            cbxNomCliente.Location = new Point(141, 78);
-            cbxNomCliente.Margin = new Padding(4, 5, 4, 5);
+            cbxNomCliente.Location = new Point(99, 47);
             cbxNomCliente.Name = "cbxNomCliente";
-            cbxNomCliente.Size = new Size(213, 33);
+            cbxNomCliente.Size = new Size(180, 23);
             cbxNomCliente.TabIndex = 19;
             cbxNomCliente.SelectedIndexChanged += cbxNomCliente_SelectedIndexChanged;
             // 
             // cbCliente
             // 
             cbCliente.AutoSize = true;
-            cbCliente.Location = new Point(29, 37);
-            cbCliente.Margin = new Padding(4, 5, 4, 5);
+            cbCliente.Location = new Point(20, 22);
             cbCliente.Name = "cbCliente";
-            cbCliente.Size = new Size(162, 29);
+            cbCliente.Size = new Size(106, 19);
             cbCliente.TabIndex = 7;
             cbCliente.Text = "Por comprador";
             cbCliente.UseVisualStyleBackColor = true;
@@ -170,11 +162,10 @@
             dtpFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             dtpFechaFin.Enabled = false;
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(589, 187);
-            dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaFin.Location = new Point(395, 112);
             dtpFechaFin.MaxDate = new DateTime(2025, 3, 13, 1, 25, 0, 0);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(213, 31);
+            dtpFechaFin.Size = new Size(180, 23);
             dtpFechaFin.TabIndex = 6;
             dtpFechaFin.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
             dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
@@ -183,11 +174,10 @@
             // 
             dtpFechaInicio.Enabled = false;
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(141, 187);
-            dtpFechaInicio.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaInicio.Location = new Point(99, 112);
             dtpFechaInicio.MaxDate = new DateTime(2025, 3, 13, 1, 25, 12, 0);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(213, 31);
+            dtpFechaInicio.Size = new Size(180, 23);
             dtpFechaInicio.TabIndex = 5;
             dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
             // 
@@ -195,10 +185,9 @@
             // 
             lblFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblFechaFin.AutoSize = true;
-            lblFechaFin.Location = new Point(477, 193);
-            lblFechaFin.Margin = new Padding(4, 0, 4, 0);
+            lblFechaFin.Location = new Point(317, 116);
             lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(99, 25);
+            lblFechaFin.Size = new Size(64, 15);
             lblFechaFin.TabIndex = 4;
             lblFechaFin.Text = "Fecha final";
             lblFechaFin.Click += lblFechaFin_Click;
@@ -206,10 +195,9 @@
             // lblFechaInicio
             // 
             lblFechaInicio.AutoSize = true;
-            lblFechaInicio.Location = new Point(29, 193);
-            lblFechaInicio.Margin = new Padding(4, 0, 4, 0);
+            lblFechaInicio.Location = new Point(20, 116);
             lblFechaInicio.Name = "lblFechaInicio";
-            lblFechaInicio.Size = new Size(111, 25);
+            lblFechaInicio.Size = new Size(72, 15);
             lblFechaInicio.TabIndex = 3;
             lblFechaInicio.Text = "Fecha inicial";
             // 
@@ -220,11 +208,10 @@
             btnGenerarReporte.BackColor = SystemColors.ActiveCaption;
             btnGenerarReporte.Image = Sistema_Ventas.Properties.Resources.generarReporte;
             btnGenerarReporte.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGenerarReporte.Location = new Point(380, 240);
-            btnGenerarReporte.Margin = new Padding(4, 5, 4, 5);
-            btnGenerarReporte.MaximumSize = new Size(107, 50);
+            btnGenerarReporte.Location = new Point(266, 144);
+            btnGenerarReporte.MaximumSize = new Size(75, 30);
             btnGenerarReporte.Name = "btnGenerarReporte";
-            btnGenerarReporte.Size = new Size(107, 50);
+            btnGenerarReporte.Size = new Size(75, 30);
             btnGenerarReporte.TabIndex = 2;
             btnGenerarReporte.Text = "Generar";
             btnGenerarReporte.TextAlign = ContentAlignment.MiddleRight;
@@ -238,11 +225,12 @@
             dgvReporteVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvReporteVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReporteVentas.Columns.AddRange(new DataGridViewColumn[] { idVt, fechaVt, clienteVt, productoVt, cantidadVt, precioUniVt });
-            dgvReporteVentas.Location = new Point(0, 361);
+            dgvReporteVentas.Location = new Point(0, 217);
+            dgvReporteVentas.Margin = new Padding(2, 2, 2, 2);
             dgvReporteVentas.Name = "dgvReporteVentas";
             dgvReporteVentas.ReadOnly = true;
             dgvReporteVentas.RowHeadersWidth = 62;
-            dgvReporteVentas.Size = new Size(838, 437);
+            dgvReporteVentas.Size = new Size(587, 262);
             dgvReporteVentas.TabIndex = 5;
             dgvReporteVentas.CellContentClick += dgvReporteVentas_CellContentClick;
             // 
@@ -296,14 +284,13 @@
             // 
             // frmReportes
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(838, 797);
+            ClientSize = new Size(587, 449);
             Controls.Add(dgvReporteVentas);
             Controls.Add(gbxFiltroVentas);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 5, 4, 5);
             Name = "frmReportes";
             Text = "Reportes de ventas";
             Load += frmReportes_Load;
