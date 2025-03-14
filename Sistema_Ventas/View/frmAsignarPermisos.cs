@@ -76,6 +76,20 @@ namespace Sistema_Ventas.View
         private void InicializarVentanaPermisos()
         {
             sc_asignacion.Panel1Collapsed = true;
+            PoblacomboPermisos();
+        }
+        private void PoblacomboPermisos()
+        {
+            Dictionary<int, string> list_cliente = new Dictionary<int, string>()
+            {
+            //key,value
+            { 0, "asignar permisos" }
+        };
+            cbox_permisos.DataSource = new BindingSource(list_cliente, null);
+            //es la fuente de datos que seria la lista atraves del objeto binding
+            cbox_permisos.DisplayMember = "value";//lo que muestra
+            cbox_permisos.ValueMember = "key";//con la que se enlaza a la base de datos
+            cbox_permisos.SelectedValue = 0;//valor inicializado
         }
     }
 }

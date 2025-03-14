@@ -57,6 +57,7 @@
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -89,6 +90,7 @@
             // 
             // gbxAltaEdicionRol
             // 
+            gbxAltaEdicionRol.Controls.Add(label1);
             gbxAltaEdicionRol.Controls.Add(picBoxFormato);
             gbxAltaEdicionRol.Controls.Add(numIdRol);
             gbxAltaEdicionRol.Controls.Add(btnGuardar);
@@ -138,7 +140,7 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(196, 365);
+            btnGuardar.Location = new Point(107, 406);
             btnGuardar.Margin = new Padding(4, 5, 4, 5);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(113, 52);
@@ -164,9 +166,9 @@
             lblEstatus.Location = new Point(19, 267);
             lblEstatus.Margin = new Padding(4, 0, 4, 0);
             lblEstatus.Name = "lblEstatus";
-            lblEstatus.Size = new Size(71, 25);
+            lblEstatus.Size = new Size(79, 25);
             lblEstatus.TabIndex = 18;
-            lblEstatus.Text = "Estatus";
+            lblEstatus.Text = "Estatus*";
             // 
             // txtDescripcion
             // 
@@ -192,9 +194,9 @@
             lblDescripcion.Location = new Point(19, 193);
             lblDescripcion.Margin = new Padding(4, 0, 4, 0);
             lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(109, 25);
+            lblDescripcion.Size = new Size(117, 25);
             lblDescripcion.TabIndex = 13;
-            lblDescripcion.Text = "Descripción";
+            lblDescripcion.Text = "Descripción*";
             // 
             // lblCodigo
             // 
@@ -389,6 +391,16 @@
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(121, 357);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(197, 25);
+            label1.TabIndex = 23;
+            label1.Text = "* Campos obligatorios";
+            // 
             // frmConfiguracionRoles
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -447,5 +459,6 @@
         private PictureBox picBoxFormato;
         private ToolTip toolTipCodigo;
         private DataGridView dgvRoles;
+        private Label label1;
     }
 }

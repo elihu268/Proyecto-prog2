@@ -238,7 +238,7 @@
             // 
             // cbox_permisos
             // 
-            cbox_permisos.AutoCompleteCustomSource.AddRange(new string[] { "Cobrar" });
+            cbox_permisos.AutoCompleteCustomSource.AddRange(new string[] { "Asignar permisos" });
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbox_permisos.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
             cbox_permisos.FormattingEnabled = true;
