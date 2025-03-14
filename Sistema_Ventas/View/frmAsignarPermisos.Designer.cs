@@ -47,6 +47,7 @@
             txt_buscar_rol = new TextBox();
             cbox_permisos = new ComboBox();
             lblt_titulo = new Label();
+            clm_descipcion = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)sc_asignacion).BeginInit();
             sc_asignacion.Panel1.SuspendLayout();
             sc_asignacion.Panel2.SuspendLayout();
@@ -84,7 +85,7 @@
             grbox_lista_permisos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grbox_lista_permisos.Location = new Point(3, 3);
             grbox_lista_permisos.Name = "grbox_lista_permisos";
-            grbox_lista_permisos.Size = new Size(335, 481);
+            grbox_lista_permisos.Size = new Size(351, 481);
             grbox_lista_permisos.TabIndex = 1;
             grbox_lista_permisos.TabStop = false;
             grbox_lista_permisos.Text = "Permisos asignados";
@@ -111,14 +112,14 @@
             // 
             fgb_permisos.BackgroundColor = SystemColors.GradientInactiveCaption;
             fgb_permisos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            fgb_permisos.Columns.AddRange(new DataGridViewColumn[] { clm_permiso });
+            fgb_permisos.Columns.AddRange(new DataGridViewColumn[] { clm_permiso, clm_descipcion });
             fgb_permisos.Enabled = false;
             fgb_permisos.GridColor = SystemColors.InactiveBorder;
-            fgb_permisos.Location = new Point(53, 121);
+            fgb_permisos.Location = new Point(11, 131);
             fgb_permisos.Name = "fgb_permisos";
             fgb_permisos.ReadOnly = true;
             fgb_permisos.RowHeadersWidth = 62;
-            fgb_permisos.Size = new Size(215, 301);
+            fgb_permisos.Size = new Size(334, 301);
             fgb_permisos.TabIndex = 18;
             fgb_permisos.CellContentClick += dataGridView2_CellContentClick;
             // 
@@ -260,6 +261,14 @@
             lblt_titulo.Text = "Asignacion de permisos";
             lblt_titulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // clm_descipcion
+            // 
+            clm_descipcion.HeaderText = "Descripcion";
+            clm_descipcion.MinimumWidth = 8;
+            clm_descipcion.Name = "clm_descipcion";
+            clm_descipcion.ReadOnly = true;
+            clm_descipcion.Width = 150;
+            // 
             // frmAsignarPermisos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -305,5 +314,6 @@
         private Label lbl_rol;
         private TextBox txt_rol;
         private Button btn_agregar;
+        private DataGridViewTextBoxColumn clm_descipcion;
     }
 }
