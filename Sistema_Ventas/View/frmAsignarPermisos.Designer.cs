@@ -240,7 +240,7 @@
             // 
             cbox_permisos.AutoCompleteCustomSource.AddRange(new string[] { "Asignar permisos" });
             cbox_permisos.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cbox_permisos.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
+            cbox_permisos.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbox_permisos.FormattingEnabled = true;
             cbox_permisos.Location = new Point(372, 65);
             cbox_permisos.Name = "cbox_permisos";
