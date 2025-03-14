@@ -92,7 +92,7 @@ namespace PuntodeVenta.View
         }
         private bool DatosValidos()
         {
-            if (!UsuariosNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
+            if (!ClientesNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
             {
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;

@@ -44,6 +44,10 @@ namespace Sistema_Ventas.Bussines
             {
                 return Validaciones.ValidarTelefono(telefono);
             }
+            internal static bool EsFormatoValido(string correo)
+            {
+                return Validaciones.EsCorreoValido(correo);
+            }
         }
         
 
