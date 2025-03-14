@@ -50,7 +50,7 @@ namespace Sistema_Ventas.Utilities
         /// <summary>
         /// metodo para saber si es un numero
         /// </summary>
-        /// <param name="cadena">intenta pasar una cadena a numero</param>
+        /// <param name="cadena">intenta pasar una cadena ingresada a numero</param>
         /// <returns>si es numero retorna verdadero</returns>
         public static bool EsUnNumero(string cadena)
         {
