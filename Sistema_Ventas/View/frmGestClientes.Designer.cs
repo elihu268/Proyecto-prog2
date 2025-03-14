@@ -199,7 +199,7 @@
             pbxInformacionrfc.Size = new Size(44, 52);
             pbxInformacionrfc.TabIndex = 30;
             pbxInformacionrfc.TabStop = false;
-            ttipinfo.SetToolTip(pbxInformacionrfc, "iniciales del nombre, fecha de nacimiento,3  caracteres dados por el SAT");
+            ttipinfo.SetToolTip(pbxInformacionrfc, "iniciales del nombre, fecha de nacimiento,3  caracteres dados por el SAT,tamaño 13 caracteres");
             // 
             // txtrfcCliente
             // 
@@ -297,7 +297,7 @@
             // 
             txtTelefonoCliente.Location = new Point(14, 255);
             txtTelefonoCliente.Margin = new Padding(4, 5, 4, 5);
-            txtTelefonoCliente.MaxLength = 15;
+            txtTelefonoCliente.MaxLength = 12;
             txtTelefonoCliente.Name = "txtTelefonoCliente";
             txtTelefonoCliente.Size = new Size(285, 31);
             txtTelefonoCliente.TabIndex = 16;

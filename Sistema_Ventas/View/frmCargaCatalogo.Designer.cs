@@ -77,11 +77,11 @@
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCatalogo.Columns.AddRange(new DataGridViewColumn[] { idProducto, codProducto, nombre, precio, descripcion, existencia });
             dgvCatalogo.Enabled = false;
-            dgvCatalogo.Location = new Point(13, 100);
+            dgvCatalogo.Location = new Point(1, 100);
             dgvCatalogo.Name = "dgvCatalogo";
             dgvCatalogo.ReadOnly = true;
             dgvCatalogo.RowHeadersWidth = 62;
-            dgvCatalogo.Size = new Size(862, 376);
+            dgvCatalogo.Size = new Size(874, 376);
             dgvCatalogo.TabIndex = 4;
             // 
             // idProducto
