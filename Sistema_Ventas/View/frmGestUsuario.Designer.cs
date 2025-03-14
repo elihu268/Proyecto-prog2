@@ -365,6 +365,7 @@
             dataGridView1.Location = new Point(0, 200);
             dataGridView1.Margin = new Padding(4, 5, 4, 5);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(746, 432);
             dataGridView1.TabIndex = 2;
@@ -374,6 +375,7 @@
             Nombre.HeaderText = "Nombre";
             Nombre.MinimumWidth = 8;
             Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
             Nombre.Width = 150;
             // 
             // Correo
@@ -381,6 +383,7 @@
             Correo.HeaderText = "Correo";
             Correo.MinimumWidth = 8;
             Correo.Name = "Correo";
+            Correo.ReadOnly = true;
             Correo.Width = 150;
             // 
             // Telefono
@@ -388,6 +391,7 @@
             Telefono.HeaderText = "Telefono";
             Telefono.MinimumWidth = 8;
             Telefono.Name = "Telefono";
+            Telefono.ReadOnly = true;
             Telefono.Width = 150;
             // 
             // Estatus
@@ -395,6 +399,7 @@
             Estatus.HeaderText = "Estatus";
             Estatus.MinimumWidth = 8;
             Estatus.Name = "Estatus";
+            Estatus.ReadOnly = true;
             Estatus.Width = 150;
             // 
             // Rol
@@ -402,6 +407,7 @@
             Rol.HeaderText = "Rol";
             Rol.MinimumWidth = 8;
             Rol.Name = "Rol";
+            Rol.ReadOnly = true;
             Rol.Width = 150;
             // 
             // gbxBusqueda
