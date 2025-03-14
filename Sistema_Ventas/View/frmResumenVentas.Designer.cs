@@ -39,6 +39,7 @@
             lblFechaFin = new Label();
             lblBusquedaTex = new Label();
             txtBusqueda = new TextBox();
+            lbl_titulo = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvResumVentas).BeginInit();
             gbFiltros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -49,17 +50,18 @@
             dgvResumVentas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvResumVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvResumVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvResumVentas.Location = new Point(13, 183);
+            dgvResumVentas.Location = new Point(13, 244);
             dgvResumVentas.Name = "dgvResumVentas";
             dgvResumVentas.ReadOnly = true;
             dgvResumVentas.RowHeadersWidth = 62;
-            dgvResumVentas.Size = new Size(862, 293);
+            dgvResumVentas.Size = new Size(862, 360);
             dgvResumVentas.TabIndex = 1;
             dgvResumVentas.CellContentClick += dataGridView1_CellContentClick;
             // 
             // gbFiltros
             // 
             gbFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbFiltros.BackColor = SystemColors.InactiveBorder;
             gbFiltros.Controls.Add(pictureBox1);
             gbFiltros.Controls.Add(btnActualizar);
             gbFiltros.Controls.Add(dtpFechaFin);
@@ -69,9 +71,9 @@
             gbFiltros.Controls.Add(lblBusquedaTex);
             gbFiltros.Controls.Add(txtBusqueda);
             gbFiltros.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbFiltros.Location = new Point(13, 13);
+            gbFiltros.Location = new Point(13, 57);
             gbFiltros.Name = "gbFiltros";
-            gbFiltros.Size = new Size(862, 163);
+            gbFiltros.Size = new Size(862, 168);
             gbFiltros.TabIndex = 2;
             gbFiltros.TabStop = false;
             gbFiltros.Text = "Filtros";
@@ -157,12 +159,25 @@
             txtBusqueda.Size = new Size(424, 31);
             txtBusqueda.TabIndex = 0;
             // 
+            // lbl_titulo
+            // 
+            lbl_titulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lbl_titulo.BackColor = Color.SteelBlue;
+            lbl_titulo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbl_titulo.Location = new Point(13, 3);
+            lbl_titulo.Name = "lbl_titulo";
+            lbl_titulo.Size = new Size(856, 51);
+            lbl_titulo.TabIndex = 3;
+            lbl_titulo.Text = "Resumen de ventas";
+            lbl_titulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // frmResumenVentas
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(889, 489);
+            ClientSize = new Size(889, 617);
+            Controls.Add(lbl_titulo);
             Controls.Add(gbFiltros);
             Controls.Add(dgvResumVentas);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -186,5 +201,6 @@
         private DateTimePicker dtpFechaFin;
         private DateTimePicker dtpFechaIn;
         private PictureBox pictureBox1;
+        private Label lbl_titulo;
     }
 }
