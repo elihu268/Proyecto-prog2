@@ -91,6 +91,11 @@ namespace PuntodeVenta.View
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+            if (!UsuariosNegocio.EsTelefonoValido(txtTelefono.Text.Trim()))
+            {
+                MessageBox.Show("El Telefono no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
         private bool GuardarUsuario()

@@ -57,5 +57,26 @@ namespace Sistema_Ventas.Utilities
             int resultado;
             return (int.TryParse(cadena, out resultado));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rfc">se espera que el valor de la cadena RFc</param>
+        /// <returns>se retorna un true si la cadena hace Ismach con la expresion regular y si coincide manda un true</returns>
+        public static bool ValidarRFC(string rfc)
+        {
+            string patron = @"^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$";
+            return Regex.IsMatch(rfc, patron);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="telefono">se captura el string de telefono</param>
+        /// <returns>se retornara un true o false dependiendo si hace mach con la expresion regular</returns>
+        public static bool ValidarTelefono(string telefono)
+        {
+            //string patron = @"^(\+)?(\d{1,2})?[( .-](\d{3})[) .-](\d{3,4})[ .-]?(\d{4})$";
+            string patron = @"^\A[0-9]{7,10}\z";
+            return Regex.IsMatch(telefono, patron);
+        }
     }
 }

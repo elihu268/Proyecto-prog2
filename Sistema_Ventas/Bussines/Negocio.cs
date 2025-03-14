@@ -15,6 +15,10 @@ namespace Sistema_Ventas.Bussines
             {
                 return Validaciones.EsCorreoValido(correo);
             }
+            internal static bool EsTelefonoValido(string telefono)
+            {
+                return Validaciones.ValidarTelefono(telefono);
+            }
         }
         internal class CompraNegocio
         {
@@ -30,5 +34,18 @@ namespace Sistema_Ventas.Bussines
                 return Validaciones.EsCodigoRolValido(codigo);
             }
         }
+        internal class ClientesNegocio
+        {
+            internal static bool EsRFCValido(string rfc)
+            {
+                return Validaciones.ValidarRFC(rfc);
+            }
+            internal static bool EsTelefonoValido(string telefono)
+            {
+                return Validaciones.ValidarTelefono(telefono);
+            }
+        }
+        
+
     }
 }

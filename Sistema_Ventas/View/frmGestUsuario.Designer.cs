@@ -51,6 +51,11 @@
             lbCorreo = new Label();
             lbNombre = new Label();
             dataGridView1 = new DataGridView();
+            Nombre = new DataGridViewTextBoxColumn();
+            Correo = new DataGridViewTextBoxColumn();
+            Telefono = new DataGridViewTextBoxColumn();
+            Estatus = new DataGridViewTextBoxColumn();
+            Rol = new DataGridViewTextBoxColumn();
             gbxBusqueda = new GroupBox();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
@@ -67,11 +72,6 @@
             btncargaUsuario = new Button();
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
-            Nombre = new DataGridViewTextBoxColumn();
-            Correo = new DataGridViewTextBoxColumn();
-            Telefono = new DataGridViewTextBoxColumn();
-            Estatus = new DataGridViewTextBoxColumn();
-            Rol = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -134,6 +134,7 @@
             // lbconfirmcontraAlert
             // 
             lbconfirmcontraAlert.AutoSize = true;
+            lbconfirmcontraAlert.ForeColor = Color.Red;
             lbconfirmcontraAlert.Location = new Point(20, 384);
             lbconfirmcontraAlert.Name = "lbconfirmcontraAlert";
             lbconfirmcontraAlert.Size = new Size(0, 15);
@@ -142,6 +143,7 @@
             // lbcontraalert
             // 
             lbcontraalert.AutoSize = true;
+            lbcontraalert.ForeColor = Color.Red;
             lbcontraalert.Location = new Point(20, 325);
             lbcontraalert.Name = "lbcontraalert";
             lbcontraalert.Size = new Size(0, 15);
@@ -168,6 +170,7 @@
             // lbConfirmcontra
             // 
             lbConfirmcontra.AutoSize = true;
+            lbConfirmcontra.ForeColor = SystemColors.ControlText;
             lbConfirmcontra.Location = new Point(16, 340);
             lbConfirmcontra.Name = "lbConfirmcontra";
             lbConfirmcontra.Size = new Size(122, 15);
@@ -309,11 +312,37 @@
             dataGridView1.BackgroundColor = SystemColors.GradientInactiveCaption;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Correo, Telefono, Estatus, Rol });
+            dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 131);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(580, 281);
             dataGridView1.TabIndex = 2;
+            // 
+            // Nombre
+            // 
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            // 
+            // Correo
+            // 
+            Correo.HeaderText = "Correo";
+            Correo.Name = "Correo";
+            // 
+            // Telefono
+            // 
+            Telefono.HeaderText = "Telefono";
+            Telefono.Name = "Telefono";
+            // 
+            // Estatus
+            // 
+            Estatus.HeaderText = "Estatus";
+            Estatus.Name = "Estatus";
+            // 
+            // Rol
+            // 
+            Rol.HeaderText = "Rol";
+            Rol.Name = "Rol";
             // 
             // gbxBusqueda
             // 
@@ -490,31 +519,6 @@
             lbTitulo.TabIndex = 1;
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // Nombre
-            // 
-            Nombre.HeaderText = "Nombre";
-            Nombre.Name = "Nombre";
-            // 
-            // Correo
-            // 
-            Correo.HeaderText = "Correo";
-            Correo.Name = "Correo";
-            // 
-            // Telefono
-            // 
-            Telefono.HeaderText = "Telefono";
-            Telefono.Name = "Telefono";
-            // 
-            // Estatus
-            // 
-            Estatus.HeaderText = "Estatus";
-            Estatus.Name = "Estatus";
-            // 
-            // Rol
-            // 
-            Rol.HeaderText = "Rol";
-            Rol.Name = "Rol";
             // 
             // frmGestUsuario
             // 

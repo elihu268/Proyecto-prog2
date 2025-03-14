@@ -88,7 +88,13 @@ namespace PuntodeVenta.View
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!ClientesNegocio.ValidarRFC(txtrfcCliente.Text.Trim()))
+            if (!ClientesNegocio.EsTelefonoValido(txtTelefonoCliente.Text.Trim()))
+            {
+                MessageBox.Show("El Telefono no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!ClientesNegocio.EsRFCValido(txtrfcCliente.Text.ToUpper().Trim()))
             {
                 MessageBox.Show("El RFC no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
