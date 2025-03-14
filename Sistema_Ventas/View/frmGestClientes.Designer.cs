@@ -199,7 +199,7 @@
             pbxInformacionrfc.Size = new Size(44, 52);
             pbxInformacionrfc.TabIndex = 30;
             pbxInformacionrfc.TabStop = false;
-            ttipinfo.SetToolTip(pbxInformacionrfc, "iniciales del nombre, fecha de nacimiento,3  cracteres dados por el SAT");
+            ttipinfo.SetToolTip(pbxInformacionrfc, "iniciales del nombre, fecha de nacimiento,3  caracteres dados por el SAT");
             // 
             // txtrfcCliente
             // 

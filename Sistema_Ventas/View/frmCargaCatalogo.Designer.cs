@@ -46,7 +46,6 @@
             // 
             // btnCargaCatalogo
             // 
-            btnCargaCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
             btnCargaCatalogo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCargaCatalogo.Location = new Point(319, 2);
@@ -59,7 +58,6 @@
             // 
             // btnActualizar
             // 
-            btnActualizar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnActualizar.BackColor = SystemColors.ActiveCaption;
             btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
