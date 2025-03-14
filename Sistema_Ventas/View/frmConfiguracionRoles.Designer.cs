@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracionRoles));
             scRoles = new SplitContainer();
             gbxAltaEdicionRol = new GroupBox();
+            label1 = new Label();
             picBoxFormato = new PictureBox();
             numIdRol = new NumericUpDown();
             btnGuardar = new Button();
@@ -57,7 +58,6 @@
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
-            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -111,6 +111,16 @@
             gbxAltaEdicionRol.TabIndex = 1;
             gbxAltaEdicionRol.TabStop = false;
             gbxAltaEdicionRol.Text = "Alta o Edición";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(121, 357);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(197, 25);
+            label1.TabIndex = 23;
+            label1.Text = "* Campos obligatorios";
             // 
             // picBoxFormato
             // 
@@ -204,9 +214,9 @@
             lblCodigo.Location = new Point(19, 117);
             lblCodigo.Margin = new Padding(4, 0, 4, 0);
             lblCodigo.Name = "lblCodigo";
-            lblCodigo.Size = new Size(72, 25);
+            lblCodigo.Size = new Size(80, 25);
             lblCodigo.TabIndex = 11;
-            lblCodigo.Text = "Código";
+            lblCodigo.Text = "Código*";
             // 
             // lblIdRol
             // 
@@ -370,7 +380,7 @@
             btnColapsar.Location = new Point(13, 33);
             btnColapsar.Margin = new Padding(4, 5, 4, 5);
             btnColapsar.Name = "btnColapsar";
-            btnColapsar.Size = new Size(151, 38);
+            btnColapsar.Size = new Size(88, 38);
             btnColapsar.TabIndex = 0;
             btnColapsar.Text = "Mostrar captura";
             btnColapsar.TextAlign = ContentAlignment.MiddleRight;
@@ -390,16 +400,6 @@
             lblTituloRol.TabIndex = 7;
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(121, 357);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(197, 25);
-            label1.TabIndex = 23;
-            label1.Text = "* Campos obligatorios";
             // 
             // frmConfiguracionRoles
             // 
