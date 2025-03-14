@@ -1,4 +1,5 @@
 ﻿using PuntodeVenta.View;
+using Sistema_Ventas.Properties;
 using Sistema_Ventas.View;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace DiseñoForms.View
         public void AjustarFondoMDI()
         {
             // Ajusta la imagen al tamaño del formulario
+            this.BackgroundImage = Resources.usuario;
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
