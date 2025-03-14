@@ -67,6 +67,11 @@
             btncargaUsuario = new Button();
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
+            Nombre = new DataGridViewTextBoxColumn();
+            Correo = new DataGridViewTextBoxColumn();
+            Telefono = new DataGridViewTextBoxColumn();
+            Estatus = new DataGridViewTextBoxColumn();
+            Rol = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -147,6 +152,7 @@
             txtConfContrasena.Location = new Point(18, 358);
             txtConfContrasena.MaxLength = 16;
             txtConfContrasena.Name = "txtConfContrasena";
+            txtConfContrasena.PasswordChar = '*';
             txtConfContrasena.Size = new Size(100, 23);
             txtConfContrasena.TabIndex = 31;
             // 
@@ -155,6 +161,7 @@
             txtContrasena.Location = new Point(18, 300);
             txtContrasena.MaxLength = 16;
             txtContrasena.Name = "txtContrasena";
+            txtContrasena.PasswordChar = '*';
             txtContrasena.Size = new Size(100, 23);
             txtContrasena.TabIndex = 30;
             // 
@@ -301,7 +308,7 @@
             // 
             dataGridView1.BackgroundColor = SystemColors.GradientInactiveCaption;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Right;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Correo, Telefono, Estatus, Rol });
             dataGridView1.Location = new Point(0, 131);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
@@ -430,12 +437,12 @@
             // lbCargaMasiva
             // 
             lbCargaMasiva.AutoSize = true;
-            lbCargaMasiva.Location = new Point(258, 19);
+            lbCargaMasiva.Location = new Point(236, 26);
             lbCargaMasiva.Margin = new Padding(2, 0, 2, 0);
             lbCargaMasiva.Name = "lbCargaMasiva";
-            lbCargaMasiva.Size = new Size(86, 15);
+            lbCargaMasiva.Size = new Size(175, 15);
             lbCargaMasiva.TabIndex = 2;
-            lbCargaMasiva.Text = "Ruta de acceso";
+            lbCargaMasiva.Text = "Seleccione un Archivo xlsx o xls";
             // 
             // btnCarga
             // 
@@ -483,6 +490,31 @@
             lbTitulo.TabIndex = 1;
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // Nombre
+            // 
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            // 
+            // Correo
+            // 
+            Correo.HeaderText = "Correo";
+            Correo.Name = "Correo";
+            // 
+            // Telefono
+            // 
+            Telefono.HeaderText = "Telefono";
+            Telefono.Name = "Telefono";
+            // 
+            // Estatus
+            // 
+            Estatus.HeaderText = "Estatus";
+            Estatus.Name = "Estatus";
+            // 
+            // Rol
+            // 
+            Rol.HeaderText = "Rol";
+            Rol.Name = "Rol";
             // 
             // frmGestUsuario
             // 
@@ -550,5 +582,10 @@
         private Label lbcontraalert;
         private Label lbconfirmcontraAlert;
         private Label lbTitulo;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Correo;
+        private DataGridViewTextBoxColumn Telefono;
+        private DataGridViewTextBoxColumn Estatus;
+        private DataGridViewTextBoxColumn Rol;
     }
 }

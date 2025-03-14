@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestClientes));
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ofdClientes = new OpenFileDialog();
@@ -38,6 +39,7 @@
             ContentPanel = new ToolStripContentPanel();
             scClientes = new SplitContainer();
             gbxActulizardatos = new GroupBox();
+            pbxInformacionrfc = new PictureBox();
             txtrfcCliente = new TextBox();
             dtpfechaRegistroCliente = new DateTimePicker();
             cbxTipoCliente = new ComboBox();
@@ -75,11 +77,13 @@
             btnCargaMasiva = new Button();
             btncollapse = new Button();
             lbtitle = new Label();
+            ttipinfo = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
             scClientes.SuspendLayout();
             gbxActulizardatos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxInformacionrfc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gbxBusqueda.SuspendLayout();
             gbxHerramientas.SuspendLayout();
@@ -146,6 +150,7 @@
             // 
             // gbxActulizardatos
             // 
+            gbxActulizardatos.Controls.Add(pbxInformacionrfc);
             gbxActulizardatos.Controls.Add(txtrfcCliente);
             gbxActulizardatos.Controls.Add(dtpfechaRegistroCliente);
             gbxActulizardatos.Controls.Add(cbxTipoCliente);
@@ -171,6 +176,16 @@
             gbxActulizardatos.TabIndex = 0;
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
+            // 
+            // pbxInformacionrfc
+            // 
+            pbxInformacionrfc.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
+            pbxInformacionrfc.Location = new Point(166, 367);
+            pbxInformacionrfc.Name = "pbxInformacionrfc";
+            pbxInformacionrfc.Size = new Size(31, 31);
+            pbxInformacionrfc.TabIndex = 30;
+            pbxInformacionrfc.TabStop = false;
+            ttipinfo.SetToolTip(pbxInformacionrfc, "el rfc tiene que contar con los 3 digitos unicos");
             // 
             // txtrfcCliente
             // 
@@ -538,6 +553,11 @@
             lbtitle.Text = "Gestion de Clientes";
             lbtitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // ttipinfo
+            // 
+            ttipinfo.Tag = "xd";
+            ttipinfo.ToolTipTitle = "RFC";
+            // 
             // frmGestClientes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -556,6 +576,7 @@
             scClientes.ResumeLayout(false);
             gbxActulizardatos.ResumeLayout(false);
             gbxActulizardatos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxInformacionrfc).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             gbxBusqueda.ResumeLayout(false);
             gbxBusqueda.PerformLayout();
@@ -611,5 +632,7 @@
         private Label lbtipoCliente;
         private DateTimePicker dtpfechaRegistroCliente;
         private TextBox txtrfcCliente;
+        private PictureBox pbxInformacionrfc;
+        private ToolTip ttipinfo;
     }
 }
