@@ -42,44 +42,46 @@
             // lbl_usuario
             // 
             lbl_usuario.AutoSize = true;
-            lbl_usuario.Location = new Point(339, 95);
+            lbl_usuario.Location = new Point(305, 87);
             lbl_usuario.Name = "lbl_usuario";
-            lbl_usuario.Size = new Size(72, 25);
+            lbl_usuario.Size = new Size(68, 23);
             lbl_usuario.TabIndex = 0;
             lbl_usuario.Text = "Usuario";
             // 
             // lbl_password
             // 
             lbl_password.AutoSize = true;
-            lbl_password.Location = new Point(310, 134);
+            lbl_password.Location = new Point(279, 123);
             lbl_password.Name = "lbl_password";
-            lbl_password.Size = new Size(101, 25);
+            lbl_password.Size = new Size(97, 23);
             lbl_password.TabIndex = 1;
             lbl_password.Text = "Contraseña";
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.usuario;
-            pictureBox1.Location = new Point(112, 95);
+            pictureBox1.Location = new Point(101, 87);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(162, 97);
+            pictureBox1.Size = new Size(146, 89);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
             // txt_usuario
             // 
-            txt_usuario.Location = new Point(439, 95);
+            txt_usuario.Location = new Point(395, 87);
+            txt_usuario.MaxLength = 50;
             txt_usuario.Name = "txt_usuario";
-            txt_usuario.Size = new Size(192, 31);
+            txt_usuario.Size = new Size(173, 30);
             txt_usuario.TabIndex = 3;
             // 
             // txt_password
             // 
-            txt_password.Location = new Point(439, 139);
+            txt_password.Location = new Point(395, 128);
+            txt_password.MaxLength = 20;
             txt_password.Name = "txt_password";
             txt_password.PasswordChar = '*';
-            txt_password.Size = new Size(192, 31);
+            txt_password.Size = new Size(173, 30);
             txt_password.TabIndex = 4;
             // 
             // btn_iniciar
@@ -88,9 +90,9 @@
             btn_iniciar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_iniciar.Image = Properties.Resources.login;
             btn_iniciar.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_iniciar.Location = new Point(149, 247);
+            btn_iniciar.Location = new Point(134, 227);
             btn_iniciar.Name = "btn_iniciar";
-            btn_iniciar.Size = new Size(219, 49);
+            btn_iniciar.Size = new Size(197, 45);
             btn_iniciar.TabIndex = 5;
             btn_iniciar.Text = "Iniciar sesion";
             btn_iniciar.UseVisualStyleBackColor = false;
@@ -102,9 +104,9 @@
             btn_cerrar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_cerrar.Image = Properties.Resources.salir;
             btn_cerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_cerrar.Location = new Point(439, 247);
+            btn_cerrar.Location = new Point(395, 227);
             btn_cerrar.Name = "btn_cerrar";
-            btn_cerrar.Size = new Size(195, 49);
+            btn_cerrar.Size = new Size(176, 45);
             btn_cerrar.TabIndex = 6;
             btn_cerrar.Text = "Cerrar";
             btn_cerrar.UseVisualStyleBackColor = false;
@@ -112,10 +114,10 @@
             // 
             // frmLogin
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(720, 414);
             Controls.Add(btn_cerrar);
             Controls.Add(btn_iniciar);
             Controls.Add(txt_password);
