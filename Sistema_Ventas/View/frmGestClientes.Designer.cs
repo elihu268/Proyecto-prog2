@@ -42,7 +42,6 @@
             txt_fecha_registro = new TextBox();
             pbxInformacionrfc = new PictureBox();
             txtrfcCliente = new TextBox();
-            dtpfechaRegistroCliente = new DateTimePicker();
             cbxTipoCliente = new ComboBox();
             lbfrcCliente = new Label();
             lbfechaRegistroCli = new Label();
@@ -156,7 +155,6 @@
             gbxActulizardatos.Controls.Add(txt_fecha_registro);
             gbxActulizardatos.Controls.Add(pbxInformacionrfc);
             gbxActulizardatos.Controls.Add(txtrfcCliente);
-            gbxActulizardatos.Controls.Add(dtpfechaRegistroCliente);
             gbxActulizardatos.Controls.Add(cbxTipoCliente);
             gbxActulizardatos.Controls.Add(lbfrcCliente);
             gbxActulizardatos.Controls.Add(lbfechaRegistroCli);
@@ -210,16 +208,6 @@
             txtrfcCliente.Name = "txtrfcCliente";
             txtrfcCliente.Size = new Size(188, 31);
             txtrfcCliente.TabIndex = 29;
-            // 
-            // dtpfechaRegistroCliente
-            // 
-            dtpfechaRegistroCliente.Format = DateTimePickerFormat.Short;
-            dtpfechaRegistroCliente.Location = new Point(237, 486);
-            dtpfechaRegistroCliente.Margin = new Padding(4, 5, 4, 5);
-            dtpfechaRegistroCliente.Name = "dtpfechaRegistroCliente";
-            dtpfechaRegistroCliente.Size = new Size(121, 31);
-            dtpfechaRegistroCliente.TabIndex = 28;
-            dtpfechaRegistroCliente.ValueChanged += dtpfechaRegistroCliente_ValueChanged;
             // 
             // cbxTipoCliente
             // 
@@ -347,9 +335,9 @@
             lbNacimiento.Location = new Point(11, 303);
             lbNacimiento.Margin = new Padding(4, 0, 4, 0);
             lbNacimiento.Name = "lbNacimiento";
-            lbNacimiento.Size = new Size(193, 25);
+            lbNacimiento.Size = new Size(185, 25);
             lbNacimiento.TabIndex = 12;
-            lbNacimiento.Text = "Fecha de Nacimiento*";
+            lbNacimiento.Text = "Fecha de Nacimiento";
             // 
             // lbCorreo
             // 
@@ -683,7 +671,6 @@
         private Label lbfrcCliente;
         private Label lbfechaRegistroCli;
         private Label lbtipoCliente;
-        private DateTimePicker dtpfechaRegistroCliente;
         private TextBox txtrfcCliente;
         private PictureBox pbxInformacionrfc;
         private ToolTip ttipinfo;
