@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestUsuario));
             scUsuarios = new SplitContainer();
             gbxUsuarios = new GroupBox();
+            lbl_obligatorios = new Label();
             lbconfirmcontraAlert = new Label();
             lbcontraalert = new Label();
             txtConfContrasena = new TextBox();
@@ -72,7 +74,8 @@
             btncargaUsuario = new Button();
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
-            lbl_obligatorios = new Label();
+            tooltip_passwor = new ToolTip(components);
+            pbox_passwor = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -81,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gbxBusqueda.SuspendLayout();
             gbxherramientas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbox_passwor).BeginInit();
             SuspendLayout();
             // 
             // scUsuarios
@@ -106,6 +110,7 @@
             // gbxUsuarios
             // 
             gbxUsuarios.BackColor = SystemColors.GradientActiveCaption;
+            gbxUsuarios.Controls.Add(pbox_passwor);
             gbxUsuarios.Controls.Add(lbl_obligatorios);
             gbxUsuarios.Controls.Add(lbconfirmcontraAlert);
             gbxUsuarios.Controls.Add(lbcontraalert);
@@ -136,6 +141,15 @@
             gbxUsuarios.TabIndex = 1;
             gbxUsuarios.TabStop = false;
             gbxUsuarios.Text = "Datos del Usuario";
+            // 
+            // lbl_obligatorios
+            // 
+            lbl_obligatorios.AutoSize = true;
+            lbl_obligatorios.Location = new Point(26, 655);
+            lbl_obligatorios.Name = "lbl_obligatorios";
+            lbl_obligatorios.Size = new Size(192, 25);
+            lbl_obligatorios.TabIndex = 34;
+            lbl_obligatorios.Text = "*Campos obligatorios";
             // 
             // lbconfirmcontraAlert
             // 
@@ -257,7 +271,7 @@
             txtTelefono.Cursor = Cursors.IBeam;
             txtTelefono.Location = new Point(21, 207);
             txtTelefono.Margin = new Padding(4, 5, 4, 5);
-            txtTelefono.MaxLength = 15;
+            txtTelefono.MaxLength = 12;
             txtTelefono.Name = "txtTelefono";
             txtTelefono.Size = new Size(323, 31);
             txtTelefono.TabIndex = 21;
@@ -569,14 +583,15 @@
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // lbl_obligatorios
+            // pbox_passwor
             // 
-            lbl_obligatorios.AutoSize = true;
-            lbl_obligatorios.Location = new Point(26, 655);
-            lbl_obligatorios.Name = "lbl_obligatorios";
-            lbl_obligatorios.Size = new Size(192, 25);
-            lbl_obligatorios.TabIndex = 34;
-            lbl_obligatorios.Text = "*Campos obligatorios";
+            pbox_passwor.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
+            pbox_passwor.Location = new Point(209, 500);
+            pbox_passwor.Name = "pbox_passwor";
+            pbox_passwor.Size = new Size(36, 42);
+            pbox_passwor.TabIndex = 35;
+            pbox_passwor.TabStop = false;
+            tooltip_passwor.SetToolTip(pbox_passwor, "por lo menos_ 8 caracteres, una mayuscula, un numero, un caracter especial");
             // 
             // frmGestUsuario
             // 
@@ -602,6 +617,7 @@
             gbxBusqueda.PerformLayout();
             gbxherramientas.ResumeLayout(false);
             gbxherramientas.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbox_passwor).EndInit();
             ResumeLayout(false);
         }
 
@@ -651,5 +667,7 @@
         private DataGridViewTextBoxColumn Estatus;
         private DataGridViewTextBoxColumn Rol;
         private Label lbl_obligatorios;
+        private PictureBox pbox_passwor;
+        private ToolTip tooltip_passwor;
     }
 }
