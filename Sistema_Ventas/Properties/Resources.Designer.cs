@@ -173,6 +173,26 @@ namespace Sistema_Ventas.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iconoVer {
+            get {
+                object obj = ResourceManager.GetObject("iconoVer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconoVer1 {
+            get {
+                object obj = ResourceManager.GetObject("iconoVer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap limpiar {
             get {
                 object obj = ResourceManager.GetObject("limpiar", resourceCulture);

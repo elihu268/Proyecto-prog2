@@ -57,6 +57,11 @@
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
+            dgvRoles = new DataGridView();
+            idRol = new DataGridViewTextBoxColumn();
+            codigoRol = new DataGridViewTextBoxColumn();
+            descripcionRol = new DataGridViewTextBoxColumn();
+            estatusRol = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -66,10 +71,12 @@
             ((System.ComponentModel.ISupportInitialize)numIdRol).BeginInit();
             gbxBusquedaRol.SuspendLayout();
             gbxHerramienta.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
             SuspendLayout();
             // 
             // scRoles
             // 
+            scRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             scRoles.Location = new Point(-1, 35);
             scRoles.Margin = new Padding(2);
             scRoles.Name = "scRoles";
@@ -80,6 +87,7 @@
             // 
             // scRoles.Panel2
             // 
+            scRoles.Panel2.Controls.Add(dgvRoles);
             scRoles.Panel2.Controls.Add(gbxBusquedaRol);
             scRoles.Panel2.Controls.Add(gbxHerramienta);
             scRoles.Size = new Size(815, 340);
@@ -339,10 +347,11 @@
             // 
             btnColapsar.BackColor = SystemColors.ActiveCaption;
             btnColapsar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnColapsar.Image = Properties.Resources.iconoVer;
             btnColapsar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnColapsar.Location = new Point(9, 20);
+            btnColapsar.Location = new Point(9, 17);
             btnColapsar.Name = "btnColapsar";
-            btnColapsar.Size = new Size(134, 23);
+            btnColapsar.Size = new Size(134, 26);
             btnColapsar.TabIndex = 0;
             btnColapsar.Text = "Mostrar captura";
             btnColapsar.TextAlign = ContentAlignment.MiddleRight;
@@ -361,6 +370,54 @@
             lblTituloRol.TabIndex = 7;
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dgvRoles
+            // 
+            dgvRoles.AllowUserToAddRows = false;
+            dgvRoles.BackgroundColor = SystemColors.ActiveCaption;
+            dgvRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRoles.Columns.AddRange(new DataGridViewColumn[] { idRol, codigoRol, descripcionRol, estatusRol });
+            dgvRoles.Dock = DockStyle.Fill;
+            dgvRoles.Enabled = false;
+            dgvRoles.Location = new Point(0, 141);
+            dgvRoles.Margin = new Padding(2);
+            dgvRoles.Name = "dgvRoles";
+            dgvRoles.ReadOnly = true;
+            dgvRoles.RowHeadersWidth = 62;
+            dgvRoles.Size = new Size(590, 199);
+            dgvRoles.TabIndex = 14;
+            // 
+            // idRol
+            // 
+            idRol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            idRol.HeaderText = "ID";
+            idRol.MinimumWidth = 10;
+            idRol.Name = "idRol";
+            idRol.ReadOnly = true;
+            // 
+            // codigoRol
+            // 
+            codigoRol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            codigoRol.HeaderText = "Código";
+            codigoRol.MinimumWidth = 10;
+            codigoRol.Name = "codigoRol";
+            codigoRol.ReadOnly = true;
+            // 
+            // descripcionRol
+            // 
+            descripcionRol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            descripcionRol.HeaderText = "Descripción";
+            descripcionRol.MinimumWidth = 10;
+            descripcionRol.Name = "descripcionRol";
+            descripcionRol.ReadOnly = true;
+            // 
+            // estatusRol
+            // 
+            estatusRol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            estatusRol.HeaderText = "Estatus";
+            estatusRol.MinimumWidth = 10;
+            estatusRol.Name = "estatusRol";
+            estatusRol.ReadOnly = true;
             // 
             // frmConfiguracionRoles
             // 
@@ -386,6 +443,7 @@
             gbxBusquedaRol.ResumeLayout(false);
             gbxBusquedaRol.PerformLayout();
             gbxHerramienta.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
             ResumeLayout(false);
         }
 
@@ -420,5 +478,10 @@
         private PictureBox picBoxFormato;
         private ToolTip toolTipCodigo;
         private Label lblInfo;
+        private DataGridView dgvRoles;
+        private DataGridViewTextBoxColumn idRol;
+        private DataGridViewTextBoxColumn codigoRol;
+        private DataGridViewTextBoxColumn descripcionRol;
+        private DataGridViewTextBoxColumn estatusRol;
     }
 }
