@@ -58,9 +58,9 @@ namespace Sistema_Ventas.Utilities
             return (int.TryParse(cadena, out resultado));
         }
         /// <summary>
-        /// 
+        /// metodo para saber si la cadena es un RFC
         /// </summary>
-        /// <param name="rfc">se espera que el valor de la cadena RFc</param>
+        /// <param name="rfc">se espera que el valor de la cadena RFC</param>
         /// <returns>se retorna un true si la cadena hace Ismach con la expresion regular y si coincide manda un true</returns>
         public static bool ValidarRFC(string rfc)
         {
@@ -68,7 +68,7 @@ namespace Sistema_Ventas.Utilities
             return Regex.IsMatch(rfc, patron);
         }
         /// <summary>
-        /// 
+        /// metodo para saber si la cadena es telefono
         /// </summary>
         /// <param name="telefono">se captura el string de telefono</param>
         /// <returns>se retornara un true o false dependiendo si hace mach con la expresion regular</returns>
