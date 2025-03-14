@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracionRoles));
             scRoles = new SplitContainer();
             gbxAltaEdicionRol = new GroupBox();
-            label1 = new Label();
+            lblInfo = new Label();
             picBoxFormato = new PictureBox();
             numIdRol = new NumericUpDown();
             btnGuardar = new Button();
@@ -43,7 +43,6 @@
             lblDescripcion = new Label();
             lblCodigo = new Label();
             lblIdRol = new Label();
-            dgvRoles = new DataGridView();
             gbxBusquedaRol = new GroupBox();
             cbxTipoFecha = new ComboBox();
             lblTipoFecha = new Label();
@@ -65,14 +64,14 @@
             gbxAltaEdicionRol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
             gbxBusquedaRol.SuspendLayout();
             gbxHerramienta.SuspendLayout();
             SuspendLayout();
             // 
             // scRoles
             // 
-            scRoles.Location = new Point(-1, 58);
+            scRoles.Location = new Point(-1, 35);
+            scRoles.Margin = new Padding(2);
             scRoles.Name = "scRoles";
             // 
             // scRoles.Panel1
@@ -81,16 +80,16 @@
             // 
             // scRoles.Panel2
             // 
-            scRoles.Panel2.Controls.Add(dgvRoles);
             scRoles.Panel2.Controls.Add(gbxBusquedaRol);
             scRoles.Panel2.Controls.Add(gbxHerramienta);
-            scRoles.Size = new Size(1164, 567);
-            scRoles.SplitterDistance = 318;
+            scRoles.Size = new Size(815, 340);
+            scRoles.SplitterDistance = 222;
+            scRoles.SplitterWidth = 3;
             scRoles.TabIndex = 6;
             // 
             // gbxAltaEdicionRol
             // 
-            gbxAltaEdicionRol.Controls.Add(label1);
+            gbxAltaEdicionRol.Controls.Add(lblInfo);
             gbxAltaEdicionRol.Controls.Add(picBoxFormato);
             gbxAltaEdicionRol.Controls.Add(numIdRol);
             gbxAltaEdicionRol.Controls.Add(btnGuardar);
@@ -104,43 +103,39 @@
             gbxAltaEdicionRol.Dock = DockStyle.Fill;
             gbxAltaEdicionRol.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxAltaEdicionRol.Location = new Point(0, 0);
-            gbxAltaEdicionRol.Margin = new Padding(4, 5, 4, 5);
             gbxAltaEdicionRol.Name = "gbxAltaEdicionRol";
-            gbxAltaEdicionRol.Padding = new Padding(4, 5, 4, 5);
-            gbxAltaEdicionRol.Size = new Size(318, 567);
+            gbxAltaEdicionRol.Size = new Size(222, 340);
             gbxAltaEdicionRol.TabIndex = 1;
             gbxAltaEdicionRol.TabStop = false;
             gbxAltaEdicionRol.Text = "Alta o Edición";
             // 
-            // label1
+            // lblInfo
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(121, 357);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(197, 25);
-            label1.TabIndex = 23;
-            label1.Text = "* Campos obligatorios";
+            lblInfo.AutoSize = true;
+            lblInfo.Location = new Point(85, 214);
+            lblInfo.Name = "lblInfo";
+            lblInfo.Size = new Size(124, 15);
+            lblInfo.TabIndex = 23;
+            lblInfo.Text = "* Campos obligatorios";
             // 
             // picBoxFormato
             // 
             picBoxFormato.Image = Properties.Resources.iconoPregunta;
-            picBoxFormato.Location = new Point(240, 146);
-            picBoxFormato.Margin = new Padding(4, 5, 4, 5);
+            picBoxFormato.Location = new Point(184, 84);
             picBoxFormato.Name = "picBoxFormato";
-            picBoxFormato.Size = new Size(46, 60);
+            picBoxFormato.Size = new Size(32, 36);
             picBoxFormato.TabIndex = 22;
             picBoxFormato.TabStop = false;
             toolTipCodigo.SetToolTip(picBoxFormato, "3 mayusculas que son el tipo de rol - 3 numeros que consisten en la categoria");
             // 
             // numIdRol
             // 
-            numIdRol.Location = new Point(19, 78);
-            numIdRol.Margin = new Padding(6, 8, 6, 8);
+            numIdRol.Location = new Point(13, 47);
+            numIdRol.Margin = new Padding(4, 5, 4, 5);
             numIdRol.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
             numIdRol.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numIdRol.Name = "numIdRol";
-            numIdRol.Size = new Size(267, 31);
+            numIdRol.Size = new Size(203, 23);
             numIdRol.TabIndex = 21;
             numIdRol.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -150,10 +145,9 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(107, 406);
-            btnGuardar.Margin = new Padding(4, 5, 4, 5);
+            btnGuardar.Location = new Point(69, 248);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(113, 52);
+            btnGuardar.Size = new Size(79, 31);
             btnGuardar.TabIndex = 20;
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
@@ -164,80 +158,62 @@
             // 
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(19, 297);
-            cbxEstatus.Margin = new Padding(4, 5, 4, 5);
+            cbxEstatus.Location = new Point(13, 178);
             cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(288, 33);
+            cbxEstatus.Size = new Size(203, 23);
             cbxEstatus.TabIndex = 19;
             // 
             // lblEstatus
             // 
             lblEstatus.AutoSize = true;
-            lblEstatus.Location = new Point(19, 267);
-            lblEstatus.Margin = new Padding(4, 0, 4, 0);
+            lblEstatus.Location = new Point(13, 160);
             lblEstatus.Name = "lblEstatus";
-            lblEstatus.Size = new Size(79, 25);
+            lblEstatus.Size = new Size(52, 15);
             lblEstatus.TabIndex = 18;
-            lblEstatus.Text = "Estatus*";
+            lblEstatus.Text = "Estatus *";
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(19, 223);
-            txtDescripcion.Margin = new Padding(4, 5, 4, 5);
+            txtDescripcion.Location = new Point(13, 134);
             txtDescripcion.MaxLength = 200;
             txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(288, 31);
+            txtDescripcion.Size = new Size(203, 23);
             txtDescripcion.TabIndex = 16;
             // 
             // txtCodigo
             // 
-            txtCodigo.Location = new Point(19, 147);
-            txtCodigo.Margin = new Padding(4, 5, 4, 5);
+            txtCodigo.Location = new Point(13, 88);
             txtCodigo.MaxLength = 15;
             txtCodigo.Name = "txtCodigo";
-            txtCodigo.Size = new Size(188, 31);
+            txtCodigo.Size = new Size(165, 23);
             txtCodigo.TabIndex = 15;
             // 
             // lblDescripcion
             // 
             lblDescripcion.AutoSize = true;
-            lblDescripcion.Location = new Point(19, 193);
-            lblDescripcion.Margin = new Padding(4, 0, 4, 0);
+            lblDescripcion.Location = new Point(13, 116);
             lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(117, 25);
+            lblDescripcion.Size = new Size(78, 15);
             lblDescripcion.TabIndex = 13;
-            lblDescripcion.Text = "Descripción*";
+            lblDescripcion.Text = "Descripción *";
             // 
             // lblCodigo
             // 
             lblCodigo.AutoSize = true;
-            lblCodigo.Location = new Point(19, 117);
-            lblCodigo.Margin = new Padding(4, 0, 4, 0);
+            lblCodigo.Location = new Point(13, 70);
             lblCodigo.Name = "lblCodigo";
-            lblCodigo.Size = new Size(80, 25);
+            lblCodigo.Size = new Size(53, 15);
             lblCodigo.TabIndex = 11;
-            lblCodigo.Text = "Código*";
+            lblCodigo.Text = "Código *";
             // 
             // lblIdRol
             // 
             lblIdRol.AutoSize = true;
-            lblIdRol.Location = new Point(19, 40);
-            lblIdRol.Margin = new Padding(4, 0, 4, 0);
+            lblIdRol.Location = new Point(13, 24);
             lblIdRol.Name = "lblIdRol";
-            lblIdRol.Size = new Size(93, 25);
+            lblIdRol.Size = new Size(64, 15);
             lblIdRol.TabIndex = 10;
-            lblIdRol.Text = "ID del rol:";
-            // 
-            // dgvRoles
-            // 
-            dgvRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvRoles.BackgroundColor = SystemColors.ActiveCaption;
-            dgvRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRoles.Location = new Point(0, 227);
-            dgvRoles.Name = "dgvRoles";
-            dgvRoles.RowHeadersWidth = 62;
-            dgvRoles.Size = new Size(845, 340);
-            dgvRoles.TabIndex = 14;
+            lblIdRol.Text = "ID del rol *";
             // 
             // gbxBusquedaRol
             // 
@@ -252,11 +228,9 @@
             gbxBusquedaRol.Controls.Add(lblBuscar);
             gbxBusquedaRol.Dock = DockStyle.Top;
             gbxBusquedaRol.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbxBusquedaRol.Location = new Point(0, 80);
-            gbxBusquedaRol.Margin = new Padding(4, 5, 4, 5);
+            gbxBusquedaRol.Location = new Point(0, 48);
             gbxBusquedaRol.Name = "gbxBusquedaRol";
-            gbxBusquedaRol.Padding = new Padding(4, 5, 4, 5);
-            gbxBusquedaRol.Size = new Size(842, 155);
+            gbxBusquedaRol.Size = new Size(590, 93);
             gbxBusquedaRol.TabIndex = 13;
             gbxBusquedaRol.TabStop = false;
             gbxBusquedaRol.Text = "Busqueda";
@@ -265,61 +239,55 @@
             // 
             cbxTipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxTipoFecha.FormattingEnabled = true;
-            cbxTipoFecha.Location = new Point(133, 42);
-            cbxTipoFecha.Margin = new Padding(4, 5, 4, 5);
+            cbxTipoFecha.Location = new Point(93, 25);
             cbxTipoFecha.Name = "cbxTipoFecha";
-            cbxTipoFecha.Size = new Size(123, 33);
+            cbxTipoFecha.Size = new Size(87, 23);
             cbxTipoFecha.TabIndex = 18;
             // 
             // lblTipoFecha
             // 
             lblTipoFecha.AutoSize = true;
-            lblTipoFecha.Location = new Point(13, 47);
-            lblTipoFecha.Margin = new Padding(4, 0, 4, 0);
+            lblTipoFecha.Location = new Point(9, 28);
             lblTipoFecha.Name = "lblTipoFecha";
-            lblTipoFecha.Size = new Size(123, 25);
+            lblTipoFecha.Size = new Size(79, 15);
             lblTipoFecha.TabIndex = 17;
             lblTipoFecha.Text = "Tipo de fecha";
             // 
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(619, 42);
-            dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaFin.Location = new Point(433, 25);
             dtpFechaFin.MaxDate = new DateTime(2025, 3, 13, 6, 39, 35, 0);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(141, 31);
+            dtpFechaFin.Size = new Size(100, 23);
             dtpFechaFin.TabIndex = 16;
             dtpFechaFin.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(377, 42);
-            dtpFechaInicio.Margin = new Padding(4, 5, 4, 5);
+            dtpFechaInicio.Location = new Point(264, 25);
             dtpFechaInicio.MaxDate = new DateTime(2025, 3, 13, 6, 38, 54, 0);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(141, 31);
+            dtpFechaInicio.Size = new Size(100, 23);
             dtpFechaInicio.TabIndex = 15;
             dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
             // 
             // lblFechaFin
             // 
             lblFechaFin.AutoSize = true;
-            lblFechaFin.Location = new Point(531, 47);
-            lblFechaFin.Margin = new Padding(4, 0, 4, 0);
+            lblFechaFin.Location = new Point(372, 28);
             lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(85, 25);
+            lblFechaFin.Size = new Size(55, 15);
             lblFechaFin.TabIndex = 14;
             lblFechaFin.Text = "Fecha fin";
             // 
             // lblFechaInicio
             // 
             lblFechaInicio.AutoSize = true;
-            lblFechaInicio.Location = new Point(269, 47);
-            lblFechaInicio.Margin = new Padding(4, 0, 4, 0);
+            lblFechaInicio.Location = new Point(188, 28);
             lblFechaInicio.Name = "lblFechaInicio";
-            lblFechaInicio.Size = new Size(108, 25);
+            lblFechaInicio.Size = new Size(70, 15);
             lblFechaInicio.TabIndex = 13;
             lblFechaInicio.Text = "Fecha inicio";
             // 
@@ -329,10 +297,9 @@
             btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(626, 88);
-            btnActualizar.Margin = new Padding(4, 5, 4, 5);
+            btnActualizar.Location = new Point(438, 53);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(136, 50);
+            btnActualizar.Size = new Size(95, 30);
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -341,20 +308,18 @@
             // 
             // txtBusquedaRol
             // 
-            txtBusquedaRol.Location = new Point(133, 95);
-            txtBusquedaRol.Margin = new Padding(4, 5, 4, 5);
+            txtBusquedaRol.Location = new Point(93, 57);
             txtBusquedaRol.MaxLength = 50;
             txtBusquedaRol.Name = "txtBusquedaRol";
-            txtBusquedaRol.Size = new Size(341, 31);
+            txtBusquedaRol.Size = new Size(240, 23);
             txtBusquedaRol.TabIndex = 1;
             // 
             // lblBuscar
             // 
             lblBuscar.AutoSize = true;
-            lblBuscar.Location = new Point(13, 102);
-            lblBuscar.Margin = new Padding(4, 0, 4, 0);
+            lblBuscar.Location = new Point(9, 61);
             lblBuscar.Name = "lblBuscar";
-            lblBuscar.Size = new Size(112, 25);
+            lblBuscar.Size = new Size(70, 15);
             lblBuscar.TabIndex = 0;
             lblBuscar.Text = "Buscar roles";
             // 
@@ -364,10 +329,8 @@
             gbxHerramienta.Dock = DockStyle.Top;
             gbxHerramienta.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxHerramienta.Location = new Point(0, 0);
-            gbxHerramienta.Margin = new Padding(4, 5, 4, 5);
             gbxHerramienta.Name = "gbxHerramienta";
-            gbxHerramienta.Padding = new Padding(4, 5, 4, 5);
-            gbxHerramienta.Size = new Size(842, 80);
+            gbxHerramienta.Size = new Size(590, 48);
             gbxHerramienta.TabIndex = 12;
             gbxHerramienta.TabStop = false;
             gbxHerramienta.Text = "Herramientas";
@@ -377,10 +340,9 @@
             btnColapsar.BackColor = SystemColors.ActiveCaption;
             btnColapsar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnColapsar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnColapsar.Location = new Point(13, 33);
-            btnColapsar.Margin = new Padding(4, 5, 4, 5);
+            btnColapsar.Location = new Point(9, 20);
             btnColapsar.Name = "btnColapsar";
-            btnColapsar.Size = new Size(191, 38);
+            btnColapsar.Size = new Size(134, 23);
             btnColapsar.TabIndex = 0;
             btnColapsar.Text = "Mostrar captura";
             btnColapsar.TextAlign = ContentAlignment.MiddleRight;
@@ -394,22 +356,22 @@
             lblTituloRol.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTituloRol.ForeColor = SystemColors.ActiveCaptionText;
             lblTituloRol.Location = new Point(0, 0);
-            lblTituloRol.Margin = new Padding(4, 0, 4, 0);
             lblTituloRol.Name = "lblTituloRol";
-            lblTituloRol.Size = new Size(1163, 55);
+            lblTituloRol.Size = new Size(814, 33);
             lblTituloRol.TabIndex = 7;
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // frmConfiguracionRoles
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(1163, 627);
+            ClientSize = new Size(814, 376);
             Controls.Add(lblTituloRol);
             Controls.Add(scRoles);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             Name = "frmConfiguracionRoles";
             Text = "Gestión de rol";
             Load += frmConfiguracionRoles_Load;
@@ -421,7 +383,6 @@
             gbxAltaEdicionRol.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).EndInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
             gbxBusquedaRol.ResumeLayout(false);
             gbxBusquedaRol.PerformLayout();
             gbxHerramienta.ResumeLayout(false);
@@ -458,7 +419,6 @@
         private NumericUpDown numIdRol;
         private PictureBox picBoxFormato;
         private ToolTip toolTipCodigo;
-        private DataGridView dgvRoles;
-        private Label label1;
+        private Label lblInfo;
     }
 }
