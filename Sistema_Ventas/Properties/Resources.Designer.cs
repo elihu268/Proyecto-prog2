@@ -113,6 +113,16 @@ namespace Sistema_Ventas.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondo {
+            get {
+                object obj = ResourceManager.GetObject("fondo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondo_MDI {
             get {
                 object obj = ResourceManager.GetObject("fondo_MDI", resourceCulture);
@@ -176,16 +186,6 @@ namespace Sistema_Ventas.Properties {
         internal static System.Drawing.Bitmap login {
             get {
                 object obj = ResourceManager.GetObject("login", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mdi {
-            get {
-                object obj = ResourceManager.GetObject("mdi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
