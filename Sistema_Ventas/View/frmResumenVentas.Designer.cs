@@ -50,11 +50,11 @@
             dgvResumVentas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvResumVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvResumVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvResumVentas.Location = new Point(13, 244);
+            dgvResumVentas.Location = new Point(12, 224);
             dgvResumVentas.Name = "dgvResumVentas";
             dgvResumVentas.ReadOnly = true;
             dgvResumVentas.RowHeadersWidth = 62;
-            dgvResumVentas.Size = new Size(862, 360);
+            dgvResumVentas.Size = new Size(776, 331);
             dgvResumVentas.TabIndex = 1;
             dgvResumVentas.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -71,9 +71,9 @@
             gbFiltros.Controls.Add(lblBusquedaTex);
             gbFiltros.Controls.Add(txtBusqueda);
             gbFiltros.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbFiltros.Location = new Point(13, 57);
+            gbFiltros.Location = new Point(12, 52);
             gbFiltros.Name = "gbFiltros";
-            gbFiltros.Size = new Size(862, 168);
+            gbFiltros.Size = new Size(776, 155);
             gbFiltros.TabIndex = 2;
             gbFiltros.TabStop = false;
             gbFiltros.Text = "Filtros";
@@ -81,9 +81,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Resumen1;
-            pictureBox1.Location = new Point(708, 0);
+            pictureBox1.Location = new Point(637, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(148, 120);
+            pictureBox1.Size = new Size(133, 110);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 26;
             pictureBox1.TabStop = false;
@@ -94,9 +94,9 @@
             btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(306, 115);
+            btnActualizar.Location = new Point(275, 106);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(162, 42);
+            btnActualizar.Size = new Size(146, 39);
             btnActualizar.TabIndex = 25;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -106,29 +106,29 @@
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
             dtpFechaFin.ImeMode = ImeMode.NoControl;
-            dtpFechaFin.Location = new Point(484, 62);
+            dtpFechaFin.Location = new Point(436, 57);
             dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(141, 31);
+            dtpFechaFin.Size = new Size(127, 23);
             dtpFechaFin.TabIndex = 24;
             // 
             // dtpFechaIn
             // 
             dtpFechaIn.Format = DateTimePickerFormat.Short;
             dtpFechaIn.ImeMode = ImeMode.NoControl;
-            dtpFechaIn.Location = new Point(146, 62);
+            dtpFechaIn.Location = new Point(131, 57);
             dtpFechaIn.Margin = new Padding(4, 5, 4, 5);
             dtpFechaIn.Name = "dtpFechaIn";
-            dtpFechaIn.Size = new Size(141, 31);
+            dtpFechaIn.Size = new Size(127, 23);
             dtpFechaIn.TabIndex = 23;
             // 
             // lblFechaIni
             // 
             lblFechaIni.AutoSize = true;
             lblFechaIni.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFechaIni.Location = new Point(22, 68);
+            lblFechaIni.Location = new Point(20, 63);
             lblFechaIni.Name = "lblFechaIni";
-            lblFechaIni.Size = new Size(117, 25);
+            lblFechaIni.Size = new Size(76, 15);
             lblFechaIni.TabIndex = 3;
             lblFechaIni.Text = "Fecha inicio: ";
             // 
@@ -136,9 +136,9 @@
             // 
             lblFechaFin.AutoSize = true;
             lblFechaFin.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFechaFin.Location = new Point(379, 62);
+            lblFechaFin.Location = new Point(341, 57);
             lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(89, 25);
+            lblFechaFin.Size = new Size(58, 15);
             lblFechaFin.TabIndex = 2;
             lblFechaFin.Text = "Fecha fin:";
             // 
@@ -146,17 +146,18 @@
             // 
             lblBusquedaTex.AutoSize = true;
             lblBusquedaTex.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblBusquedaTex.Location = new Point(22, 24);
+            lblBusquedaTex.Location = new Point(20, 22);
             lblBusquedaTex.Name = "lblBusquedaTex";
-            lblBusquedaTex.Size = new Size(173, 25);
+            lblBusquedaTex.Size = new Size(108, 15);
             lblBusquedaTex.TabIndex = 1;
             lblBusquedaTex.Text = "Busqueda de texto:";
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(201, 18);
+            txtBusqueda.Location = new Point(181, 17);
+            txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(424, 31);
+            txtBusqueda.Size = new Size(382, 23);
             txtBusqueda.TabIndex = 0;
             // 
             // lbl_titulo
@@ -164,19 +165,19 @@
             lbl_titulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_titulo.BackColor = Color.SteelBlue;
             lbl_titulo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl_titulo.Location = new Point(13, 3);
+            lbl_titulo.Location = new Point(12, 3);
             lbl_titulo.Name = "lbl_titulo";
-            lbl_titulo.Size = new Size(856, 51);
+            lbl_titulo.Size = new Size(770, 47);
             lbl_titulo.TabIndex = 3;
             lbl_titulo.Text = "Resumen de ventas";
             lbl_titulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // frmResumenVentas
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(889, 617);
+            ClientSize = new Size(800, 568);
             Controls.Add(lbl_titulo);
             Controls.Add(gbFiltros);
             Controls.Add(dgvResumVentas);

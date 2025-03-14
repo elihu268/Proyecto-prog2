@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestUsuario));
             scUsuarios = new SplitContainer();
             gbxUsuarios = new GroupBox();
+            pbox_passwor = new PictureBox();
             lbl_obligatorios = new Label();
             lbconfirmcontraAlert = new Label();
             lbcontraalert = new Label();
@@ -75,21 +76,20 @@
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
             tooltip_passwor = new ToolTip(components);
-            pbox_passwor = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
             scUsuarios.SuspendLayout();
             gbxUsuarios.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbox_passwor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gbxBusqueda.SuspendLayout();
             gbxherramientas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbox_passwor).BeginInit();
             SuspendLayout();
             // 
             // scUsuarios
             // 
-            scUsuarios.Location = new Point(0, 53);
+            scUsuarios.Location = new Point(0, 49);
             scUsuarios.Margin = new Padding(4, 5, 4, 5);
             scUsuarios.Name = "scUsuarios";
             // 
@@ -102,9 +102,9 @@
             scUsuarios.Panel2.Controls.Add(dataGridView1);
             scUsuarios.Panel2.Controls.Add(gbxBusqueda);
             scUsuarios.Panel2.Controls.Add(gbxherramientas);
-            scUsuarios.Size = new Size(1251, 687);
-            scUsuarios.SplitterDistance = 417;
-            scUsuarios.SplitterWidth = 6;
+            scUsuarios.Size = new Size(1126, 632);
+            scUsuarios.SplitterDistance = 375;
+            scUsuarios.SplitterWidth = 5;
             scUsuarios.TabIndex = 0;
             // 
             // gbxUsuarios
@@ -137,17 +137,27 @@
             gbxUsuarios.Margin = new Padding(4, 5, 4, 5);
             gbxUsuarios.Name = "gbxUsuarios";
             gbxUsuarios.Padding = new Padding(4, 5, 4, 5);
-            gbxUsuarios.Size = new Size(417, 687);
+            gbxUsuarios.Size = new Size(375, 632);
             gbxUsuarios.TabIndex = 1;
             gbxUsuarios.TabStop = false;
             gbxUsuarios.Text = "Datos del Usuario";
             // 
+            // pbox_passwor
+            // 
+            pbox_passwor.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
+            pbox_passwor.Location = new Point(188, 460);
+            pbox_passwor.Name = "pbox_passwor";
+            pbox_passwor.Size = new Size(32, 39);
+            pbox_passwor.TabIndex = 35;
+            pbox_passwor.TabStop = false;
+            tooltip_passwor.SetToolTip(pbox_passwor, "por lo menos_ 8 caracteres, una mayuscula, un numero, un caracter especial");
+            // 
             // lbl_obligatorios
             // 
             lbl_obligatorios.AutoSize = true;
-            lbl_obligatorios.Location = new Point(26, 655);
+            lbl_obligatorios.Location = new Point(23, 603);
             lbl_obligatorios.Name = "lbl_obligatorios";
-            lbl_obligatorios.Size = new Size(192, 25);
+            lbl_obligatorios.Size = new Size(121, 15);
             lbl_obligatorios.TabIndex = 34;
             lbl_obligatorios.Text = "*Campos obligatorios";
             // 
@@ -155,79 +165,79 @@
             // 
             lbconfirmcontraAlert.AutoSize = true;
             lbconfirmcontraAlert.ForeColor = Color.Red;
-            lbconfirmcontraAlert.Location = new Point(29, 640);
+            lbconfirmcontraAlert.Location = new Point(26, 589);
             lbconfirmcontraAlert.Margin = new Padding(4, 0, 4, 0);
             lbconfirmcontraAlert.Name = "lbconfirmcontraAlert";
-            lbconfirmcontraAlert.Size = new Size(0, 25);
+            lbconfirmcontraAlert.Size = new Size(0, 15);
             lbconfirmcontraAlert.TabIndex = 33;
             // 
             // lbcontraalert
             // 
             lbcontraalert.AutoSize = true;
             lbcontraalert.ForeColor = Color.Red;
-            lbcontraalert.Location = new Point(29, 542);
+            lbcontraalert.Location = new Point(26, 499);
             lbcontraalert.Margin = new Padding(4, 0, 4, 0);
             lbcontraalert.Name = "lbcontraalert";
-            lbcontraalert.Size = new Size(0, 25);
+            lbcontraalert.Size = new Size(0, 15);
             lbcontraalert.TabIndex = 32;
             // 
             // txtConfContrasena
             // 
-            txtConfContrasena.Location = new Point(26, 597);
+            txtConfContrasena.Location = new Point(23, 549);
             txtConfContrasena.Margin = new Padding(4, 5, 4, 5);
             txtConfContrasena.MaxLength = 16;
             txtConfContrasena.Name = "txtConfContrasena";
             txtConfContrasena.PasswordChar = '*';
-            txtConfContrasena.Size = new Size(141, 31);
+            txtConfContrasena.Size = new Size(127, 23);
             txtConfContrasena.TabIndex = 31;
             // 
             // txtContrasena
             // 
-            txtContrasena.Location = new Point(26, 500);
+            txtContrasena.Location = new Point(23, 460);
             txtContrasena.Margin = new Padding(4, 5, 4, 5);
             txtContrasena.MaxLength = 16;
             txtContrasena.Name = "txtContrasena";
             txtContrasena.PasswordChar = '*';
-            txtContrasena.Size = new Size(141, 31);
+            txtContrasena.Size = new Size(127, 23);
             txtContrasena.TabIndex = 30;
             // 
             // lbConfirmcontra
             // 
             lbConfirmcontra.AutoSize = true;
             lbConfirmcontra.ForeColor = SystemColors.ControlText;
-            lbConfirmcontra.Location = new Point(21, 567);
+            lbConfirmcontra.Location = new Point(19, 522);
             lbConfirmcontra.Margin = new Padding(4, 0, 4, 0);
             lbConfirmcontra.Name = "lbConfirmcontra";
-            lbConfirmcontra.Size = new Size(202, 25);
+            lbConfirmcontra.Size = new Size(127, 15);
             lbConfirmcontra.TabIndex = 29;
             lbConfirmcontra.Text = "Confirmar Contraseña*";
             // 
             // lbcontrasena
             // 
             lbcontrasena.AutoSize = true;
-            lbcontrasena.Location = new Point(23, 470);
+            lbcontrasena.Location = new Point(21, 432);
             lbcontrasena.Margin = new Padding(4, 0, 4, 0);
             lbcontrasena.Name = "lbcontrasena";
-            lbcontrasena.Size = new Size(114, 25);
+            lbcontrasena.Size = new Size(71, 15);
             lbcontrasena.TabIndex = 28;
             lbcontrasena.Text = "Contraseña*";
             // 
             // cbxRoles
             // 
             cbxRoles.FormattingEnabled = true;
-            cbxRoles.Location = new Point(21, 423);
+            cbxRoles.Location = new Point(19, 389);
             cbxRoles.Margin = new Padding(4, 5, 4, 5);
             cbxRoles.Name = "cbxRoles";
-            cbxRoles.Size = new Size(171, 33);
+            cbxRoles.Size = new Size(154, 23);
             cbxRoles.TabIndex = 27;
             // 
             // lbRol
             // 
             lbRol.AutoSize = true;
-            lbRol.Location = new Point(21, 390);
+            lbRol.Location = new Point(19, 359);
             lbRol.Margin = new Padding(4, 0, 4, 0);
             lbRol.Name = "lbRol";
-            lbRol.Size = new Size(47, 25);
+            lbRol.Size = new Size(29, 15);
             lbRol.TabIndex = 26;
             lbRol.Text = "Rol*";
             // 
@@ -237,10 +247,10 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(283, 622);
+            btnGuardar.Location = new Point(255, 572);
             btnGuardar.Margin = new Padding(4, 5, 4, 5);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(126, 60);
+            btnGuardar.Size = new Size(113, 55);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
@@ -250,99 +260,99 @@
             // cbxEstatus
             // 
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(21, 348);
+            cbxEstatus.Location = new Point(19, 320);
             cbxEstatus.Margin = new Padding(4, 5, 4, 5);
             cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(191, 33);
+            cbxEstatus.Size = new Size(172, 23);
             cbxEstatus.TabIndex = 23;
             // 
             // dtpNacimiento
             // 
             dtpNacimiento.Format = DateTimePickerFormat.Short;
             dtpNacimiento.ImeMode = ImeMode.NoControl;
-            dtpNacimiento.Location = new Point(21, 273);
+            dtpNacimiento.Location = new Point(19, 251);
             dtpNacimiento.Margin = new Padding(4, 5, 4, 5);
             dtpNacimiento.Name = "dtpNacimiento";
-            dtpNacimiento.Size = new Size(284, 31);
+            dtpNacimiento.Size = new Size(256, 23);
             dtpNacimiento.TabIndex = 22;
             // 
             // txtTelefono
             // 
             txtTelefono.Cursor = Cursors.IBeam;
-            txtTelefono.Location = new Point(21, 207);
+            txtTelefono.Location = new Point(19, 190);
             txtTelefono.Margin = new Padding(4, 5, 4, 5);
             txtTelefono.MaxLength = 12;
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(323, 31);
+            txtTelefono.Size = new Size(291, 23);
             txtTelefono.TabIndex = 21;
             // 
             // txtCorreo
             // 
             txtCorreo.Cursor = Cursors.IBeam;
-            txtCorreo.Location = new Point(21, 135);
+            txtCorreo.Location = new Point(19, 124);
             txtCorreo.Margin = new Padding(4, 5, 4, 5);
-            txtCorreo.MaxLength = 100;
+            txtCorreo.MaxLength = 30;
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(320, 31);
+            txtCorreo.Size = new Size(288, 23);
             txtCorreo.TabIndex = 20;
             // 
             // txtNombre
             // 
             txtNombre.Cursor = Cursors.IBeam;
-            txtNombre.Location = new Point(23, 62);
+            txtNombre.Location = new Point(21, 57);
             txtNombre.Margin = new Padding(4, 5, 4, 5);
-            txtNombre.MaxLength = 100;
+            txtNombre.MaxLength = 50;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(320, 31);
+            txtNombre.Size = new Size(288, 23);
             txtNombre.TabIndex = 19;
             // 
             // lbEstatus
             // 
             lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(19, 320);
+            lbEstatus.Location = new Point(17, 294);
             lbEstatus.Margin = new Padding(4, 0, 4, 0);
             lbEstatus.Name = "lbEstatus";
-            lbEstatus.Size = new Size(79, 25);
+            lbEstatus.Size = new Size(49, 15);
             lbEstatus.TabIndex = 18;
             lbEstatus.Text = "Estatus*";
             // 
             // lbfechaNacimiento
             // 
             lbfechaNacimiento.AutoSize = true;
-            lbfechaNacimiento.Location = new Point(26, 248);
+            lbfechaNacimiento.Location = new Point(23, 228);
             lbfechaNacimiento.Margin = new Padding(4, 0, 4, 0);
             lbfechaNacimiento.Name = "lbfechaNacimiento";
-            lbfechaNacimiento.Size = new Size(193, 25);
+            lbfechaNacimiento.Size = new Size(124, 15);
             lbfechaNacimiento.TabIndex = 17;
             lbfechaNacimiento.Text = "Fecha de Nacimiento*";
             // 
             // lbTelefono
             // 
             lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(21, 182);
+            lbTelefono.Location = new Point(19, 167);
             lbTelefono.Margin = new Padding(4, 0, 4, 0);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(92, 25);
+            lbTelefono.Size = new Size(58, 15);
             lbTelefono.TabIndex = 16;
             lbTelefono.Text = "Telefono*";
             // 
             // lbCorreo
             // 
             lbCorreo.AutoSize = true;
-            lbCorreo.Location = new Point(21, 105);
+            lbCorreo.Location = new Point(19, 97);
             lbCorreo.Margin = new Padding(4, 0, 4, 0);
             lbCorreo.Name = "lbCorreo";
-            lbCorreo.Size = new Size(77, 25);
+            lbCorreo.Size = new Size(47, 15);
             lbCorreo.TabIndex = 15;
             lbCorreo.Text = "Correo*";
             // 
             // lbNombre
             // 
             lbNombre.AutoSize = true;
-            lbNombre.Location = new Point(19, 32);
+            lbNombre.Location = new Point(17, 29);
             lbNombre.Margin = new Padding(4, 0, 4, 0);
             lbNombre.Name = "lbNombre";
-            lbNombre.Size = new Size(176, 25);
+            lbNombre.Size = new Size(111, 15);
             lbNombre.TabIndex = 14;
             lbNombre.Text = "Nombre Completo*";
             // 
@@ -352,11 +362,11 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Correo, Telefono, Estatus, Rol });
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 218);
+            dataGridView1.Location = new Point(0, 200);
             dataGridView1.Margin = new Padding(4, 5, 4, 5);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(828, 469);
+            dataGridView1.Size = new Size(746, 432);
             dataGridView1.TabIndex = 2;
             // 
             // Nombre
@@ -408,11 +418,11 @@
             gbxBusqueda.Controls.Add(lbBusqueda);
             gbxBusqueda.Dock = DockStyle.Top;
             gbxBusqueda.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbxBusqueda.Location = new Point(0, 95);
+            gbxBusqueda.Location = new Point(0, 87);
             gbxBusqueda.Margin = new Padding(4, 5, 4, 5);
             gbxBusqueda.Name = "gbxBusqueda";
             gbxBusqueda.Padding = new Padding(4, 5, 4, 5);
-            gbxBusqueda.Size = new Size(828, 123);
+            gbxBusqueda.Size = new Size(746, 113);
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda";
@@ -420,56 +430,56 @@
             // cbxtipoFecha
             // 
             cbxtipoFecha.FormattingEnabled = true;
-            cbxtipoFecha.Location = new Point(119, 28);
+            cbxtipoFecha.Location = new Point(107, 26);
             cbxtipoFecha.Margin = new Padding(4, 5, 4, 5);
             cbxtipoFecha.Name = "cbxtipoFecha";
-            cbxtipoFecha.Size = new Size(123, 33);
+            cbxtipoFecha.Size = new Size(111, 23);
             cbxtipoFecha.TabIndex = 12;
             // 
             // lbTipoFecha
             // 
             lbTipoFecha.AutoSize = true;
-            lbTipoFecha.Location = new Point(17, 32);
+            lbTipoFecha.Location = new Point(15, 29);
             lbTipoFecha.Margin = new Padding(4, 0, 4, 0);
             lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(100, 25);
+            lbTipoFecha.Size = new Size(65, 15);
             lbTipoFecha.TabIndex = 11;
             lbTipoFecha.Text = "Tipo Fecha";
             // 
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(604, 25);
+            dtpFechaFin.Location = new Point(544, 23);
             dtpFechaFin.Margin = new Padding(4, 5, 4, 5);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(155, 31);
+            dtpFechaFin.Size = new Size(140, 23);
             dtpFechaFin.TabIndex = 10;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(403, 28);
+            dtpFechaInicio.Location = new Point(363, 26);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(110, 31);
+            dtpFechaInicio.Size = new Size(99, 23);
             dtpFechaInicio.TabIndex = 9;
             // 
             // lbFechaFin
             // 
             lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(521, 32);
+            lbFechaFin.Location = new Point(469, 29);
             lbFechaFin.Margin = new Padding(4, 0, 4, 0);
             lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(88, 25);
+            lbFechaFin.Size = new Size(57, 15);
             lbFechaFin.TabIndex = 8;
             lbFechaFin.Text = "Fecha Fin";
             // 
             // lbFechaInicio
             // 
             lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(296, 35);
+            lbFechaInicio.Location = new Point(266, 32);
             lbFechaInicio.Margin = new Padding(4, 0, 4, 0);
             lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(108, 25);
+            lbFechaInicio.Size = new Size(71, 15);
             lbFechaInicio.TabIndex = 7;
             lbFechaInicio.Text = "Fecha Inicio";
             // 
@@ -479,10 +489,10 @@
             btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(641, 73);
+            btnBuscar.Location = new Point(577, 67);
             btnBuscar.Margin = new Padding(4, 5, 4, 5);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(134, 50);
+            btnBuscar.Size = new Size(121, 46);
             btnBuscar.TabIndex = 2;
             btnBuscar.Text = "Actualizar";
             btnBuscar.TextAlign = ContentAlignment.MiddleRight;
@@ -490,20 +500,20 @@
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(196, 75);
+            txtBusqueda.Location = new Point(176, 69);
             txtBusqueda.Margin = new Padding(4, 5, 4, 5);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(380, 31);
+            txtBusqueda.Size = new Size(342, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBusqueda
             // 
             lbBusqueda.AutoSize = true;
-            lbBusqueda.Location = new Point(14, 73);
+            lbBusqueda.Location = new Point(13, 67);
             lbBusqueda.Margin = new Padding(4, 0, 4, 0);
             lbBusqueda.Name = "lbBusqueda";
-            lbBusqueda.Size = new Size(197, 25);
+            lbBusqueda.Size = new Size(123, 15);
             lbBusqueda.TabIndex = 0;
             lbBusqueda.Text = "Busqueda de Usuarios";
             // 
@@ -519,7 +529,7 @@
             gbxherramientas.Margin = new Padding(4, 5, 4, 5);
             gbxherramientas.Name = "gbxherramientas";
             gbxherramientas.Padding = new Padding(4, 5, 4, 5);
-            gbxherramientas.Size = new Size(828, 95);
+            gbxherramientas.Size = new Size(746, 87);
             gbxherramientas.TabIndex = 0;
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
@@ -527,9 +537,9 @@
             // lbCargaMasiva
             // 
             lbCargaMasiva.AutoSize = true;
-            lbCargaMasiva.Location = new Point(337, 43);
+            lbCargaMasiva.Location = new Point(303, 40);
             lbCargaMasiva.Name = "lbCargaMasiva";
-            lbCargaMasiva.Size = new Size(273, 25);
+            lbCargaMasiva.Size = new Size(175, 15);
             lbCargaMasiva.TabIndex = 2;
             lbCargaMasiva.Text = "Seleccione un Archivo xlsx o xls";
             // 
@@ -539,10 +549,10 @@
             btnCarga.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCarga.Image = Sistema_Ventas.Properties.Resources.upload1;
             btnCarga.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCarga.Location = new Point(181, 30);
+            btnCarga.Location = new Point(163, 28);
             btnCarga.Margin = new Padding(4, 5, 4, 5);
             btnCarga.Name = "btnCarga";
-            btnCarga.Size = new Size(149, 50);
+            btnCarga.Size = new Size(134, 46);
             btnCarga.TabIndex = 1;
             btnCarga.Text = "Carga Masiva";
             btnCarga.TextAlign = ContentAlignment.MiddleRight;
@@ -555,10 +565,10 @@
             btncargaUsuario.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btncargaUsuario.Image = Sistema_Ventas.Properties.Resources.uploadUser1;
             btncargaUsuario.ImageAlign = ContentAlignment.MiddleLeft;
-            btncargaUsuario.Location = new Point(9, 30);
+            btncargaUsuario.Location = new Point(8, 28);
             btncargaUsuario.Margin = new Padding(4, 5, 4, 5);
             btncargaUsuario.Name = "btncargaUsuario";
-            btncargaUsuario.Size = new Size(164, 50);
+            btncargaUsuario.Size = new Size(148, 46);
             btncargaUsuario.TabIndex = 0;
             btncargaUsuario.Text = "Cargar Usuario";
             btncargaUsuario.TextAlign = ContentAlignment.MiddleRight;
@@ -578,27 +588,17 @@
             lbTitulo.Location = new Point(0, 0);
             lbTitulo.Margin = new Padding(4, 0, 4, 0);
             lbTitulo.Name = "lbTitulo";
-            lbTitulo.Size = new Size(1251, 48);
+            lbTitulo.Size = new Size(1126, 44);
             lbTitulo.TabIndex = 1;
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pbox_passwor
-            // 
-            pbox_passwor.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
-            pbox_passwor.Location = new Point(209, 500);
-            pbox_passwor.Name = "pbox_passwor";
-            pbox_passwor.Size = new Size(36, 42);
-            pbox_passwor.TabIndex = 35;
-            pbox_passwor.TabStop = false;
-            tooltip_passwor.SetToolTip(pbox_passwor, "por lo menos_ 8 caracteres, una mayuscula, un numero, un caracter especial");
-            // 
             // frmGestUsuario
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(1251, 740);
+            ClientSize = new Size(1126, 681);
             Controls.Add(lbTitulo);
             Controls.Add(scUsuarios);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -612,12 +612,12 @@
             scUsuarios.ResumeLayout(false);
             gbxUsuarios.ResumeLayout(false);
             gbxUsuarios.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbox_passwor).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             gbxBusqueda.ResumeLayout(false);
             gbxBusqueda.PerformLayout();
             gbxherramientas.ResumeLayout(false);
             gbxherramientas.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbox_passwor).EndInit();
             ResumeLayout(false);
         }
 

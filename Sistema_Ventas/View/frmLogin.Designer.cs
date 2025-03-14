@@ -70,7 +70,7 @@
             // txt_usuario
             // 
             txt_usuario.Location = new Point(395, 87);
-            txt_usuario.MaxLength = 50;
+            txt_usuario.MaxLength = 30;
             txt_usuario.Name = "txt_usuario";
             txt_usuario.Size = new Size(173, 30);
             txt_usuario.TabIndex = 3;
