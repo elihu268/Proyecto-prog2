@@ -40,17 +40,20 @@
             existencia = new DataGridViewTextBoxColumn();
             ofdCatalogo = new OpenFileDialog();
             pbCatalogo = new PictureBox();
+            lbl_titulo = new Label();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dgvCatalogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbCatalogo).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // btnCargaCatalogo
             // 
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
-            btnCargaCatalogo.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCargaCatalogo.Location = new Point(319, 2);
+            btnCargaCatalogo.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCargaCatalogo.Location = new Point(275, 30);
             btnCargaCatalogo.Name = "btnCargaCatalogo";
-            btnCargaCatalogo.Size = new Size(253, 48);
+            btnCargaCatalogo.Size = new Size(292, 48);
             btnCargaCatalogo.TabIndex = 1;
             btnCargaCatalogo.Text = "Carga de Catalogo";
             btnCargaCatalogo.UseVisualStyleBackColor = false;
@@ -59,10 +62,10 @@
             // btnActualizar
             // 
             btnActualizar.BackColor = SystemColors.ActiveCaption;
-            btnActualizar.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnActualizar.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(354, 56);
+            btnActualizar.Location = new Point(322, 92);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(174, 37);
             btnActualizar.TabIndex = 3;
@@ -77,11 +80,11 @@
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCatalogo.Columns.AddRange(new DataGridViewColumn[] { idProducto, codProducto, nombre, precio, descripcion, existencia });
             dgvCatalogo.Enabled = false;
-            dgvCatalogo.Location = new Point(1, 100);
+            dgvCatalogo.Location = new Point(1, 213);
             dgvCatalogo.Name = "dgvCatalogo";
             dgvCatalogo.ReadOnly = true;
             dgvCatalogo.RowHeadersWidth = 62;
-            dgvCatalogo.Size = new Size(874, 376);
+            dgvCatalogo.Size = new Size(874, 263);
             dgvCatalogo.TabIndex = 4;
             // 
             // idProducto
@@ -139,12 +142,39 @@
             // pbCatalogo
             // 
             pbCatalogo.Image = Properties.Resources.catalogo1;
-            pbCatalogo.Location = new Point(127, 12);
+            pbCatalogo.Location = new Point(27, 30);
             pbCatalogo.Name = "pbCatalogo";
             pbCatalogo.Size = new Size(108, 82);
             pbCatalogo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCatalogo.TabIndex = 5;
             pbCatalogo.TabStop = false;
+            // 
+            // lbl_titulo
+            // 
+            lbl_titulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lbl_titulo.BackColor = Color.SteelBlue;
+            lbl_titulo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbl_titulo.Location = new Point(12, 9);
+            lbl_titulo.Name = "lbl_titulo";
+            lbl_titulo.Size = new Size(856, 51);
+            lbl_titulo.TabIndex = 6;
+            lbl_titulo.Text = "Resumen de ventas";
+            lbl_titulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.BackColor = SystemColors.InactiveBorder;
+            groupBox1.Controls.Add(btnActualizar);
+            groupBox1.Controls.Add(btnCargaCatalogo);
+            groupBox1.Controls.Add(pbCatalogo);
+            groupBox1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            groupBox1.Location = new Point(12, 72);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(856, 135);
+            groupBox1.TabIndex = 7;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Herramientas";
             // 
             // frmCargaCatalogo
             // 
@@ -152,16 +182,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(889, 489);
-            Controls.Add(pbCatalogo);
+            Controls.Add(groupBox1);
+            Controls.Add(lbl_titulo);
             Controls.Add(dgvCatalogo);
-            Controls.Add(btnActualizar);
-            Controls.Add(btnCargaCatalogo);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmCargaCatalogo";
             Text = "Carga de catalogo";
             Load += frmCatalogo_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCatalogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbCatalogo).EndInit();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -177,5 +207,7 @@
         private DataGridViewTextBoxColumn precio;
         private DataGridViewTextBoxColumn descripcion;
         private DataGridViewTextBoxColumn existencia;
+        private Label lbl_titulo;
+        private GroupBox groupBox1;
     }
 }
