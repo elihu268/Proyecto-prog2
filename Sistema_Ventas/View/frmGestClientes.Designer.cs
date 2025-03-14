@@ -205,6 +205,7 @@
             // 
             txtrfcCliente.Location = new Point(19, 625);
             txtrfcCliente.Margin = new Padding(4, 5, 4, 5);
+            txtrfcCliente.MaxLength = 13;
             txtrfcCliente.Name = "txtrfcCliente";
             txtrfcCliente.Size = new Size(188, 31);
             txtrfcCliente.TabIndex = 29;
