@@ -78,6 +78,7 @@
             btncollapse = new Button();
             lbtitle = new Label();
             ttipinfo = new ToolTip(components);
+            txt_fecha_registro = new TextBox();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
@@ -152,6 +153,7 @@
             // 
             // gbxActulizardatos
             // 
+            gbxActulizardatos.Controls.Add(txt_fecha_registro);
             gbxActulizardatos.Controls.Add(pbxInformacionrfc);
             gbxActulizardatos.Controls.Add(txtrfcCliente);
             gbxActulizardatos.Controls.Add(dtpfechaRegistroCliente);
@@ -203,11 +205,12 @@
             // dtpfechaRegistroCliente
             // 
             dtpfechaRegistroCliente.Format = DateTimePickerFormat.Short;
-            dtpfechaRegistroCliente.Location = new Point(14, 558);
+            dtpfechaRegistroCliente.Location = new Point(263, 548);
             dtpfechaRegistroCliente.Margin = new Padding(4, 5, 4, 5);
             dtpfechaRegistroCliente.Name = "dtpfechaRegistroCliente";
-            dtpfechaRegistroCliente.Size = new Size(284, 31);
+            dtpfechaRegistroCliente.Size = new Size(121, 31);
             dtpfechaRegistroCliente.TabIndex = 28;
+            dtpfechaRegistroCliente.ValueChanged += dtpfechaRegistroCliente_ValueChanged;
             // 
             // cbxTipoCliente
             // 
@@ -598,6 +601,14 @@
             ttipinfo.Tag = "xd";
             ttipinfo.ToolTipTitle = "RFC";
             // 
+            // txt_fecha_registro
+            // 
+            txt_fecha_registro.Location = new Point(16, 567);
+            txt_fecha_registro.Name = "txt_fecha_registro";
+            txt_fecha_registro.Size = new Size(150, 31);
+            txt_fecha_registro.TabIndex = 31;
+            txt_fecha_registro.TextChanged += txt_fecha_registro_TextChanged;
+            // 
             // frmGestClientes
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -675,5 +686,6 @@
         private TextBox txtrfcCliente;
         private PictureBox pbxInformacionrfc;
         private ToolTip ttipinfo;
+        private TextBox txt_fecha_registro;
     }
 }

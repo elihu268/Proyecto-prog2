@@ -23,12 +23,21 @@ namespace PuntodeVenta.View
 
         private void frmGestClientes_Load(object sender, EventArgs e)
         {
+            InicializarFrmClientes();
+        }
+        /// <summary>
+        /// metodo para darle caracteristicas a frm despues de su creacion
+        /// </summary>
+        private void InicializarFrmClientes()
+        {
             scClientes.Panel1Collapsed = true;
+            txt_fecha_registro.Text = DateTime.Now.ToString("dd-mm-yyyy");
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaTipoCliente();
+
         }
-        private void PoblaComboEstatus()
+            private void PoblaComboEstatus()
         {
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
@@ -161,6 +170,15 @@ namespace PuntodeVenta.View
             }
         }
 
+        private void dtpfechaRegistroCliente_ValueChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void txt_fecha_registro_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+       
     }
 }
