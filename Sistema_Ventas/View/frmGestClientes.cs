@@ -31,7 +31,7 @@ namespace PuntodeVenta.View
         private void InicializarFrmClientes()
         {
             scClientes.Panel1Collapsed = true;
-            txt_fecha_registro.Text = DateTime.Now.ToString("dd-mm-yyyy");
+            txt_fecha_registro.Text = DateTime.Now.ToString("DD/MM/YYYY");
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaTipoCliente();

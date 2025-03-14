@@ -39,6 +39,7 @@
             ContentPanel = new ToolStripContentPanel();
             scClientes = new SplitContainer();
             gbxActulizardatos = new GroupBox();
+            txt_fecha_registro = new TextBox();
             pbxInformacionrfc = new PictureBox();
             txtrfcCliente = new TextBox();
             dtpfechaRegistroCliente = new DateTimePicker();
@@ -78,7 +79,6 @@
             btncollapse = new Button();
             lbtitle = new Label();
             ttipinfo = new ToolTip(components);
-            txt_fecha_registro = new TextBox();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
@@ -183,6 +183,15 @@
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
             // 
+            // txt_fecha_registro
+            // 
+            txt_fecha_registro.Enabled = false;
+            txt_fecha_registro.Location = new Point(16, 567);
+            txt_fecha_registro.Name = "txt_fecha_registro";
+            txt_fecha_registro.Size = new Size(207, 31);
+            txt_fecha_registro.TabIndex = 31;
+            txt_fecha_registro.TextChanged += txt_fecha_registro_TextChanged;
+            // 
             // pbxInformacionrfc
             // 
             pbxInformacionrfc.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
@@ -205,7 +214,7 @@
             // dtpfechaRegistroCliente
             // 
             dtpfechaRegistroCliente.Format = DateTimePickerFormat.Short;
-            dtpfechaRegistroCliente.Location = new Point(263, 548);
+            dtpfechaRegistroCliente.Location = new Point(237, 486);
             dtpfechaRegistroCliente.Margin = new Padding(4, 5, 4, 5);
             dtpfechaRegistroCliente.Name = "dtpfechaRegistroCliente";
             dtpfechaRegistroCliente.Size = new Size(121, 31);
@@ -600,14 +609,6 @@
             // 
             ttipinfo.Tag = "xd";
             ttipinfo.ToolTipTitle = "RFC";
-            // 
-            // txt_fecha_registro
-            // 
-            txt_fecha_registro.Location = new Point(16, 567);
-            txt_fecha_registro.Name = "txt_fecha_registro";
-            txt_fecha_registro.Size = new Size(150, 31);
-            txt_fecha_registro.TabIndex = 31;
-            txt_fecha_registro.TextChanged += txt_fecha_registro_TextChanged;
             // 
             // frmGestClientes
             // 
