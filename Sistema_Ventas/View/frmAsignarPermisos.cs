@@ -44,7 +44,6 @@ namespace Sistema_Ventas.View
             if (cbox_permisos.Text == "")
             {
                 MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
             }
             return true;
         }
