@@ -39,13 +39,21 @@ namespace Sistema_Ventas.View
         {
             AsignarPermiso();
         }
-        public bool AsignarPermiso()
+        public void AsignarPermiso()
         {
-            if (cbox_permisos.Text == "")
+            if (cbox_rol.SelectedIndex == -1)
             {
-                MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("seleccione rol", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            return true;
+            if (SeleccionoPermiso().Count==0)
+            {
+                MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+           return;
+            }
+            
+            MessageBox.Show("Permisos seleccionados: " + string.Join(", ", SeleccionoPermiso));
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -53,20 +61,7 @@ namespace Sistema_Ventas.View
             AsignarPermiso();
         }
 
-        private void btn_ver_Click(object sender, EventArgs e)
-        {
-            if (sc_asignacion.Panel1Collapsed)//si esta colapsado
-            {
-                //entonces no colapsar
-                sc_asignacion.Panel1Collapsed = false;
-                btn_ver.Text = "ocultar permisos asignados";
-            }
-            else
-            {
-                sc_asignacion.Panel1Collapsed = true;
-                btn_ver.Text = "mostrar permisos asignados";
-            }
-        }
+      
 
         private void frmAsignarPermisos_Load(object sender, EventArgs e)
         {
@@ -74,21 +69,52 @@ namespace Sistema_Ventas.View
         }
         private void InicializarVentanaPermisos()
         {
-            sc_asignacion.Panel1Collapsed = true;
-            PoblacomboPermisos();
+            //sc_asignacion.Panel1Collapsed = true;
+          PoblaDataPermiso();
+            PoblacboxRol();
         }
-        private void PoblacomboPermisos()
+        public void PoblacboxRol()
         {
-            Dictionary<int, string> list_cliente = new Dictionary<int, string>()
+
+        }
+ private void PoblaDataPermiso()
+        {
+            DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+            chk.HeaderText = "Seleccionar";
+            chk.Name = "chkSeleccionar";
+            chk.Width = 60;
+            dgv_permisos.Columns.Add(chk);
+            dgv_permisos.Columns.Add("nombre", "Nombre del Permiso");
+            dgv_permisos.Columns.Add("descripcion", "Descripción");
+
+
+            dgv_permisos.Rows.Add(false, "CrearUsuarios", "Permite crear nuevos usuarios");
+            dgv_permisos.Rows.Add(false, "EditarUsuarios", "Permite modificar datos");
+            dgv_permisos.Rows.Add(false, "EliminarUsuarios", "Permite eliminar usuarios");
+
+        }
+
+        private List<string> SeleccionoPermiso()
+        {
+            List<string> permisosSeleccionados = new List<string>();
+
+            foreach (DataGridViewRow row in dgv_permisos.Rows)
             {
-            //key,value
-            { 0, "asignar permisos" }
-        };
-            cbox_permisos.DataSource = new BindingSource(list_cliente, null);
-            //es la fuente de datos que seria la lista atraves del objeto binding
-            cbox_permisos.DisplayMember = "value";//lo que muestra
-            cbox_permisos.ValueMember = "key";//con la que se enlaza a la base de datos
-            cbox_permisos.SelectedValue = 0;//valor inicializado
+                bool seleccionado = Convert.ToBoolean(row.Cells["chkSeleccionar"].Value);
+
+                if (seleccionado)
+                {
+                    string nombrePermiso = row.Cells["nombre"].Value.ToString();
+                    permisosSeleccionados.Add(nombrePermiso);
+
+                }
+            }
+
+            return permisosSeleccionados;
+        }
+        private void sc_asignacion_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
