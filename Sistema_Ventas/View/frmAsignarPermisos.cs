@@ -52,7 +52,7 @@ namespace Sistema_Ventas.View
            return;
             }
             
-            MessageBox.Show("Permisos seleccionados: " + string.Join(", ", SeleccionoPermiso));
+            MessageBox.Show("Permisos seleccionados: " + string.Join(", ", SeleccionoPermiso()));
 
         }
 
