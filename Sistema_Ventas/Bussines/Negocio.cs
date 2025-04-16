@@ -12,7 +12,7 @@ namespace Sistema_Ventas.Bussines
     /// </summary>
     internal class Negocio
     {
-        ¿
+        
 
         /// <summary>
         /// Clase para manejar reglas de negocio relacionadas con clientes
