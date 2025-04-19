@@ -41,13 +41,6 @@ namespace Sistema_Ventas.Model
 
         /// </summary>
 
-        public string Curp { get; set; }
-
-        /// <summary>
-
-        /// Fecha de nacimiento de la persona
-
-        /// </summary>
 
         public DateTime? FechaNacimiento { get; set; }//no es obligatoria puede ser nulo
 
@@ -65,28 +58,25 @@ namespace Sistema_Ventas.Model
             NombreCompleto = string.Empty;
             Correo = string.Empty;
             Telefono = string.Empty;
-            Curp = string.Empty;
             Estatus = true;
 
         }
         //para no objeto vacio, solo inserta datos obligatorios
-        public Persona(string nombreCompleto, string correo, string telefono, string curp)
+        public Persona(string nombreCompleto, string correo, string telefono)
         {
             NombreCompleto = nombreCompleto;
             Correo = correo;
             Telefono = telefono;
-            Curp = curp;
             Estatus = true;
 
         }
         //constructor completo
-        public Persona(int id, string nombreCompleto, string correo, string telefono, string curp, DateTime? fechaNacimiento, bool estatus)
+        public Persona(int id, string nombreCompleto, string correo, string telefono, DateTime? fechaNacimiento, bool estatus)
         {
             Id = id;
             NombreCompleto = nombreCompleto;
             Correo = correo;
             Telefono = telefono;
-            Curp = curp;
             FechaNacimiento = fechaNacimiento;
             Estatus = estatus;
         }
