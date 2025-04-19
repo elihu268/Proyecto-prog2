@@ -574,6 +574,7 @@
             cBox_codigo.Name = "cBox_codigo";
             cBox_codigo.Size = new Size(246, 33);
             cBox_codigo.TabIndex = 23;
+            cBox_codigo.SelectedIndexChanged += cBox_codigo_SelectedIndexChanged;
             // 
             // lblcodigo
             // 

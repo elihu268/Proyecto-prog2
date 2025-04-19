@@ -26,7 +26,7 @@ namespace Sistema_Ventas.Model
             this.Descripcion = descripcion;
             this.Existencia = existencia;
         }
-
+        
         public void CalcularIVA()
         {
             this.Precio = this.Precio * 0.16;

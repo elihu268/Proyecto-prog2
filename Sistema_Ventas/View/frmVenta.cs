@@ -148,16 +148,16 @@ namespace Sistema_Ventas.View
 
         private void btn_actualizar_Click_(object sender, EventArgs e)
         {
+          
+        }
+
+        private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
             if (cb_clientes.SelectedItem is Cliente clienteSeleccionado)
             {
                 txt_nombre.Text = clienteSeleccionado.DatosPersonales.NombreCompleto;
 
             }
-        }
-
-        private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
         private void PoblacomboCliente()
         {
@@ -173,13 +173,18 @@ namespace Sistema_Ventas.View
                 cb_clientes.Items.Add(c.DatosPersonales.Correo); // Solo agregas el correo al combo
             }
             cb_clientes.DataSource = listaClientes;
-            cb_clientes.DisplayMember = "Correo"; 
-            cb_clientes.ValueMember = "Id";     
+            cb_clientes.DisplayMember = "Correo";
+            cb_clientes.ValueMember = "Id";
             cb_clientes.SelectedIndex = -1; // Para que no aparezca uno seleccionado por defecto
 
         }
 
         private void gpbox_cliente_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cBox_codigo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
