@@ -16,5 +16,9 @@ namespace Sistema_Ventas.Model
 
         public int cantidad { get; set; }
         public double TotalPorUnidad { get; set; }
+        //constructor
+
+
+       
     }
 }

@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Ventas.Controller;
+using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Sistema_Ventas.View
@@ -135,7 +138,7 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("porfavor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!Bussines.Negocio.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
+            if (!Bussines.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
             {
                 MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -154,16 +157,17 @@ namespace Sistema_Ventas.View
         }
         private void PoblacomboCliente()
         {
-            Dictionary<int, string> list_cliente = new Dictionary<int, string>()
+            ClientesController clienteController = new ClientesController();
+
+            // Obtener la lista de clientes (estudiantes)
+            List<Cliente> listaClientes = clienteController.ObtenerEstudiantes();
+
+            cb_clientes.Items.Clear(); // Limpia primero el combo
+
+            foreach (Cliente c in listaClientes)
             {
-            //key,value
-            { 0, "cliente general" }
-        };
-            cb_clientes.DataSource = new BindingSource(list_cliente, null);
-            //es la fuente de datos que seria la lista atraves del objeto binding
-            cb_clientes.DisplayMember = "value";//lo que muestra
-            cb_clientes.ValueMember = "key";//con la que se enlaza a la base de datos
-            cb_clientes.SelectedValue = 0;//valor inicializado
+                cb_clientes.Items.Add(c.DatosPersonales.Correo); // Solo agregas el correo al combo
+            }
         }
 
         private void gpbox_cliente_Enter(object sender, EventArgs e)

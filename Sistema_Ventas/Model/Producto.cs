@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog.LayoutRenderers;
 
 namespace Sistema_Ventas.Model
 {
@@ -17,5 +18,18 @@ namespace Sistema_Ventas.Model
         public string Descripcion { get; set; }
         public int Existencia { get; set; }
 
+        public Producto(int idProducto,string codigo,string nombre,double precio,string  descripcion, int existencia) {
+        this.IdProduco = idProducto;
+            this.IdCodigo = codigo; 
+            this.Nombre = nombre;
+            this.Precio = precio;
+            this.Descripcion = descripcion;
+            this.Existencia = existencia;
+        }
+
+        public void CalcularIVA()
+        {
+            this.Precio = this.Precio * 0.16;
+        }
     }
 }
