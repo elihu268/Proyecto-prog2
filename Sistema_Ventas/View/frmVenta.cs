@@ -148,7 +148,7 @@ namespace Sistema_Ventas.View
 
         private void btn_actualizar_Click_(object sender, EventArgs e)
         {
-          
+
         }
 
         private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
@@ -185,6 +185,16 @@ namespace Sistema_Ventas.View
         }
 
         private void cBox_codigo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitCVenta_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void gpbox_carrito_Enter(object sender, EventArgs e)
         {
 
         }
