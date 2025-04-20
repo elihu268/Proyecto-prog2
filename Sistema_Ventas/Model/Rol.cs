@@ -34,7 +34,6 @@ namespace Sistema_Ventas.Model
                 this.Descripcion = descripcion;
                 this.Estatus = estatus;
             }
-        
 
     }
 }

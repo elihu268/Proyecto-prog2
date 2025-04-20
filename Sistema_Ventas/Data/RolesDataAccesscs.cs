@@ -31,26 +31,21 @@ namespace Sistema_Ventas.Data
         public List<Rol> obtenerRoles()
         {
             List<Rol> roles = new List<Rol>();
+
             try
             {
-                // Consulta SQL
-                string query = @"
-        ";
+                string query = @"SELECT id_rol, codigo, descripcion, estatus FROM roles";
 
-                // Ejecutar consulta 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
 
-                // Procesar 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    Rol rol = new Rol(
-                        Convert.ToInt32(row["id_producto"]),
-                        row["cod_producto"].ToString(),
-                        row["nombre"].ToString(),
-                        Convert.ToDouble(row["precio"]),
-                        row["descripcion"].ToString(),
-                        Convert.ToInt32(row["existencia"])
-                    );
+                    var idRol = Convert.ToInt32(row["id_rol"]);
+                    var codigo = row["codigo"].ToString();
+                    var descripcion = row.IsNull("descripcion") ? null : row["descripcion"].ToString();
+                    var estatus = Convert.ToBoolean(row["estatus"]);
+
+                    Rol rol = new Rol(idRol, codigo, descripcion, estatus);
                     roles.Add(rol);
                 }
 
@@ -58,13 +53,14 @@ namespace Sistema_Ventas.Data
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener información de los productos desde la base de datos");
+                _logger.Error(ex, "Error al obtener información de los roles desde la base de datos");
                 throw;
             }
             finally
             {
-                _dbAccess.Disconnect(); // Siempre cerrar conexión
+                _dbAccess.Disconnect();
             }
         }
+
     }
 }
