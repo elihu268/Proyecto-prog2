@@ -9,7 +9,7 @@ namespace Sistema_Ventas.Data
 {
     public class DetalleCompraDataAccess
     {
-        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.VlienteDataAccess");
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.DetalleCompraDataAccess");
       private readonly PostgreSQLDataAccess _dbAccess;
 
         public bool AgregarDetalleaCompra()
