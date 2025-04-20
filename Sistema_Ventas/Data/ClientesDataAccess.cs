@@ -23,31 +23,37 @@ namespace Sistema_Ventas.Data
 
         public List<Cliente> ObtenerClientes(bool Activos)
         {
-            //solo acitvos ==true; por defecto si no se pone el parmetro se pone true
-            //tipo fecha=alta,baja,nacimiento
-            //rango de fechas que interactua con la consultas, pueden estar nulas
-            List<Cliente> clientes = new List<Cliente>();
+             List<Cliente> clientes = new List<Cliente>();
 
             try
             {
                 string query = @"
-                    SELECT c.id_cliente,c.tipo,c.rfc,c.fecha _registro
-                            CASE
-                                WHEN c.estatus=0 THEN 'Baja'
-                                WHEN c.estatus=1 THEN 'Activo'
-                                    ELSE
-                                        'Desconocido'
-                            END AS descestatus_estudiante,
-                                c.id_persona,p.nombre_completo,p.correo,p.telefono,p.fecha_nacimiento,p.estatus as estatus_persona
-                    FROM pv.cliente c
-                    INNER JOIN personas p ON e.id_persona=p.id_persona
-                    WHERE 1=1";
+                    SELECT 
+    c.id_cliente,
+    c.tipo,
+    c.rfc,
+    c.fecha_registro,
+    CASE
+        WHEN c.estatus = 0 THEN 'Baja'
+        WHEN c.estatus = 1 THEN 'Activo'
+        ELSE 'Desconocido'
+    END AS descestatus_personas,
+    c.id_persona,
+    p.nombre_completo,
+    p.correo,
+    p.telefono,
+    p.fecha_nacimiento,
+    p.estatus AS estatus_persona
+FROM pv.cliente c
+INNER JOIN personas p ON c.id_persona = p.id_persona
+WHERE 1=1;
+";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
                 if (Activos)
                 {
-                    query += " AND e.estatus = 1";
+                    query += " AND p.estatus = 1";
                 }
-                query += " ORDER BY e.id";
+                query += " ORDER BY c.id_cliente";
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
                 
