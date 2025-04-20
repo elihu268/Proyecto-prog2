@@ -7,6 +7,7 @@ using Sistema_Ventas.Utilities;
 using NLog;
 using Sistema_Ventas.Model;
 using System.Data;
+using Npgsql;
 
 namespace Sistema_Ventas.Data
 {
@@ -60,6 +61,6 @@ namespace Sistema_Ventas.Data
             }
         }
 
-
+       
     }
 }

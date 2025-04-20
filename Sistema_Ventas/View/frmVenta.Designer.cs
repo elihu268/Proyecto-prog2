@@ -321,6 +321,8 @@
             // 
             // cBox_codigo
             // 
+            cBox_codigo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cBox_codigo.AutoCompleteSource = AutoCompleteSource.ListItems;
             cBox_codigo.FormattingEnabled = true;
             cBox_codigo.Location = new Point(27, 69);
             cBox_codigo.Name = "cBox_codigo";

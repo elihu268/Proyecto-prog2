@@ -41,5 +41,19 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+        public List<Permiso> ObtenerPermisos()
+        {
+            try
+            {
+                List<Permiso> permisos = _permisosData.obtenerPermisos();
+                _logger.Info($"Se obtuvieron {permisos.Count} ");
+                return permisos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener la lista de permisos");
+                throw;
+            }
+        }
     }
 }

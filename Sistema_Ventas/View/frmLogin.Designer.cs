@@ -73,6 +73,7 @@
             txt_usuario.Name = "txt_usuario";
             txt_usuario.Size = new Size(192, 31);
             txt_usuario.TabIndex = 3;
+            txt_usuario.Text = "a@a.a";
             // 
             // txt_password
             // 
@@ -81,6 +82,7 @@
             txt_password.PasswordChar = '*';
             txt_password.Size = new Size(192, 31);
             txt_password.TabIndex = 4;
+            txt_password.Text = "a";
             // 
             // btn_iniciar
             // 

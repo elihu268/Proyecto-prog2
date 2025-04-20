@@ -244,9 +244,94 @@ namespace Sistema_Ventas.View
         {
             if (cBox_codigo.SelectedItem is Producto productoSeleccionado)
             {
-                txt_nombre.Text = productoSeleccionado.Codigo;
+                txt_nombre.Text = productoSeleccionado.Nombre;
+                txt_precio.Text = Convert.ToString(productoSeleccionado.Precio);
 
             }
+        }
+        public void ConfigurarDgvProductos()
+        {
+
+            //Ajustes generales
+            dgv_productos.AllowUserToAddRows = false;
+            dgv_productos.AllowUserToDeleteRows = false;
+            dgv_productos.ReadOnly = true;
+
+            // Ajustar el ancho de las columnas
+            dgv_productos.Columns["Codigo"].Width = 100;
+            dgv_productos.Columns["Nombre"].Width = 100;
+            dgv_productos.Columns["Precio"].Width = 50;
+            dgv_productos.Columns["Descripcion"].Width = 200;
+            dgv_productos.Columns["Existencia"].Width = 50;
+
+            // Ocultar columna ID si es necesario
+            dgv_productos.Columns["ID"].Visible = false;
+            // Alineación
+            dgv_productos.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Codigo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv_productos.Columns["Nombre"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv_productos.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Descripcion"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // Color alternado de filas
+            dgv_productos.AlternatingRowsDefaultCellStyle.BackColor = Color.Gray;
+
+            // Selección de fila completa
+            dgv_productos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Estilo de cabeceras
+            dgv_productos.EnableHeadersVisualStyles = false;
+            dgv_productos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgv_productos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgv_productos.ColumnHeadersDefaultCellStyle.Font = new Font(dgv_productos.Font, FontStyle.Bold);
+            dgv_productos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Ordenar al hacer clic en el encabezado
+            dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv_productos.ColumnHeadersHeight = 35;
+        }
+        public void ConfigurarDgvDetalle()
+        {
+
+            //Ajustes generales
+            dgv_productos.AllowUserToAddRows = false;
+            dgv_productos.AllowUserToDeleteRows = false;
+            dgv_productos.ReadOnly = true;
+
+            // Ajustar el ancho de las columnas
+            dgv_productos.Columns["Codigo"].Width = 100;
+            dgv_productos.Columns["Nombre"].Width = 100;
+            dgv_productos.Columns["Precio"].Width = 50;
+            dgv_productos.Columns["Descripcion"].Width = 200;
+            dgv_productos.Columns["Existencia"].Width = 50;
+
+            // Ocultar columna ID si es necesario
+            dgv_productos.Columns["ID"].Visible = false;
+            // Alineación
+            dgv_productos.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Codigo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv_productos.Columns["Nombre"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv_productos.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Descripcion"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_productos.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // Color alternado de filas
+            dgv_productos.AlternatingRowsDefaultCellStyle.BackColor = Color.Gray;
+
+            // Selección de fila completa
+            dgv_productos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Estilo de cabeceras
+            dgv_productos.EnableHeadersVisualStyles = false;
+            dgv_productos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgv_productos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgv_productos.ColumnHeadersDefaultCellStyle.Font = new Font(dgv_productos.Font, FontStyle.Bold);
+            dgv_productos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Ordenar al hacer clic en el encabezado
+            dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv_productos.ColumnHeadersHeight = 35;
         }
     }
 }
