@@ -61,7 +61,7 @@ namespace Sistema_Ventas.Controller
                 _logger.Error($"Error al elimar permisos al rol: {idRol},{ex}");
             }
         }
-        public List<Permiso> ObtenerPermisosPorRol(int idRol)
+        /*public List<Permiso> ObtenerPermisosPorRol(int idRol)
         {
             try
             {
@@ -77,6 +77,6 @@ namespace Sistema_Ventas.Controller
             {
                 _logger.Error($"no se pudo obtener la lista de permisos del rol: {idRol},{ex}");
             }
-        }
+        }*/
     }
 }

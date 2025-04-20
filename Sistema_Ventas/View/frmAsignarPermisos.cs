@@ -87,7 +87,7 @@ namespace Sistema_Ventas.View
             dgv_permisos.Rows.Clear();
 
             PermisosController permisosController = new PermisosController();
-            List<Permiso> permisos = permisosController.ObtenerPermisos();
+           List<Permiso> permisos = permisosController.ObtenerPermisos();
 
             // Filtrar solo los permisos activos
             var permisosActivos = permisos.Where(p => p.Estatus == true).ToList();
@@ -169,10 +169,10 @@ namespace Sistema_Ventas.View
                 Rol rolSeleccionado = (Rol)cbox_rol.SelectedItem;
                 string codigoRol = rolSeleccionado.Codigo; // o usar el ID si prefieres
 
-                LlenarTablaPermisos(codigoRol);
+                //LlenarTablaPermisos(codigoRol);
             }
         }
-        private void LlenarTablaPermisos(string codigoRol)
+       /* private void LlenarTablaPermisos(string codigoRol)
         {
             dgv_permisos.Columns.Clear();
             dgv_permisos.Rows.Clear();
@@ -210,7 +210,7 @@ namespace Sistema_Ventas.View
                 dgv_permisos.AutoResizeColumns();
                 ConfigurarDgvPermisos(); // tu método para estilo
             }
-        }
+        }*/
         
         private void dgv_permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

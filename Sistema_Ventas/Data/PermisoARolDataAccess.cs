@@ -81,7 +81,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
-        public List<Permiso> ObtenerPermisosPorRol(int codigoRol)
+       /* public List<Permiso> ObtenerPermisosPorRol(int codigoRol)
         {
             List<Permiso> lista = new List<Permiso>();
 
@@ -115,6 +115,6 @@ namespace Sistema_Ventas.Data
 
             return lista;
         }
-
+       */
     }
 }
