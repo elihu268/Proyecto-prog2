@@ -37,13 +37,12 @@ namespace Sistema_Ventas.Model
         public Persona DatosPersonales { get; set; }
 
         //CONSTRUCTORES
-        public Cliente(int id,int idPersona,int tipo, DateTime fechaREgistro,string rfc,int estatus, Persona persona) {
+        public Cliente(int id,int idPersona,int tipo, DateTime fechaREgistro,string rfc, Persona persona) {
             this.Id = id;
             this.IdPersona = idPersona;
             this.Tipo = tipo;
             this.FechaRegistro = fechaREgistro;
             this.Rfc = rfc;
-            this.Estatus = estatus;
             DatosPersonales =persona;
         }
     }

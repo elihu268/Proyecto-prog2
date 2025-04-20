@@ -31,19 +31,17 @@ namespace Sistema_Ventas.Data
             try
             {
                 string query = @"
-                    SELECT c.id,c.tipo,c.rfc,c.estatus
+                    SELECT c.id_cliente,c.tipo,c.rfc,c.fecha _registro
                             CASE
                                 WHEN c.estatus=0 THEN 'Baja'
                                 WHEN c.estatus=1 THEN 'Activo'
                                     ELSE
                                         'Desconocido'
                             END AS descestatus_estudiante,
-                                c.id_persona,p.nombre_completo,p.correo,p.telefono,p.fecha_nacimiento,p.curp,p.estatus as estatus_persona
+                                c.id_persona,p.nombre_completo,p.correo,p.telefono,p.fecha_nacimiento,p.estatus as estatus_persona
                     FROM pv.cliente c
-                    INNER JOIN seguridad.personas p ON e.id_persona=p.id
-                    WHERE 1=1";//Iniciamos con na condicion siempre verdadeera para facilitar la adicion de filros 
-
-
+                    INNER JOIN personas p ON e.id_persona=p.id_persona
+                    WHERE 1=1";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
                 if (Activos)
                 {
@@ -61,19 +59,17 @@ namespace Sistema_Ventas.Data
                         row["nombre_completo"].ToString() ?? "",
                         row["correo"].ToString() ?? "",
                         row["telefono"].ToString() ?? "",
-                        row["curp"].ToString() ?? "",
                         row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
                          Convert.ToBoolean(row["estatus_persona"])
                         );
 
                     //crear el objeto cliente
                     Cliente cliente = new Cliente(
-                  Convert.ToInt32(row["id"]),
+                  Convert.ToInt32(row["id_cliente"]),
                   Convert.ToInt32(row["id_persona"]),
                   Convert.ToInt32(row["tipo"]),
-                  Convert.ToDateTime(row["fechaRegistro"]),
+                  Convert.ToDateTime(row["fecha_registro"]),
                       row["rfc"].ToString() ?? "",
-                      Convert.ToInt32(row["estatus"]),
                       persona
                        );
                     clientes.Add(cliente);
