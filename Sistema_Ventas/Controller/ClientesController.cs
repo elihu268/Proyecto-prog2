@@ -16,7 +16,20 @@ namespace Sistema_Ventas.Controller
         private readonly ClientesDataAccess _clientesData;
         private readonly PersonasDataAccess _personasData;
 
-        
+        public ClientesController()
+        {
+            try
+            {
+                _clientesData = new ClientesDataAccess();
+                _personasData = new PersonasDataAccess();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "error al inicializar el controlador de estudiantes");
+                throw;
+            }
+        }
         public List<Cliente> ObtenerEstudiantes(bool Activo = true)
         {
             try

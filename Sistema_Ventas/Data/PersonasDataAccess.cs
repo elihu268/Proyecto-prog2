@@ -32,19 +32,18 @@ namespace Sistema_Ventas.Data
             try
             {
                 string query = "INSERT INTO seguridad.personas (nombre_completo, correo, telefono, fecha_nacimiento, curp, estatus) " +
-"VALUES (@NombreCompleto, @Correo, @Telefono, @FechaNacimiento, @Curp, @Estatus) " +
+"VALUES (@NombreCompleto, @Correo, @Telefono, @FechaNacimiento, @Estatus) " +
 "RETURNING id";
                 //crear parametros
                 NpgsqlParameter paramNombre = _dbAccess.CreateParameter("@NombreCompleto", persona.NombreCompleto);
                 NpgsqlParameter paramCorreo = _dbAccess.CreateParameter("@Correo", persona.Correo);
                 NpgsqlParameter paramTelefono = _dbAccess.CreateParameter("@Telefono", persona.Telefono);
                 NpgsqlParameter paramFechaNac = _dbAccess.CreateParameter("@FechaNacimiento", persona.FechaNacimiento);
-                NpgsqlParameter paramCurp = _dbAccess.CreateParameter("@Curp", persona.Curp);
                 NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", persona.Estatus);
                 //establecer conexion
                 _dbAccess.Connect();
                 //ejecutar insercion y obtiene id generado(scalar sdolo se afceta uno)
-                object? resultado = _dbAccess.ExecuteScalar(query, paramNombre, paramCorreo, paramTelefono, paramFechaNac, paramCurp, paramEstatus);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramNombre, paramCorreo, paramTelefono, paramFechaNac, paramEstatus);
                 //resultado a entero
                 int idGenerado = Convert.ToInt32(resultado);
                 _logger.Info($"persona insertada correctamente con ID{idGenerado}");
