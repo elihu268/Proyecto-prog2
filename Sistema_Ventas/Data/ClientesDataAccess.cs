@@ -13,7 +13,7 @@ namespace Sistema_Ventas.Data
 {
     public class ClientesDataAccess
     {
-        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.VlienteDataAccess");
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.ClientesDataAccess");
         /// 
         private readonly PostgreSQLDataAccess _dbAccess;
 
@@ -28,12 +28,12 @@ namespace Sistema_Ventas.Data
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "error al inicializar EstudiantesDataAccess");
+                _logger.Error(ex, "error al inicializar ClienteDataAccess");
                 throw;
             }
         }
 
-        public List<Cliente> ObtenerClientes(bool Activos)
+        public List<Cliente> ObtenerClientes(int Activos)
         {
              List<Cliente> clientes = new List<Cliente>();
 
@@ -46,8 +46,8 @@ namespace Sistema_Ventas.Data
     c.rfc,
     c.fecha_registro,
     CASE
-        WHEN c.estatus = 0 THEN 'Baja'
-        WHEN c.estatus = 1 THEN 'Activo'
+        WHEN p.estatus = 0 THEN 'Baja'
+        WHEN p.estatus = 1 THEN 'Activo'
         ELSE 'Desconocido'
     END AS descestatus_personas,
     c.id_persona,
@@ -56,12 +56,12 @@ namespace Sistema_Ventas.Data
     p.telefono,
     p.fecha_nacimiento,
     p.estatus AS estatus_persona
-FROM pv.cliente c
+FROM cliente c
 INNER JOIN personas p ON c.id_persona = p.id_persona
 WHERE 1=1;
 ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-                if (Activos)
+                if (Activos==1)
                 {
                     query += " AND p.estatus = 1";
                 }

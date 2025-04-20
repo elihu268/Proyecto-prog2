@@ -26,21 +26,21 @@ namespace Sistema_Ventas.Controller
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "error al inicializar el controlador de estudiantes");
+                _logger.Error(ex, "error al inicializar el controlador de clientes");
                 throw;
             }
         }
-        public List<Cliente> ObtenerEstudiantes(bool Activo = true)
+        public List<Cliente> ObtenerClientes(int Activo = 1)
         {
             try
             {
-                List<Cliente> estudiantes = _clientesData.ObtenerClientes(Activo);
-                _logger.Info($"Se obtuvieron {estudiantes.Count} estudiantes");
-                return estudiantes;
+                List<Cliente> clientes = _clientesData.ObtenerClientes(Activo);
+                _logger.Info($"Se obtuvieron {clientes.Count} ");
+                return clientes;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener la lista de estudiantes");
+                _logger.Error(ex, "Error al obtener la lista de clientes");
                 throw;
             }
         }

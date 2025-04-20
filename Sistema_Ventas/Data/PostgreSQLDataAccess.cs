@@ -88,7 +88,7 @@ namespace Sistema_Ventas.Data
         /// </summary>
         /// <param name="query"></param>
         /// <param name="parameters"></param>
-        /// <returns></returns>///!!!!!!!!!!
+        /// <returns></returns>///
         public DataTable ExecuteQuery_Reader(string query, params NpgsqlParameter[] parameters)
         {
             DataTable dataTable = new DataTable();
