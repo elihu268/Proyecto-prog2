@@ -12,15 +12,16 @@ namespace Sistema_Ventas.Data
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.DetalleCompraDataAccess");
       private readonly PostgreSQLDataAccess _dbAccess;
 
-        public bool AgregarDetalleaCompra()
+        public  DetalleCompraDataAccess()
         {
             try
             {
-                return true;
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-
+                _logger.Fatal(e, "Error al instializar DetalleCompraDataAccess");
+                throw;
             }
         }
     }
