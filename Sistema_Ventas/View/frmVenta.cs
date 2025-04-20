@@ -198,5 +198,10 @@ namespace Sistema_Ventas.View
         {
 
         }
+
+        private void splitCVenta_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
     }
 }
