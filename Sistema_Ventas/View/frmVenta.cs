@@ -164,7 +164,7 @@ namespace Sistema_Ventas.View
             ClientesController clienteController = new ClientesController();
 
             // Obtener la lista de clientes (estudiantes)
-            List<Cliente> listaClientes = clienteController.ObtenerEstudiantes();
+            List<Cliente> listaClientes = clienteController.ObtenerClientes();
 
             cb_clientes.Items.Clear(); // Limpia primero el combo
 

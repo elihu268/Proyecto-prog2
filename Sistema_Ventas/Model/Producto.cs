@@ -17,7 +17,7 @@ namespace Sistema_Ventas.Model
 
         public string Descripcion { get; set; }
         public int Existencia { get; set; }
-
+        public Producto() { }
         public Producto(int idProducto,string codigo,string nombre,double precio,string  descripcion, int existencia) {
         this.IdProduco = idProducto;
             this.Codigo = codigo; 
@@ -26,10 +26,19 @@ namespace Sistema_Ventas.Model
             this.Descripcion = descripcion;
             this.Existencia = existencia;
         }
-        
-        public void CalcularIVA()
+        public Producto(int idProducto, string codigo, string nombre, string descripcion, int existencia)
         {
-            this.Precio = this.Precio * 0.16;
+            this.IdProduco = idProducto;
+            this.Codigo = codigo;
+            this.Nombre = nombre;
+            this.Precio = CalcularIVA();
+            this.Descripcion = descripcion;
+            this.Existencia = existencia;
+        }
+
+        public double CalcularIVA()
+        {
+            return this.Precio+( this.Precio * 0.16);
         }
     }
 }

@@ -40,32 +40,31 @@ namespace Sistema_Ventas.Data
             try
             {
                 string query = @"
-                    SELECT 
+                   SELECT 
     c.id_cliente,
-    c.tipo,
-    c.rfc,
-    c.fecha_registro,
-    CASE
-        WHEN p.estatus = 0 THEN 'Baja'
-        WHEN p.estatus = 1 THEN 'Activo'
-        ELSE 'Desconocido'
-    END AS descestatus_personas,
-    c.id_persona,
     p.nombre_completo,
     p.correo,
     p.telefono,
     p.fecha_nacimiento,
-    p.estatus AS estatus_persona
-FROM cliente c
-INNER JOIN personas p ON c.id_persona = p.id_persona
-WHERE 1=1;
+    c.fecha_registro,
+    c.rfc,
+    c.tipo
+FROM  cliente c
+JOIN  personas p ON c.id_persona = p.id_persona
+WHERE  1 = 1 
 ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-                if (Activos==1)
+
+                if (Activos == 2)
                 {
-                    query += " AND p.estatus = 1";
+                    query += " AND p.estatus = @estatus ";
+                    parametros.Add(new NpgsqlParameter("@estatus", 2));
                 }
-                query += " ORDER BY c.id_cliente";
+                /*if (Activos==2)
+                {
+                    query += " AND p.estatus = 2 ";
+                }*/
+                query += "\nORDER BY c.id_cliente";
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
                 

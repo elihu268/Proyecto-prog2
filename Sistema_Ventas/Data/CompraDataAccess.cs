@@ -7,12 +7,13 @@ using Sistema_Ventas.Utilities;
 using NLog;
 namespace Sistema_Ventas.Data
 {
-    public class DetalleCompraDataAccess
+    public class CompraDataAccess
     {
-        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.DetalleCompraDataAccess");
-      private readonly PostgreSQLDataAccess _dbAccess;
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.CompraDataAccess");
+        
+        private readonly PostgreSQLDataAccess _dbAccess;
 
-        public  DetalleCompraDataAccess()
+        public CompraDataAccess()
         {
             try
             {
@@ -20,14 +21,13 @@ namespace Sistema_Ventas.Data
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "Error al instializar DetalleCompraDataAccess");
+                _logger.Fatal(e, "Error al instializar CompraDataAccess");
                 throw;
             }
         }
-        public bool AgregarProducto()
+        public bool AgregarCompra()
         {
             return true;
-
         }
     }
 }
