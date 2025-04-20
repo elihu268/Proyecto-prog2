@@ -9,7 +9,7 @@ namespace Sistema_Ventas.Model
 {
     public class Producto
     {
-        public int IdProduco { get; set; }
+        public int IdProducto { get; set; }
         public string Codigo { get; set; }
         public string Nombre { get; set; }
 
@@ -18,8 +18,8 @@ namespace Sistema_Ventas.Model
         public string Descripcion { get; set; }
         public int Existencia { get; set; }
         public Producto() { }
-        public Producto(int idProducto,string codigo,string nombre,double precio,string  descripcion, int existencia) {
-        this.IdProduco = idProducto;
+        public Producto(int idProducto, string codigo,string nombre,double precio,string  descripcion, int existencia) {
+        this.IdProducto = idProducto;
             this.Codigo = codigo; 
             this.Nombre = nombre;
             this.Precio = precio;
@@ -28,7 +28,7 @@ namespace Sistema_Ventas.Model
         }
         public Producto(int idProducto, string codigo, string nombre, string descripcion, int existencia)
         {
-            this.IdProduco = idProducto;
+            this.IdProducto = idProducto;
             this.Codigo = codigo;
             this.Nombre = nombre;
             this.Precio = CalcularIVA();
@@ -40,5 +40,6 @@ namespace Sistema_Ventas.Model
         {
             return this.Precio+( this.Precio * 0.16);
         }
+       
     }
 }

@@ -42,8 +42,15 @@ namespace Sistema_Ventas.Bussines
 
                 throw;
             }
-            
     }
+        internal static int CalcularStock(string cantidad, int stock)
+        {
+            int cant;
+            int nvoStock;
+            int.TryParse(cantidad, out cant);
+            nvoStock = stock - cant;
+            return nvoStock;
+        }
     }
     
 }

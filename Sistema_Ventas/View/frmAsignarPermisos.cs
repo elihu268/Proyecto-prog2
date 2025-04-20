@@ -46,12 +46,12 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("seleccione rol", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (SeleccionoPermiso().Count==0)
+            if (SeleccionoPermiso().Count == 0)
             {
-                MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
-           return;
+                MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            
+
             MessageBox.Show("Permisos seleccionados: " + string.Join(", ", SeleccionoPermiso()));
 
         }
@@ -61,7 +61,7 @@ namespace Sistema_Ventas.View
             AsignarPermiso();
         }
 
-      
+
 
         private void frmAsignarPermisos_Load(object sender, EventArgs e)
         {
@@ -70,14 +70,14 @@ namespace Sistema_Ventas.View
         private void InicializarVentanaPermisos()
         {
             //sc_asignacion.Panel1Collapsed = true;
-          PoblaDataPermiso();
+            PoblaDataPermiso();
             PoblacboxRol();
         }
         public void PoblacboxRol()
         {
 
         }
- private void PoblaDataPermiso()
+        private void PoblaDataPermiso()
         {
             DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
             chk.HeaderText = "Seleccionar";
@@ -113,6 +113,11 @@ namespace Sistema_Ventas.View
             return permisosSeleccionados;
         }
         private void sc_asignacion_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

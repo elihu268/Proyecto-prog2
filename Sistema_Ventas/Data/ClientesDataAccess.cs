@@ -60,10 +60,6 @@ WHERE  1 = 1
                     query += " AND p.estatus = @estatus ";
                     parametros.Add(new NpgsqlParameter("@estatus", 2));
                 }
-                /*if (Activos==2)
-                {
-                    query += " AND p.estatus = 2 ";
-                }*/
                 query += "\nORDER BY c.id_cliente";
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());

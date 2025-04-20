@@ -7,15 +7,17 @@ using Sistema_Ventas.Data;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using NLog;
+using System.Reflection.Metadata.Ecma335;
+using Sistema_Ventas.Bussines;
 
 namespace Sistema_Ventas.Controller
 {
-    public class ProductosCrontoller
+    public class ProductosController
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Controller.ProductosCrontoller");
         private readonly ProductosDataAccess _productosData;
 
-        public ProductosCrontoller()
+        public ProductosController()
         {
             try
             {
@@ -39,6 +41,18 @@ namespace Sistema_Ventas.Controller
             catch (Exception ex)
             {
                 _logger.Error(ex, "Error al obtener la lista de productos");
+                throw;
+            }
+        }
+        public void ModificarStcok(String cantidad,Producto producto)
+        {
+            try
+            {
+                producto.Existencia=CompraNegocio.CalcularStock(cantidad, producto.Existencia);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al modicficar el stock del producto: "+producto.IdProducto);
                 throw;
             }
         }

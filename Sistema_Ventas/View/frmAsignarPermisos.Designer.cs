@@ -63,6 +63,7 @@
             cbox_rol.Name = "cbox_rol";
             cbox_rol.Size = new Size(281, 33);
             cbox_rol.TabIndex = 22;
+            cbox_rol.SelectedIndexChanged += cbox_rol_SelectedIndexChanged;
             // 
             // dgv_permisos
             // 

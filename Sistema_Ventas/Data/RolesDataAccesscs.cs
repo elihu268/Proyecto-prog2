@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sistema_Ventas.Utilities;
-using NLog;
 using Sistema_Ventas.Model;
+using NLog;
 using System.Data;
-using System.Collections;
+
 namespace Sistema_Ventas.Data
 {
-    public class ProductosDataAccess
+    public class RolesDataAccesscs
     {
-        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.ProductosDataAccess");
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.RolesDataAccesscs");
         /// 
         private readonly PostgreSQLDataAccess _dbAccess;
-        public ProductosDataAccess()
+        public RolesDataAccesscs()
         {
             try
             {
@@ -23,25 +23,18 @@ namespace Sistema_Ventas.Data
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "Error al instializar PersonasDataAccess");
+                _logger.Fatal(e, "Error al instializar RolesDataAccesscs");
                 throw;
             }
         }
-        public List<Producto> ObtenerProductos()
+
+        public List<Rol> obtenerRoles()
         {
-            List<Producto> productos = new List<Producto>();
+            List<Rol> roles = new List<Rol>();
             try
             {
                 // Consulta SQL
                 string query = @"
-            SELECT 
-                id_producto,
-                cod_producto,
-                nombre,
-                precio,
-                descripcion,
-                existencia
-            FROM producto
         ";
 
                 // Ejecutar consulta 
@@ -50,18 +43,18 @@ namespace Sistema_Ventas.Data
                 // Procesar 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    Producto producto = new Producto(
+                    Rol rol = new Rol(
                         Convert.ToInt32(row["id_producto"]),
                         row["cod_producto"].ToString(),
                         row["nombre"].ToString(),
                         Convert.ToDouble(row["precio"]),
                         row["descripcion"].ToString(),
-                        Convert.ToInt32(row["existencia"]) 
+                        Convert.ToInt32(row["existencia"])
                     );
-                    productos.Add(producto);
+                    roles.Add(rol);
                 }
 
-                return productos;
+                return roles;
             }
             catch (Exception ex)
             {
@@ -73,6 +66,5 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect(); // Siempre cerrar conexión
             }
         }
-
     }
 }

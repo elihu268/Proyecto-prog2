@@ -33,7 +33,9 @@ namespace Sistema_Ventas.View
         public void InicializaVentanaVenta()
         {
             PoblaComboMetodo();
+            PoblaComboEstatus();
             PoblacomboCliente();
+            PoblacomboProducto();
 
         }
         /// <summary>
@@ -54,8 +56,60 @@ namespace Sistema_Ventas.View
             cb_metodo.SelectedValue = 0;//valor inicializado
 
         }
+        public void PoblaComboEstatus()
+        {
+            Dictionary<int, string> list_estatus = new Dictionary<int, string>()
+            {
+                //key,value
+    { 0, "liquidada" },
+    { 1, "en proceso" },
+    { 2, "cancelada" }};
+            cbox_estatus.DataSource = new BindingSource(list_estatus, null);
+            //es la fuente de datos que seria la lista atraves del objeto binding
+            cbox_estatus.DisplayMember = "value";//lo que muestra
+            cbox_estatus.ValueMember = "key";//con la que se enlaza a la base de datos
+            cbox_estatus.SelectedValue = 1;//valor inicializado
 
+        }
 
+        private void PoblacomboCliente()
+        {
+            ClientesController clienteController = new ClientesController();
+
+            // Obtener la lista de clientes (estudiantes)
+            List<Cliente> listaClientes = clienteController.ObtenerClientes();
+
+            cb_clientes.Items.Clear(); // Limpia primero el combo
+
+            foreach (Cliente c in listaClientes)
+            {
+                cb_clientes.Items.Add(c.DatosPersonales.Correo); // Solo agregas el correo al combo
+            }
+            cb_clientes.DataSource = listaClientes;
+            cb_clientes.DisplayMember = "Correo";
+            cb_clientes.ValueMember = "Id";
+            cb_clientes.SelectedIndex = -1; // Para que no aparezca uno seleccionado por defecto
+
+        }
+        private void PoblacomboProducto()
+        {
+            ProductosController productoController = new ProductosController();
+
+            // Obtener la lista de clientes (estudiantes)
+            List<Producto> listaProducto = productoController.ObtenerProductos();
+
+            cBox_codigo.Items.Clear(); // Limpia primero el combo
+
+            foreach (Producto p in listaProducto)
+            {
+                cBox_codigo.Items.Add(p.Codigo); // Solo agregas el correo al combo
+            }
+            cBox_codigo.DataSource = listaProducto;
+            cBox_codigo.DisplayMember = "Codigo";
+            cBox_codigo.ValueMember = "IdProducto";
+            cBox_codigo.SelectedIndex = -1; // Para que no aparezca uno seleccionado por defecto
+
+        }
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
         {
 
@@ -159,25 +213,7 @@ namespace Sistema_Ventas.View
 
             }
         }
-        private void PoblacomboCliente()
-        {
-            ClientesController clienteController = new ClientesController();
-
-            // Obtener la lista de clientes (estudiantes)
-            List<Cliente> listaClientes = clienteController.ObtenerClientes();
-
-            cb_clientes.Items.Clear(); // Limpia primero el combo
-
-            foreach (Cliente c in listaClientes)
-            {
-                cb_clientes.Items.Add(c.DatosPersonales.Correo); // Solo agregas el correo al combo
-            }
-            cb_clientes.DataSource = listaClientes;
-            cb_clientes.DisplayMember = "Correo";
-            cb_clientes.ValueMember = "Id";
-            cb_clientes.SelectedIndex = -1; // Para que no aparezca uno seleccionado por defecto
-
-        }
+        
 
         private void gpbox_cliente_Enter(object sender, EventArgs e)
         {
@@ -202,6 +238,15 @@ namespace Sistema_Ventas.View
         private void splitCVenta_SplitterMoved(object sender, SplitterEventArgs e)
         {
 
+        }
+
+        private void cBox_codigo_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cBox_codigo.SelectedItem is Producto productoSeleccionado)
+            {
+                txt_nombre.Text = productoSeleccionado.Codigo;
+
+            }
         }
     }
 }
