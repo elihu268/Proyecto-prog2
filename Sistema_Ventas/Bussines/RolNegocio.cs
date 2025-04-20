@@ -15,7 +15,7 @@ namespace Sistema_Ventas.Bussines
             /// </summary>
             /// <param name="codigo">Código a validar</param>
             /// <returns>True si el formato es válido</returns>
-            internal static bool EsCodigoValido(string codigo)
+            public static bool EsCodigoValido(string codigo)
             {
                 return Validaciones.EsCodigoRolValido(codigo);
             }

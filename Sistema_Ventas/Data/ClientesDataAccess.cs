@@ -19,7 +19,19 @@ namespace Sistema_Ventas.Data
 
         private readonly PersonasDataAccess _personasData;
 
-
+        public ClientesDataAccess()
+        {
+            try
+            {
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
+               _personasData = new PersonasDataAccess();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "error al inicializar EstudiantesDataAccess");
+                throw;
+            }
+        }
 
         public List<Cliente> ObtenerClientes(bool Activos)
         {

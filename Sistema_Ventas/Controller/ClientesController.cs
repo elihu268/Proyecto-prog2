@@ -15,15 +15,15 @@ namespace Sistema_Ventas.Controller
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Controller.ClientesController");
         private readonly ClientesDataAccess _clientesData;
         private readonly PersonasDataAccess _personasData;
-        public List<Cliente> ObtenerEstudiantes(bool Ativo = true)
-        {
 
+        
+        public List<Cliente> ObtenerEstudiantes(bool Activo = true)
+        {
             try
             {
-                //variable var: no tienen un tipo definido, una variable tipo comodin
-                var clientes = _clientesData.ObtenerClientes(Ativo);
-                _logger.Info($"se obtuvieron {clientes.Count} clientes");
-                return clientes;
+                List<Cliente> estudiantes = _clientesData.ObtenerClientes(Activo);
+                _logger.Info($"Se obtuvieron {estudiantes.Count} estudiantes");
+                return estudiantes;
             }
             catch (Exception ex)
             {
@@ -31,5 +31,6 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+
     }
 }
