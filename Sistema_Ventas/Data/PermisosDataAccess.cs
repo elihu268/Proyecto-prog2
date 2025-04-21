@@ -33,7 +33,7 @@ namespace Sistema_Ventas.Data
 
             try
             {
-                string query = @"SELECT id_permiso, codigo, descripcion, estatus FROM permisos";
+                string query = @"SELECT id_permiso, codigo, descripcion, estatus FROM permisos WHERE estatus = true";
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
 

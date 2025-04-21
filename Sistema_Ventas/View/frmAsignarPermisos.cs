@@ -58,9 +58,14 @@ namespace Sistema_Ventas.View
         }
         private void InicializarVentanaPermisos()
         {
-            //sc_asignacion.Panel1Collapsed = true;
-            PoblaDataPermiso();
-            PoblacboxRol();
+            
+            PoblacboxRol(); // Llena el ComboBox
+            if (cbox_rol.Items.Count > 0)
+            {
+                int idRol = (int)cbox_rol.SelectedValue;
+                CargarPermisosPorRol(idRol);
+            }
+            //PoblacboxRol();
         }
         public void PoblacboxRol()
         {
@@ -81,41 +86,7 @@ namespace Sistema_Ventas.View
             cbox_rol.SelectedIndex = -1;
         }
 
-        private void PoblaDataPermiso()
-        {
-            dgv_permisos.Columns.Clear();
-            dgv_permisos.Rows.Clear();
-
-            PermisosController permisosController = new PermisosController();
-           List<Permiso> permisos = permisosController.ObtenerPermisos();
-
-            // Filtrar solo los permisos activos
-            var permisosActivos = permisos.Where(p => p.Estatus == true).ToList();
-
-            // Solo agregar columnas si hay datos
-            if (permisosActivos.Count > 0)
-            {
-                // Columna de checkbox
-                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-                chk.HeaderText = "Seleccionar";
-                chk.Name = "chkSeleccionar";
-                chk.Width = 60;
-                dgv_permisos.Columns.Add(chk);
-
-                // Otras columnas
-                dgv_permisos.Columns.Add("codigoa@", "Nombre del Permiso");
-                dgv_permisos.Columns.Add("descripcion", "Descripción");
-
-                // Agregar filas para permisos activos
-                foreach (var permiso in permisosActivos)
-                {
-                    dgv_permisos.Rows.Add(false, permiso.Codigo, permiso.Descripcion);
-                }
-
-                dgv_permisos.AutoResizeColumns();
-                ConfigurarDgvPermisos();
-            }
-        }
+       
 
         private void GuardarPermisosDelRol(int idRol)
         {
@@ -164,93 +135,117 @@ namespace Sistema_Ventas.View
 
         private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbox_rol.SelectedItem != null)
+            if (cbox_rol.SelectedValue != null)
             {
-                Rol rolSeleccionado = (Rol)cbox_rol.SelectedItem;
-                string codigoRol = rolSeleccionado.Codigo; // o usar el ID si prefieres
-
-                //LlenarTablaPermisos(codigoRol);
+                int idRol = (int)cbox_rol.SelectedValue;
+                CargarPermisosPorRol(idRol);
             }
         }
-       /* private void LlenarTablaPermisos(string codigoRol)
+       
+            private void CargarPermisosPorRol(int idRol)
         {
-            dgv_permisos.Columns.Clear();
-            dgv_permisos.Rows.Clear();
-
-            PermisosController permisosController = new PermisosController();
-
-            // 1. Obtener todos los permisos activos
-            List<Permiso> permisos = permisosController.ObtenerPermisos();
-            var permisosActivos = permisos.Where(p => p.Estatus == true).ToList();
-
-            // 2. Obtener permisos asignados al rol
-            List<Permiso> permisosAsignados = permisosController.ObtenerPermisosPorRol(codigoRol);
-
-            // 3. Crear columnas del DataGridView si hay datos
-            if (permisosActivos.Count > 0)
+            try
             {
-                // Columna de checkbox
-                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-                chk.HeaderText = "Seleccionar";
-                chk.Name = "chkSeleccionar";
-                chk.Width = 60;
-                dgv_permisos.Columns.Add(chk);
+                Cursor = Cursors.WaitCursor;
 
-                // Otras columnas
-                dgv_permisos.Columns.Add("codigoa@", "Nombre del Permiso");
-                dgv_permisos.Columns.Add("descripcion", "Descripción");
+                // Controlador (o lógica de datos)
+                PermisoARolController permisosRolController = new PermisoARolController();
+                PermisosController permisosController = new PermisosController();
+                // Obtener todos los permisos disponibles
+                List<Permiso> permisos = permisosController.ObtenerPermisos();
 
-                // 4. Agregar filas con checkbox marcado si el permiso está asignado al rol
-                foreach (var permiso in permisosActivos)
+                // Obtener los permisos que ya tiene el rol
+                List<int> permisosDelRol = permisosRolController.ObtenerIdsPermisosPorRol(idRol); ;
+
+                if (permisos == null || permisos.Count == 0)
                 {
-                    bool estaAsignado = permisosAsignados.Any(p => p.Codigo == permiso.Codigo);
-                    dgv_permisos.Rows.Add(estaAsignado, permiso.Codigo, permiso.Descripcion);
+                    MessageBox.Show("No hay permisos disponibles.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dgv_permisos.DataSource = null;
+                    return;
                 }
 
-                dgv_permisos.AutoResizeColumns();
-                ConfigurarDgvPermisos(); // tu método para estilo
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("Código", typeof(string));
+                dt.Columns.Add("Descripción", typeof(string));
+                dt.Columns.Add("Asignado", typeof(bool)); // checkbox
+
+                foreach (var permiso in permisos)
+                {
+                    dt.Rows.Add(
+                        permiso.IdPermiso,
+                        permiso.Codigo,
+                        permiso.Descripcion,
+                        permisosDelRol.Contains(permiso.IdPermiso) // true si está asignado
+                    );
+                }
+
+                dgv_permisos.DataSource = dt;
+
+                // Opcional: ocultar la columna ID si no la necesitas
+                dgv_permisos.Columns["ID"].Visible = false;
+
+                // Ajustes visuales si quieres
+                dgv_permisos.Columns["Asignado"].HeaderText = "Asignado al Rol";
+                dgv_permisos.Columns["Asignado"].Width = 100;
+
             }
-        }*/
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los permisos. Contacta al administrador.", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         
+
+        }
+
+        /* private void LlenarTablaPermisos(string codigoRol)
+         {
+             dgv_permisos.Columns.Clear();
+             dgv_permisos.Rows.Clear();
+
+             PermisosController permisosController = new PermisosController();
+
+             // 1. Obtener todos los permisos activos
+             List<Permiso> permisos = permisosController.ObtenerPermisos();
+             var permisosActivos = permisos.Where(p => p.Estatus == true).ToList();
+
+             // 2. Obtener permisos asignados al rol
+             List<Permiso> permisosAsignados = permisosController.ObtenerPermisosPorRol(codigoRol);
+
+             // 3. Crear columnas del DataGridView si hay datos
+             if (permisosActivos.Count > 0)
+             {
+                 // Columna de checkbox
+                 DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+                 chk.HeaderText = "Seleccionar";
+                 chk.Name = "chkSeleccionar";
+                 chk.Width = 60;
+                 dgv_permisos.Columns.Add(chk);
+
+                 // Otras columnas
+                 dgv_permisos.Columns.Add("codigoa@", "Nombre del Permiso");
+                 dgv_permisos.Columns.Add("descripcion", "Descripción");
+
+                 // 4. Agregar filas con checkbox marcado si el permiso está asignado al rol
+                 foreach (var permiso in permisosActivos)
+                 {
+                     bool estaAsignado = permisosAsignados.Any(p => p.Codigo == permiso.Codigo);
+                     dgv_permisos.Rows.Add(estaAsignado, permiso.Codigo, permiso.Descripcion);
+                 }
+
+                 dgv_permisos.AutoResizeColumns();
+                 ConfigurarDgvPermisos(); // tu método para estilo
+             }
+         }*/
+
         private void dgv_permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-        public void ConfigurarDgvPermisos()
-        {
-
-            //Ajustes generales
-            dgv_permisos.AllowUserToAddRows = false;
-            dgv_permisos.AllowUserToDeleteRows = false;
-            //dgv_permisos.ReadOnly = true;
-
-            /* Ajustar el ancho de las columnas
-            dgv_permisos.Columns["Codigo"].Width = 100;
-            dgv_permisos.Columns["Descripcion"].Width = 200;
-
-            // Ocultar columna ID si es necesario
-            dgv_permisos.Columns["ID"].Visible = false;
-            // Alineación
-            dgv_permisos.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgv_permisos.Columns["Codigo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv_permisos.Columns["Descripcion"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            */
-            // Color alternado de filas
-            dgv_permisos.AlternatingRowsDefaultCellStyle.BackColor = Color.Gray;
-
-            // Selección de fila completa
-            dgv_permisos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            // Estilo de cabeceras
-            dgv_permisos.EnableHeadersVisualStyles = false;
-            dgv_permisos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
-            dgv_permisos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgv_permisos.ColumnHeadersDefaultCellStyle.Font = new Font(dgv_permisos.Font, FontStyle.Bold);
-            dgv_permisos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            // Ordenar al hacer clic en el encabezado
-            dgv_permisos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgv_permisos.ColumnHeadersHeight = 35;
-        }
+        
     }
 }

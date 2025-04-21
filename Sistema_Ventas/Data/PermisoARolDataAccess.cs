@@ -7,6 +7,7 @@ using Sistema_Ventas.Utilities;
 using NLog;
 using Npgsql;
 using Sistema_Ventas.Model;
+using System.Data;
 namespace Sistema_Ventas.Data
 {
     public class PermisoARolDataAccess
@@ -81,40 +82,79 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
-       /* public List<Permiso> ObtenerPermisosPorRol(int codigoRol)
+        public List<int> ObtenerIdsPermisosPorRol(int idRol)
         {
-            List<Permiso> lista = new List<Permiso>();
+            List<int> permisos = new List<int>();
 
-            _dbAccess.Connect();
-            string query = @"
-            SELECT p.codigo, p.descripcion, p.estatus
-            FROM permisos p
-            INNER JOIN permisos_a_puesto pp ON p.idpermiso = pp.idpermiso
-            INNER JOIN roles r ON pp.idrol = r.idrol
-            WHERE r.codigo = @codigoRol;
-        ";
-
-            using (NpgsqlCommand cmd = new NpgsqlCommand(query))
+            try
             {
-                cmd.Parameters.AddWithValue("@codigoRol", codigoRol);
+                string query = "SELECT id_permiso FROM permisos_rol WHERE id_rol = @IdRol";
 
-                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                NpgsqlParameter paramIdRol = _dbAccess.CreateParameter("@IdRol", idRol);
+
+                _dbAccess.Connect();
+                DataTable dt = _dbAccess.ExecuteQuery_Reader(query, paramIdRol);
+
+                foreach (DataRow row in dt.Rows)
                 {
-                    while (reader.Read())
-                    {
-                        int id = reader.GetInt32(0);
-                        string codigo = reader.GetString(1);
-                        string descripcion = reader.GetString(2);
-                        bool estatus = reader.GetBoolean(3);
-                        Permiso permiso = new Permiso(id, codigo, descripcion, estatus);
-                        lista.Add(permiso);
-                    }
+                    permisos.Add(Convert.ToInt32(row["id_permiso"]));
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener permisos del rol {idRol}");
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
 
-
-            return lista;
+            return permisos;
         }
-       */
+
+        /* public List<Permiso> ObtenerPermisosDeRol(int idRol)
+         {
+             List<Permiso> permisos = new List<Permiso>();
+
+             try
+             {
+                 string query = @"
+             SELECT p.id_permiso, p.codigo, p.descripcion, p.estatus
+             FROM permisos_rol pr
+             INNER JOIN permisos p ON pr.id_permiso = p.id_permiso
+             WHERE pr.id_rol = @IdRol";
+
+                 NpgsqlParameter paramRol = _dbAccess.CreateParameter("@IdRol", idRol);
+
+                 _dbAccess.Connect();
+                 DataTable tablaPermisos = _dbAccess.ExecuteQuery_Reader(query, paramRol);
+
+                 foreach (DataRow row in tablaPermisos.Rows)
+                 {
+                     Permiso permiso = new Permiso
+                     {
+                         IdPermiso = Convert.ToInt32(row["id_permiso"]),
+                         Codigo = row["codigo"].ToString(),
+                         Descripcion = row["descripcion"].ToString(),
+                         Estatus = Convert.ToBoolean(row["estatus"])
+                     };
+                     permisos.Add(permiso);
+                 }
+
+                 _logger.Info($"Se recuperaron {permisos.Count} permisos para el rol con ID {idRol}");
+             }
+             catch (Exception ex)
+             {
+                 _logger.Error(ex, $"Error al obtener permisos para el rol con ID {idRol}");
+             }
+             finally
+             {
+                 _dbAccess.Disconnect();
+             }
+
+             return permisos;
+         }*/
+
+
     }
 }

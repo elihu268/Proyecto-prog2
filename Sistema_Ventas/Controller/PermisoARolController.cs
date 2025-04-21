@@ -61,14 +61,12 @@ namespace Sistema_Ventas.Controller
                 _logger.Error($"Error al elimar permisos al rol: {idRol},{ex}");
             }
         }
-        /*public List<Permiso> ObtenerPermisosPorRol(int idRol)
+        public List<int> ObtenerIdsPermisosPorRol(int idRol)
         {
             try
             {
                 // 1. Eliminar todos los permisos actuales del puesto
-                List<Permiso> listaPermisos= _permisoARolData.ObtenerPermisosPorRol(idRol);
-
-
+                List<int> listaPermisos= _permisoARolData.ObtenerIdsPermisosPorRol(idRol);
                 
                 _logger.Debug($"se obtuvo la lista de permisos del rol: {idRol}");
                 return listaPermisos;
@@ -76,7 +74,8 @@ namespace Sistema_Ventas.Controller
             catch (Exception ex)
             {
                 _logger.Error($"no se pudo obtener la lista de permisos del rol: {idRol},{ex}");
+                return null;
             }
-        }*/
+        }
     }
 }

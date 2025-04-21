@@ -20,6 +20,9 @@ namespace Sistema_Ventas.Model
                 Descripcion = descripcion;
                 Estatus = estatus;
             }
-       
+        public Permiso()
+        {
+
+        }
     }
 }
