@@ -140,9 +140,9 @@
             lbl_buscar_cliente.AutoSize = true;
             lbl_buscar_cliente.Location = new Point(30, 33);
             lbl_buscar_cliente.Name = "lbl_buscar_cliente";
-            lbl_buscar_cliente.Size = new Size(66, 25);
+            lbl_buscar_cliente.Size = new Size(140, 25);
             lbl_buscar_cliente.TabIndex = 16;
-            lbl_buscar_cliente.Text = "Buscar";
+            lbl_buscar_cliente.Text = "Buscar (Correo)";
             // 
             // cb_clientes
             // 
@@ -151,7 +151,7 @@
             cb_clientes.AutoCompleteSource = AutoCompleteSource.ListItems;
             cb_clientes.FormattingEnabled = true;
             cb_clientes.Items.AddRange(new object[] { "cliente general" });
-            cb_clientes.Location = new Point(118, 30);
+            cb_clientes.Location = new Point(195, 30);
             cb_clientes.MaxLength = 100;
             cb_clientes.Name = "cb_clientes";
             cb_clientes.Size = new Size(347, 33);
@@ -271,18 +271,18 @@
             // lbl_buscar_prod
             // 
             lbl_buscar_prod.AutoSize = true;
-            lbl_buscar_prod.Location = new Point(27, 55);
+            lbl_buscar_prod.Location = new Point(18, 27);
             lbl_buscar_prod.Name = "lbl_buscar_prod";
-            lbl_buscar_prod.Size = new Size(66, 25);
+            lbl_buscar_prod.Size = new Size(199, 25);
             lbl_buscar_prod.TabIndex = 17;
-            lbl_buscar_prod.Text = "Buscar";
+            lbl_buscar_prod.Text = "Busqueda por nombre";
             // 
             // txt_buscar
             // 
-            txt_buscar.Location = new Point(96, 55);
+            txt_buscar.Location = new Point(15, 56);
             txt_buscar.MaxLength = 100;
             txt_buscar.Name = "txt_buscar";
-            txt_buscar.Size = new Size(290, 31);
+            txt_buscar.Size = new Size(365, 31);
             txt_buscar.TabIndex = 0;
             // 
             // btn_actualizar
@@ -369,6 +369,7 @@
             btn_agregar.TabIndex = 21;
             btn_agregar.Text = "Agregar";
             btn_agregar.UseVisualStyleBackColor = false;
+            btn_agregar.Click += btn_agregar_Click_1;
             // 
             // lbl_precio
             // 
@@ -525,6 +526,7 @@
             btn_cobrar.TabIndex = 13;
             btn_cobrar.Text = "Terminar compra";
             btn_cobrar.UseVisualStyleBackColor = false;
+            btn_cobrar.Click += btn_cobrar_Click;
             // 
             // lbl_descuento
             // 
@@ -541,11 +543,11 @@
             dgv_carrito.BackgroundColor = SystemColors.GradientInactiveCaption;
             dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_carrito.Columns.AddRange(new DataGridViewColumn[] { clm_c_nombre, clm_c_cantidad, clm_c_precio });
-            dgv_carrito.Location = new Point(51, 49);
+            dgv_carrito.Location = new Point(23, 50);
             dgv_carrito.Name = "dgv_carrito";
             dgv_carrito.ReadOnly = true;
             dgv_carrito.RowHeadersWidth = 62;
-            dgv_carrito.Size = new Size(419, 198);
+            dgv_carrito.Size = new Size(465, 198);
             dgv_carrito.TabIndex = 11;
             // 
             // clm_c_nombre

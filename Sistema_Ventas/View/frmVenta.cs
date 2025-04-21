@@ -32,14 +32,15 @@ namespace Sistema_Ventas.View
         /// </summary>
         public void InicializaVentanaVenta()
         {
-            PoblaComboMetodo();
-            PoblaComboEstatus();
-            PoblacomboCliente();
-            PoblacomboProducto();
+            //mostrar informacion
+            PoblaComboMetodo();//metodo de pago
+            PoblaComboEstatus();//estatus de compra
+            PoblacomboCliente();//cliente por correo
+            PoblacomboProducto();//producto por codigo
 
         }
         /// <summary>
-        /// duncion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
+        /// funcion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
         /// </summary>
         public void PoblaComboMetodo()
         {
@@ -110,45 +111,9 @@ namespace Sistema_Ventas.View
             cBox_codigo.SelectedIndex = -1; // Para que no aparezca uno seleccionado por defecto
 
         }
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
+      
 
-        }
 
-        private void gbx_metodo_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void sc_venta_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void sp_efectivo_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void btn_terminar_Click(object sender, EventArgs e)
-        {
-            TerminarCompra();
-        }
-
-        private void btn_agregar_Click(object sender, EventArgs e)
-        {
-            AgregarProducto();
-        }
         /// <summary>
         /// metodo para registrar datos de compra,cliente
         /// </summary>no permite pagar si no se cumplen condiciones
@@ -200,10 +165,7 @@ namespace Sistema_Ventas.View
             return true;
         }
 
-        private void btn_actualizar_Click_(object sender, EventArgs e)
-        {
 
-        }
 
         private void cb_clientes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -213,24 +175,7 @@ namespace Sistema_Ventas.View
 
             }
         }
-        
-
-        private void gpbox_cliente_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cBox_codigo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void splitCVenta_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void gpbox_carrito_Enter(object sender, EventArgs e)
         {
 
         }
@@ -332,6 +277,16 @@ namespace Sistema_Ventas.View
             // Ordenar al hacer clic en el encabezado
             dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgv_productos.ColumnHeadersHeight = 35;
+        }
+
+        private void btn_agregar_Click_1(object sender, EventArgs e)
+        {
+            AgregarProducto();
+        }
+
+        private void btn_cobrar_Click(object sender, EventArgs e)
+        {
+            TerminarCompra();
         }
     }
 }
