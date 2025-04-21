@@ -231,7 +231,6 @@
             dgv_productos.Columns.AddRange(new DataGridViewColumn[] { clmCodigo, clm_nombre, clm_precio, clm_stock });
             dgv_productos.Location = new Point(15, 107);
             dgv_productos.Name = "dgv_productos";
-            dgv_productos.ReadOnly = true;
             dgv_productos.RowHeadersWidth = 62;
             dgv_productos.Size = new Size(633, 228);
             dgv_productos.TabIndex = 9;
@@ -241,7 +240,6 @@
             clmCodigo.HeaderText = "Codigo";
             clmCodigo.MinimumWidth = 8;
             clmCodigo.Name = "clmCodigo";
-            clmCodigo.ReadOnly = true;
             clmCodigo.Width = 150;
             // 
             // clm_nombre
@@ -249,7 +247,6 @@
             clm_nombre.HeaderText = "Nombre";
             clm_nombre.MinimumWidth = 8;
             clm_nombre.Name = "clm_nombre";
-            clm_nombre.ReadOnly = true;
             clm_nombre.Width = 150;
             // 
             // clm_precio
@@ -257,7 +254,6 @@
             clm_precio.HeaderText = "Precio";
             clm_precio.MinimumWidth = 8;
             clm_precio.Name = "clm_precio";
-            clm_precio.ReadOnly = true;
             clm_precio.Width = 150;
             // 
             // clm_stock
@@ -265,7 +261,6 @@
             clm_stock.HeaderText = "Stock";
             clm_stock.MinimumWidth = 8;
             clm_stock.Name = "clm_stock";
-            clm_stock.ReadOnly = true;
             clm_stock.Width = 150;
             // 
             // lbl_buscar_prod
@@ -297,6 +292,7 @@
             btn_actualizar.TabIndex = 0;
             btn_actualizar.Text = "Buscar";
             btn_actualizar.UseVisualStyleBackColor = false;
+            btn_actualizar.Click += btn_actualizar_Click;
             // 
             // grpbox_agregarP
             // 
@@ -435,6 +431,7 @@
             // 
             // cbox_estatus
             // 
+            cbox_estatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cbox_estatus.FormattingEnabled = true;
             cbox_estatus.Location = new Point(320, 468);
             cbox_estatus.Name = "cbox_estatus";
@@ -443,6 +440,7 @@
             // 
             // lbl_estatus
             // 
+            lbl_estatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_estatus.AutoSize = true;
             lbl_estatus.Location = new Point(217, 464);
             lbl_estatus.Name = "lbl_estatus";
@@ -462,6 +460,7 @@
             // 
             // lbl_metodo
             // 
+            lbl_metodo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_metodo.AutoSize = true;
             lbl_metodo.Location = new Point(144, 422);
             lbl_metodo.Name = "lbl_metodo";
@@ -471,6 +470,7 @@
             // 
             // txt_total
             // 
+            txt_total.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txt_total.Enabled = false;
             txt_total.Location = new Point(321, 368);
             txt_total.MaxLength = 6;
@@ -480,6 +480,7 @@
             // 
             // txt_IVA
             // 
+            txt_IVA.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txt_IVA.Enabled = false;
             txt_IVA.Location = new Point(323, 334);
             txt_IVA.MaxLength = 5;
@@ -489,6 +490,7 @@
             // 
             // txt_descuento
             // 
+            txt_descuento.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txt_descuento.Enabled = false;
             txt_descuento.Location = new Point(323, 295);
             txt_descuento.MaxLength = 5;
@@ -498,6 +500,7 @@
             // 
             // txt_subtotal
             // 
+            txt_subtotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txt_subtotal.Enabled = false;
             txt_subtotal.Location = new Point(323, 254);
             txt_subtotal.MaxLength = 6;
@@ -507,6 +510,7 @@
             // 
             // cb_metodo
             // 
+            cb_metodo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cb_metodo.DropDownStyle = ComboBoxStyle.DropDownList;
             cb_metodo.FormattingEnabled = true;
             cb_metodo.Location = new Point(321, 419);
@@ -530,6 +534,7 @@
             // 
             // lbl_descuento
             // 
+            lbl_descuento.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_descuento.AutoSize = true;
             lbl_descuento.Location = new Point(196, 298);
             lbl_descuento.Name = "lbl_descuento";
@@ -576,6 +581,7 @@
             // 
             // lbl_total
             // 
+            lbl_total.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_total.AutoSize = true;
             lbl_total.Location = new Point(243, 371);
             lbl_total.Name = "lbl_total";
@@ -585,6 +591,7 @@
             // 
             // lbl_IVA
             // 
+            lbl_IVA.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_IVA.AutoSize = true;
             lbl_IVA.Location = new Point(253, 337);
             lbl_IVA.Name = "lbl_IVA";
@@ -594,6 +601,7 @@
             // 
             // lbl_subtotal
             // 
+            lbl_subtotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_subtotal.AutoSize = true;
             lbl_subtotal.Location = new Point(213, 261);
             lbl_subtotal.Name = "lbl_subtotal";

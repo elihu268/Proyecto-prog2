@@ -44,6 +44,20 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+        public List<Producto> ObtenerProductoPorNombre(String nombreprd)
+        {
+            try
+            {
+                List<Producto> productos = _productosData.ObtenerProductoPorNombre(nombreprd);
+                _logger.Info($"Se obtuvieron {productos.Count} Productos");
+                return productos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener la lista de productos con el nombre:{nombreprd} ");
+                throw;
+            }
+        }
         public void ModificarStcok(String cantidad,Producto producto)
         {
             try

@@ -8,6 +8,7 @@ using NLog;
 using Sistema_Ventas.Model;
 using System.Data;
 using System.Collections;
+using Npgsql;
 namespace Sistema_Ventas.Data
 {
     public class ProductosDataAccess
@@ -35,15 +36,10 @@ namespace Sistema_Ventas.Data
                 // Consulta SQL
                 string query = @"
             SELECT 
-                id_producto,
-                cod_producto,
-                nombre,
-                precio,
-                descripcion,
-                existencia
+                id_producto,cod_producto,nombre, precio, descripcion,existencia
             FROM producto
         ";
-
+                
                 // Ejecutar consulta 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
 
@@ -73,6 +69,48 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect(); // Siempre cerrar conexión
             }
         }
+        public List<Producto> ObtenerProductoPorNombre(String nombrePrd)
+        {
+            
+            List<Producto> productos = new List<Producto>();
+            try
+            {
+                string query = @"
+            SELECT 
+                id_producto, cod_producto, nombre, precio, descripcion, existencia
+            FROM producto
+            WHERE LOWER(nombre) LIKE LOWER(@nombrePrd)
+";
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
+                parametros.Add(new NpgsqlParameter("@nombrePrd", $"%{nombrePrd}%"));
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+                // Procesar 
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Producto producto = new Producto(
+                        Convert.ToInt32(row["id_producto"]),
+                        row["cod_producto"].ToString(),
+                        row["nombre"].ToString(),
+                        Convert.ToDouble(row["precio"]),
+                        row["descripcion"].ToString(),
+                        Convert.ToInt32(row["existencia"])
+                    );
+                    productos.Add(producto);
+                }
+
+                return productos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener información de los productos desde la base de datos");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect(); // Siempre cerrar conexión
+            }
+    }
     }
 }
