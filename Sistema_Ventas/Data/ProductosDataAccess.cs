@@ -50,7 +50,7 @@ namespace Sistema_Ventas.Data
                         Convert.ToInt32(row["id_producto"]),
                         row["cod_producto"].ToString(),
                         row["nombre"].ToString(),
-                        Convert.ToDouble(row["precio"]),
+                        Convert.ToDecimal(row["precio"]),
                         row["descripcion"].ToString(),
                         Convert.ToInt32(row["existencia"]) 
                     );
@@ -93,7 +93,7 @@ namespace Sistema_Ventas.Data
                         Convert.ToInt32(row["id_producto"]),
                         row["cod_producto"].ToString(),
                         row["nombre"].ToString(),
-                        Convert.ToDouble(row["precio"]),
+                        Convert.ToDecimal(row["precio"]),
                         row["descripcion"].ToString(),
                         Convert.ToInt32(row["existencia"])
                     );

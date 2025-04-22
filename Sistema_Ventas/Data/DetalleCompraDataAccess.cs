@@ -26,6 +26,7 @@ namespace Sistema_Ventas.Data
                 throw;
             }
         }
+
         public bool AgregarProductoADetalle(int idCompra, Producto producto, int cantidad)
         {
             try

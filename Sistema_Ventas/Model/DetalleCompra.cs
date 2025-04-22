@@ -10,28 +10,22 @@ namespace Sistema_Ventas.Model
     public class DetalleCompra
     {
         public int IdDetalle { get; set; }
-        public int IdCompra { get; set; }
+        public int IdCompra { get; set; } // Se asigna al guardar en base de datos
         public int IdProducto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal TotalPorUnidad { get; set; }
 
-        public int cantidad { get; set; }
-        public double TotalPorUnidad { get; set; }
-        //constructor
-        public DetalleCompra(int id_detalle, int id_compra,int id_producto,int cantidad
-) { 
-            this.IdDetalle = id_detalle;
-            this.IdCompra = id_compra;
-            this.IdProducto = id_producto;
-            this.cantidad = cantidad;
-            this.TotalPorUnidad = CalcularTotalDetalle();
-        }
-        public double CalcularTotalDetalle()
+        // Constructor para agregar detalle manualmente
+        public DetalleCompra(int idProducto, int cantidad, decimal precioUnitario)
         {
-            double total =0;
-            Producto producto = new Producto();
-            double precio = producto.Precio;
-            total=  this.cantidad*precio;
-                return total;
+            IdProducto = idProducto;
+            Cantidad = cantidad;
+            TotalPorUnidad = cantidad * precioUnitario;
         }
-       
+
+        // Constructor vacío
+        public DetalleCompra() { }
+
+
     }
 }

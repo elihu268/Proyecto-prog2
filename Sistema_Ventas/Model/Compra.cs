@@ -11,26 +11,37 @@ namespace Sistema_Ventas.Model
         public int IdCompra { get; set; }
         public int IdCliente { get; set; }
         public string Codigo { get; set; }
-        public int MetodoPago { get; set; }
-        public double Iva { get; set; }
-        public double Subtotal { get; set; }
-        public double Descuento { get; set; }
-        public int Total { get; set; }
-        public DateTime FechaCompra { get; set; }
+        public int MetodoDePago { get; set; }
+        public decimal Iva { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal Descuento { get; set; }
+        public decimal Total { get; set; }
+        public DateTime FechaDeCompra { get; set; }
         public int Estatus { get; set; }
 
-        public Compra(int id_compra,int id_cliente,string codigo,int metodo_de_pago,double iva,double subtotal,double descuento,int total,DateTime fecha_de_compra, int estatus)
+        public List<DetalleCompra> Detalles { get; set; } = new();
+
+        // Constructor para crear una nueva compra desde la interfaz
+        public Compra(int idCliente, string codigo, int metodoDePago, decimal descuento)
         {
-            this.IdCompra = id_compra;
-            this.IdCliente = id_cliente;
-            this.Codigo = codigo;
-            this.MetodoPago = metodo_de_pago;
-            this.Iva = iva;
-            this.Subtotal = subtotal;
-            this.Descuento = descuento;
-            this.Total = total;
-            this.FechaCompra = fecha_de_compra;
-            this.Estatus = estatus;
+            IdCliente = idCliente;
+            Codigo = codigo;
+            MetodoDePago = metodoDePago;
+            Descuento = descuento;
+            FechaDeCompra = DateTime.Today;
+            Estatus = 1;
+        }
+
+        // Constructor vacío (recomendado si usas ORM o deserialización)
+        public Compra() { }
+
+        // Método para calcular los valores y preparar la compra antes de guardar
+        public void CalcularTotales()
+        {
+            Subtotal = Detalles.Sum(d => d.TotalPorUnidad);
+            Iva = Subtotal * 0.16m; 
+            Total = Subtotal + Iva - Descuento;
         }
     }
+
 }

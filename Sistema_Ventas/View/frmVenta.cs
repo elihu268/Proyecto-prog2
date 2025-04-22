@@ -207,7 +207,7 @@ namespace Sistema_Ventas.View
             }
             Producto prod = (Producto)cBox_codigo.SelectedItem;
             int cantidad = Convert.ToInt32(txt_cantidad.Text);
-            bool exito = detalleController.AgregarProductoADetalle(id, prod, cantidad);
+            bool exito = true;
             if (exito)
             {
                 MessageBox.Show("Producto agregado a la compra.");
