@@ -179,6 +179,7 @@
             btn_limpiar.Text = "Limpiar";
             toolTip_limpar.SetToolTip(btn_limpiar, "Eliminar productor seleccionados");
             btn_limpiar.UseVisualStyleBackColor = false;
+            btn_limpiar.Click += btn_limpiar_Click;
             // 
             // splitCVenta
             // 

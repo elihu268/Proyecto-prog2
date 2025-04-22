@@ -151,5 +151,36 @@ namespace Sistema_Ventas.Data
             }
         }
 
+        public bool ModificarExistencia(int idProducto, int cantidad)
+        {
+            try
+            {
+                _dbAccess.Connect(); // conectar a la base de datos
+
+                string query = @"UPDATE producto
+                         SET existencia = existencia - @cantidad
+                         WHERE id_producto = @idProducto;";
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+        {
+            new NpgsqlParameter("@cantidad", cantidad),
+            new NpgsqlParameter("@idProducto", idProducto)
+        };
+
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros.ToArray());
+
+                return filasAfectadas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al modificar la existencia del producto: {idProducto}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect(); // cerrar la conexión
+            }
+        }
+
     }
 }

@@ -7,6 +7,7 @@ using Sistema_Ventas.Utilities;
 using NLog;
 using Npgsql;
 using Sistema_Ventas.Model;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 namespace Sistema_Ventas.Data
 {
     public class DetalleCompraDataAccess
@@ -27,32 +28,30 @@ namespace Sistema_Ventas.Data
             }
         }
 
-        public bool AgregarProductoADetalle(int idCompra, Producto producto, int cantidad)
+        public bool AgregarProductoADetalle(int id_compra, Producto producto, int cantidad)
         {
             try
             {
+                _dbAccess.Connect(); // Conectar a la base de datos
+
                 decimal totalPorUnidad = producto.Precio * cantidad;
 
-                string query = @"
+                string insertDetalleQuery = @"
             INSERT INTO detalle_compra (id_compra, id_producto, cantidad, total_por_unidad)
-            VALUES (@idCompra, @idProducto, @cantidad, @totalPorUnidad);
-
-            UPDATE producto 
-            SET existencia = existencia - @cantidad
-            WHERE id_producto = @idProducto;
+            VALUES (@id_compra, @id_producto, @cantidad, @totalPorUnidad);
         ";
 
-                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+                List<NpgsqlParameter> parametrosDetalle = new List<NpgsqlParameter>
         {
-            new NpgsqlParameter("@idCompra", idCompra),
-            new NpgsqlParameter("@idProducto", producto.IdProducto),
+            new NpgsqlParameter("@id_compra", id_compra),
+            new NpgsqlParameter("@id_producto", producto.IdProducto),
             new NpgsqlParameter("@cantidad", cantidad),
-            new NpgsqlParameter("@totalPorUnidad", totalPorUnidad)
+            new NpgsqlParameter("@totalPorUnidad", totalPorUnidad) 
         };
 
-                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros.ToArray());
+                _dbAccess.ExecuteNonQuery(insertDetalleQuery, parametrosDetalle.ToArray());
 
-                return filasAfectadas > 0;
+                return true; // Agregado retorno exitoso
             }
             catch (Exception ex)
             {
@@ -61,9 +60,10 @@ namespace Sistema_Ventas.Data
             }
             finally
             {
-                _dbAccess.Disconnect();
+                _dbAccess.Disconnect(); // cerrar la conexión
             }
         }
+
 
     }
 }

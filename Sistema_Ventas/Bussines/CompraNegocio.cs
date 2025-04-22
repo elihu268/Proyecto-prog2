@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -19,9 +20,9 @@ namespace Sistema_Ventas.Bussines
         /// <param name="cantidad">Cantidad a validar</param>
         /// <returns>True si la cantidad es válida</returns>
         internal static bool EsCantidadValida(string cantidad)
-            {
-                return Validaciones.EsMayorACero(cantidad);
-            }
+        {
+            return Validaciones.EsMayorACero(cantidad);
+        }
         internal static bool CantidadEnRango(string cantidad, int cantidadStock)
         {
             try
@@ -41,7 +42,7 @@ namespace Sistema_Ventas.Bussines
 
                 throw;
             }
-    }
+        }
         internal static int CalcularStock(string cantidad, int stock)
         {
             int cant;
@@ -51,5 +52,6 @@ namespace Sistema_Ventas.Bussines
             return nvoStock;
         }
     }
-    
-}
+     
+
+    }
