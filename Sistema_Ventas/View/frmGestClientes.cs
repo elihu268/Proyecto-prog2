@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Ventas.Bussines.Negocio;
 using Sistema_Ventas.Utilities;
+using Sistema_Ventas.Model;
+using Sistema_Ventas.Controller;
 
 namespace PuntodeVenta.View
 {
@@ -37,7 +39,7 @@ namespace PuntodeVenta.View
             PoblaTipoCliente();
 
         }
-            private void PoblaComboEstatus()
+        private void PoblaComboEstatus()
         {
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
@@ -110,26 +112,75 @@ namespace PuntodeVenta.View
             }
             return true;
         }
-        private bool GuardarCliente()
+        private void GuardarCliente()
         {
-            if (DatosVacios())
+            try
             {
-                MessageBox.Show("Favor de llenar los datos Obligatorios. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                if (DatosVacios())
+                {
+                    MessageBox.Show("Favor de llenar los datos Obligatorios. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!DatosValidos())
+                {
+                    return;
+                }
+
+                Persona persona = new Persona(
+                    txtNombreCliente.Text.Trim(),
+                    txtCorreoCliente.Text.Trim(),
+                    txtTelefonoCliente.Text.Trim());
+
+                persona.FechaNacimiento = dtpNacimientoCliente.Value;
+
+                Cliente cliente = new Cliente
+                {
+                    Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 1,
+                    Rfc = txtrfcCliente.Text.Trim(),
+                    FechaRegistro = DateTime.ParseExact(txt_fecha_registro.Text.Trim(), "dd/MM/yyyy", null),
+                    Estatus = 1,
+                    DatosPersonales = persona
+                };
+
+                ClientesController clientesController = new ClientesController();
+
+                var (idCliente, mensaje) = clientesController.RegistrarCliente(cliente);
+
+                //Verificar el resultado
+                if (idCliente > 0)
+                {
+                    MessageBox.Show(mensaje, "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos(); //Metodo para limpiar el formulario edspues de guardar
+
+                    //Actualizar la lista de estudiantes si esta presente en la misma vista
+                    CargarClientes();
+                }
+                else
+                {
+                    //Mostrar mensaje de error devuelto por el controlador
+                    MessageBox.Show(mensaje, "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    //Enfocar el campo apropiado basado en el codigo de error
+                    switch (idCliente)
+                    {
+                        case -2: //Error de RFC duplicado
+                            txtrfcCliente.Focus();
+                            txtrfcCliente.SelectAll();
+                            break;
+                    }
+                }
             }
-            if (!DatosValidos())
+            catch (Exception ex)
             {
-                return false;
+                //El detalle del error ya se guardara en el log por el controlador
+                MessageBox.Show("No se pudo completar el registro del estudiante.Por favor, intente nuevamente o contacte al administrador del sistema.",
+                    "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return true;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarCliente())
-            {
-                MessageBox.Show("Datos Guardados Exitosamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            GuardarCliente();
         }
 
         private void btncollapse_Click(object sender, EventArgs e)
@@ -170,6 +221,133 @@ namespace PuntodeVenta.View
             }
         }
 
+        private void CargarClientes()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                ClientesController clienteController = new ClientesController();
+
+                List<Cliente> clientes = clienteController.ObtenerClientes();
+
+                dgvGesClientes.DataSource = null;
+
+                if (clientes.Count == 0)
+                {
+                    //opcionalmente mostrar mensaje cuando no hay datos
+                    if (!string.IsNullOrEmpty(txtBusqueda.Text))
+                    {
+                        MessageBox.Show("No se encontraron clientes con el criterio de busqueda especificado", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    return;
+                }
+
+                //Crear una tabla
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("RFC", typeof(string));
+                dt.Columns.Add("Nombre Completo", typeof(string));
+                dt.Columns.Add("Tipo", typeof(string));
+                dt.Columns.Add("Correo", typeof(string));
+                dt.Columns.Add("Teléfono", typeof(string));
+                dt.Columns.Add("Fecha Nacimiento", typeof(DateTime));
+                dt.Columns.Add("Fecha de Registro", typeof(DateTime));
+                dt.Columns.Add("Estatus", typeof(string));
+
+                //llenar el dataTime con la info de los estudiantes
+                foreach (Cliente cliente in clientes)
+                {
+                    dt.Rows.Add(
+                        cliente.Id,
+                        cliente.Rfc,
+                        cliente.DatosPersonales.NombreCompleto,
+                        cliente.Tipo,
+                        cliente.DatosPersonales.Correo,
+                        cliente.DatosPersonales.Telefono,
+                        cliente.DatosPersonales.FechaNacimiento,
+                        cliente.FechaRegistro,
+                        cliente.DescripcionEstatus
+                        );
+                }
+
+                //asignar el dataTime como origen de dattos
+                dgvGesClientes.DataSource = dt;
+
+                //configurar la paraencia
+                ConfigurarDataGridView();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar estudiantes. Contacta al administrador del sistema",
+                    "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                //restaurar cursor, no tener bolita de carga
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private void LimpiarCampos()
+        {
+            txtNombreCliente.Clear();
+            txtCorreoCliente.Clear();
+            txtTelefonoCliente.Clear();
+            cbxTipoCliente.SelectedValue = 1;
+            txtrfcCliente.Clear();
+            cbxEstatus.SelectedValue = 2;
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            //Ajustes generales
+            dgvGesClientes.AllowUserToAddRows = false;
+            dgvGesClientes.AllowUserToDeleteRows = false;
+            dgvGesClientes.ReadOnly = true;
+
+            // Ajustar el ancho de las columnas
+            dgvGesClientes.Columns["RFC"].Width = 150;
+            dgvGesClientes.Columns["Nombre Completo"].Width = 200;
+            dgvGesClientes.Columns["Tipo"].Width = 80;
+            dgvGesClientes.Columns["Correo"].Width = 180;
+            dgvGesClientes.Columns["Teléfono"].Width = 120;
+            dgvGesClientes.Columns["Fecha Nacimiento"].Width = 120;
+            dgvGesClientes.Columns["Fecha de Registro"].Width = 120;
+            dgvGesClientes.Columns["Estatus"].Width = 100;
+
+            // Ocultar columna ID si es necesario
+            dgvGesClientes.Columns["ID"].Visible = false;
+
+            // Formato para las fechas
+            dgvGesClientes.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvGesClientes.Columns["Fecha de Registro"].DefaultCellStyle.Format = "dd/MM/yyyy";
+
+            // Alineación
+            dgvGesClientes.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvGesClientes.Columns["RFC"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvGesClientes.Columns["Tipo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvGesClientes.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // Color alternado de filas
+            dgvGesClientes.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+
+            // Selección de fila completa
+            dgvGesClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Estilo de cabeceras
+            dgvGesClientes.EnableHeadersVisualStyles = false;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font(dgvGesClientes.Font, FontStyle.Bold);
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Ordenar al hacer clic en el encabezado
+            dgvGesClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvGesClientes.ColumnHeadersHeight = 35;
+        }
+
         private void dtpfechaRegistroCliente_ValueChanged(object sender, EventArgs e)
         {
 
@@ -179,6 +357,20 @@ namespace PuntodeVenta.View
         {
 
         }
-       
+
+        private void cbxTipoCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxEstatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvGesClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

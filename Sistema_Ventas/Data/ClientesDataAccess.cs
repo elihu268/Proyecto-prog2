@@ -101,5 +101,77 @@ WHERE  1 = 1
                 _dbAccess.Disconnect();//asegura cierre de la conexion
             }
         }
+
+        public int InsertarCliente(Cliente cliente)
+        {
+            try
+            {
+                int idPersona = _personasData.InsertarPersona(cliente.DatosPersonales);
+
+                if (idPersona <= 0)
+                {
+                    _logger.Error($"No se pudo insertar la persona para el cliente{cliente.Rfc}");
+                    return -1;
+                }
+                cliente.IdPersona = idPersona;
+
+                string query = @"
+                    INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc)
+	                    VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc)
+	                    RETURNING id_cliente ";
+
+                NpgsqlParameter paramIdPersona = _dbAccess.CreateParameter("@IdPersona", cliente.IdPersona);
+                NpgsqlParameter paramTipo = _dbAccess.CreateParameter("@Tipo", cliente.Tipo);
+                NpgsqlParameter paramFechaRegistro = _dbAccess.CreateParameter("@FechaRegistro", cliente.FechaRegistro);
+                NpgsqlParameter paramRfc = _dbAccess.CreateParameter("@Rfc", cliente.Rfc);
+
+                _dbAccess.Connect();
+
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramTipo, paramFechaRegistro, paramRfc);
+
+                int idCliente_generado = Convert.ToInt32(resultado);
+                _logger.Info($"Cliente insertado correctamente con ID {idCliente_generado}");
+
+                return idCliente_generado;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al insertar al cliente con RFC {cliente.Rfc}");
+                return -1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+        public bool ExisteRfc(string rfc)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM public.cliente WHERE rfc = @Rfc;";
+
+                NpgsqlParameter paramRfc = _dbAccess.CreateParameter(@"Rfc", rfc);
+
+                _dbAccess.Connect();
+
+                object? resultado = _dbAccess.ExecuteScalar(query, paramRfc);
+
+                int cantidad = Convert.ToInt32(resultado);
+                bool existe = cantidad > 0;
+
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al verificar la existencia dell RFC {rfc}");
+                return false;
+            }
+            finally
+            {
+                //Asegura que se cierre la conexion
+                _dbAccess.Disconnect();
+            }
+        }
+
     }
 }

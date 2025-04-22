@@ -31,9 +31,9 @@ namespace Sistema_Ventas.Data
         {
             try
             {
-                string query = "INSERT INTO seguridad.personas (nombre_completo, correo, telefono, fecha_nacimiento, curp, estatus) " +
+                string query = "INSERT INTO personas (nombre_completo, correo, telefono, fecha_nacimiento, estatus) " +
 "VALUES (@NombreCompleto, @Correo, @Telefono, @FechaNacimiento, @Estatus) " +
-"RETURNING id";
+"RETURNING id_persona";
                 //crear parametros
                 NpgsqlParameter paramNombre = _dbAccess.CreateParameter("@NombreCompleto", persona.NombreCompleto);
                 NpgsqlParameter paramCorreo = _dbAccess.CreateParameter("@Correo", persona.Correo);

@@ -45,5 +45,39 @@ namespace Sistema_Ventas.Controller
             }
         }
 
+        public (int id, string mensaje) RegistrarCliente(Cliente cliente)
+        {
+            try
+            {
+                if (_clientesData.ExisteRfc(cliente.Rfc))
+                {
+                    _logger.Warn($"Intento de registrar el cliente con RFC duplicado: {cliente.Rfc}");
+                    return (-2, $"El RFC {cliente.Rfc} ya esta registrado en el sistema");
+                }
+
+                _logger.Info($"Registrando nuevo cliente {cliente.DatosPersonales.NombreCompleto}, RFC: {cliente.Rfc}");
+                int idCliente = _clientesData.InsertarCliente(cliente);
+
+                if (idCliente <= 0)
+                {
+                    return (-3, "Error al registrar al cliente en la base de datos");
+                }
+
+                _logger.Info($"Cliente registrado exitosamente con ID: {idCliente}");
+                return (idCliente, "Cliente registrado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al registrar al cliente: {cliente.DatosPersonales?.NombreCompleto ?? "Sin nombre"}, RFC: {cliente.Rfc}");
+                return (-4, $"Error inesperado: {ex.Message}");
+            }
+        }
+
+
+
+
+
+
+
     }
 }
