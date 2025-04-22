@@ -12,7 +12,7 @@ namespace Sistema_Ventas.Bussines
 {
     internal class CompraNegocio
     {
-        public const int CANTIDAD_MIN = 3;
+        internal const int CANTIDAD_MIN = 3;
         /// <summary>
         /// Valida que la cantidad sea mayor a cero
         /// </summary>
@@ -27,15 +27,14 @@ namespace Sistema_Ventas.Bussines
             try
             {
 
-                int cant;
-                int resultado;
-                int.TryParse(cantidad, out cant);
-                resultado = cantidadStock-cant;
-                if (resultado <= CANTIDAD_MIN)
+                if (!int.TryParse(cantidad, out int cant))
                 {
+                    // Si no se puede convertir la cantidad, no es válida
                     return false;
                 }
-                return true;
+
+                int resultado = cantidadStock - cant;
+                return resultado >= CANTIDAD_MIN;
             }
             catch (Exception e)
             {

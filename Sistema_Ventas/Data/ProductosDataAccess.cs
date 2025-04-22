@@ -112,5 +112,44 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect(); // Siempre cerrar conexión
             }
     }
+
+        public int ObtenerExistenciaPorCodigo(string codProducto)
+        {
+            try
+            {
+                string query = @"
+            SELECT existencia 
+            FROM producto 
+            WHERE cod_producto = @codProducto
+        ";
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+        {
+            new NpgsqlParameter("@codProducto", codProducto)
+        };
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                if (resultado.Rows.Count > 0)
+                {
+                    return Convert.ToInt32(resultado.Rows[0]["existencia"]);
+                }
+                else
+                {
+                    // Si no se encontró el producto
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener existencia del producto");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,6 +38,7 @@ namespace Sistema_Ventas.View
             PoblaComboEstatus();//estatus de compra
             PoblacomboCliente();//cliente por correo
             PoblacomboProducto();//producto por codigo
+            PoblaDataProducto();
 
         }
         /// <summary>
@@ -112,8 +114,36 @@ namespace Sistema_Ventas.View
 
         }
 
+        private void PoblaDataProducto()
+        {
+            
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                
+                ProductosController productosController = new ProductosController();
+                List<Producto> productos = productosController.ObtenerProductos();
+
+                if (productos.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron productos con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
 
+                ConfigurarDataGridViewProductos(productos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar productos. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Liberar el cursor
+                Cursor = Cursors.Default;
+            }
+        }
         /// <summary>
         /// metodo para registrar datos de compra,cliente
         /// </summary>no permite pagar si no se cumplen condiciones
@@ -152,14 +182,14 @@ namespace Sistema_Ventas.View
         /// <returns>booleano si se cumple toda la validacion</returns>
         private void AgregarProducto()
         {
-            if (cb_clientes.Text == "")
+            if (!(cBox_codigo.SelectedItem is Producto productoSeleccionado))
             {
                 MessageBox.Show("porfavor seleccione un producto valido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (txt_cantidad.Text == "")
             {
-                MessageBox.Show("por avor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!Bussines.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
@@ -167,6 +197,26 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            DetalleCompraController detalleController = new DetalleCompraController();
+            
+            if (!detalleController.ValidarCantidad(cBox_codigo.Text
+                , txt_cantidad.Text))
+            {
+                MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Producto prod = (Producto)cBox_codigo.SelectedItem;
+            int cantidad = Convert.ToInt32(txt_cantidad.Text);
+            bool exito = detalleController.AgregarProductoADetalle(id, prod, cantidad);
+            if (exito)
+            {
+                MessageBox.Show("Producto agregado a la compra.");
+            }
+            else
+            {
+                MessageBox.Show("No se pudo agregar el producto.");
+            }
+
 
         }
 
@@ -369,50 +419,14 @@ namespace Sistema_Ventas.View
                 ProductosController productosController = new ProductosController();
                 List<Producto> productos = productosController.ObtenerProductoPorNombre(txt_buscar.Text.ToLower());
 
-                // Confirmar si se encontraron productos
-                MessageBox.Show($"Productos encontrados: {productos.Count}");
-
                 if (productos.Count == 0)
                 {
                     MessageBox.Show("No se encontraron productos con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                dgv_productos.DataSource = null;
-
-                DataTable dt = new DataTable();
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("Codigo", typeof(string));
-                dt.Columns.Add("Precio", typeof(double));
-                dt.Columns.Add("Descripcion", typeof(string));
-                dt.Columns.Add("Existencia", typeof(int));
-
-                // Llenar el DataTable con los productos encontrados
-                foreach (Producto prd in productos)
-                {
-                    dt.Rows.Add(
-                        prd.IdProducto,
-                        prd.Codigo,
-                        prd.Precio,
-                        prd.Descripcion,
-                        prd.Existencia
-                    );
-                }
-
-                // Verificar cuántas filas tiene el DataTable
-                MessageBox.Show($"Filas en DataTable: {dt.Rows.Count}");
-
-                // Asignar el DataTable al DataGridView
-                dgv_productos.DataSource = dt;
-
-                // Verificar cuántas filas tiene el DataGridView
-                MessageBox.Show($"Filas en DataGridView: {dgv_productos.Rows.Count}");
-
-                // Forzar un refresco
-                dgv_productos.Refresh();
-
-                // Configurar el DataGridView
-                ConfigurarDataGridViewProductos();
+              
+                ConfigurarDataGridViewProductos(productos);
             }
             catch (Exception ex)
             {
@@ -425,10 +439,35 @@ namespace Sistema_Ventas.View
             }
         }
 
-        public void ConfigurarDataGridViewProductos()
+        public void ConfigurarDataGridViewProductos(List<Producto> productos)
         {
-            dgv_productos.Size = new Size(600, 400);
+            dgv_productos.DataSource = null;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Codigo", typeof(string));
+            dt.Columns.Add("Precio", typeof(double));
+            dt.Columns.Add("Descripcion", typeof(string));
+            dt.Columns.Add("Existencia", typeof(int));
+
+            // Llenar el DataTable con los productos encontrados
+            foreach (Producto prd in productos)
+            {
+                dt.Rows.Add(
+                    prd.IdProducto,
+                    prd.Codigo,
+                    prd.Precio,
+                    prd.Descripcion,
+                    prd.Existencia
+                );
+            }
+
+
+            // Asignar el DataTable al DataGridView
+            dgv_productos.DataSource = dt;
+            //dgv_productos.Size = new Size(600, 400);
             //Ajustes generales
+
+
             dgv_productos.AllowUserToAddRows = false;
             dgv_productos.AllowUserToDeleteRows = false;
             dgv_productos.ReadOnly = true;
@@ -437,17 +476,12 @@ namespace Sistema_Ventas.View
             dgv_productos.Columns["ID"].Width = 100;
             dgv_productos.Columns["Codigo"].Width = 200;
             dgv_productos.Columns["Precio"].Width = 80;
-            dgv_productos.Columns["Descripcion"].Width = 180;
+            dgv_productos.Columns["Descripcion"].Width = 250;
             dgv_productos.Columns["Existencia"].Width = 120;
 
             // Ocultar columna ID si es necesario
-           // dgv_productos.Columns["ID"].Visible = false;
-            dgv_productos.Columns["ID"].Visible = true;
-            dgv_productos.Columns["Codigo"].Visible = true;
-            dgv_productos.Columns["Precio"].Visible = true;
-            dgv_productos.Columns["Descripcion"].Visible = true;
-            dgv_productos.Columns["Existencia"].Visible = true;
-
+            dgv_productos.Columns["ID"].Visible = false;
+          
 
             // Alineación
             dgv_productos.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -457,7 +491,7 @@ namespace Sistema_Ventas.View
             dgv_productos.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // Color alternado de filas
-            dgv_productos.AlternatingRowsDefaultCellStyle.BackColor = Color.Gray;
+            dgv_productos.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
 
             // Selección de fila completa
             dgv_productos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -472,6 +506,11 @@ namespace Sistema_Ventas.View
             // Ordenar al hacer clic en el encabezado
             dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgv_productos.ColumnHeadersHeight = 35;
+        }
+
+        private void cb_metodo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
-}
 }

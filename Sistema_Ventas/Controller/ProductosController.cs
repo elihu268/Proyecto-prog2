@@ -58,6 +58,19 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+        public int ObtenerExistenciaDeProducto(String codigo){
+            try
+            {
+                int existencia = _productosData.ObtenerExistenciaPorCodigo(codigo);
+                
+                return existencia;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al existencia del producto :{codigo} ");
+                throw;
+            }
+        }
         public void ModificarStcok(String cantidad,Producto producto)
         {
             try

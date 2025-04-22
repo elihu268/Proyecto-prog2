@@ -43,10 +43,6 @@
             splitCVenta = new SplitContainer();
             gpBox_producto = new GroupBox();
             dgv_productos = new DataGridView();
-            clmCodigo = new DataGridViewTextBoxColumn();
-            clm_nombre = new DataGridViewTextBoxColumn();
-            clm_precio = new DataGridViewTextBoxColumn();
-            clm_stock = new DataGridViewTextBoxColumn();
             lbl_buscar_prod = new Label();
             txt_buscar = new TextBox();
             btn_actualizar = new Button();
@@ -219,49 +215,20 @@
             gpBox_producto.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gpBox_producto.Location = new Point(12, 217);
             gpBox_producto.Name = "gpBox_producto";
-            gpBox_producto.Size = new Size(666, 345);
+            gpBox_producto.Size = new Size(666, 360);
             gpBox_producto.TabIndex = 14;
             gpBox_producto.TabStop = false;
             gpBox_producto.Text = "Producto disponible";
             // 
             // dgv_productos
             // 
-            dgv_productos.BackgroundColor = SystemColors.GradientInactiveCaption;
+            dgv_productos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_productos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_productos.Columns.AddRange(new DataGridViewColumn[] { clmCodigo, clm_nombre, clm_precio, clm_stock });
-            dgv_productos.Location = new Point(15, 107);
+            dgv_productos.Location = new Point(18, 105);
             dgv_productos.Name = "dgv_productos";
             dgv_productos.RowHeadersWidth = 62;
-            dgv_productos.Size = new Size(633, 228);
-            dgv_productos.TabIndex = 9;
-            // 
-            // clmCodigo
-            // 
-            clmCodigo.HeaderText = "Codigo";
-            clmCodigo.MinimumWidth = 8;
-            clmCodigo.Name = "clmCodigo";
-            clmCodigo.Width = 150;
-            // 
-            // clm_nombre
-            // 
-            clm_nombre.HeaderText = "Nombre";
-            clm_nombre.MinimumWidth = 8;
-            clm_nombre.Name = "clm_nombre";
-            clm_nombre.Width = 150;
-            // 
-            // clm_precio
-            // 
-            clm_precio.HeaderText = "Precio";
-            clm_precio.MinimumWidth = 8;
-            clm_precio.Name = "clm_precio";
-            clm_precio.Width = 150;
-            // 
-            // clm_stock
-            // 
-            clm_stock.HeaderText = "Stock";
-            clm_stock.MinimumWidth = 8;
-            clm_stock.Name = "clm_stock";
-            clm_stock.Width = 150;
+            dgv_productos.Size = new Size(608, 240);
+            dgv_productos.TabIndex = 18;
             // 
             // lbl_buscar_prod
             // 
@@ -432,6 +399,7 @@
             // cbox_estatus
             // 
             cbox_estatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cbox_estatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbox_estatus.FormattingEnabled = true;
             cbox_estatus.Location = new Point(320, 468);
             cbox_estatus.Name = "cbox_estatus";
@@ -517,6 +485,7 @@
             cb_metodo.Name = "cb_metodo";
             cb_metodo.Size = new Size(150, 33);
             cb_metodo.TabIndex = 14;
+            cb_metodo.SelectedIndexChanged += cb_metodo_SelectedIndexChanged;
             // 
             // btn_cobrar
             // 
@@ -686,13 +655,9 @@
         private TextBox txt_precio;
         private Splitter splitter1;
         private GroupBox gpBox_producto;
-        private DataGridView dgv_productos;
-        private DataGridViewTextBoxColumn clmCodigo;
-        private DataGridViewTextBoxColumn clm_nombre;
-        private DataGridViewTextBoxColumn clm_precio;
-        private DataGridViewTextBoxColumn clm_stock;
         private Label lbl_buscar_prod;
         private TextBox txt_buscar;
         private Button btn_actualizar;
+        private DataGridView dgv_productos;
     }
 }
