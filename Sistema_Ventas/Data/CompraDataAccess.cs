@@ -62,7 +62,7 @@ namespace Sistema_Ventas.Data
                     List<NpgsqlParameter> parametrosDetalle = new List<NpgsqlParameter>
             {
                 new NpgsqlParameter("@id_compra", idCompraGenerado),
-                new NpgsqlParameter("@id_producto", detalle.IdProducto),
+                new NpgsqlParameter("@id_producto", detalle.Productoi.IdProducto),
                 new NpgsqlParameter("@cantidad", detalle.Cantidad),
                 new NpgsqlParameter("@total_por_unidad", detalle.TotalPorUnidad)
             };

@@ -11,16 +11,16 @@ namespace Sistema_Ventas.Model
     {
         public int IdDetalle { get; set; }
         public int IdCompra { get; set; } // Se asigna al guardar en base de datos
-        public int IdProducto { get; set; }
+        public Producto Productoi { get; set; }
         public int Cantidad { get; set; }
         public decimal TotalPorUnidad { get; set; }
 
         // Constructor para agregar detalle manualmente
-        public DetalleCompra(int idProducto, int cantidad, decimal precioUnitario)
+        public DetalleCompra(Producto productoi, int cantidad)
         {
-            IdProducto = idProducto;
+            Productoi = productoi;
             Cantidad = cantidad;
-            TotalPorUnidad = cantidad * precioUnitario;
+            TotalPorUnidad = cantidad * productoi.Precio;
         }
 
         // Constructor vacío

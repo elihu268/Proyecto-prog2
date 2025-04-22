@@ -57,6 +57,7 @@
             txt_precio = new TextBox();
             splitter1 = new Splitter();
             gpbox_carrito = new GroupBox();
+            dgv_carrito = new DataGridView();
             cbox_estatus = new ComboBox();
             lbl_estatus = new Label();
             lbl_seleccionar_eli = new Label();
@@ -68,10 +69,6 @@
             cb_metodo = new ComboBox();
             btn_cobrar = new Button();
             lbl_descuento = new Label();
-            dgv_carrito = new DataGridView();
-            clm_c_nombre = new DataGridViewTextBoxColumn();
-            clm_c_cantidad = new DataGridViewTextBoxColumn();
-            clm_c_precio = new DataGridViewTextBoxColumn();
             lbl_total = new Label();
             lbl_IVA = new Label();
             lbl_subtotal = new Label();
@@ -372,6 +369,7 @@
             // 
             gpbox_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             gpbox_carrito.BackColor = SystemColors.InactiveBorder;
+            gpbox_carrito.Controls.Add(dgv_carrito);
             gpbox_carrito.Controls.Add(cbox_estatus);
             gpbox_carrito.Controls.Add(lbl_estatus);
             gpbox_carrito.Controls.Add(lbl_seleccionar_eli);
@@ -383,7 +381,6 @@
             gpbox_carrito.Controls.Add(cb_metodo);
             gpbox_carrito.Controls.Add(btn_cobrar);
             gpbox_carrito.Controls.Add(lbl_descuento);
-            gpbox_carrito.Controls.Add(dgv_carrito);
             gpbox_carrito.Controls.Add(lbl_total);
             gpbox_carrito.Controls.Add(lbl_IVA);
             gpbox_carrito.Controls.Add(lbl_subtotal);
@@ -395,6 +392,16 @@
             gpbox_carrito.TabIndex = 8;
             gpbox_carrito.TabStop = false;
             gpbox_carrito.Text = "Carrito";
+            // 
+            // dgv_carrito
+            // 
+            dgv_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_carrito.Location = new Point(23, 64);
+            dgv_carrito.Name = "dgv_carrito";
+            dgv_carrito.RowHeadersWidth = 62;
+            dgv_carrito.Size = new Size(465, 184);
+            dgv_carrito.TabIndex = 26;
             // 
             // cbox_estatus
             // 
@@ -511,43 +518,6 @@
             lbl_descuento.TabIndex = 12;
             lbl_descuento.Text = "Descuento";
             // 
-            // dgv_carrito
-            // 
-            dgv_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgv_carrito.BackgroundColor = SystemColors.GradientInactiveCaption;
-            dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_carrito.Columns.AddRange(new DataGridViewColumn[] { clm_c_nombre, clm_c_cantidad, clm_c_precio });
-            dgv_carrito.Location = new Point(23, 50);
-            dgv_carrito.Name = "dgv_carrito";
-            dgv_carrito.ReadOnly = true;
-            dgv_carrito.RowHeadersWidth = 62;
-            dgv_carrito.Size = new Size(465, 198);
-            dgv_carrito.TabIndex = 11;
-            // 
-            // clm_c_nombre
-            // 
-            clm_c_nombre.HeaderText = "nombre";
-            clm_c_nombre.MinimumWidth = 8;
-            clm_c_nombre.Name = "clm_c_nombre";
-            clm_c_nombre.ReadOnly = true;
-            clm_c_nombre.Width = 150;
-            // 
-            // clm_c_cantidad
-            // 
-            clm_c_cantidad.HeaderText = "cantidad";
-            clm_c_cantidad.MinimumWidth = 8;
-            clm_c_cantidad.Name = "clm_c_cantidad";
-            clm_c_cantidad.ReadOnly = true;
-            clm_c_cantidad.Width = 150;
-            // 
-            // clm_c_precio
-            // 
-            clm_c_precio.HeaderText = "Precio";
-            clm_c_precio.MinimumWidth = 8;
-            clm_c_precio.Name = "clm_c_precio";
-            clm_c_precio.ReadOnly = true;
-            clm_c_precio.Width = 150;
-            // 
             // lbl_total
             // 
             lbl_total.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -636,10 +606,6 @@
         private ComboBox cb_metodo;
         private Button btn_cobrar;
         private Label lbl_descuento;
-        private DataGridView dgv_carrito;
-        private DataGridViewTextBoxColumn clm_c_nombre;
-        private DataGridViewTextBoxColumn clm_c_cantidad;
-        private DataGridViewTextBoxColumn clm_c_precio;
         private Label lbl_total;
         private Label lbl_IVA;
         private Label lbl_subtotal;
@@ -659,5 +625,6 @@
         private TextBox txt_buscar;
         private Button btn_actualizar;
         private DataGridView dgv_productos;
+        private DataGridView dgv_carrito;
     }
 }

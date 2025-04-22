@@ -42,13 +42,15 @@ namespace Sistema_Ventas.Data
                 string query = @"
                    SELECT 
     c.id_cliente,
+c.id_persona,
     p.nombre_completo,
     p.correo,
     p.telefono,
     p.fecha_nacimiento,
     c.fecha_registro,
     c.rfc,
-    c.tipo
+    c.tipo,
+p.estatus AS estatus_persona
 FROM  cliente c
 JOIN  personas p ON c.id_persona = p.id_persona
 WHERE  1 = 1 
