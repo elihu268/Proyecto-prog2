@@ -156,7 +156,7 @@ namespace Sistema_Ventas.View
             {
                 return;
             }
-            if (detalles.Count==0)
+            if (detalles.Count == 0)
             {
                 MessageBox.Show("no se han agregado producto al carrito", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
                 return;
@@ -263,7 +263,7 @@ namespace Sistema_Ventas.View
             txt_descuento.Text = Convert.ToString(compraController.DatosCompraDescuento());
             ConfigurarDgvCarrito(detalles);
 
-            MessageBox.Show("Producto agregado a la compra.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Producto agregado a la compra.{}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -323,7 +323,7 @@ namespace Sistema_Ventas.View
             dgv_carrito.ScrollBars = ScrollBars.Both;  // Habilitar desplazamiento para el DataGridView
 
             // **Prevenir el ajuste del tamaño del DataGridView al contenedor**:
-            dgv_carrito.Dock = DockStyle.None;  
+            dgv_carrito.Dock = DockStyle.None;
 
         }
 
@@ -355,8 +355,8 @@ namespace Sistema_Ventas.View
 
             }
         }
-       
-        
+
+
 
         private void btn_agregar_Click_1(object sender, EventArgs e)
         {
@@ -423,11 +423,11 @@ namespace Sistema_Ventas.View
             {
                 dt.Rows.Add(
                     prd.IdProducto,
-                    prd.Codigo ,
-                    prd.Nombre ,
-                    prd.Precio ,
-                    prd.Descripcion ,
-                    prd.Existencia 
+                    prd.Codigo,
+                    prd.Nombre,
+                    prd.Precio,
+                    prd.Descripcion,
+                    prd.Existencia
                 );
             }
 
@@ -471,7 +471,7 @@ namespace Sistema_Ventas.View
             dgv_productos.ScrollBars = ScrollBars.Both;
 
             // Ajustar el DataGridView al tamaño del contenedor
-            dgv_productos.Dock = DockStyle.Fill;
+            //dgv_productos.Dock = DockStyle.Fill;
         }
 
 
@@ -484,5 +484,42 @@ namespace Sistema_Ventas.View
         {
             limpiarCampos();
         }
-    }
+
+        private void eliminarProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var row = dgv_carrito.SelectedRows[0];
+                string nombre = row.Cells["Nombre"].Value.ToString();
+                int cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
+                decimal precio = Convert.ToDecimal(row.Cells["Total Por Unidad"].Value);
+                DetalleCompra detalleEliminar = detalles.FirstOrDefault(d =>
+                    d.Productoi.Nombre == nombre && d.Cantidad == cantidad&& d.TotalPorUnidad==precio);
+               
+               
+
+                if (detalleEliminar != null)
+                {
+                    detalles.Remove(detalleEliminar);
+                    ConfigurarDgvCarrito(detalles);
+                    CompraController compraController = new CompraController();
+                    txt_subtotal.Text = Convert.ToString(compraController.DatosCompraSubtotal(detalles));
+                    txt_IVA.Text = Convert.ToString(compraController.DatosCompraIva(detalles));
+                    txt_total.Text = Convert.ToString(compraController.DatosCompraTotal(detalles));
+                    txt_descuento.Text = Convert.ToString(compraController.DatosCompraDescuento());
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, seleccione un producto para eliminar.",
+                        "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar el producto: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+}
 }

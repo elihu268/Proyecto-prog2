@@ -72,6 +72,8 @@
             lbl_total = new Label();
             lbl_IVA = new Label();
             lbl_subtotal = new Label();
+            cms_eliminar = new ContextMenuStrip(components);
+            eliminarProductoToolStripMenuItem = new ToolStripMenuItem();
             lbl_cantidad = new Label();
             gpbox_cliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitCVenta).BeginInit();
@@ -83,6 +85,7 @@
             grpbox_agregarP.SuspendLayout();
             gpbox_carrito.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_carrito).BeginInit();
+            cms_eliminar.SuspendLayout();
             SuspendLayout();
             // 
             // lbl_cantidad
@@ -398,6 +401,7 @@
             // 
             dgv_carrito.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_carrito.ContextMenuStrip = cms_eliminar;
             dgv_carrito.Location = new Point(23, 64);
             dgv_carrito.Name = "dgv_carrito";
             dgv_carrito.RowHeadersWidth = 62;
@@ -549,6 +553,20 @@
             lbl_subtotal.TabIndex = 8;
             lbl_subtotal.Text = "Subtotal";
             // 
+            // cms_eliminar
+            // 
+            cms_eliminar.ImageScalingSize = new Size(24, 24);
+            cms_eliminar.Items.AddRange(new ToolStripItem[] { eliminarProductoToolStripMenuItem });
+            cms_eliminar.Name = "cms_eliminar";
+            cms_eliminar.Size = new Size(241, 69);
+            // 
+            // eliminarProductoToolStripMenuItem
+            // 
+            eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
+            eliminarProductoToolStripMenuItem.Size = new Size(240, 32);
+            eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
+            eliminarProductoToolStripMenuItem.Click += eliminarProductoToolStripMenuItem_Click;
+            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -581,6 +599,7 @@
             gpbox_carrito.ResumeLayout(false);
             gpbox_carrito.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_carrito).EndInit();
+            cms_eliminar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -627,5 +646,7 @@
         private Button btn_actualizar;
         private DataGridView dgv_productos;
         private DataGridView dgv_carrito;
+        private ContextMenuStrip cms_eliminar;
+        private ToolStripMenuItem eliminarProductoToolStripMenuItem;
     }
 }
