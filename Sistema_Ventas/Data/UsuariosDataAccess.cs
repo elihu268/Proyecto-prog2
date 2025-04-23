@@ -1,0 +1,178 @@
+﻿using NLog;
+using Sistema_Ventas.Utilities;
+using Sistema_Ventas.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Npgsql;
+using System.Data;
+using System.Windows.Forms;
+
+namespace Sistema_Ventas.Data
+{
+   public class UsuariosDataAccess
+    {
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.UsuariosDataAccess");
+
+        private readonly PostgreSQLDataAccess _dbAccess;
+
+        private readonly PersonasDataAccess _personasDataAccess;
+
+        public UsuariosDataAccess()
+        {
+            try
+            {
+                _dbAccess =  PostgreSQLDataAccess.GetInstance();
+                _personasDataAccess = new PersonasDataAccess();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, "Error al inicializar UsuariosDataAccess");
+                throw;
+            }
+        }
+
+
+        // Aquí iría la lógica para interactuar con la base de datos
+        public  List<Usuario> ObtenerUsuarios(int activos)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+            // Aquí iría la lógica para obtener los usuarios de la base de datos
+            try
+            {
+                string query = "SELECT p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, r.descripcion as Rol FROM usuarios u JOIN personas p ON u.id_persona = p.id_persona JOIN roles r ON u.id_rol = r.id_rol WHERE 1 = 1  ";
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
+                if(activos == 2)
+                {
+                    query += " AND p.estatus = @estatus ";
+                    parameters.Add(new NpgsqlParameter("@estatus", 2));
+                }
+                query += " ORDER BY p.nombre_completo";
+                _logger.Info("Ejecutando consulta: {0}", query);
+                _dbAccess.Connect(); 
+                DataTable usuari = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+
+                foreach (DataRow row in usuari.Rows)
+                {
+                    Persona persona = new Persona(
+                        Convert.ToInt32(row["id_persona"]),
+                        row["nombre_completo"].ToString() ?? "",
+                        row["correo"].ToString() ?? "",
+                        row["telefono"].ToString() ?? "",
+                        row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]):null,
+                        Convert.ToBoolean(row["estatus_persona"])
+                        );
+                    Usuario usuario = new Usuario(
+                        Convert.ToInt32(row["id_usuario"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["id_rol"]),
+                        row["usuario"].ToString() ?? "",
+                        row["contrasena"].ToString() ?? "",
+                        Convert.ToInt32(row["estatus"]),
+                        persona
+                    );
+                    usuarios.Add(usuario);
+                }
+                _logger.Info("Consulta ejecutada con éxito, se encontraron {0} usuarios", usuarios.Count);
+                return usuarios;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener usuarios "+"ObtenerUsuario /UsuariosDataAcces");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+        public int AgregarUsuario(Usuario usuario)
+        {
+            // Aquí iría la lógica para agregar un nuevo usuario a la base de datos
+            try
+            {
+                int idPersona = _personasDataAccess.InsertarPersona(usuario.DatosPersonales);
+                if (idPersona <= 0)
+                {
+                    _logger.Error("Error al agregar persona para el usuario");
+                    return -1;
+                }
+                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contrasena, estatus) " +
+                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
+
+                NpgsqlParameter paramIdPersona = new NpgsqlParameter("@id_persona", idPersona);
+                NpgsqlParameter paramIdRol = new NpgsqlParameter("@id_rol", usuario.idRol);
+                NpgsqlParameter paramCuenta = new NpgsqlParameter("@cuenta", usuario.Cuenta);
+                NpgsqlParameter paramContrasena = new NpgsqlParameter("@contrasena", usuario.Constrasena);
+                NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
+
+                _dbAccess.Connect();
+                object? resualtado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena, paramEstatus);
+
+                if (resualtado != null && int.TryParse(resualtado.ToString(), out int idUsuario))
+                {
+                    _logger.Info("Usuario agregado con éxito, ID: {0}", idUsuario);
+                    return idUsuario;
+                }
+                else
+                {
+                    _logger.Error("Error al agregar usuario, no se obtuvo un ID válido");
+                    return -1;
+                }
+                int idPersonaGenerado = Convert.ToInt32(resualtado);
+                _logger.Info("Usuario agregado con éxito, ID: {0}", idPersonaGenerado);
+                return idPersonaGenerado;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al agregar usuario");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+        /// <summary>
+        /// Verifica si un usuario existe en la base de datos.
+        /// </summary>
+        /// <param name="cuenta"> cuenta es igual que usuario
+        /// se ocupa usuario en las consultas de base de datos</param>
+        /// <returns></returns>
+        public bool ExisteUsuario(string cuenta)
+        {
+            // Aquí iría la lógica para obtener un usuario por su ID de la base de datos
+            try
+            {
+                string query = "SELECT COUNT(*) FROM Usuarios WHERE usuario = @cuenta";
+                NpgsqlParameter paramCuenta = new NpgsqlParameter("@cuenta", cuenta);
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, paramCuenta);
+                int cantidad = Convert.ToInt32(resultado);
+                bool existe = cantidad > 0;
+                _logger.Info("Verificación de existencia de usuario: {0}", existe);
+                return existe;
+            }
+            catch
+            {
+                _logger.Error("Error al verificar existencia de usuario");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+
+            }// Placeholder
+        }
+        public static void ActualizarUsuario(Usuario usuario)
+        {
+            // Aquí iría la lógica para actualizar un usuario existente en la base de datos
+        }
+        public static void EliminarUsuario(int id)
+        {
+            // Aquí iría la lógica para eliminar un usuario de la base de datos
+        }
+    }
+}
