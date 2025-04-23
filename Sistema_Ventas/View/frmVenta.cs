@@ -257,10 +257,10 @@ namespace Sistema_Ventas.View
             {
                 detalles.Add(new DetalleCompra(productoSeleccionado, cantidad));
             }
-            txt_subtotal.Text = Convert.ToString(compraController.DatosCompraSubtotal(detalles));
-            txt_IVA.Text = Convert.ToString(compraController.DatosCompraIva(detalles));
-            txt_total.Text = Convert.ToString(compraController.DatosCompraTotal(detalles));
-            txt_descuento.Text = Convert.ToString(compraController.DatosCompraDescuento());
+            txt_subtotal.Text =  compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
+            txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
+            txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
+            txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
             ConfigurarDgvCarrito(detalles);
 
             //MessageBox.Show("Producto agregado a la compra.{}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -503,10 +503,10 @@ namespace Sistema_Ventas.View
                     detalles.Remove(detalleEliminar);
                     ConfigurarDgvCarrito(detalles);
                     CompraController compraController = new CompraController();
-                    txt_subtotal.Text = Convert.ToString(compraController.DatosCompraSubtotal(detalles));
-                    txt_IVA.Text = Convert.ToString(compraController.DatosCompraIva(detalles));
-                    txt_total.Text = Convert.ToString(compraController.DatosCompraTotal(detalles));
-                    txt_descuento.Text = Convert.ToString(compraController.DatosCompraDescuento());
+                    txt_subtotal.Text = compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
+                    txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
+                    txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
+                    txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
                 }
                 else
                 {
