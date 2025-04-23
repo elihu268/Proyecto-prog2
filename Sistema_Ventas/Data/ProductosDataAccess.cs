@@ -38,6 +38,7 @@ namespace Sistema_Ventas.Data
             SELECT 
                 id_producto,cod_producto,nombre, precio, descripcion,existencia
             FROM producto
+            WHERE estatus = TRUE;
         ";
                 
                 // Ejecutar consulta 
@@ -79,7 +80,8 @@ namespace Sistema_Ventas.Data
             SELECT 
                 id_producto, cod_producto, nombre, precio, descripcion, existencia
             FROM producto
-            WHERE LOWER(nombre) LIKE LOWER(@nombrePrd)
+            WHERE LOWER(nombre) LIKE LOWER(@nombrePrd) and estatus = TRUE
+            ;
 ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 

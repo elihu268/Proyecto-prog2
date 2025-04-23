@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Sistema_Ventas.Bussines
 {
     internal class CompraNegocio
     {
-        internal const int CANTIDAD_MIN = 3;
+        //internal const int CANTIDAD_MIN = 3;
         /// <summary>
         /// Valida que la cantidad sea mayor a cero
         /// </summary>
@@ -35,7 +36,7 @@ namespace Sistema_Ventas.Bussines
                 }
 
                 int resultado = cantidadStock - cant;
-                return resultado >= CANTIDAD_MIN;
+                return resultado >= 0;
             }
             catch (Exception e)
             {
@@ -51,7 +52,23 @@ namespace Sistema_Ventas.Bussines
             nvoStock = stock - cant;
             return nvoStock;
         }
-    }
+    
      
-
+      internal static (bool hay, string mnj)AlertaExistencia(List<Producto> productos)
+        {
+            int existenciaMinima = int.Parse(ConfigurationManager.AppSettings["ExistenciaMinima"]);
+            string mensaje = "\t\t¡Alerta!\n";
+            bool hay = false;
+            foreach (var producto in productos)
+            {
+                if (producto.Existencia <= existenciaMinima)
+                {
+                  
+                         mensaje+= $" ⚫ El producto '{producto.Nombre}' tiene  {producto.Existencia} en existencia.\n";
+                    hay= true;
+                }
+            }
+            return (hay, mensaje);
+        }
+        }
     }

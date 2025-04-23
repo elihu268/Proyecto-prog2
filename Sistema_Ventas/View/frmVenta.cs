@@ -15,6 +15,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using NLog;
+using Sistema_Ventas.Bussines;
 namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
@@ -41,9 +42,21 @@ namespace Sistema_Ventas.View
             PoblaComboMetodo();//metodo de pago
             PoblaComboEstatus();//estatus de compra
             PoblacomboCliente();//cliente por correo
-            PoblacomboProducto();//producto por codigo
-            PoblaDataProducto();
+            ProductosController productoController = new ProductosController();
+            List<Producto> listaProducto = productoController.ObtenerProductos();
+            var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaProducto);
+            if (alerta)
+            {
+                MessageBox.Show(
+                    mensaje,
+                    "Existencia Baja",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            PoblacomboProducto(listaProducto);//producto por codigo
+            PoblaDataProducto(listaProducto);
             txt_nombre_prod.Text = "";
+            
             _logger.Debug("se cargo correctamente los combos bos y el datagrid");
         }
         /// <summary>
@@ -96,12 +109,9 @@ namespace Sistema_Ventas.View
             cb_clientes.ValueMember = "Id"; 
             cb_clientes.SelectedIndex = -1; 
         }
-        private void PoblacomboProducto()
+        private void PoblacomboProducto(List<Producto> listaProducto)
         {
-            ProductosController productoController = new ProductosController();
-
-            // Obtener la lista de clientes
-            List<Producto> listaProducto = productoController.ObtenerProductos();
+           
 
             cBox_codigo.Items.Clear(); // Limpia primero el combo
 
@@ -116,17 +126,13 @@ namespace Sistema_Ventas.View
 
         }
 
-        private void PoblaDataProducto()
+        private void PoblaDataProducto(List<Producto> productos)
         {
 
 
             try
             {
                 Cursor = Cursors.WaitCursor;
-
-                ProductosController productosController = new ProductosController();
-                List<Producto> productos = productosController.ObtenerProductos();
-
                 if (productos.Count == 0)
                 {
                     MessageBox.Show("No se encontraron productos con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -250,7 +256,13 @@ namespace Sistema_Ventas.View
             DetalleCompra producto = new DetalleCompra(prod, cantidad);
             var existente = detalles.FirstOrDefault(d => d.Productoi.IdProducto == productoSeleccionado.IdProducto);//ver si ya existen
             if (existente != null)
-            {
+            { int existenciamod = existente.Cantidad + cantidad;
+                if (!detalleController.ValidarCantidad(cBox_codigo.Text
+                , Convert.ToString(existenciamod)))
+                {
+                    MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 existente.Cantidad += cantidad;
             }
             else
