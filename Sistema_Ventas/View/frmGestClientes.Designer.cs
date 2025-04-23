@@ -129,6 +129,7 @@
             // 
             // scClientes
             // 
+            scClientes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             scClientes.Location = new Point(0, 55);
             scClientes.Margin = new Padding(4, 5, 4, 5);
             scClientes.Name = "scClientes";
@@ -477,6 +478,7 @@
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
             btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // txtBusqueda
             // 

@@ -96,6 +96,7 @@ WHERE  1 = 1
             {
                 //logear error
                 _logger.Error(ex, "Error al obtener informacion de los clientes de la base de datos");
+                _logger.Error(ex.ToString());
                 throw;
             }
             finally

@@ -313,8 +313,8 @@ namespace PuntodeVenta.View
             dgvGesClientes.Columns["Tipo"].Width = 80;
             dgvGesClientes.Columns["Correo"].Width = 180;
             dgvGesClientes.Columns["Teléfono"].Width = 120;
-            dgvGesClientes.Columns["Fecha Nacimiento"].Width = 120;
-            dgvGesClientes.Columns["Fecha de Registro"].Width = 120;
+            dgvGesClientes.Columns["Fecha Nacimiento"].Width = 220;
+            dgvGesClientes.Columns["Fecha de Registro"].Width = 220;
             dgvGesClientes.Columns["Estatus"].Width = 100;
 
             // Ocultar columna ID si es necesario
@@ -371,6 +371,11 @@ namespace PuntodeVenta.View
         private void dgvGesClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            CargarClientes();
         }
     }
 }
