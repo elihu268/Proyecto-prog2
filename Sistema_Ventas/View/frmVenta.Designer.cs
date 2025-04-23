@@ -58,6 +58,8 @@
             splitter1 = new Splitter();
             gpbox_carrito = new GroupBox();
             dgv_carrito = new DataGridView();
+            cms_eliminar = new ContextMenuStrip(components);
+            eliminarProductoToolStripMenuItem = new ToolStripMenuItem();
             cbox_estatus = new ComboBox();
             lbl_estatus = new Label();
             lbl_seleccionar_eli = new Label();
@@ -72,8 +74,6 @@
             lbl_total = new Label();
             lbl_IVA = new Label();
             lbl_subtotal = new Label();
-            cms_eliminar = new ContextMenuStrip(components);
-            eliminarProductoToolStripMenuItem = new ToolStripMenuItem();
             lbl_cantidad = new Label();
             gpbox_cliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitCVenta).BeginInit();
@@ -116,16 +116,16 @@
             // txt_nombre_prod
             // 
             txt_nombre_prod.Enabled = false;
-            txt_nombre_prod.Location = new Point(754, 27);
+            txt_nombre_prod.Location = new Point(951, 27);
             txt_nombre_prod.MaxLength = 30;
             txt_nombre_prod.Name = "txt_nombre_prod";
-            txt_nombre_prod.Size = new Size(338, 31);
+            txt_nombre_prod.Size = new Size(240, 31);
             txt_nombre_prod.TabIndex = 20;
             // 
             // lbl_nombre_c
             // 
             lbl_nombre_c.AutoSize = true;
-            lbl_nombre_c.Location = new Point(636, 30);
+            lbl_nombre_c.Location = new Point(844, 27);
             lbl_nombre_c.Name = "lbl_nombre_c";
             lbl_nombre_c.Size = new Size(81, 25);
             lbl_nombre_c.TabIndex = 17;
@@ -408,6 +408,20 @@
             dgv_carrito.Size = new Size(465, 184);
             dgv_carrito.TabIndex = 26;
             // 
+            // cms_eliminar
+            // 
+            cms_eliminar.ImageScalingSize = new Size(24, 24);
+            cms_eliminar.Items.AddRange(new ToolStripItem[] { eliminarProductoToolStripMenuItem });
+            cms_eliminar.Name = "cms_eliminar";
+            cms_eliminar.Size = new Size(226, 36);
+            // 
+            // eliminarProductoToolStripMenuItem
+            // 
+            eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
+            eliminarProductoToolStripMenuItem.Size = new Size(225, 32);
+            eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
+            eliminarProductoToolStripMenuItem.Click += eliminarProductoToolStripMenuItem_Click;
+            // 
             // cbox_estatus
             // 
             cbox_estatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -552,20 +566,6 @@
             lbl_subtotal.Size = new Size(83, 25);
             lbl_subtotal.TabIndex = 8;
             lbl_subtotal.Text = "Subtotal";
-            // 
-            // cms_eliminar
-            // 
-            cms_eliminar.ImageScalingSize = new Size(24, 24);
-            cms_eliminar.Items.AddRange(new ToolStripItem[] { eliminarProductoToolStripMenuItem });
-            cms_eliminar.Name = "cms_eliminar";
-            cms_eliminar.Size = new Size(241, 69);
-            // 
-            // eliminarProductoToolStripMenuItem
-            // 
-            eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
-            eliminarProductoToolStripMenuItem.Size = new Size(240, 32);
-            eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
-            eliminarProductoToolStripMenuItem.Click += eliminarProductoToolStripMenuItem_Click;
             // 
             // frmVenta
             // 

@@ -61,6 +61,8 @@ namespace Sistema_Ventas.Model
             this.FechaRegistro = fechaREgistro;
             this.Rfc = rfc;
             DatosPersonales =persona;
-        }
+        }//Propiedad auxiliar para mostrar el correo en el ComboBox
+        public string Correo => DatosPersonales?.Correo ?? "";
     }
+
 }

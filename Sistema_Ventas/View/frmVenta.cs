@@ -14,12 +14,14 @@ using Sistema_Ventas.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-
+using NLog;
 namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
     {
         private List<DetalleCompra> detalles = new List<DetalleCompra>();
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmVenta");
+
         public frmVenta(Form parent)
         {
             InitializeComponent();
@@ -41,7 +43,8 @@ namespace Sistema_Ventas.View
             PoblacomboCliente();//cliente por correo
             PoblacomboProducto();//producto por codigo
             PoblaDataProducto();
-
+            txt_nombre_prod.Text = "";
+            _logger.Debug("se cargo correctamente los combos bos y el datagrid");
         }
         /// <summary>
         /// funcion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
@@ -79,35 +82,32 @@ namespace Sistema_Ventas.View
 
         private void PoblacomboCliente()
         {
+           
             ClientesController clienteController = new ClientesController();
 
             // Obtener la lista de clientes
             List<Cliente> listaClientes = clienteController.ObtenerClientes();
 
-            // Limpiar el combo antes de asignar nuevos elementos
-            cb_clientes.Items.Clear();
+            // Limpiar cualquier asignación previa
+            cb_clientes.DataSource = null;
 
-            // Configurar el DataSource y los miembros de visualización y valor
             cb_clientes.DataSource = listaClientes;
-            cb_clientes.DisplayMember = "Correo"; // Propiedad que se mostrará
-            cb_clientes.ValueMember = "Id"; // Propiedad que se usará como valor al seleccionar
-
-            // Establecer el índice seleccionado a -1 para que no haya ningún valor seleccionado al inicio
-            cb_clientes.SelectedIndex = -1;
-
+            cb_clientes.DisplayMember = "Correo";     
+            cb_clientes.ValueMember = "Id"; 
+            cb_clientes.SelectedIndex = -1; 
         }
         private void PoblacomboProducto()
         {
             ProductosController productoController = new ProductosController();
 
-            // Obtener la lista de clientes (estudiantes)
+            // Obtener la lista de clientes
             List<Producto> listaProducto = productoController.ObtenerProductos();
 
             cBox_codigo.Items.Clear(); // Limpia primero el combo
 
             foreach (Producto p in listaProducto)
             {
-                cBox_codigo.Items.Add(p.Codigo); // Solo agregas el correo al combo
+                cBox_codigo.Items.Add(p.Codigo); 
             }
             cBox_codigo.DataSource = listaProducto;
             cBox_codigo.DisplayMember = "Codigo";
@@ -333,7 +333,7 @@ namespace Sistema_Ventas.View
             if (cb_clientes.SelectedItem is Cliente clienteSeleccionado)
             {
                 txt_nombre_prod.Text = clienteSeleccionado.DatosPersonales.NombreCompleto;
-
+             
             }
         }
         private void splitCVenta_Panel1_Paint(object sender, PaintEventArgs e)
@@ -438,9 +438,9 @@ namespace Sistema_Ventas.View
             dgv_productos.AllowUserToAddRows = false;
             dgv_productos.AllowUserToDeleteRows = false;
             dgv_productos.ReadOnly = true;
-
-            // Ajuste automático de las columnas
-            dgv_productos.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dgv_productos.Columns["ID"].Visible=false;
+           // Ajuste automático de las columnas
+           dgv_productos.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
             // Ajustar la altura de las filas
             dgv_productos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -494,9 +494,9 @@ namespace Sistema_Ventas.View
                 int cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
                 decimal precio = Convert.ToDecimal(row.Cells["Total Por Unidad"].Value);
                 DetalleCompra detalleEliminar = detalles.FirstOrDefault(d =>
-                    d.Productoi.Nombre == nombre && d.Cantidad == cantidad&& d.TotalPorUnidad==precio);
-               
-               
+                    d.Productoi.Nombre == nombre && d.Cantidad == cantidad && d.TotalPorUnidad == precio);
+
+
 
                 if (detalleEliminar != null)
                 {
@@ -521,5 +521,9 @@ namespace Sistema_Ventas.View
             }
         }
 
-}
+        private void lblCorreo_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
