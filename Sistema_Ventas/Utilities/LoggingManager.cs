@@ -100,7 +100,7 @@ namespace Sistema_Ventas.Utilities
 
                 // Logs de base de datos van a su archivo específico
 
-                config.AddRule(LogLevel.Trace, LogLevel.Fatal, dbFileTarget, "ControlEscolar.Data*");
+                config.AddRule(LogLevel.Trace, LogLevel.Fatal, dbFileTarget, "Sistema_Ventas.Data*");
 
 
                 // Todos los demás logs van al archivo general
