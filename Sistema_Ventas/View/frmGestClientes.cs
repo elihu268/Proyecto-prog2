@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Sistema_Ventas.Bussines.Negocio;
+using static Sistema_Ventas.Bussines.ClientesNegocio;
 using Sistema_Ventas.Utilities;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
@@ -94,18 +94,18 @@ namespace PuntodeVenta.View
         }
         private bool DatosValidos()
         {
-            if (!ClientesNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
+            if (!Sistema_Ventas.Bussines.ClientesNegocio.EsFormatoValido(txtCorreoCliente.Text.Trim()))
             {
                 MessageBox.Show("El correo no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!ClientesNegocio.EsTelefonoValido(txtTelefonoCliente.Text.Trim()))
+            if (!Sistema_Ventas.Bussines.ClientesNegocio.EsTelefonoValido(txtTelefonoCliente.Text.Trim()))
             {
                 MessageBox.Show("El Telefono no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            if (!ClientesNegocio.EsRFCValido(txtrfcCliente.Text.ToUpper().Trim()))
+            if (!Sistema_Ventas.Bussines.ClientesNegocio.EsRFCValido(txtrfcCliente.Text.ToUpper().Trim()))
             {
                 MessageBox.Show("El RFC no es Valido. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;

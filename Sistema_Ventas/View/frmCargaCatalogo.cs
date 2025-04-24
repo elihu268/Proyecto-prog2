@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Sistema_Ventas.Bussines.Negocio;
+using static Sistema_Ventas.Bussines.ClientesNegocio;
 using Sistema_Ventas.Utilities;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
