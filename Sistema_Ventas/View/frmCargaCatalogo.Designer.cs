@@ -32,12 +32,6 @@
             btnCargaCatalogo = new Button();
             btnActualizar = new Button();
             dgvCatalogo = new DataGridView();
-            idProducto = new DataGridViewTextBoxColumn();
-            codProducto = new DataGridViewTextBoxColumn();
-            nombre = new DataGridViewTextBoxColumn();
-            precio = new DataGridViewTextBoxColumn();
-            descripcion = new DataGridViewTextBoxColumn();
-            existencia = new DataGridViewTextBoxColumn();
             ofdCatalogo = new OpenFileDialog();
             pbCatalogo = new PictureBox();
             groupBox1 = new GroupBox();
@@ -72,13 +66,13 @@
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
             btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // dgvCatalogo
             // 
             dgvCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCatalogo.BackgroundColor = SystemColors.ActiveCaption;
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCatalogo.Columns.AddRange(new DataGridViewColumn[] { idProducto, codProducto, nombre, precio, descripcion, existencia });
             dgvCatalogo.Enabled = false;
             dgvCatalogo.Location = new Point(1, 184);
             dgvCatalogo.Name = "dgvCatalogo";
@@ -86,54 +80,6 @@
             dgvCatalogo.RowHeadersWidth = 62;
             dgvCatalogo.Size = new Size(799, 254);
             dgvCatalogo.TabIndex = 4;
-            // 
-            // idProducto
-            // 
-            idProducto.HeaderText = "ID";
-            idProducto.MinimumWidth = 8;
-            idProducto.Name = "idProducto";
-            idProducto.ReadOnly = true;
-            idProducto.Width = 150;
-            // 
-            // codProducto
-            // 
-            codProducto.HeaderText = "Codigo";
-            codProducto.MinimumWidth = 8;
-            codProducto.Name = "codProducto";
-            codProducto.ReadOnly = true;
-            codProducto.Width = 150;
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "Nombre";
-            nombre.MinimumWidth = 8;
-            nombre.Name = "nombre";
-            nombre.ReadOnly = true;
-            nombre.Width = 150;
-            // 
-            // precio
-            // 
-            precio.HeaderText = "Precio";
-            precio.MinimumWidth = 8;
-            precio.Name = "precio";
-            precio.ReadOnly = true;
-            precio.Width = 150;
-            // 
-            // descripcion
-            // 
-            descripcion.HeaderText = "Descripcion";
-            descripcion.MinimumWidth = 8;
-            descripcion.Name = "descripcion";
-            descripcion.ReadOnly = true;
-            descripcion.Width = 150;
-            // 
-            // existencia
-            // 
-            existencia.HeaderText = "Existencia";
-            existencia.MinimumWidth = 8;
-            existencia.Name = "existencia";
-            existencia.ReadOnly = true;
-            existencia.Width = 150;
             // 
             // ofdCatalogo
             // 
@@ -203,12 +149,6 @@
         private DataGridView dgvCatalogo;
         private OpenFileDialog ofdCatalogo;
         private PictureBox pbCatalogo;
-        private DataGridViewTextBoxColumn idProducto;
-        private DataGridViewTextBoxColumn codProducto;
-        private DataGridViewTextBoxColumn nombre;
-        private DataGridViewTextBoxColumn precio;
-        private DataGridViewTextBoxColumn descripcion;
-        private DataGridViewTextBoxColumn existencia;
         private GroupBox groupBox1;
         private Label lblTitulo;
     }

@@ -83,7 +83,7 @@ namespace PuntodeVenta.View
         }
         private bool DatosVacios()
         {
-            if (txtNombreCliente.Text == "" || txtCorreoCliente.Text == "" || txtTelefonoCliente.Text == "" || cbxEstatus.Text == "")
+            if (txtNombreCliente.Text == "" || txtCorreoCliente.Text == "" || txtTelefonoCliente.Text == "" || cbxEstatus.Text == "" || txtrfcCliente.Text == "")
             {
                 return true;
             }
@@ -182,7 +182,10 @@ namespace PuntodeVenta.View
         {
             GuardarCliente();
         }
-
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            CargarClientes();
+        }
         private void btncollapse_Click(object sender, EventArgs e)
         {
             if (scClientes.Panel1Collapsed)
@@ -336,11 +339,11 @@ namespace PuntodeVenta.View
             // Selección de fila completa
             dgvGesClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            // Estilo de cabeceras
+            // Estilo de las cabeceras
             dgvGesClientes.EnableHeadersVisualStyles = false;
             dgvGesClientes.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
             dgvGesClientes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font(dgvGesClientes.Font, FontStyle.Bold);
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgvGesClientes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // Ordenar al hacer clic en el encabezado
@@ -373,9 +376,6 @@ namespace PuntodeVenta.View
 
         }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
-        {
-            CargarClientes();
-        }
+        
     }
 }
