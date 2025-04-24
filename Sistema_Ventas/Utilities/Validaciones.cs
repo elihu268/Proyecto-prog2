@@ -35,18 +35,7 @@ namespace Sistema_Ventas.Utilities
             }
             return false; 
         }
-
-        /// <summary>
-        /// validar que el string sea un codigo valido para rol
-        /// </summary>
-        /// <param name="codigo"> recepcion de cadena</param>
-        /// <returns>retorna verdadero si es un formato de codigo de rol</returns>
-        public static bool EsCodigoRolValido(string codigo)
-        {
-            string patron = @"^[A-Z]{2,4}-\d{3,4}$";
-            return Regex.IsMatch(codigo, patron);
-        }
- 
+        
         /// <summary>
         /// metodo para saber si es un numero
         /// </summary>
@@ -57,6 +46,7 @@ namespace Sistema_Ventas.Utilities
             int resultado;
             return (int.TryParse(cadena, out resultado));
         }
+
         /// <summary>
         /// metodo para saber si la cadena es un RFC
         /// </summary>
@@ -67,6 +57,7 @@ namespace Sistema_Ventas.Utilities
             string patron = @"^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$";
             return Regex.IsMatch(rfc, patron);
         }
+
         /// <summary>
         /// metodo para saber si la cadena es telefono
         /// </summary>

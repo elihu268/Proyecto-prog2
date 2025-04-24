@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Sistema_Ventas.Utilities;
 
 namespace Sistema_Ventas.Bussines
 {
     internal class RolNegocio
     {
-        
-            /// <summary>
-            /// Valida el formato del código de un rol
-            /// </summary>
-            /// <param name="codigo">Código a validar</param>
-            /// <returns>True si el formato es válido</returns>
-            public static bool EsCodigoValido(string codigo)
-            {
-                return Validaciones.EsCodigoRolValido(codigo);
-            }
+        /// <summary>
+        /// Valida el formato del código de un rol
+        /// Verifica que el string sea un codigo valido para rol
+        /// </summary>
+        /// <param name="codigo"> recepcion de cadena</param>
+        /// <returns>retorna verdadero si es un formato de codigo de rol</returns>
+        public static bool EsCodigoValido(string codigo)
+        {
+            string patron = @"^[A-Z]{2,4}-\d{3,4}$";
+            return Regex.IsMatch(codigo, patron);
         }
+
+    }
     
 }
