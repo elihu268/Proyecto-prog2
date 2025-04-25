@@ -109,9 +109,9 @@ namespace Sistema_Ventas.Data
                 NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
 
                 _dbAccess.Connect();
-                object? resualtado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena, paramEstatus);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena, paramEstatus);
 
-                if (resualtado != null && int.TryParse(resualtado.ToString(), out int idUsuario))
+                /*if (resultado != null && int.TryParse(resultado.ToString(), out int idUsuario))
                 {
                     _logger.Info("Usuario agregado con éxito, ID: {0}", idUsuario);
                     return idUsuario;
@@ -120,8 +120,8 @@ namespace Sistema_Ventas.Data
                 {
                     _logger.Error("Error al agregar usuario, no se obtuvo un ID válido");
                     return -1;
-                }
-                int idPersonaGenerado = Convert.ToInt32(resualtado);
+                }*/
+                int idPersonaGenerado = Convert.ToInt32(resultado);
                 _logger.Info("Usuario agregado con éxito, ID: {0}", idPersonaGenerado);
                 return idPersonaGenerado;
             }
