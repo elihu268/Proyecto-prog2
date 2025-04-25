@@ -99,17 +99,17 @@ namespace Sistema_Ventas.Data
                     _logger.Error("Error al agregar persona para el usuario");
                     return -1;
                 }
-                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña, estatus) " +
-                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
+                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña) " +
+                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena ) RETURNING id_usuario";
 
                 NpgsqlParameter paramIdPersona = new NpgsqlParameter("@id_persona", idPersona);
                 NpgsqlParameter paramIdRol = new NpgsqlParameter("@id_rol", usuario.idRol);
                 NpgsqlParameter paramCuenta = new NpgsqlParameter("@cuenta", usuario.Cuenta);
                 NpgsqlParameter paramContrasena = new NpgsqlParameter("@contrasena", usuario.Constrasena);
-                NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
+                //NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
 
                 _dbAccess.Connect();
-                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena, paramEstatus);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena);
 
                 /*if (resultado != null && int.TryParse(resultado.ToString(), out int idUsuario))
                 {
@@ -127,7 +127,7 @@ namespace Sistema_Ventas.Data
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al agregar usuario");
+                _logger.Error(ex, $"Error al agregar usuario");
                 throw;
             }
             finally
