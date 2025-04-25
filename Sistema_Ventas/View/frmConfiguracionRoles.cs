@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Sistema_Ventas.Bussines.ClientesNegocio;
+using NLog;
 
 namespace Sistema_Ventas.View
 {
@@ -18,6 +18,7 @@ namespace Sistema_Ventas.View
     /// </summary>
     public partial class frmConfiguracionRoles : Form
     {
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmConfiguracionRoles");
         /// <summary>
         /// Inicializa una nueva instancia del formulario de configuración de roles
         /// </summary>
@@ -36,6 +37,41 @@ namespace Sistema_Ventas.View
             scRoles.Panel1Collapsed = true;
             PoblaTipoFecha();
             PoblaComboEstatus();
+
+            // Se registra información indicando que el formulario ha sido cargado
+            _logger.Info("El formulario de configuración de roles ha sido cargado correctamente.");
+
+            // Mensaje de depuración que indica que comienza la carga inicial de datos
+            _logger.Debug("Iniciando carga de datos y configuraciones iniciales para roles.");
+            try
+            {
+                // Mensaje de traza detallado, útil si se quiere revisar paso a paso lo que ocurre
+                _logger.Trace("Simulando una excepción anidada al cargar roles.");
+                try
+                {
+                    // Se simula una operación que causa una excepción: Acceso fuera de los límites de un arreglo
+                    string[] roles = { "Administrador", "Auditor" };
+                    string rolInexistente = roles[10]; // IndexOutOfRangeException
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    // Se lanza una nueva excepción, más contextual, incluyendo la original como Inner
+                    throw new ApplicationException("Error al intentar obtener los roles disponibles", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Se registra el error de nivel general que ha ocurrido durante la carga de roles
+                _logger.Error(ex, "Se produjo un error durante la carga de roles.");
+
+                // Si hay una excepción interna (InnerException), se registra también como error crítico
+                if (ex.InnerException != null)
+                {
+                    _logger.Fatal(ex.InnerException, $"Error crítico: Detalle interno - {ex.InnerException.Message}");
+                }
+            }
+            // Se indica que el proceso terminó
+            _logger.Info("Proceso de carga del formulario de configuración de roles finalizado.");
         }
 
         /// <summary>

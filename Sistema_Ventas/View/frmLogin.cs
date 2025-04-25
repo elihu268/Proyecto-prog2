@@ -44,7 +44,6 @@ namespace Sistema_Ventas.View
                 return;
             }
             //  MessageBox.Show("Listo para iniciar sesion", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-           // this.Hide();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

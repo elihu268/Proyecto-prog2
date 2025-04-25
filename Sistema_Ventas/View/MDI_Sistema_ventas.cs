@@ -1,5 +1,4 @@
 ﻿using PuntodeVenta.View;
-using Sistema_Ventas.Properties;
 using Sistema_Ventas.View;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NLog;
+using Sistema_Ventas.Utilities;
 
 namespace DiseñoForms.View
 {
@@ -18,6 +19,7 @@ namespace DiseñoForms.View
     /// </summary>
     public partial class MDI_Sistema_ventas : Form
     {
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.MDI_Sistema_ventas");
         /// <summary>
         /// Inicializa el formulario MDI principal
         /// </summary>
@@ -34,6 +36,37 @@ namespace DiseñoForms.View
         {
             // Ajusta la imagen al tamaño del formulario
             this.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
+        {
+            _logger.Info("Usuario accedio al Dashboard despues de iniciar sesión correctamente");
+            _logger.Warn("Espacio en disco bajo!");
+            try
+            {
+                // Aquí provocamos una primera excepción
+                try
+                {
+                    int divisor = 0;
+                    int resultado = 10 / divisor; // Esto generará una DivideByZeroException
+                }
+                catch (DivideByZeroException ex)
+                {
+                    // Capturamos la primera excepción y la envolvemos en otra
+                    throw new ApplicationException("Error al realizar el cálculo en la aplicación", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes manejar la excepción que contiene la inner exception
+                _logger.Error(ex, "Se produjo un error en la operación");
+
+                // O registrar específicamente usando la inner exception
+                if (ex.InnerException != null)
+                {
+                    _logger.Fatal(ex, $"Error crítico con detalle interno: {ex.InnerException.Message}");
+                }
+            }
         }
 
         /// <summary>
@@ -210,9 +243,5 @@ namespace DiseñoForms.View
             AbreVentanaHija("frmasignarpermisos");
         }
 
-        private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

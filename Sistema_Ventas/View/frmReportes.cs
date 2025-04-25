@@ -9,7 +9,8 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using NLog;
+
 
 namespace PuntodeVenta.View
 {
@@ -18,6 +19,7 @@ namespace PuntodeVenta.View
     /// </summary>
     public partial class frmReportes : Form
     {
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmReportes");
         /// <summary>
         /// Inicializa una nueva instancia del formulario de reportes
         /// </summary>
@@ -32,6 +34,12 @@ namespace PuntodeVenta.View
         private void frmReportes_Load(object sender, EventArgs e)
         {
             InicializaVentanaReportes();
+
+            // Log de operación: el formulario se ha cargado
+            _logger.Info("El formulario de reporte de ventas ha sido cargado correctamente.");
+            // Log de depuración: inicio de operaciones internas
+            _logger.Debug("Inicializando filtros y parámetros para generación de reportes.");
+
         }
 
         /// <summary>
