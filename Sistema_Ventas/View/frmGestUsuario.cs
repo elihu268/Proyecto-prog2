@@ -101,7 +101,7 @@ namespace PuntodeVenta.View
             }
             return true;
         }
-     /*   private void GuardarUsuario()
+        private void GuardarUsuario()
         {
             try
             {
@@ -159,11 +159,11 @@ namespace PuntodeVenta.View
             {
                 MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }*/
+        }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-         //   GuardarUsuario();
+            GuardarUsuario();
         }
 
         private void btncargaUsuario_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace PuntodeVenta.View
                 btncargaUsuario.Text = "Captura Rapida";
             }
         }
-        /*private void CargarUsuarios()
+        private void CargarUsuarios()
         {
             try
             {
@@ -224,7 +224,7 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.Default;
             }
-        }*/
+        }
         private void ConfigurarDGV()
         {
             dgvUsuarios.AllowUserToAddRows = false;
