@@ -99,7 +99,7 @@ namespace Sistema_Ventas.Data
                     _logger.Error("Error al agregar persona para el usuario");
                     return -1;
                 }
-                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contrasena, estatus) " +
+                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña, estatus) " +
                     "VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
 
                 NpgsqlParameter paramIdPersona = new NpgsqlParameter("@id_persona", idPersona);
