@@ -166,9 +166,51 @@ namespace Sistema_Ventas.Data
 
             }// Placeholder
         }
-        public static void ActualizarUsuario(Usuario usuario)
+        public bool ActualizarUsuario(Usuario usuario)
         {
             // Aquí iría la lógica para actualizar un usuario existente en la base de datos
+            try
+            {
+                _logger.Debug($"Actualizando usuario: {usuario.IdUsuario} y persona con id {usuario.IdPersona}");
+                bool actualizadopersonaexitosa = _personasDataAccess.ActualizarPersona(usuario.DatosPersonales);
+                if (!actualizadopersonaexitosa)
+                {
+                    _logger.Error("Error al actualizar persona para el usuario");
+                    return false;
+                }
+                string query = "UPDATE Usuarios SET id_rol = @id_rol, usuario = @cuenta, contrasena = @contrasena, estatus = @estatus WHERE id_usuario = @id_usuario";
+                _dbAccess.Connect();
+                NpgsqlParameter paramIdUsuario = new NpgsqlParameter("@id_usuario", usuario.IdUsuario);
+                NpgsqlParameter paramIdRol = new NpgsqlParameter("@id_rol", usuario.idRol);
+                NpgsqlParameter paramCuenta = new NpgsqlParameter("@cuenta", usuario.Cuenta);
+                NpgsqlParameter paramContrasena = new NpgsqlParameter("@contrasena", usuario.Constrasena);
+                NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, paramIdUsuario, paramIdRol, paramCuenta, paramContrasena, paramEstatus);
+
+                bool exito = filasAfectadas > 0;
+
+                if(!exito)
+                {
+                    _logger.Warn($"No se pudo actualizar el Usuarios con Id {usuario.IdUsuario}, No se encontro registro");
+                }
+                else
+                {
+                    _logger.Debug($"Usuario actualizado con éxito, ID: {usuario.IdUsuario}");
+                }
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al actualizar usuario");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+            {
+
+            }
         }
         public static void EliminarUsuario(int id)
         {

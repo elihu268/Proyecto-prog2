@@ -38,7 +38,7 @@ namespace Sistema_Ventas.Data
                 NpgsqlParameter paramNombre = _dbAccess.CreateParameter("@NombreCompleto", persona.NombreCompleto);
                 NpgsqlParameter paramCorreo = _dbAccess.CreateParameter("@Correo", persona.Correo);
                 NpgsqlParameter paramTelefono = _dbAccess.CreateParameter("@Telefono", persona.Telefono);
-                NpgsqlParameter paramFechaNac = _dbAccess.CreateParameter("@FechaNacimiento", persona.FechaNacimiento);
+                NpgsqlParameter paramFechaNac = _dbAccess.CreateParameter("@FechaNacimiento", persona.FechaNacimiento ?? (object)DBNull.Value);
                 NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", persona.Estatus);
                 //establecer conexion
                 _dbAccess.Connect();
@@ -53,6 +53,44 @@ namespace Sistema_Ventas.Data
             {
                 _logger.Error(ex, $"error al insertar persona{persona.NombreCompleto}");
                 return -1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+        public bool ActualizarPersona(Persona persona)
+        {
+            try
+            {
+                string query = "UPDATE personas SET nombre_completo = @NombreCompleto, correo = @Correo, telefono = @Telefono, fecha_nacimiento = @FechaNacimiento, estatus = @Estatus ";
+
+                NpgsqlParameter paramNombre = _dbAccess.CreateParameter("@NombreCompleto", persona.NombreCompleto);
+                NpgsqlParameter paramCorreo = _dbAccess.CreateParameter("@Correo", persona.Correo);
+                NpgsqlParameter paramTelefono = _dbAccess.CreateParameter("@Telefono", persona.Telefono);
+                NpgsqlParameter paramFechaNac = _dbAccess.CreateParameter("@FechaNacimiento", persona.FechaNacimiento ?? (object)DBNull.Value);
+                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", persona.Estatus);
+                NpgsqlParameter paramId = _dbAccess.CreateParameter("@Id", persona.Id);
+
+                _dbAccess.Connect();
+                //ejecutar actualizacion
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, paramNombre, paramCorreo, paramTelefono, paramFechaNac, paramEstatus, paramId);
+
+                bool exito = filasAfectadas > 0;
+                if (exito)
+                {
+                    _logger.Info($"persona actualizada correctamente con ID{persona.Id}");
+                }
+                else
+                {
+                    _logger.Warn($"no se actualizo la persona con ID{persona.Id}");
+                }
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"error al actualizar persona{persona.NombreCompleto}");
+                return false;
             }
             finally
             {
