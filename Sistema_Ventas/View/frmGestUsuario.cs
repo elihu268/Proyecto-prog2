@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Ventas.Bussines;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
 
@@ -31,7 +30,7 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
-            CargarUsuarios();
+            //CargarUsuarios();
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
@@ -102,7 +101,7 @@ namespace PuntodeVenta.View
             }
             return true;
         }
-        private void GuardarUsuario()
+     /*   private void GuardarUsuario()
         {
             try
             {
@@ -160,11 +159,11 @@ namespace PuntodeVenta.View
             {
                 MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        }*/
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            GuardarUsuario();
+         //   GuardarUsuario();
         }
 
         private void btncargaUsuario_Click(object sender, EventArgs e)
@@ -180,7 +179,7 @@ namespace PuntodeVenta.View
                 btncargaUsuario.Text = "Captura Rapida";
             }
         }
-        private void CargarUsuarios()
+        /*private void CargarUsuarios()
         {
             try
             {
@@ -225,7 +224,7 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.Default;
             }
-        }
+        }*/
         private void ConfigurarDGV()
         {
             dgvUsuarios.AllowUserToAddRows = false;
