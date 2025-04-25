@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Ventas.Bussines;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
 
