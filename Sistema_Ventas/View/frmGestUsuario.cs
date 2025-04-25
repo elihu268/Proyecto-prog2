@@ -10,7 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Sistema_Ventas.Bussines.ClientesNegocio;
+using Sistema_Ventas.Bussines;
+using Sistema_Ventas.Model;
+using Sistema_Ventas.Controller;
+
 
 namespace PuntodeVenta.View
 {
@@ -28,6 +31,7 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
+            CargarUsuarios();
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
@@ -98,33 +102,69 @@ namespace PuntodeVenta.View
             }
             return true;
         }
-        private bool GuardarUsuario()
+        private void GuardarUsuario()
         {
-            lbconfirmcontraAlert.Text = " ";
-            lbcontraalert.Text = " ";
-            if (DatosVacios())
+            try
             {
-                MessageBox.Show("Favor de llenar los datos Obligatorios. ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!DatosValidos())
-            {
-                return false;
-            }
-            if (!ValidarContrasenas())
-            {
-                return false;
+                if (DatosVacios())
+                {
+                    MessageBox.Show("Por favor llene todos los campos", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!ValidarContrasenas())
+                {
+                    return;
+                }
+                if (!DatosValidos())
+                {
+                    return;
+                }
+                Persona persona = new Persona(
+                    txtNombre.Text.Trim(),
+                    txtCorreo.Text.Trim(),
+                    txtTelefono.Text.Trim());
 
+                persona.FechaNacimiento = dtpFechaNacimiento.Value;
+
+                Usuario usuario = new Usuario
+                {
+                    idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
+                    Cuenta = txtCorreo.Text.Trim(),
+                    Constrasena = txtContrasena.Text.Trim(),
+                    Estatus = 1,
+                    DatosPersonales = persona
+                };
+                UsuariosController usuariosController = new UsuariosController();
+                var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
+
+                if (idUsuario > 0)
+                {
+                    MessageBox.Show(mensaje, "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LimpiarCampos();
+                    CargarUsuarios();
+                }
+                else
+                {
+                    MessageBox.Show("Error al guardar el usuario: " + mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    switch (idUsuario)
+                    {
+                        case -2:
+                            MessageBox.Show("El usuario ya existe", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtCorreo.Focus();
+                            txtCorreo.SelectAll();
+                            break;
+                    }
+                }
             }
-            return true;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarUsuario())
-            {
-                MessageBox.Show("Datos Guardados Exitosamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            GuardarUsuario();
         }
 
         private void btncargaUsuario_Click(object sender, EventArgs e)
@@ -140,7 +180,92 @@ namespace PuntodeVenta.View
                 btncargaUsuario.Text = "Captura Rapida";
             }
         }
+        private void CargarUsuarios()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                UsuariosController usuariosController = new UsuariosController();
+                List<Usuario> usuarios = usuariosController.ObtenerUsuarios();
+                dgvUsuarios.DataSource = null;
+                if (usuarios.Count == 0)
+                {
+                    if (!string.IsNullOrEmpty(txtBusqueda.Text))
+                    {
+                        MessageBox.Show("No se encontraron resultados para la busqueda", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    return;
+                }
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Nombre", typeof(string));
+                dt.Columns.Add("Correo", typeof(string));
+                dt.Columns.Add("Telefono", typeof(string));
+                dt.Columns.Add("Estatus", typeof(string));
+                dt.Columns.Add("Rol", typeof(string));
 
+                //llenado de la tabla
+                foreach (Usuario usuario in usuarios)
+                {
+                    dt.Rows.Add(
+                        usuario.DatosPersonales.NombreCompleto,
+                        usuario.DatosPersonales.Correo,
+                        usuario.DatosPersonales.Telefono,
+                        usuario.Estatus,
+                        usuario.idRol);
+                }
+                dgvUsuarios.DataSource = dt;
+
+                ConfigurarDGV();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+        private void ConfigurarDGV()
+        {
+            dgvUsuarios.AllowUserToAddRows = false;
+            dgvUsuarios.AllowUserToDeleteRows = false;
+            dgvUsuarios.ReadOnly = true;
+
+            // Ajustar el ancho de las columnas
+            dgvUsuarios.Columns["Nombre Completo"].Width = 200;
+            dgvUsuarios.Columns["Correo"].Width = 180;
+            dgvUsuarios.Columns["Teléfono"].Width = 120;
+            dgvUsuarios.Columns["Fecha Nacimiento"].Width = 120;
+            dgvUsuarios.Columns["Estatus"].Width = 100;
+
+            // Ocultar columna ID si es necesario
+            dgvUsuarios.Columns["ID"].Visible = false;
+
+            // Formato para las fechas
+            dgvUsuarios.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+
+            // Alineación
+            dgvUsuarios.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvUsuarios.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // Color alternado de filas
+            dgvUsuarios.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+
+            // Selección de fila completa
+            dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Estilo de cabeceras
+            dgvUsuarios.EnableHeadersVisualStyles = false;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.Font = new Font(dgvUsuarios.Font, FontStyle.Bold);
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Ordenar al hacer clic en el encabezado
+            dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+        }
         private void btnCarga_Click(object sender, EventArgs e)
         {
             ofdArchivo.Title = "Seleccionar Archivo de Exel";
@@ -200,7 +325,17 @@ namespace PuntodeVenta.View
             return true;
         }
 
-
+        private void LimpiarCampos()
+        {
+            txtNombre.Clear();
+            txtCorreo.Clear();
+            txtTelefono.Clear();
+            txtContrasena.Clear();
+            txtConfContrasena.Clear();
+            cbxEstatus.SelectedValue = 1;
+            cbxRoles.SelectedValue = 2;
+            dtpFechaNacimiento.Value = DateTime.Now;
+        }
         private bool Datosbusqueda()
         {
             if (cbxtipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "")
@@ -211,7 +346,9 @@ namespace PuntodeVenta.View
             return true;
         }
 
+        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-
+        }
     }
 }
