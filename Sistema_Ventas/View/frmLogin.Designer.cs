@@ -42,82 +42,97 @@
             // lbl_usuario
             // 
             lbl_usuario.AutoSize = true;
-            lbl_usuario.Location = new Point(339, 95);
+            lbl_usuario.Location = new Point(270, 49);
+            lbl_usuario.Margin = new Padding(2, 0, 2, 0);
             lbl_usuario.Name = "lbl_usuario";
-            lbl_usuario.Size = new Size(72, 25);
+            lbl_usuario.Size = new Size(55, 16);
             lbl_usuario.TabIndex = 0;
             lbl_usuario.Text = "Usuario";
             // 
             // lbl_password
             // 
             lbl_password.AutoSize = true;
-            lbl_password.Location = new Point(310, 134);
+            lbl_password.Location = new Point(248, 116);
+            lbl_password.Margin = new Padding(2, 0, 2, 0);
             lbl_password.Name = "lbl_password";
-            lbl_password.Size = new Size(101, 25);
+            lbl_password.Size = new Size(82, 16);
             lbl_password.TabIndex = 1;
             lbl_password.Text = "Contraseña";
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.usuario;
-            pictureBox1.Location = new Point(112, 95);
+            pictureBox1.Location = new Point(82, 39);
+            pictureBox1.Margin = new Padding(2, 3, 2, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(162, 97);
+            pictureBox1.Size = new Size(104, 92);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
             // txt_usuario
             // 
-            txt_usuario.Location = new Point(439, 95);
+            txt_usuario.Location = new Point(350, 45);
+            txt_usuario.Margin = new Padding(2, 3, 2, 3);
             txt_usuario.Name = "txt_usuario";
-            txt_usuario.Size = new Size(192, 31);
+            txt_usuario.Size = new Size(155, 23);
             txt_usuario.TabIndex = 3;
             txt_usuario.Text = "a@a.a";
             // 
             // txt_password
             // 
-            txt_password.Location = new Point(439, 139);
+            txt_password.Location = new Point(350, 106);
+            txt_password.Margin = new Padding(2, 3, 2, 3);
             txt_password.Name = "txt_password";
             txt_password.PasswordChar = '*';
-            txt_password.Size = new Size(192, 31);
+            txt_password.Size = new Size(155, 23);
             txt_password.TabIndex = 4;
             txt_password.Text = "a";
             // 
             // btn_iniciar
             // 
             btn_iniciar.BackColor = SystemColors.ActiveCaption;
-            btn_iniciar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_iniciar.Cursor = Cursors.Hand;
+            btn_iniciar.FlatAppearance.BorderSize = 0;
+            btn_iniciar.FlatStyle = FlatStyle.Flat;
+            btn_iniciar.Font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_iniciar.Image = Properties.Resources.login;
             btn_iniciar.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_iniciar.Location = new Point(149, 247);
+            btn_iniciar.Location = new Point(82, 182);
+            btn_iniciar.Margin = new Padding(2, 3, 2, 3);
             btn_iniciar.Name = "btn_iniciar";
-            btn_iniciar.Size = new Size(219, 49);
+            btn_iniciar.Size = new Size(155, 42);
             btn_iniciar.TabIndex = 5;
-            btn_iniciar.Text = "Iniciar sesion";
+            btn_iniciar.Text = "Iniciar Sesión";
+            btn_iniciar.TextAlign = ContentAlignment.MiddleRight;
             btn_iniciar.UseVisualStyleBackColor = false;
             btn_iniciar.Click += btn_iniciar_Click;
             // 
             // btn_cerrar
             // 
             btn_cerrar.BackColor = SystemColors.ActiveCaption;
-            btn_cerrar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_cerrar.Cursor = Cursors.Hand;
+            btn_cerrar.FlatAppearance.BorderSize = 0;
+            btn_cerrar.FlatStyle = FlatStyle.Flat;
+            btn_cerrar.Font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_cerrar.Image = Properties.Resources.salir;
             btn_cerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_cerrar.Location = new Point(439, 247);
+            btn_cerrar.Location = new Point(430, 182);
+            btn_cerrar.Margin = new Padding(2, 3, 2, 3);
             btn_cerrar.Name = "btn_cerrar";
-            btn_cerrar.Size = new Size(195, 49);
+            btn_cerrar.Size = new Size(96, 42);
             btn_cerrar.TabIndex = 6;
             btn_cerrar.Text = "Cerrar";
+            btn_cerrar.TextAlign = ContentAlignment.MiddleRight;
             btn_cerrar.UseVisualStyleBackColor = false;
             btn_cerrar.Click += btn_cerrar_Click;
             // 
             // frmLogin
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(583, 269);
             Controls.Add(btn_cerrar);
             Controls.Add(btn_iniciar);
             Controls.Add(txt_password);
@@ -125,12 +140,15 @@
             Controls.Add(pictureBox1);
             Controls.Add(lbl_password);
             Controls.Add(lbl_usuario);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2, 3, 2, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmLogin";
-            Text = "inicio de sesion";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Login";
             Load += frmLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

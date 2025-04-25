@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Ventas.Bussines;
 using static Sistema_Ventas.Bussines.ClientesNegocio;
+using Sistema_Ventas.Controller;
 
 namespace Sistema_Ventas.View
 {
@@ -44,8 +45,22 @@ namespace Sistema_Ventas.View
                 return;
             }
             //  MessageBox.Show("Listo para iniciar sesion", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+
+            UsuariosController usuariosController = new UsuariosController();
+
+            if (usuariosController.ValidarUsuario(txt_usuario.Text, txt_password.Text))
+            {
+                // Si la validación es exitosa, se cierra el formulario de inicio de sesión
+                // y se abre el formulario principal (MDI)
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            
         }
         /// <summary>
         /// cierra ventana de incio de secion, cierra todo el programa

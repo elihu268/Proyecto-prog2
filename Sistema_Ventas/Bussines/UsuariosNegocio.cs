@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Sistema_Ventas.Utilities;
 
 namespace Sistema_Ventas.Bussines
 {
     internal class UsuariosNegocio
     {
-     
-            /// <summary>
-            /// Valida el formato de un correo electrónico
-            /// </summary>
-            /// <param name="correo">Correo electrónico a validar</param>
-            /// <returns>True si el formato es válido</returns>
-            internal static bool EsFormatoValido(string correo)
+        /// <summary>
+        /// Valida el formato de un correo electrónico
+        /// </summary>
+        /// <param name="correo">Correo electrónico a validar</param>
+        /// <returns>True si el formato es válido</returns>
+        internal static bool EsFormatoValido(string correo)
             {
                 return Validaciones.EsCorreoValido(correo);
             }
@@ -29,5 +24,5 @@ namespace Sistema_Ventas.Bussines
             {
                 return Validaciones.ValidarTelefono(telefono);
             }
-        }
+    }
 }

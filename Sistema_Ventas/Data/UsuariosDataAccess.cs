@@ -212,6 +212,77 @@ namespace Sistema_Ventas.Data
 
             }
         }
+
+        public Usuario ValidarUsuario(string usuario, string contrasena)
+        {
+            Usuario usuarioValido = null;
+            string query = "SELECT u.id_usuario, u.id_persona, u.id_rol, u.usuario, u.contraseña, u.estatus, " +
+                           "p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus AS estatus_persona " +
+                           "FROM usuarios u " +
+                           "JOIN personas p ON u.id_persona = p.id_persona " +
+                           "WHERE u.usuario = @usuario AND u.contraseña = @contrasena AND u.estatus = TRUE AND p.estatus = TRUE";
+
+
+            List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@usuario", usuario),
+                    new NpgsqlParameter("@contrasena", contrasena)
+                };
+
+            DataTable result = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+
+            if (result.Rows.Count > 0)
+            {
+                // Si se encuentra el usuario, lo armamos
+                DataRow row = result.Rows[0];
+                Persona persona = new Persona(
+                    Convert.ToInt32(row["id_persona"]),
+                    row["nombre_completo"].ToString(),
+                    row["correo"].ToString(),
+                    row["telefono"].ToString(),
+                    row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                    Convert.ToBoolean(row["estatus_persona"])
+                );
+
+                usuarioValido = new Usuario(
+                    Convert.ToInt32(row["id_usuario"]),
+                    Convert.ToInt32(row["id_persona"]),
+                    Convert.ToInt32(row["id_rol"]),
+                    row["usuario"].ToString(),
+                    row["contraseña"].ToString(),
+                    Convert.ToInt32(row["estatus"]),
+                    persona
+                );
+            }
+
+            return usuarioValido;
+        }
+
+        public List<string> ObtenerPermisos(int idRol)
+        {
+            List<string> permisos = new List<string>();
+
+            string query = "SELECT P.codigo " +
+                           "FROM permisos P " +
+                           "JOIN permisos_rol PR ON P.id_permiso = PR.id_permiso " +
+                           "WHERE PR.id_rol = @idRol AND P.estatus = TRUE";
+
+
+            List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
+            {
+                new NpgsqlParameter("@idRol", idRol)
+            };
+
+            DataTable result = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+
+            foreach (DataRow row in result.Rows)
+            {
+                permisos.Add(row["codigo"].ToString());
+            }
+
+            return permisos;
+        }
+
         public static void EliminarUsuario(int id)
         {
             // Aquí iría la lógica para eliminar un usuario de la base de datos
