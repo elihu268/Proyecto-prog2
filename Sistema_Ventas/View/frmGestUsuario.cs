@@ -30,7 +30,7 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
-            CargarUsuarios();
+            //CargarUsuarios();
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
@@ -101,69 +101,69 @@ namespace PuntodeVenta.View
             }
             return true;
         }
-        private void GuardarUsuario()
-        {
-            try
-            {
-                if (DatosVacios())
-                {
-                    MessageBox.Show("Por favor llene todos los campos", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!ValidarContrasenas())
-                {
-                    return;
-                }
-                if (!DatosValidos())
-                {
-                    return;
-                }
-                Persona persona = new Persona(
-                    txtNombre.Text.Trim(),
-                    txtCorreo.Text.Trim(),
-                    txtTelefono.Text.Trim());
+        /*   private void GuardarUsuario()
+           {
+               try
+               {
+                   if (DatosVacios())
+                   {
+                       MessageBox.Show("Por favor llene todos los campos", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                       return;
+                   }
+                   if (!ValidarContrasenas())
+                   {
+                       return;
+                   }
+                   if (!DatosValidos())
+                   {
+                       return;
+                   }
+                   Persona persona = new Persona(
+                       txtNombre.Text.Trim(),
+                       txtCorreo.Text.Trim(),
+                       txtTelefono.Text.Trim());
 
-                persona.FechaNacimiento = dtpFechaNacimiento.Value;
+                   persona.FechaNacimiento = dtpFechaNacimiento.Value;
 
-                Usuario usuario = new Usuario
-                {
-                    idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
-                    Cuenta = txtCorreo.Text.Trim(),
-                    Constrasena = txtContrasena.Text.Trim(),
-                    Estatus = 1,
-                    DatosPersonales = persona
-                };
-                UsuariosController usuariosController = new UsuariosController();
-                var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
+                   Usuario usuario = new Usuario
+                   {
+                       idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
+                       Cuenta = txtCorreo.Text.Trim(),
+                       Constrasena = txtContrasena.Text.Trim(),
+                       Estatus = 1,
+                       DatosPersonales = persona
+                   };
+                   UsuariosController usuariosController = new UsuariosController();
+                   var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
 
-                if (idUsuario > 0)
-                {
-                    MessageBox.Show(mensaje, "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    LimpiarCampos();
-                    CargarUsuarios();
-                }
-                else
-                {
-                    MessageBox.Show("Error al guardar el usuario: " + mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    switch (idUsuario)
-                    {
-                        case -2:
-                            MessageBox.Show("El usuario ya existe", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            txtCorreo.Focus();
-                            txtCorreo.SelectAll();
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+                   if (idUsuario > 0)
+                   {
+                       MessageBox.Show(mensaje, "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                       LimpiarCampos();
+                       CargarUsuarios();
+                   }
+                   else
+                   {
+                       MessageBox.Show("Error al guardar el usuario: " + mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       switch (idUsuario)
+                       {
+                           case -2:
+                               MessageBox.Show("El usuario ya existe", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                               txtCorreo.Focus();
+                               txtCorreo.SelectAll();
+                               break;
+                       }
+                   }
+               }
+               catch (Exception ex)
+               {
+                   MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               }
+           }*/
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            GuardarUsuario();            
+            //   GuardarUsuario();
         }
 
         private void btncargaUsuario_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace PuntodeVenta.View
                 btncargaUsuario.Text = "Captura Rapida";
             }
         }
-        private void CargarUsuarios()
+        /*private void CargarUsuarios()
         {
             try
             {
@@ -224,7 +224,7 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.Default;
             }
-        }
+        }*/
         private void ConfigurarDGV()
         {
             dgvUsuarios.AllowUserToAddRows = false;
