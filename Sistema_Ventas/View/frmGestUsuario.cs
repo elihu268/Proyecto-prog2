@@ -30,11 +30,6 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
-            if (!Sesión.TienePermiso("USR_CREATE"))
-            {
-                // Si no tiene el permiso, ocultar el botón
-                btncargaUsuario.Visible = false;
-            }
             //CargarUsuarios();
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
