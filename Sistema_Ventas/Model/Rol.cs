@@ -37,23 +37,10 @@ namespace Sistema_Ventas.Model
             /// </summary>
             public Rol()
             {
-                IdRol = 1; // Por defecto, el ID es 1
+                IdRol = 0; // Por defecto, el ID es 0
                 Codigo = string.Empty;
                 Descripcion = string.Empty;
                 Estatus = true; // Por defecto, el rol se crea activo
-            }
-
-            /// <summary>
-            /// Constructor con datos obligatorios.
-            /// </summary>
-            /// <param name="codigo">Código del rol.</param>
-            /// <param name="descripcion">Descripción del rol.</param>
-            public Rol(string codigo, string descripcion)
-            {
-                Codigo = codigo;
-                Descripcion = descripcion;
-                Estatus = true;
-                IdRol = 1;
             }
 
             /// <summary>
