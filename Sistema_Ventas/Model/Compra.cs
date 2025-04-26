@@ -32,7 +32,7 @@ namespace Sistema_Ventas.Model
             Estatus = 1;
         }
 
-        // Constructor vacío (recomendado si usas ORM o deserialización)
+        // Constructor vacío (recomendado para ORM o deserialización)
         public Compra() { }
 
         // Método para calcular los valores y preparar la compra antes de guardar

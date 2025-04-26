@@ -7,33 +7,68 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sistema_Ventas.Model
 {
+    /// <summary>
+    /// Representa un rol dentro del sistema.
+    /// </summary>
     public class Rol
     {
-        
-
             /// <summary>
             /// Corresponde a id_rol (clave primaria SERIAL)
             /// </summary>
-            public int IdRol { get; set; }      
-            /// <summary>
-            /// Corresponde a codigo (VARCHAR(20) NOT NULL)
-            /// </summary>
-            public string Codigo { get; set; }        
-            /// <summary>
-            ///  Corresponde a descripcion (TEXT)
-            /// </summary>
-            public string Descripcion { get; set; }  
-            /// <summary>
-            /// Corresponde a estatus(BOOLEAN)
-            /// </summary>
-            public bool Estatus { get; set; }        
+            public int IdRol { get; set; }
 
-            public Rol(int idRol, string codigo, string descripcion, bool estatus) {
-                this.IdRol = idRol;
-                this.Codigo=codigo;
-                this.Descripcion = descripcion;
-                this.Estatus = estatus;
+            /// <summary>
+            /// Corresponde a código del rol (VARCHAR(20) NOT NULL)
+            /// </summary>
+            public string Codigo { get; set; }
+
+            /// <summary>
+            /// Corresponde a descripción del rol (TEXT)
+            /// </summary>
+            public string Descripcion { get; set; }
+
+            /// <summary>
+            /// Corresponde a estatus del rol (BOOLEAN) [Está activo o no]
+            /// </summary>
+            public bool Estatus { get; set; }
+            
+            /// <summary>
+            /// Constructor por defecto.
+            /// </summary>
+            public Rol()
+            {
+                IdRol = 1; // Por defecto, el ID es 1
+                Codigo = string.Empty;
+                Descripcion = string.Empty;
+                Estatus = true; // Por defecto, el rol se crea activo
             }
 
+            /// <summary>
+            /// Constructor con datos obligatorios.
+            /// </summary>
+            /// <param name="codigo">Código del rol.</param>
+            /// <param name="descripcion">Descripción del rol.</param>
+            public Rol(string codigo, string descripcion)
+            {
+                Codigo = codigo;
+                Descripcion = descripcion;
+                Estatus = true;
+                IdRol = 1;
+            }
+
+            /// <summary>
+            /// Constructor completo.
+            /// </summary>
+            /// <param name="idRol">Identificador único del rol.</param>
+            /// <param name="codigo">Código del rol.</param>
+            /// <param name="descripcion">Descripción del rol.</param>
+            /// <param name="estatus">Estatus del rol.</param>
+            public Rol(int idRol, string codigo, string descripcion, bool estatus)
+            {
+                IdRol = idRol;
+                Codigo = codigo;
+                Descripcion = descripcion;
+                Estatus = estatus;
+            }
     }
 }
