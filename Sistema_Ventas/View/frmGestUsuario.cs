@@ -130,7 +130,7 @@ namespace PuntodeVenta.View
                     idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
                     Cuenta = txtCorreo.Text.Trim(),
                     Constrasena = txtContrasena.Text.Trim(),
-                    Estatus = 1,
+                    Estatus = true,
                     DatosPersonales = persona
                 };
                 UsuariosController usuariosController = new UsuariosController();

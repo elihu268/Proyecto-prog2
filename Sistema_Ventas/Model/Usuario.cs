@@ -13,7 +13,7 @@ namespace Sistema_Ventas.Model
         public int idRol { get; set; }
         public string Cuenta { get; set; }
         public string Constrasena { get; set; }
-        public int Estatus { get; set; }
+        public bool Estatus { get; set; }
         public Persona DatosPersonales { get; set; }
 
         public Usuario()
@@ -21,10 +21,10 @@ namespace Sistema_Ventas.Model
             ;
             Cuenta = string.Empty;
             Constrasena = string.Empty;
-            Estatus = 1;
+            Estatus = true;
             DatosPersonales = new Persona();
         }
-        public Usuario(int idrol, string cuenta, string constrasena, int estatus, Persona datospersonales)
+        public Usuario(int idrol, string cuenta, string constrasena, bool estatus, Persona datospersonales)
         {
             idRol = idrol;
             Cuenta = cuenta;
@@ -32,7 +32,7 @@ namespace Sistema_Ventas.Model
             Estatus = estatus;
             DatosPersonales = datospersonales;
         }
-        public Usuario(int idUsuario, int idPersona, int idRol, string cuenta, string constrasena, int estatus, Persona datospersonale)
+        public Usuario(int idUsuario, int idPersona, int idRol, string cuenta, string constrasena, bool estatus, Persona datospersonale)
         {
             IdUsuario = idUsuario;
             IdPersona = idPersona;

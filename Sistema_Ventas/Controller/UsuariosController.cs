@@ -74,31 +74,26 @@ namespace Sistema_Ventas.Controller
             }
         }
 
-        public bool ValidarUsuario(string usuario, string contraseña)
+        public string ValidarUsuario(string usuario, string contraseña)
         {
             try
             {
-                Usuario usuarioValidado = _usuariosDataAccess.ValidarUsuario(usuario, contraseña);
+                var (usuarioValido, mensaje) = _usuariosDataAccess.ValidarUsuario(usuario, contraseña);
 
-                if (usuarioValidado != null)
+
+                // Si el usuario es válido, se obtienen los permisos de ese usuario
+                if (usuarioValido != null)
                 {
-                    // Si el usuario es válido, se obtienen los permisos de ese usuario
-                    List<string> permisos = _usuariosDataAccess.ObtenerPermisos(usuarioValidado.idRol);
+                    // Si la validación es exitosa, se obtiene el permiso del usuario y se inicia la sesión
+                    List<string> permisos = _usuariosDataAccess.ObtenerPermisos(usuarioValido.idRol);
+                    Sesión.IniciarSesion(usuarioValido.IdUsuario, usuarioValido.Cuenta, permisos);
 
-                    // Iniciamos la sesión
-                    Sesión.IniciarSesion(usuarioValidado.IdUsuario, usuarioValidado.Cuenta, permisos);
-
-                    // Mensaje de éxito
-                    MessageBox.Show("Inicio de sesión exitoso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-
+                    return mensaje;  // Éxito
                 }
-                else
-                {
-                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    _logger.Error($"Intento Fallido de inicio de sesion con la credencial " + usuario);
-                    return false;
-                }
+
+                // Mensaje de error
+                return mensaje;
+
             }
             catch (Exception)
             {

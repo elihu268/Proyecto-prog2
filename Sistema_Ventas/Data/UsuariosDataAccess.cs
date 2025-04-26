@@ -62,15 +62,15 @@ namespace Sistema_Ventas.Data
                         row["correo"].ToString() ?? "",
                         row["telefono"].ToString() ?? "",
                         row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
-                        Convert.ToBoolean(row["estatus_persona"])
-                        );
+                        Convert.ToBoolean(row["estatus_persona"]) // Changed from Convert.ToInt32 to Convert.ToBoolean
+                    );
                     Usuario usuario = new Usuario(
                         Convert.ToInt32(row["id_usuario"]),
                         Convert.ToInt32(row["id_persona"]),
                         Convert.ToInt32(row["id_rol"]),
                         row["usuario"].ToString() ?? "",
                         row["contrasena"].ToString() ?? "",
-                        Convert.ToInt32(row["estatus"]),
+                        Convert.ToBoolean(row["estatus"]),
                         persona
                     );
                     usuarios.Add(usuario);
@@ -99,14 +99,14 @@ namespace Sistema_Ventas.Data
                     _logger.Error("Error al agregar persona para el usuario");
                     return -1;
                 }
-                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña) " +
-                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena ) RETURNING id_usuario";
+                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña, estatus) " +
+                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
 
                 NpgsqlParameter paramIdPersona = new NpgsqlParameter("@id_persona", idPersona);
                 NpgsqlParameter paramIdRol = new NpgsqlParameter("@id_rol", usuario.idRol);
                 NpgsqlParameter paramCuenta = new NpgsqlParameter("@cuenta", usuario.Cuenta);
                 NpgsqlParameter paramContrasena = new NpgsqlParameter("@contrasena", usuario.Constrasena);
-                //NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
+                NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
 
                 _dbAccess.Connect();
                 object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena);
@@ -213,28 +213,50 @@ namespace Sistema_Ventas.Data
             }
         }
 
-        public Usuario ValidarUsuario(string usuario, string contrasena)
+        public (Usuario, string) ValidarUsuario(string usuario, string contrasena)
         {
             Usuario usuarioValido = null;
+            string mensaje = "";
             string query = "SELECT u.id_usuario, u.id_persona, u.id_rol, u.usuario, u.contraseña, u.estatus, " +
                            "p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus AS estatus_persona " +
                            "FROM usuarios u " +
                            "JOIN personas p ON u.id_persona = p.id_persona " +
-                           "WHERE u.usuario = @usuario AND u.contraseña = @contrasena AND u.estatus = TRUE AND p.estatus = TRUE";
+                           "WHERE u.usuario = @usuario";
 
 
             List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
-                {
-                    new NpgsqlParameter("@usuario", usuario),
-                    new NpgsqlParameter("@contrasena", contrasena)
-                };
+            {
+                new NpgsqlParameter("@usuario", usuario)
+            };
 
             DataTable result = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+
+            if (result.Rows.Count == 0)
+            {
+                mensaje = "Usuario no registrado.";  // No existe el usuario
+                return (null, mensaje);
+            }
+
+            DataRow row = result.Rows[0];
+
+            // Verificar si el usuario está dado de baja
+            if (Convert.ToBoolean(row["estatus"]) == false)
+            {
+                mensaje = "El usuario está dado de baja.";  // Usuario dado de baja
+                return (null, mensaje);
+            }
+
+            // Verificar si la contraseña es incorrecta
+            if (row["contraseña"].ToString() != contrasena)
+            {
+                mensaje = "Contraseña incorrecta.";  // Contraseña incorrecta
+                return (null, mensaje);
+            }
 
             if (result.Rows.Count > 0)
             {
                 // Si se encuentra el usuario, lo armamos
-                DataRow row = result.Rows[0];
+                row = result.Rows[0];
                 Persona persona = new Persona(
                     Convert.ToInt32(row["id_persona"]),
                     row["nombre_completo"].ToString(),
@@ -250,12 +272,13 @@ namespace Sistema_Ventas.Data
                     Convert.ToInt32(row["id_rol"]),
                     row["usuario"].ToString(),
                     row["contraseña"].ToString(),
-                    Convert.ToInt32(row["estatus"]),
+                    Convert.ToBoolean(row["estatus"]),
                     persona
-                );
+                );                
             }
 
-            return usuarioValido;
+            mensaje = "Inicio de sesión exitoso.";  // Inicio de sesión exitoso
+            return (usuarioValido, mensaje);
         }
 
         public List<string> ObtenerPermisos(int idRol)

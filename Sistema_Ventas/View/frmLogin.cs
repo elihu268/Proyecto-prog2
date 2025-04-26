@@ -48,19 +48,23 @@ namespace Sistema_Ventas.View
 
             UsuariosController usuariosController = new UsuariosController();
 
-            if (usuariosController.ValidarUsuario(txt_usuario.Text, txt_password.Text))
+            string resultado = usuariosController.ValidarUsuario(txt_usuario.Text, txt_password.Text);
+
+            if (resultado == "Inicio de sesión exitoso.")
             {
                 // Si la validación es exitosa, se cierra el formulario de inicio de sesión
                 // y se abre el formulario principal (MDI)
+                MessageBox.Show("Bienvenido al sistema", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Mostrar el mensaje de error correspondiente
+                MessageBox.Show(resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            
+
         }
         /// <summary>
         /// cierra ventana de incio de secion, cierra todo el programa
