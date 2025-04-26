@@ -42,6 +42,7 @@
             // 
             // grbox_permisos
             // 
+            grbox_permisos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             grbox_permisos.BackColor = SystemColors.InactiveBorder;
             grbox_permisos.Controls.Add(cbox_rol);
             grbox_permisos.Controls.Add(dgv_permisos);
@@ -51,7 +52,7 @@
             grbox_permisos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grbox_permisos.Location = new Point(12, 79);
             grbox_permisos.Name = "grbox_permisos";
-            grbox_permisos.Size = new Size(787, 566);
+            grbox_permisos.Size = new Size(634, 566);
             grbox_permisos.TabIndex = 11;
             grbox_permisos.TabStop = false;
             grbox_permisos.Text = "Permisos";
@@ -67,11 +68,13 @@
             // 
             // dgv_permisos
             // 
+            dgv_permisos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_permisos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_permisos.Location = new Point(35, 161);
+            dgv_permisos.Location = new Point(23, 161);
+            dgv_permisos.MaximumSize = new Size(700, 900);
             dgv_permisos.Name = "dgv_permisos";
             dgv_permisos.RowHeadersWidth = 62;
-            dgv_permisos.Size = new Size(720, 377);
+            dgv_permisos.Size = new Size(600, 377);
             dgv_permisos.TabIndex = 21;
             dgv_permisos.CellContentClick += dgv_permisos_CellContentClick;
             // 
@@ -79,7 +82,7 @@
             // 
             btn_agregar.BackColor = SystemColors.ActiveCaption;
             btn_agregar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_agregar.Location = new Point(541, 30);
+            btn_agregar.Location = new Point(357, 30);
             btn_agregar.Name = "btn_agregar";
             btn_agregar.Size = new Size(198, 51);
             btn_agregar.TabIndex = 20;
@@ -90,7 +93,7 @@
             // lbl_selec_permiso
             // 
             lbl_selec_permiso.AutoSize = true;
-            lbl_selec_permiso.Location = new Point(560, 103);
+            lbl_selec_permiso.Location = new Point(433, 115);
             lbl_selec_permiso.Name = "lbl_selec_permiso";
             lbl_selec_permiso.Size = new Size(179, 25);
             lbl_selec_permiso.TabIndex = 19;
@@ -112,7 +115,7 @@
             lblt_titulo.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblt_titulo.Location = new Point(1, 9);
             lblt_titulo.Name = "lblt_titulo";
-            lblt_titulo.Size = new Size(804, 50);
+            lblt_titulo.Size = new Size(659, 50);
             lblt_titulo.TabIndex = 7;
             lblt_titulo.Text = "Asignacion de permisos";
             lblt_titulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -122,10 +125,11 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(811, 657);
+            ClientSize = new Size(666, 657);
             Controls.Add(grbox_permisos);
             Controls.Add(lblt_titulo);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(800, 800);
             Name = "frmAsignarPermisos";
             Text = "Permisos";
             Load += frmAsignarPermisos_Load;

@@ -34,7 +34,7 @@ namespace Sistema_Ventas.Data
 
             try
             {
-                string query = @"SELECT id_rol, codigo, descripcion, estatus FROM roles";
+                string query = @"SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE estatus=true";
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
 

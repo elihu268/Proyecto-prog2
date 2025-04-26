@@ -23,32 +23,47 @@ namespace Sistema_Ventas.View
         }
 
         
-        public void AsignarPermiso()
-        {
-            
-            if (cbox_rol.SelectedIndex == -1)
-            {
-                MessageBox.Show("seleccione rol", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (SeleccionoPermiso().Count == 0)
-            {
-                MessageBox.Show("seleccione permiso", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            Rol rolSeleccionado = (Rol)cbox_rol.SelectedItem;
-            int idRolSeleccionado = rolSeleccionado.IdRol;
-
-            GuardarPermisosDelRol(idRolSeleccionado);
-
-            MessageBox.Show("Permisos seleccionados: " + string.Join(", ", SeleccionoPermiso()));
-
-        }
-
+      
         private void button1_Click(object sender, EventArgs e)
         {
             AsignarPermiso();
         }
+        public void AsignarPermiso()
+
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                if (cbox_rol.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Por favor seleccione un rol.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var permisosSeleccionados = SeleccionoPermiso();
+                if (permisosSeleccionados.Count == 0)
+                {
+                    MessageBox.Show("Por favor seleccione al menos un permiso.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int idRolSeleccionado = (int)cbox_rol.SelectedValue; //  SelectedValue = ID del rol
+
+                GuardarPermisosDelRol(idRolSeleccionado);
+
+                MessageBox.Show("Permisos asignados correctamente.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al asignar los permisos. Contacta al administrador.", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+
+        }
+
 
 
 
@@ -59,74 +74,65 @@ namespace Sistema_Ventas.View
         private void InicializarVentanaPermisos()
         {
             
-            PoblacboxRol(); // Llena el ComboBox
+            PoblacboxRol(); // Llena el ComboBox de roles
             if (cbox_rol.Items.Count > 0)
             {
                 int idRol = (int)cbox_rol.SelectedValue;
                 CargarPermisosPorRol(idRol);
             }
-            //PoblacboxRol();
         }
         public void PoblacboxRol()
         {
             RolesController rolesController = new RolesController();
 
-            // Obtener la lista de clientes (estudiantes)
+            // Obtener la lista de roles
             List<Rol> listaRoles = rolesController.ObtenerRoles();
 
-            cbox_rol.Items.Clear(); // Limpia primero el combo
-
-            foreach (Rol r in listaRoles)
-            {
-                cbox_rol.Items.Add(r.Codigo); // Solo agregas el correo al combo
-            }
+            cbox_rol.Items.Clear(); 
             cbox_rol.DataSource = listaRoles;
             cbox_rol.DisplayMember = "Codigo";
             cbox_rol.ValueMember = "Idrol";
-            cbox_rol.SelectedIndex = -1;
+            cbox_rol.SelectedIndex = 0;
         }
 
-       
+
 
         private void GuardarPermisosDelRol(int idRol)
         {
-            PermisoARolController permisoARolController= new PermisoARolController();
-            // 1. Eliminar todos los permisos actuales del puesto
+            PermisoARolController permisoARolController = new PermisoARolController();
 
+            // 1. Eliminar todos los permisos actuales del puesto
             permisoARolController.EliminarPermisos(idRol);
 
             // 2. Insertar los permisos seleccionados
             foreach (DataGridViewRow fila in dgv_permisos.Rows)
             {
-                // Asegúrate de que no sea una fila nueva vacía
                 if (!fila.IsNewRow)
                 {
-                    bool asignado = Convert.ToBoolean(fila.Cells["chkSeleccionar"].Value);
-                    int idPermiso = Convert.ToInt32(fila.Cells["codigoa@"].Value);
+                    bool asignado = Convert.ToBoolean(fila.Cells["Asignado"].Value);
+                    int idPermiso = Convert.ToInt32(fila.Cells["ID"].Value);
 
                     if (asignado)
                     {
                         permisoARolController.AsignarPermisosARol(idRol, idPermiso);
                     }
                 }
-            }
-
-            MessageBox.Show("Permisos guardados correctamente.");
+            } 
         }
 
-        private List<string> SeleccionoPermiso()
+
+        private List<int> SeleccionoPermiso()
         {
-            List<string> permisosSeleccionados = new List<string>();
+            List<int> permisosSeleccionados = new List<int>();
 
             foreach (DataGridViewRow row in dgv_permisos.Rows)
             {
-                bool seleccionado = Convert.ToBoolean(row.Cells["chkSeleccionar"].Value);
+                bool seleccionado = Convert.ToBoolean(row.Cells["Asignado"].Value);
 
                 if (seleccionado)
                 {
-                    string nombrePermiso = row.Cells["nombre"].Value.ToString();
-                    permisosSeleccionados.Add(nombrePermiso);
-
+                    int idPermiso = Convert.ToInt32(row.Cells["ID"].Value); // Leer la columna "ID"
+                    permisosSeleccionados.Add(idPermiso);
                 }
             }
 
@@ -135,9 +141,10 @@ namespace Sistema_Ventas.View
 
         private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbox_rol.SelectedValue != null)
+            int idRol;
+            if (cbox_rol.SelectedValue != null && int.TryParse(cbox_rol.SelectedValue.ToString(), out  idRol))
             {
-                int idRol = (int)cbox_rol.SelectedValue;
+                 idRol = (int)cbox_rol.SelectedValue;
                 CargarPermisosPorRol(idRol);
             }
         }
@@ -148,19 +155,19 @@ namespace Sistema_Ventas.View
             {
                 Cursor = Cursors.WaitCursor;
 
-                // Controlador (o lógica de datos)
+                // Controlador
                 PermisoARolController permisosRolController = new PermisoARolController();
                 PermisosController permisosController = new PermisosController();
                 // Obtener todos los permisos disponibles
                 List<Permiso> permisos = permisosController.ObtenerPermisos();
 
-                // Obtener los permisos que ya tiene el rol
+                // Obtener los id permisos que ya tiene el rol, para seleccionar el check de la tabla
                 List<int> permisosDelRol = permisosRolController.ObtenerIdsPermisosPorRol(idRol); ;
 
-                if (permisos == null || permisos.Count == 0)
+                if (permisos == null )
                 {
                     MessageBox.Show("No hay permisos disponibles.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dgv_permisos.DataSource = null;
+                   
                     return;
                 }
 
@@ -168,6 +175,7 @@ namespace Sistema_Ventas.View
                 dt.Columns.Add("ID", typeof(int));
                 dt.Columns.Add("Código", typeof(string));
                 dt.Columns.Add("Descripción", typeof(string));
+                dt.Columns.Add("Estatus", typeof(bool));
                 dt.Columns.Add("Asignado", typeof(bool)); // checkbox
 
                 foreach (var permiso in permisos)
@@ -176,19 +184,30 @@ namespace Sistema_Ventas.View
                         permiso.IdPermiso,
                         permiso.Codigo,
                         permiso.Descripcion,
+                        permiso.Estatus,
                         permisosDelRol.Contains(permiso.IdPermiso) // true si está asignado
                     );
                 }
 
                 dgv_permisos.DataSource = dt;
-
-                // Opcional: ocultar la columna ID si no la necesitas
                 dgv_permisos.Columns["ID"].Visible = false;
-
-                // Ajustes visuales si quieres
+                dgv_permisos.Columns["Estatus"].Visible = false;
                 dgv_permisos.Columns["Asignado"].HeaderText = "Asignado al Rol";
                 dgv_permisos.Columns["Asignado"].Width = 100;
-
+                dgv_permisos.ReadOnly = false;
+                foreach (DataGridViewColumn col in dgv_permisos.Columns)
+                {
+                    if (col.Name != "Asignado")
+                        col.ReadOnly = true; // Solo el checkbox editable
+                }
+                dgv_permisos.AllowUserToAddRows = false;//que no pueda agregar mas filas
+                dgv_permisos.AllowUserToDeleteRows = false;
+                dgv_permisos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;// Ajustar automáticamente el ancho de las columnas al contenido
+                dgv_permisos.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centrar el texto en las celdas
+                dgv_permisos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centrar el encabezado
+                dgv_permisos.DefaultCellStyle.WrapMode = DataGridViewTriState.True; // Que el texto se ajuste si es muy largo
+                dgv_permisos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;// Ajustar altura de filas si el texto se expande
+                
             }
             catch (Exception ex)
             {
@@ -202,45 +221,7 @@ namespace Sistema_Ventas.View
 
         }
 
-        /* private void LlenarTablaPermisos(string codigoRol)
-         {
-             dgv_permisos.Columns.Clear();
-             dgv_permisos.Rows.Clear();
-
-             PermisosController permisosController = new PermisosController();
-
-             // 1. Obtener todos los permisos activos
-             List<Permiso> permisos = permisosController.ObtenerPermisos();
-             var permisosActivos = permisos.Where(p => p.Estatus == true).ToList();
-
-             // 2. Obtener permisos asignados al rol
-             List<Permiso> permisosAsignados = permisosController.ObtenerPermisosPorRol(codigoRol);
-
-             // 3. Crear columnas del DataGridView si hay datos
-             if (permisosActivos.Count > 0)
-             {
-                 // Columna de checkbox
-                 DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-                 chk.HeaderText = "Seleccionar";
-                 chk.Name = "chkSeleccionar";
-                 chk.Width = 60;
-                 dgv_permisos.Columns.Add(chk);
-
-                 // Otras columnas
-                 dgv_permisos.Columns.Add("codigoa@", "Nombre del Permiso");
-                 dgv_permisos.Columns.Add("descripcion", "Descripción");
-
-                 // 4. Agregar filas con checkbox marcado si el permiso está asignado al rol
-                 foreach (var permiso in permisosActivos)
-                 {
-                     bool estaAsignado = permisosAsignados.Any(p => p.Codigo == permiso.Codigo);
-                     dgv_permisos.Rows.Add(estaAsignado, permiso.Codigo, permiso.Descripcion);
-                 }
-
-                 dgv_permisos.AutoResizeColumns();
-                 ConfigurarDgvPermisos(); // tu método para estilo
-             }
-         }*/
+      
 
         private void dgv_permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

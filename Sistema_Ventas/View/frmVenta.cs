@@ -326,15 +326,15 @@ namespace Sistema_Ventas.View
             dgv_carrito.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgv_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             dgv_carrito.ColumnHeadersHeight = 40;
-            // **Evitar que el DataGridView cambie de tamaño al agregar filas**:
+            // Evitar que el DataGridView cambie de tamaño al agregar filas
             dgv_carrito.Dock = DockStyle.None;  // Desactivar el Dock
             dgv_carrito.Size = new Size(dgv_carrito.Width, 184);  // Configurar un tamaño fijo (ajusta la altura que desees)
 
-            // **Evitar que se modifique el tamaño de las columnas al agregar filas**:
+            // Evitar que se modifique el tamaño de las columnas al agregar filas
             dgv_carrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;  // No cambiar el tamaño de las columnas automáticamente
             dgv_carrito.ScrollBars = ScrollBars.Both;  // Habilitar desplazamiento para el DataGridView
 
-            // **Prevenir el ajuste del tamaño del DataGridView al contenedor**:
+            // Prevenir el ajuste del tamaño del DataGridView al contenedor
             dgv_carrito.Dock = DockStyle.None;
 
         }

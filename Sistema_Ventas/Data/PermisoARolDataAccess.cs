@@ -29,45 +29,44 @@ namespace Sistema_Ventas.Data
                 throw;
             }
         }
-        
-            public void EliminarPermisosDeRol(int id_rol)
+
+        public void EliminarPermisosDeRol(int id_rol)
         {
             try
             {
-                string query = "DELETE FROM permisos_rol WHERE id_puesto = @IdPuesto";
-
+                string query = "DELETE FROM permisos_rol WHERE id_rol = @id_rol"; 
                 // Crear parámetro
-                NpgsqlParameter paramPuesto = _dbAccess.CreateParameter("@id_rol", id_rol);
+                NpgsqlParameter paramRol = _dbAccess.CreateParameter("@id_rol", id_rol);
 
-                // Conectar y ejecutar
                 _dbAccess.Connect();
-                _dbAccess.ExecuteNonQuery(query, paramPuesto);
+                _dbAccess.ExecuteNonQuery(query, paramRol);
 
                 _logger.Info($"Permisos eliminados correctamente para el rol: {id_rol}");
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Error al eliminar permisos del rol: {id_rol}");
-                throw; 
+                throw;
             }
             finally
             {
                 _dbAccess.Disconnect();
             }
         }
+
         public bool AgregarPermisoARol(int idRol, int idPermiso)
         {
             try
             {
-                string query = "INSERT INTO permisos_rol (id_puesto, id_permiso) VALUES (@IdPuesto, @IdPermiso)";
+                string query = "INSERT INTO permisos_rol (id_rol, id_permiso) VALUES (@id_rol, @id_permiso)";
 
                 // Crear parámetros
-                NpgsqlParameter paramPuesto = _dbAccess.CreateParameter("@IdPuesto", idRol);
-                NpgsqlParameter paramPermiso = _dbAccess.CreateParameter("@IdPermiso", idPermiso);
+                NpgsqlParameter paramRol = _dbAccess.CreateParameter("@id_rol", idRol);
+                NpgsqlParameter paramPermiso = _dbAccess.CreateParameter("@id_permiso", idPermiso);
 
                 // Conectar y ejecutar
                 _dbAccess.Connect();
-                _dbAccess.ExecuteNonQuery(query, paramPuesto, paramPermiso);
+                _dbAccess.ExecuteNonQuery(query, paramRol, paramPermiso);
 
                 _logger.Info($"Permiso {idPermiso} asignado correctamente al rol {idRol}");
                 return true;
@@ -82,6 +81,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
         public List<int> ObtenerIdsPermisosPorRol(int idRol)
         {
             List<int> permisos = new List<int>();
@@ -111,50 +111,6 @@ namespace Sistema_Ventas.Data
 
             return permisos;
         }
-
-        /* public List<Permiso> ObtenerPermisosDeRol(int idRol)
-         {
-             List<Permiso> permisos = new List<Permiso>();
-
-             try
-             {
-                 string query = @"
-             SELECT p.id_permiso, p.codigo, p.descripcion, p.estatus
-             FROM permisos_rol pr
-             INNER JOIN permisos p ON pr.id_permiso = p.id_permiso
-             WHERE pr.id_rol = @IdRol";
-
-                 NpgsqlParameter paramRol = _dbAccess.CreateParameter("@IdRol", idRol);
-
-                 _dbAccess.Connect();
-                 DataTable tablaPermisos = _dbAccess.ExecuteQuery_Reader(query, paramRol);
-
-                 foreach (DataRow row in tablaPermisos.Rows)
-                 {
-                     Permiso permiso = new Permiso
-                     {
-                         IdPermiso = Convert.ToInt32(row["id_permiso"]),
-                         Codigo = row["codigo"].ToString(),
-                         Descripcion = row["descripcion"].ToString(),
-                         Estatus = Convert.ToBoolean(row["estatus"])
-                     };
-                     permisos.Add(permiso);
-                 }
-
-                 _logger.Info($"Se recuperaron {permisos.Count} permisos para el rol con ID {idRol}");
-             }
-             catch (Exception ex)
-             {
-                 _logger.Error(ex, $"Error al obtener permisos para el rol con ID {idRol}");
-             }
-             finally
-             {
-                 _dbAccess.Disconnect();
-             }
-
-             return permisos;
-         }*/
-
 
     }
 }
