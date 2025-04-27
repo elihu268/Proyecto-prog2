@@ -27,6 +27,7 @@ namespace Sistema_Ventas.View
         /// <param name="e"></param>
         private void btn_iniciar_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor; // Cambia el cursor a un reloj de espera
             if (string.IsNullOrWhiteSpace(txt_usuario.Text))
             {
                 MessageBox.Show("El campo de usuario no puede estar vacio.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);

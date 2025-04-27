@@ -224,5 +224,18 @@ namespace Sistema_Ventas.View
             return true;
         }
 
+        private void dgvRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Sesión.TienePermiso("ROLE_EDIT"))
+            {
+                // Código para mandar los datos de la fila seleccionada para editar
+            }
+            else
+            {
+                MessageBox.Show("No tiene permiso para editar roles", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
     }
 }

@@ -21,7 +21,16 @@ namespace Sistema_Ventas.View
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Sesión.TienePermiso("SALE_EDIT"))
+            {
+                //Código para la edición de una venta
 
+            } 
+
+            if (Sesión.TienePermiso("SALE_UPDATE"))
+            {
+                //Código para actualizar el estado de una venta
+            }
         }
     }
 }

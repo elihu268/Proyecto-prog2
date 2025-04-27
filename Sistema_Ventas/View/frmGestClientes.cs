@@ -26,6 +26,14 @@ namespace PuntodeVenta.View
         private void frmGestClientes_Load(object sender, EventArgs e)
         {
             InicializarFrmClientes();
+            if (!Sesión.TienePermiso("CLI_CREATE"))
+            {
+                btncollapse.Visible = false;
+            }
+            if (!Sesión.TienePermiso("CLIENT_IMPORT"))
+            {
+                btnCargaMasiva.Visible = false;
+            }
         }
         /// <summary>
         /// metodo para darle caracteristicas a frm despues de su creacion
@@ -37,7 +45,6 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaTipoCliente();
-
         }
         private void PoblaComboEstatus()
         {
@@ -373,7 +380,14 @@ namespace PuntodeVenta.View
 
         private void dgvGesClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (Sesión.TienePermiso("CLI_EDIT"))
+            {
+                // Código para mandar los datos de la fila seleccionada para editar
+            }
+            else
+            {
+                MessageBox.Show("No tiene permiso para editar clientes", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         

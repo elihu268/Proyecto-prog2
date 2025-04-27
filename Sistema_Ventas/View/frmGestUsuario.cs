@@ -30,12 +30,22 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
+
+            //CargarUsuarios();
+
+            //Se oculta el boton para cargar un nuevo usuario si no tiene el permiso.
             if (!Sesión.TienePermiso("USR_CREATE"))
             {
                 // Si no tiene el permiso, ocultar el botón
                 btncargaUsuario.Visible = false;
             }
-            //CargarUsuarios();
+            // Se oculta el botón de carga masiva si no tiene el permiso
+            if (!Sesión.TienePermiso("USER_IMPORT"))
+            {
+                // Si no tiene el permiso, ocultar el botón
+                btnCarga.Visible = false;
+            }
+
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
@@ -352,6 +362,13 @@ namespace PuntodeVenta.View
 
         private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Sesión.TienePermiso("USR_EDIT"))
+            {
+                // Código para mandar los datos de la fila seleccionada para editar
+            } else
+            {
+                MessageBox.Show("No tiene permiso para editar usuarios", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
     }

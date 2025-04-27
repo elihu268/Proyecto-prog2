@@ -41,32 +41,66 @@ namespace DiseñoForms.View
         private void MDI_Sistema_ventas_Load(object sender, EventArgs e)
         {
             _logger.Info("Usuario accedio al Dashboard despues de iniciar sesión correctamente");
-            _logger.Warn("Espacio en disco bajo!");
-            try
-            {
-                // Aquí provocamos una primera excepción
-                try
-                {
-                    int divisor = 0;
-                    int resultado = 10 / divisor; // Esto generará una DivideByZeroException
-                }
-                catch (DivideByZeroException ex)
-                {
-                    // Capturamos la primera excepción y la envolvemos en otra
-                    throw new ApplicationException("Error al realizar el cálculo en la aplicación", ex);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Aquí puedes manejar la excepción que contiene la inner exception
-                _logger.Error(ex, "Se produjo un error en la operación");
 
-                // O registrar específicamente usando la inner exception
-                if (ex.InnerException != null)
-                {
-                    _logger.Fatal(ex, $"Error crítico con detalle interno: {ex.InnerException.Message}");
-                }
+            //Permisos del strip de usuarios
+            if (!Sesión.TienePermiso("USR_VIEW") && !Sesión.TienePermiso("AUDIT_VIEW"))
+            {
+                usuariosToolStripMenuItem.Visible = false;
             }
+            if (!Sesión.TienePermiso("USR_VIEW")) {
+                geUsuariosToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("AUDIT_VIEW"))
+            {
+                auditoriasToolStripMenuItem.Visible = false;
+            }
+
+            //Permisos del strip de ventas y clientes
+            if (!Sesión.TienePermiso("CLI_VIEW") && !Sesión.TienePermiso("SALE_CREATE") && !Sesión.TienePermiso("CATALOG_VIEW"))
+            {
+                clientesVentasToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("CLI_VIEW"))
+            {
+                geClientesToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("SALE_CREATE"))
+            {
+                geVentasToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("CATALOG_VIEW"))
+            {
+                cargaCatalogosToolStripMenuItem.Visible = false;
+            }
+
+            //Permisos del strip de estadisticas
+            if (!Sesión.TienePermiso("SALE_VIEW") && !Sesión.TienePermiso("REPORT_VIEW"))
+            {
+                estadisticaAnalisisToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("SALE_VIEW"))
+            {
+                apiVentasToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("REPORT_VIEW"))
+            {
+                reportesToolStripMenuItem.Visible = false;
+            }
+
+            //Permisos del strip de seguriadad
+            if (!Sesión.TienePermiso("ROLE_ASSIGN") && !Sesión.TienePermiso("ROLE_CREATE"))
+            {
+                seguridadToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("ROLE_ASSIGN"))
+            {
+                permisosToolStripMenuItem.Visible = false;
+            }
+            if (!Sesión.TienePermiso("ROLE_CREATE"))
+            {
+                rolesToolStripMenuItem.Visible = false;
+            }
+
         }
 
         /// <summary>

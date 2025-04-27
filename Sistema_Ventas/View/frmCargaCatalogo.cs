@@ -27,7 +27,10 @@ namespace Sistema_Ventas.View
 
         private void frmCatalogo_Load(object sender, EventArgs e)
         {
-
+            if (!Sesión.TienePermiso("CATALOG_UPLOAD"))
+            {
+                btnCargaCatalogo.Visible = false;
+            }
         }
 
         private void btnCargaCatalogo_Click(object sender, EventArgs e)
