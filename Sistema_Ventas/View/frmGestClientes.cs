@@ -21,6 +21,7 @@ namespace PuntodeVenta.View
         {
             InitializeComponent();
             Formas.InicializarForma(this, parent);
+            CargarClientes();
         }
 
         private void frmGestClientes_Load(object sender, EventArgs e)

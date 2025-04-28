@@ -23,6 +23,7 @@ namespace Sistema_Ventas.View
         {
             InitializeComponent();
             Formas.InicializarForma(this, parent);
+            CargarCatalogo();
         }
 
         private void frmCatalogo_Load(object sender, EventArgs e)
