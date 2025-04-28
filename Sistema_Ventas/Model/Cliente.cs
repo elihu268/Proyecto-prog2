@@ -63,6 +63,15 @@ namespace Sistema_Ventas.Model
             DatosPersonales =persona;
         }//Propiedad auxiliar para mostrar el correo en el ComboBox
         public string Correo => DatosPersonales?.Correo ?? "";
+
+        public string NombreCompletoCliente
+        {
+            get
+            {
+                return DatosPersonales != null ? DatosPersonales.NombreCompleto : "Desconocido";
+            }
+        }
+
     }
 
 }

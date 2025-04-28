@@ -88,7 +88,7 @@
             // 
             lblNomProducto.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblNomProducto.AutoSize = true;
-            lblNomProducto.Enabled = false;
+            lblNomProducto.ForeColor = SystemColors.Desktop;
             lblNomProducto.Location = new Point(317, 44);
             lblNomProducto.Name = "lblNomProducto";
             lblNomProducto.Size = new Size(73, 30);
@@ -122,7 +122,7 @@
             // lblNomCliente
             // 
             lblNomCliente.AutoSize = true;
-            lblNomCliente.Enabled = false;
+            lblNomCliente.ForeColor = SystemColors.Desktop;
             lblNomCliente.Location = new Point(20, 44);
             lblNomCliente.Name = "lblNomCliente";
             lblNomCliente.Size = new Size(73, 30);

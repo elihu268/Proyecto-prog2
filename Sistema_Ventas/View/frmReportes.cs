@@ -73,7 +73,7 @@ namespace PuntodeVenta.View
                 }
 
                 cbxNomCliente.DataSource = clientes;
-                cbxNomCliente.DisplayMember = "DatosPersonales.NombreCompleto";
+                cbxNomCliente.DisplayMember = "NombreCompletoCliente";
                 cbxNomCliente.ValueMember = "Id";
                 cbxNomCliente.DropDownStyle = ComboBoxStyle.DropDownList;
                 cbxNomCliente.SelectedIndex = 0;
