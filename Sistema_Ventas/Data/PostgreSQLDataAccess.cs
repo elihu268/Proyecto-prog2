@@ -14,7 +14,7 @@ namespace Sistema_Ventas.Data
 {
     internal class PostgreSQLDataAccess
     {
-        private static readonly Logger _logger = LoggingManager.GetLogger("alumnos_tem2.Data.PostgreeSQLDataAccess");
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.PostgreSQLDataAccess");
         //cadena de conexion desde Ap.cpnfig
         private static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
         //le indiica al dataacces donde esta la cadena de conexion que esta appConfig

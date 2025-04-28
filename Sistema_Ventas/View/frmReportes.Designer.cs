@@ -43,12 +43,6 @@
             lblFechaInicio = new Label();
             btnGenerarReporte = new Button();
             dgvReporteVentas = new DataGridView();
-            idVt = new DataGridViewTextBoxColumn();
-            fechaVt = new DataGridViewTextBoxColumn();
-            clienteVt = new DataGridViewTextBoxColumn();
-            productoVt = new DataGridViewTextBoxColumn();
-            cantidadVt = new DataGridViewTextBoxColumn();
-            precioUniVt = new DataGridViewTextBoxColumn();
             gbxFiltroVentas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReporteVentas).BeginInit();
             SuspendLayout();
@@ -185,6 +179,7 @@
             // 
             lblFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblFechaFin.AutoSize = true;
+            lblFechaFin.ForeColor = SystemColors.Desktop;
             lblFechaFin.Location = new Point(317, 116);
             lblFechaFin.Name = "lblFechaFin";
             lblFechaFin.Size = new Size(64, 15);
@@ -195,6 +190,7 @@
             // lblFechaInicio
             // 
             lblFechaInicio.AutoSize = true;
+            lblFechaInicio.ForeColor = SystemColors.Desktop;
             lblFechaInicio.Location = new Point(20, 116);
             lblFechaInicio.Name = "lblFechaInicio";
             lblFechaInicio.Size = new Size(72, 15);
@@ -224,63 +220,14 @@
             dgvReporteVentas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvReporteVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvReporteVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReporteVentas.Columns.AddRange(new DataGridViewColumn[] { idVt, fechaVt, clienteVt, productoVt, cantidadVt, precioUniVt });
             dgvReporteVentas.Location = new Point(0, 217);
-            dgvReporteVentas.Margin = new Padding(2, 2, 2, 2);
+            dgvReporteVentas.Margin = new Padding(2);
             dgvReporteVentas.Name = "dgvReporteVentas";
             dgvReporteVentas.ReadOnly = true;
             dgvReporteVentas.RowHeadersWidth = 62;
-            dgvReporteVentas.Size = new Size(587, 262);
+            dgvReporteVentas.Size = new Size(587, 230);
             dgvReporteVentas.TabIndex = 5;
             dgvReporteVentas.CellContentClick += dgvReporteVentas_CellContentClick;
-            // 
-            // idVt
-            // 
-            idVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            idVt.HeaderText = "ID";
-            idVt.MinimumWidth = 10;
-            idVt.Name = "idVt";
-            idVt.ReadOnly = true;
-            // 
-            // fechaVt
-            // 
-            fechaVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fechaVt.HeaderText = "Fecha";
-            fechaVt.MinimumWidth = 10;
-            fechaVt.Name = "fechaVt";
-            fechaVt.ReadOnly = true;
-            // 
-            // clienteVt
-            // 
-            clienteVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            clienteVt.HeaderText = "Cliente";
-            clienteVt.MinimumWidth = 10;
-            clienteVt.Name = "clienteVt";
-            clienteVt.ReadOnly = true;
-            // 
-            // productoVt
-            // 
-            productoVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            productoVt.HeaderText = "Producto";
-            productoVt.MinimumWidth = 10;
-            productoVt.Name = "productoVt";
-            productoVt.ReadOnly = true;
-            // 
-            // cantidadVt
-            // 
-            cantidadVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            cantidadVt.HeaderText = "Cantidad";
-            cantidadVt.MinimumWidth = 10;
-            cantidadVt.Name = "cantidadVt";
-            cantidadVt.ReadOnly = true;
-            // 
-            // precioUniVt
-            // 
-            precioUniVt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            precioUniVt.HeaderText = "Precio Unitario";
-            precioUniVt.MinimumWidth = 10;
-            precioUniVt.Name = "precioUniVt";
-            precioUniVt.ReadOnly = true;
             // 
             // frmReportes
             // 
@@ -316,11 +263,5 @@
         private ComboBox cbxNomProducto;
         private CheckBox cbFecha;
         private DataGridView dgvReporteVentas;
-        private DataGridViewTextBoxColumn idVt;
-        private DataGridViewTextBoxColumn fechaVt;
-        private DataGridViewTextBoxColumn clienteVt;
-        private DataGridViewTextBoxColumn productoVt;
-        private DataGridViewTextBoxColumn cantidadVt;
-        private DataGridViewTextBoxColumn precioUniVt;
     }
 }

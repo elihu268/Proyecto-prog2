@@ -20,6 +20,8 @@ namespace Sistema_Ventas.Model
         public int Estatus { get; set; }
 
         public List<DetalleCompra> Detalles { get; set; } = new();
+        public int MetodoPago { get; internal set; }
+        public DateTime FechaCompra { get; internal set; }
 
         // Constructor para crear una nueva compra desde la interfaz
         public Compra(int idCliente, string codigo, int metodoDePago, decimal descuento)

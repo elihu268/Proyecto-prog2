@@ -14,6 +14,7 @@ namespace Sistema_Ventas.Model
         public Producto Productoi { get; set; }
         public int Cantidad { get; set; }
         public decimal TotalPorUnidad { get; set; }
+        public int IdProducto { get; internal set; }
 
         // Constructor para agregar detalle manualmente
         public DetalleCompra(Producto productoi, int cantidad)
