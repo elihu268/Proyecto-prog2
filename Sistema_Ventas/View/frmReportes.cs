@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NLog;
-
+using Sistema_Ventas.Controller;
+using Sistema_Ventas.Model;
 
 namespace PuntodeVenta.View
 {
@@ -20,26 +21,18 @@ namespace PuntodeVenta.View
     public partial class frmReportes : Form
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmReportes");
-        /// <summary>
-        /// Inicializa una nueva instancia del formulario de reportes
-        /// </summary>
-        /// <param name="parent">Formulario padre para la correcta ubicación en pantalla</param>
+
         public frmReportes(Form parent)
         {
             InitializeComponent();
             Formas.InicializarForma(this, parent);
         }
 
-        // Evento Load del formulario
         private void frmReportes_Load(object sender, EventArgs e)
         {
             InicializaVentanaReportes();
-
-            // Log de operación: el formulario se ha cargado
             _logger.Info("El formulario de reporte de ventas ha sido cargado correctamente.");
-            // Log de depuración: inicio de operaciones internas
             _logger.Debug("Inicializando filtros y parámetros para generación de reportes.");
-
         }
 
         /// <summary>
@@ -49,136 +42,206 @@ namespace PuntodeVenta.View
         {
             PoblaComboNomCliente();
             PoblaComboNomProducto();
+
+            // Ajustar MaxDate correcto para evitar errores de rango
+            dtpFechaInicio.MaxDate = new DateTime(9998, 12, 31);
+            dtpFechaFin.MaxDate = new DateTime(9998, 12, 31);
+
+            dtpFechaInicio.Value = DateTime.Today;
+            dtpFechaFin.Value = DateTime.Today;
+
+            cbxNomCliente.Enabled = false;
+            cbxNomProducto.Enabled = false;
+            dtpFechaInicio.Enabled = false;
+            dtpFechaFin.Enabled = false;
         }
 
         /// <summary>
-        /// Llena el ComboBox de clientes con datos de ejemplo
+        /// Llena el ComboBox de clientes desde la base de datos
         /// </summary>
         private void PoblaComboNomCliente()
         {
-            // Crear un diccionario con nombres de clientes de muestra
-            Dictionary<int, string> list_nomclientes = new Dictionary<int, string>
+            try
             {
-                { 1, "Julio Domingez" },
-                { 2, "Jesus Vasquez" },
-                { 3, "Pedro Picapiedra" }
-            };
+                ClientesController clienteController = new ClientesController();
+                List<Cliente> clientes = clienteController.ObtenerClientes();
 
-            // Configurar el ComboBox con los datos
-            cbxNomCliente.DataSource = new BindingSource(list_nomclientes, null);
-            cbxNomCliente.DisplayMember = "Value";
-            cbxNomCliente.ValueMember = "Key";
+                if (clientes.Count == 0)
+                {
+                    MessageBox.Show("No hay clientes registrados para seleccionar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-            // Establecer valor inicial seleccionado
-            cbxNomCliente.SelectedValue = 1;
+                cbxNomCliente.DataSource = clientes;
+                cbxNomCliente.DisplayMember = "DatosPersonales.NombreCompleto";
+                cbxNomCliente.ValueMember = "Id";
+                cbxNomCliente.DropDownStyle = ComboBoxStyle.DropDownList;
+                cbxNomCliente.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al cargar clientes en el ComboBox");
+                MessageBox.Show("Error al cargar la lista de clientes.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
-        /// Llena el ComboBox de productos con datos de ejemplo
+        /// Llena el ComboBox de productos desde la base de datos
         /// </summary>
         private void PoblaComboNomProducto()
         {
-            // Crear un diccionario con nombres de productos de muestra
-            Dictionary<int, string> list_nomproducto = new Dictionary<int, string>
+            try
             {
-                { 1, "Leche" },
-                { 2, "Cafe" },
-                { 3, "Cereal" }
-            };
+                ProductosController productoController = new ProductosController();
+                List<Producto> productos = productoController.ObtenerProductos();
 
-            // Configurar el ComboBox con los datos
-            cbxNomProducto.DataSource = new BindingSource(list_nomproducto, null);
-            cbxNomProducto.DisplayMember = "Value";
-            cbxNomProducto.ValueMember = "Key";
+                if (productos.Count == 0)
+                {
+                    MessageBox.Show("No hay productos registrados para seleccionar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-            // Establecer valor inicial seleccionado
-            cbxNomProducto.SelectedValue = 1;
+                cbxNomProducto.DataSource = productos;
+                cbxNomProducto.DisplayMember = "Nombre";
+                cbxNomProducto.ValueMember = "IdProducto";
+                cbxNomProducto.DropDownStyle = ComboBoxStyle.DropDownList;
+                cbxNomProducto.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al cargar productos en el ComboBox");
+                MessageBox.Show("Error al cargar la lista de productos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        /// <summary>
-        /// Maneja el cambio de estado del CheckBox de cliente
-        /// </summary>
-        /// <param name="sender">Objeto que generó el evento</param>
-        /// <param name="e">Argumentos del evento</param>
         private void cbCliente_CheckedChanged(object sender, EventArgs e)
         {
-            // Habilitar o deshabilitar los controles según el estado del CheckBox
-            bool isChecked = cbCliente.Checked;
-            cbxNomCliente.Enabled = isChecked;
+            cbxNomCliente.Enabled = cbCliente.Checked;
         }
 
-        /// <summary>
-        /// Maneja el cambio de estado del CheckBox de producto
-        /// </summary>
-        /// <param name="sender">Objeto que generó el evento</param>
-        /// <param name="e">Argumentos del evento</param>
         private void cbProducto_CheckedChanged(object sender, EventArgs e)
         {
-            // Habilitar o deshabilitar los controles según el estado del CheckBox
-            bool isChecked = cbProducto.Checked;
-            cbxNomProducto.Enabled = isChecked;
+            cbxNomProducto.Enabled = cbProducto.Checked;
         }
 
-        /// <summary>
-        /// Maneja el cambio de estado del CheckBox de fechas
-        /// </summary>
-        /// <param name="sender">Objeto que generó el evento</param>
-        /// <param name="e">Argumentos del evento</param>
         private void cbFecha_CheckedChanged(object sender, EventArgs e)
         {
-            // Habilitar o deshabilitar los controles según el estado del CheckBox
-            bool isChecked = cbFecha.Checked;
-            dtpFechaInicio.Enabled = isChecked;
-            dtpFechaFin.Enabled = isChecked;
-        }
-        private void cbxNomProducto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            dtpFechaInicio.Enabled = cbFecha.Checked;
+            dtpFechaFin.Enabled = cbFecha.Checked;
         }
 
-        private void cbxNomCliente_SelectedIndexChanged(object sender, EventArgs e)
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
         {
-
+            if (dtpFechaFin.Value < dtpFechaInicio.Value)
+            {
+                dtpFechaFin.Value = dtpFechaInicio.Value;
+            }
         }
 
         private void dtpFechaFin_ValueChanged(object sender, EventArgs e)
         {
-
+            if (dtpFechaFin.Value < dtpFechaInicio.Value)
+            {
+                MessageBox.Show("La fecha final no puede ser menor a la fecha inicial.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpFechaFin.Value = dtpFechaInicio.Value;
+            }
         }
 
-        private void lblNomProducto_Click(object sender, EventArgs e)
+        private void btnGenerarReporte_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
 
-        }
+                int? idCliente = null;
+                int? idProducto = null;
+                DateTime? fechaInicio = null;
+                DateTime? fechaFin = null;
 
-        private void lblFechaFin_Click(object sender, EventArgs e)
-        {
+                if (cbCliente.Checked && cbxNomCliente.SelectedValue != null)
+                    idCliente = Convert.ToInt32(cbxNomCliente.SelectedValue);
 
-        }
+                if (cbProducto.Checked && cbxNomProducto.SelectedValue != null)
+                    idProducto = Convert.ToInt32(cbxNomProducto.SelectedValue);
 
-        private void dgvReporteVentas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+                if (cbFecha.Checked)
+                {
+                    fechaInicio = dtpFechaInicio.Value.Date;
+                    fechaFin = dtpFechaFin.Value.Date;
+                }
 
+                CompraController compraController = new CompraController();
+                List<Compra> compras = compraController.BuscarCompras(idCliente, fechaInicio, fechaFin, 1);
+
+                MostrarReporteVentas(compras);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al generar el reporte. Contacte al administrador.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.Error(ex, "Error al generar reporte de ventas");
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
-        /// Maneja el evento de clic en el botón Generar Reporte
+        /// Muestra el listado de compras en el DataGridView
         /// </summary>
-        /// <param name="sender">Objeto que generó el evento</param>
-        /// <param name="e">Argumentos del evento</param>
-        private void btnGenerarReporte_Click(object sender, EventArgs e)
+        private void MostrarReporteVentas(List<Compra> compras)
         {
-            // Lógica para generar reporte (pendiente de implementar)
+            dgvReporteVentas.DataSource = null;
+
+            if (compras.Count == 0)
+            {
+                MessageBox.Show("No se encontraron resultados con los filtros aplicados.", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID Compra", typeof(int));
+            dt.Columns.Add("Código", typeof(string));
+            dt.Columns.Add("Cliente", typeof(string));
+            dt.Columns.Add("Subtotal", typeof(decimal));
+            dt.Columns.Add("IVA", typeof(decimal));
+            dt.Columns.Add("Descuento", typeof(decimal));
+            dt.Columns.Add("Total", typeof(decimal));
+            dt.Columns.Add("Fecha de Compra", typeof(DateTime));
+
+            foreach (var compra in compras)
+            {
+                dt.Rows.Add(
+                    compra.IdCompra,
+                    compra.Codigo,
+                    compra.NombreCliente ?? "Desconocido",
+                    compra.Subtotal,
+                    compra.Iva,
+                    compra.Descuento,
+                    compra.Total,
+                    compra.FechaCompra
+                );
+            }
+
+            dgvReporteVentas.DataSource = dt;
+
+            dgvReporteVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReporteVentas.ReadOnly = true;
+            dgvReporteVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        private void gbxFiltroVentas_Enter(object sender, EventArgs e)
-        {
+        private void cbxNomProducto_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        }
+        private void cbxNomCliente_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        private void cbxNomProducto_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
+        private void lblNomProducto_Click(object sender, EventArgs e) { }
 
-        }
+        private void lblFechaFin_Click(object sender, EventArgs e) { }
+
+        private void dgvReporteVentas_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void gbxFiltroVentas_Enter(object sender, EventArgs e) { }
+
+        private void cbxNomProducto_SelectedIndexChanged_1(object sender, EventArgs e) { }
     }
 }

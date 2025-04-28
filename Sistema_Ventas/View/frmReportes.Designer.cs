@@ -174,6 +174,7 @@
             dtpFechaInicio.Size = new Size(180, 23);
             dtpFechaInicio.TabIndex = 5;
             dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             // 
             // lblFechaFin
             // 

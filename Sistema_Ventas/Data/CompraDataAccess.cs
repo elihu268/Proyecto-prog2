@@ -327,31 +327,44 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Connect();
 
                 string query = @"
-            SELECT id_compra, id_cliente, codigo, metodo_de_pago, iva, subtotal, descuento, total, fecha_de_compra, estatus
-            FROM compra
-            WHERE 1=1"; // Condición inicial para facilitar concatenación
+            SELECT 
+                c.id_compra,
+                c.id_cliente,
+                c.codigo,
+                c.metodo_de_pago,
+                c.iva,
+                c.subtotal,
+                c.descuento,
+                c.total,
+                c.fecha_de_compra,
+                c.estatus,
+                COALESCE(p.nombre_completo, 'Desconocido') AS nombre_cliente
+            FROM compra c
+            LEFT JOIN cliente cli ON c.id_cliente = cli.id_cliente
+            LEFT JOIN personas p ON cli.id_persona = p.id_persona
+            WHERE 1=1"; // Condición inicial
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
-                // Filtros dinámicos
+                // Aplicar filtros dinámicamente
                 if (idCliente.HasValue)
                 {
-                    query += " AND id_cliente = @id_cliente";
+                    query += " AND c.id_cliente = @id_cliente";
                     parametros.Add(new NpgsqlParameter("@id_cliente", idCliente.Value));
                 }
                 if (fechaInicio.HasValue && fechaFin.HasValue)
                 {
-                    query += " AND fecha_de_compra BETWEEN @fechaInicio AND @fechaFin";
+                    query += " AND c.fecha_de_compra BETWEEN @fechaInicio AND @fechaFin";
                     parametros.Add(new NpgsqlParameter("@fechaInicio", fechaInicio.Value));
                     parametros.Add(new NpgsqlParameter("@fechaFin", fechaFin.Value));
                 }
                 if (estatus.HasValue)
                 {
-                    query += " AND estatus = @estatus";
+                    query += " AND c.estatus = @estatus";
                     parametros.Add(new NpgsqlParameter("@estatus", estatus.Value));
                 }
 
-                query += " ORDER BY fecha_de_compra DESC";
+                query += " ORDER BY c.fecha_de_compra DESC;";
 
                 var result = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 
@@ -368,7 +381,8 @@ namespace Sistema_Ventas.Data
                         Descuento = Convert.ToDecimal(row["descuento"]),
                         Total = Convert.ToDecimal(row["total"]),
                         FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
-                        Estatus = Convert.ToInt32(row["estatus"])
+                        Estatus = Convert.ToInt32(row["estatus"]),
+                        NombreCliente = row["nombre_cliente"].ToString() ?? "Desconocido"
                     };
                     compras.Add(compra);
                 }
@@ -386,6 +400,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
 
     }
 }
