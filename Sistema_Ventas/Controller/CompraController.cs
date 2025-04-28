@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sistema_Ventas.Data;
+﻿using Sistema_Ventas.Data;
 using Sistema_Ventas.Utilities;
 using NLog;
 using Sistema_Ventas.Model;
 using System.Linq.Expressions;
 using Npgsql;
+
 namespace Sistema_Ventas.Controller
 {
     public class CompraController
@@ -18,37 +14,55 @@ namespace Sistema_Ventas.Controller
         private readonly DetalleCompraDataAccess _detalleData;
         private readonly ProductosDataAccess _productoData;
 
+        /// <summary>
+        /// Constructor del controlador de compras.
+        /// </summary>
         public CompraController()
         {
             try
             {
                 _compraData = new CompraDataAccess();
                 _detalleData = new DetalleCompraDataAccess();
-                 _productoData= new ProductosDataAccess();
-
+                _productoData = new ProductosDataAccess();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "error al inicializar el controlador de compra");
+                _logger.Error(ex, "Error al inicializar el controlador de compra");
                 throw;
             }
         }
+
+        /// <summary>
+        /// Calcula el subtotal de la compra.
+        /// </summary>
         public decimal DatosCompraSubtotal(List<DetalleCompra> detalles)
         {
             decimal subtotal = detalles.Sum(d => d.Cantidad * d.Productoi.Precio);
             return subtotal;
         }
+
+        /// <summary>
+        /// Calcula el IVA de la compra.
+        /// </summary>
         public decimal DatosCompraIva(List<DetalleCompra> detalles)
         {
             decimal subtotal = DatosCompraSubtotal(detalles);
             decimal iva = subtotal * (decimal)0.16;
             return iva;
         }
+
+        /// <summary>
+        /// Calcula el descuento de la compra.
+        /// </summary>
         public decimal DatosCompraDescuento()
         {
             decimal des = 0;
             return des;
         }
+
+        /// <summary>
+        /// Calcula el total de la compra.
+        /// </summary>
         public decimal DatosCompraTotal(List<DetalleCompra> detalles)
         {
             decimal subtotal = DatosCompraSubtotal(detalles);
@@ -58,9 +72,11 @@ namespace Sistema_Ventas.Controller
             return total;
         }
 
+        /// <summary>
+        /// Inserta una nueva compra junto con sus detalles.
+        /// </summary>
         public bool InsertarCompra(int idCliente, int estatus, int metodo, List<DetalleCompra> detalles)
         {
-            // 1. Calcular totales
             decimal subtotal = DatosCompraSubtotal(detalles);
             decimal iva = DatosCompraIva(detalles);
             decimal descuento = DatosCompraDescuento();
@@ -68,14 +84,10 @@ namespace Sistema_Ventas.Controller
 
             try
             {
-                // 2. Insertar en tabla compra
                 int id_Compra = _compraData.InsertarCompra(idCliente, estatus, metodo, iva, subtotal, descuento, total);
 
-               
-                // 3. Insertar productos en detalle_compra y actualizar existencia
                 foreach (var detalle in detalles)
                 {
-                    // Insertar en detalle_compra
                     bool detalleAgregado = _detalleData.AgregarProductoADetalle(id_Compra, detalle.Productoi, detalle.Cantidad);
                     if (!detalleAgregado)
                     {
@@ -83,7 +95,6 @@ namespace Sistema_Ventas.Controller
                         return false;
                     }
 
-                    // Actualizar existencia del producto
                     bool existenciaModificada = _productoData.ModificarExistencia(detalle.Productoi.IdProducto, detalle.Cantidad);
                     if (!existenciaModificada)
                     {
@@ -93,15 +104,111 @@ namespace Sistema_Ventas.Controller
                 }
 
                 _logger.Info($"Compra realizada exitosamente. ID: {id_Compra}");
-                return true; // Retornar éxito solo después de insertar todos los detalles
+                return true;
             }
             catch (Exception ex)
             {
-                // Manejo de excepciones en caso de fallos no controlados
                 _logger.Error(ex, "Error al realizar la compra.");
                 return false;
             }
         }
 
+        /// <summary>
+        /// Busca compras aplicando filtros opcionales.
+        /// </summary>
+        public List<Compra> BuscarCompras(int? idCliente = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
+        {
+            try
+            {
+                var compras = _compraData.BuscarCompras(idCliente, fechaInicio, fechaFin, estatus);
+                _logger.Info($"Compras obtenidas con filtros: {compras.Count} registros encontrados");
+                return compras;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al buscar compras filtradas.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el detalle de una compra incluyendo sus productos.
+        /// </summary>
+        public (Compra? compra, List<DetalleCompra> detalles) ObtenerDetalleCompra(int idCompra)
+        {
+            try
+            {
+                _logger.Debug($"Solicitando detalle de la compra con ID: {idCompra}");
+
+                var compra = _compraData.ObtenerCompraPorId(idCompra);
+                if (compra == null)
+                {
+                    _logger.Warn($"No se encontró la compra con ID {idCompra}");
+                    return (null, new List<DetalleCompra>());
+                }
+
+                var detalles = _detalleData.ObtenerDetallePorCompra(idCompra);
+                _logger.Info($"Compra y detalles obtenidos exitosamente para ID {idCompra}");
+
+                return (compra, detalles);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener detalle de la compra con ID: {idCompra}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Actualiza el estatus de una compra (ej. cancelar).
+        /// </summary>
+        public (bool exito, string mensaje) ActualizarEstatusCompra(int idCompra, int nuevoEstatus)
+        {
+            try
+            {
+                var compra = _compraData.ObtenerCompraPorId(idCompra);
+                if (compra == null)
+                {
+                    return (false, $"No se encontró la compra con ID {idCompra}");
+                }
+
+                compra.Estatus = nuevoEstatus;
+                bool actualizado = _compraData.ActualizarCompra(compra);
+
+                if (actualizado)
+                {
+                    _logger.Info($"Compra con ID {idCompra} actualizada al nuevo estatus {nuevoEstatus}");
+                    return (true, "Estatus de la compra actualizado exitosamente.");
+                }
+                else
+                {
+                    _logger.Warn($"No se pudo actualizar la compra con ID {idCompra}");
+                    return (false, "No se pudo actualizar el estatus de la compra.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar el estatus de la compra ID {idCompra}");
+                return (false, $"Error inesperado: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Obtiene todas las compras sin filtros.
+        /// </summary>
+        public List<Compra> ObtenerTodasLasCompras()
+        {
+            try
+            {
+                var compras = _compraData.ObtenerCompras();
+                _logger.Info($"Todas las compras obtenidas correctamente: {compras.Count} registros");
+                return compras;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener todas las compras.");
+                throw;
+            }
+        }
     }
 }

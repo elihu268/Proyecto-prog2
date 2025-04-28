@@ -256,5 +256,136 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
+        /// <summary>
+        /// Actualiza una compra existente en la base de datos.
+        /// </summary>
+        public bool ActualizarCompra(Compra compra)
+        {
+            try
+            {
+                _dbAccess.Connect();
+
+                string query = @"
+            UPDATE compra
+            SET 
+                id_cliente = @id_cliente,
+                metodo_de_pago = @metodo_pago,
+                iva = @iva,
+                subtotal = @subtotal,
+                descuento = @descuento,
+                total = @total,
+                fecha_de_compra = @fecha,
+                estatus = @estatus
+            WHERE id_compra = @id_compra;";
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+        {
+            new NpgsqlParameter("@id_compra", compra.IdCompra),
+            new NpgsqlParameter("@id_cliente", compra.IdCliente),
+            new NpgsqlParameter("@metodo_pago", compra.MetodoPago),
+            new NpgsqlParameter("@iva", compra.Iva),
+            new NpgsqlParameter("@subtotal", compra.Subtotal),
+            new NpgsqlParameter("@descuento", compra.Descuento),
+            new NpgsqlParameter("@total", compra.Total),
+            new NpgsqlParameter("@fecha", compra.FechaCompra),
+            new NpgsqlParameter("@estatus", compra.Estatus)
+        };
+
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros.ToArray());
+
+                if (filasAfectadas > 0)
+                {
+                    _logger.Info($"Compra actualizada correctamente con ID {compra.IdCompra}.");
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn($"No se encontró la compra con ID {compra.IdCompra} para actualizar.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar la compra con ID {compra.IdCompra}.");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Busca compras basadas en filtros opcionales: cliente, rango de fechas y estatus.
+        /// </summary>
+        public List<Compra> BuscarCompras(int? idCliente = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
+        {
+            List<Compra> compras = new List<Compra>();
+            try
+            {
+                _dbAccess.Connect();
+
+                string query = @"
+            SELECT id_compra, id_cliente, codigo, metodo_de_pago, iva, subtotal, descuento, total, fecha_de_compra, estatus
+            FROM compra
+            WHERE 1=1"; // Condición inicial para facilitar concatenación
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+
+                // Filtros dinámicos
+                if (idCliente.HasValue)
+                {
+                    query += " AND id_cliente = @id_cliente";
+                    parametros.Add(new NpgsqlParameter("@id_cliente", idCliente.Value));
+                }
+                if (fechaInicio.HasValue && fechaFin.HasValue)
+                {
+                    query += " AND fecha_de_compra BETWEEN @fechaInicio AND @fechaFin";
+                    parametros.Add(new NpgsqlParameter("@fechaInicio", fechaInicio.Value));
+                    parametros.Add(new NpgsqlParameter("@fechaFin", fechaFin.Value));
+                }
+                if (estatus.HasValue)
+                {
+                    query += " AND estatus = @estatus";
+                    parametros.Add(new NpgsqlParameter("@estatus", estatus.Value));
+                }
+
+                query += " ORDER BY fecha_de_compra DESC";
+
+                var result = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                foreach (DataRow row in result.Rows)
+                {
+                    Compra compra = new Compra
+                    {
+                        IdCompra = Convert.ToInt32(row["id_compra"]),
+                        IdCliente = Convert.ToInt32(row["id_cliente"]),
+                        Codigo = row["codigo"].ToString() ?? "",
+                        MetodoPago = Convert.ToInt32(row["metodo_de_pago"]),
+                        Iva = Convert.ToDecimal(row["iva"]),
+                        Subtotal = Convert.ToDecimal(row["subtotal"]),
+                        Descuento = Convert.ToDecimal(row["descuento"]),
+                        Total = Convert.ToDecimal(row["total"]),
+                        FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
+                        Estatus = Convert.ToInt32(row["estatus"])
+                    };
+                    compras.Add(compra);
+                }
+
+                _logger.Info($"Se encontraron {compras.Count} compras con los filtros especificados.");
+                return compras;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al buscar las compras filtradas.");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
     }
 }
