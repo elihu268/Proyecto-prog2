@@ -360,9 +360,10 @@ namespace Sistema_Ventas.Data
                 }
                 if (estatus.HasValue)
                 {
-                    query += " AND c.estatus = @estatus";
-                    parametros.Add(new NpgsqlParameter("@estatus", estatus.Value));
+                    query += " AND c.estatus = CAST(@estatus AS VARCHAR)";
+                    parametros.Add(new NpgsqlParameter("@estatus", estatus.Value.ToString()));
                 }
+
 
                 query += " ORDER BY c.fecha_de_compra DESC;";
 
