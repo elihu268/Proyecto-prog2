@@ -237,5 +237,9 @@ namespace Sistema_Ventas.View
 
         }
 
+        private void contextMenuRoles_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
