@@ -16,6 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using NLog;
 using Sistema_Ventas.Bussines;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
@@ -39,27 +40,29 @@ namespace Sistema_Ventas.View
         /// </summary>
         public void InicializaVentanaVenta()
         {
-            //mostrar informacion
-            PoblaComboMetodo();//metodo de pago
-            PoblaComboEstatus();//estatus de compra
-            PoblacomboCliente();//cliente por correo
-            //notifica la baja existencia de un producto
-            ProductosController productoController = new ProductosController();
-            List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
-            var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaProducto);
-            if (alerta)
-            {
-                MessageBox.Show(
-                    mensaje,
-                    "Existencia Baja",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
-            PoblacomboProducto(listaProducto);//producto por codigo para elegir en agregar producto
-            PoblaDataProducto(listaProducto);//para busqueda del producto
-            txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
+         
+                //mostrar informacion
+                PoblaComboMetodo();//metodo de pago
+                PoblaComboEstatus();//estatus de compra
+                PoblacomboCliente();//cliente por correo
+                                    //notifica la baja existencia de un producto
+                ProductosController productoController = new ProductosController();
+                List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
+                var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaProducto);
+                if (alerta)
+                {
+                    MessageBox.Show(
+                        mensaje,
+                        "Existencia Baja",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+                PoblacomboProducto(listaProducto);//producto por codigo para elegir en agregar producto
+                PoblaDataProducto(listaProducto);//para busqueda del producto
+                txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
+
+                _logger.Debug("se cargo correctamente los datos de productos,clientes");
             
-            _logger.Debug("se cargo correctamente los datos de productos,clientes");
         }
         /// <summary>
         /// funcion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
@@ -97,8 +100,10 @@ namespace Sistema_Ventas.View
 
         private void PoblacomboCliente()
         {
-           
-            ClientesController clienteController = new ClientesController();
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                ClientesController clienteController = new ClientesController();
 
             // Obtener la lista de clientes
             List<Cliente> listaClientes = clienteController.ObtenerClientes();
@@ -109,37 +114,34 @@ namespace Sistema_Ventas.View
             cb_clientes.DataSource = listaClientes;
             cb_clientes.DisplayMember = "Correo";     
             cb_clientes.ValueMember = "Id"; 
-            cb_clientes.SelectedIndex = -1; 
+            cb_clientes.SelectedIndex = -1;
+        }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al cargar datos del cliente en el combo");
+                MessageBox.Show("Error al cargar datos del cliente. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Liberar el cursor
+                Cursor = Cursors.Default;
+            }
         }
         private void PoblacomboProducto(List<Producto> listaProducto)
         {
-            cBox_codigo.DataSource = null;
-            cBox_codigo.DataSource = listaProducto;
-            cBox_codigo.DisplayMember = "Codigo";
-            cBox_codigo.ValueMember = "IdProducto";
-            cBox_codigo.SelectedIndex = 0;
-
-        }
-
-        private void PoblaDataProducto(List<Producto> productos)
-        {
-
-
             try
             {
                 Cursor = Cursors.WaitCursor;
-                if (productos.Count == 0)
-                {
-                    MessageBox.Show("No se encontraron productos con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-
-                ConfigurarDataGridViewProductos(productos);
+                cBox_codigo.DataSource = null;
+                cBox_codigo.DataSource = listaProducto;
+                cBox_codigo.DisplayMember = "Codigo";
+                cBox_codigo.ValueMember = "IdProducto";
+                cBox_codigo.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar productos. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.Error(ex, "Error al cargar el codigo de productos en combo");
+                MessageBox.Show("Error al cargar producto . Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -148,8 +150,23 @@ namespace Sistema_Ventas.View
             }
         }
         /// <summary>
-        /// metodo para registrar datos de compra,cliente
-        /// </summary>no permite pagar si no se cumplen condiciones
+        /// llena la tabla de acuerdo a una busqueda de por nombre de un producto,
+        /// si esta vacia la lista manda un mensaje y termina el metodo si no configura la tabla
+        /// </summary>
+        /// <param name="productos">una lista de productos que coincidieron con la busqueda </param>
+        private void PoblaDataProducto(List<Producto> productos)
+        {
+                if (productos.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron productos con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ConfigurarDataGridViewProductos(productos);
+          
+        }
+        /// <summary>
+        /// metodo para registrar datos de compra,cliente, y el detalle de compra
+        /// </summary>
         /// <returns>retorna verdadeo si se cumplen condiciones</returns>
         private void TerminarCompra()
         {
@@ -193,8 +210,8 @@ namespace Sistema_Ventas.View
                 dt.Clear();  // Limpiar las filas del DataTable
             }
             detalles.Clear();
-            // Resetear ComboBoxes o controles adicionales
-            cb_clientes.SelectedIndex = -1; // Resetear selección de cliente
+            // Resetear ComboBoxes 
+            cb_clientes.SelectedIndex = -1; //quitar cliete
         }
         /// <summary>
         /// metodo para validar seleccion de busqueda
@@ -202,18 +219,18 @@ namespace Sistema_Ventas.View
         /// <returns>falso si la inforacion ingresada no es valida</returns>
         private bool SeleccionBusquedaCliente()
         {
-            if (!(cb_clientes.SelectedItem is Cliente clienteSeleccionado))
+            if (!(cb_clientes.SelectedItem is Cliente clienteSeleccionado))//si la opcion seleccionada es cliente
             {
                 MessageBox.Show("Por favor seleccione un cliente válido", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            // Verificar que el correo no sea vacío o inválido
+            // Verificar que el correo no sea vacío o inválido, en caso de que quiera ingresar otro dato
             if (string.IsNullOrEmpty(clienteSeleccionado.DatosPersonales.Correo) || !Utilities.Validaciones.EsCorreoValido(clienteSeleccionado.DatosPersonales.Correo))
             {
                 MessageBox.Show("Cliente no válido: correo inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
-            }
+            }//talvez no necesario
             return true;
 
         }
@@ -241,28 +258,38 @@ namespace Sistema_Ventas.View
             }
             DetalleCompraController detalleController = new DetalleCompraController();
             CompraController compraController = new CompraController();
-            if (!detalleController.ValidarCantidad(cBox_codigo.Text
-                , txt_cantidad.Text))
+            if (!detalleController.ValidarCantidad(cBox_codigo.Text, txt_cantidad.Text))//si la cantidad no es valida
             {
                 MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             int cantidad = Convert.ToInt32(txt_cantidad.Text);
-            Producto prod = (Producto)cBox_codigo.SelectedItem;
-            DetalleCompra producto = new DetalleCompra(prod, cantidad);
-            var existente = detalles.FirstOrDefault(d => d.Productoi.IdProducto == productoSeleccionado.IdProducto);//ver si ya existen
-            if (existente != null)
-            { int existenciamod = existente.Cantidad + cantidad;
+            Producto prod = (Producto)cBox_codigo.SelectedItem;//el procusto seleccionado casteado para agregarlo al detalle
+            DetalleCompra existente = null;
+
+            foreach (var d in detalles)
+            {
+                if (d.Productoi.IdProducto == productoSeleccionado.IdProducto)
+                {
+                    existente = d;
+                    break;
+                }
+            }
+           //Busca el primer detalle en la lista detalles cuyo producto(Productoi.IdProducto) sea igual al producto seleccionado.Si existe, guárdalo en existente; si no, existente será null
+            if (existente != null)//ya existe en la lista
+            { 
+                int existenciamod = existente.Cantidad + cantidad;
                 if (!detalleController.ValidarCantidad(cBox_codigo.Text
                 , Convert.ToString(existenciamod)))
                 {
                     MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                existente.Cantidad += cantidad;
+                cantidad += existente.Cantidad;
             }
             else
             {
+                DetalleCompra producto = new DetalleCompra(prod, cantidad);//crea un objeto detalle para luego insertalo al arreglo
                 detalles.Add(new DetalleCompra(productoSeleccionado, cantidad));
             }
             txt_subtotal.Text =  compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
@@ -341,7 +368,7 @@ namespace Sistema_Ventas.View
             if (cb_clientes.SelectedItem is Cliente clienteSeleccionado)
             {
                 txt_nombre_prod.Text = clienteSeleccionado.DatosPersonales.NombreCompleto;
-             
+             //poner el nombre del cliente que se selecciono
             }
         }
         private void splitCVenta_Panel1_Paint(object sender, PaintEventArgs e)
@@ -501,6 +528,7 @@ namespace Sistema_Ventas.View
                 string nombre = row.Cells["Nombre"].Value.ToString();
                 int cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
                 decimal precio = Convert.ToDecimal(row.Cells["Total Por Unidad"].Value);
+                //crea el objeto de acuerdo a lo que se obtuvo en la fila
                 DetalleCompra detalleEliminar = detalles.FirstOrDefault(d =>
                     d.Productoi.Nombre == nombre && d.Cantidad == cantidad && d.TotalPorUnidad == precio);
 
@@ -508,9 +536,10 @@ namespace Sistema_Ventas.View
 
                 if (detalleEliminar != null)
                 {
-                    detalles.Remove(detalleEliminar);
-                    ConfigurarDgvCarrito(detalles);
+                    detalles.Remove(detalleEliminar);//lo quita de la lista
+                    ConfigurarDgvCarrito(detalles);//configura la tabla
                     CompraController compraController = new CompraController();
+                    //calula otravz toal subtotal e iva
                     txt_subtotal.Text = compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
                     txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
                     txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
