@@ -30,7 +30,11 @@ namespace Sistema_Ventas.Model
 
         public int? IdMovimiento { get; set; }
 
+        public String Movimiento { get; set; }
+
         public string NombreCompleto { get; set; }
+
+        public string Cuenta { get; set; }
 
         public Persona Persona { get; set; }
 
@@ -46,16 +50,18 @@ namespace Sistema_Ventas.Model
         }
 
         //int usuario
-        public Auditoria(int? usuarioid, string nombreCompleto, string accion, DateTime fecha, string ip, string nombreEquipo, int idMovimiento, string tipo)
+        public Auditoria(int? usuarioid, string nombreCompleto, string cuenta, string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, string idMovimiento)
         {
            UsuarioId = usuarioid;
             NombreCompleto = nombreCompleto;
+            Cuenta = cuenta;
             Accion = accion;
             Fecha = fecha;
             IpAcceso = ip;
             NombreEquipo = nombreEquipo;
-            IdMovimiento = idMovimiento;
             Tipo = tipo;
+            Movimiento = idMovimiento;
+            
         }
 
         public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimiento)

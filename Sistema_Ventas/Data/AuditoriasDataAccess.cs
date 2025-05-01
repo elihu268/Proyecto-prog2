@@ -33,9 +33,20 @@ namespace Sistema_Ventas.Data
             try
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
-                string query = @"SELECT u.id_usuario, p.nombre_completo, 
+                string query = @"SELECT u.id_usuario, p.nombre_completo, p.correo,
                                 b.accion, b.fecha, b.ip_acceso, 
-                                b.nombre_equipo, b.tipo
+                                b.nombre_equipo, b.tipo,
+                                CASE 
+					WHEN b.id_movimiento = 0 THEN 'USUARIO AGREGADO'
+					WHEN b.id_movimiento = 1 THEN 'ACTUALIZACION USUARIO'
+					WHEN b.id_movimiento = 2 THEN 'BAJA USUARIO'
+	                                WHEN b.id_movimiento = 3 THEN 'VENTA'
+	                                WHEN b.id_movimiento = 4 THEN 'MODIFICACION'
+	                                WHEN b.id_movimiento = 5 THEN 'CANCELACION'
+					WHEN b.id_movimiento = 6 THEN 'CLIENTE AGREGADO'
+	                                ELSE
+	                                'Desconocido'
+	                                END AS movimiento
 	                                FROM bitacora b
 	                                JOIN usuarios u ON u.id_usuario = b.id_usuario
 	                                JOIN personas p on u.id_persona = p.id_persona
@@ -49,12 +60,14 @@ namespace Sistema_Ventas.Data
                     Auditoria auditoria = new Auditoria(
                        Convert.ToInt32(row["id_usuario"]),
                           row["nombre_completo"].ToString() ?? "",
-                            row["accion"].ToString() ?? "",
+                          row["correo"].ToString() ?? "",
+                          row["accion"].ToString() ?? "",
                             Convert.ToDateTime(row["fecha"]),
                             row["ip_acceso"].ToString() ?? "",
                             row["nombre_equipo"].ToString() ?? "",
-                            Convert.ToInt32(row["id_movimiento"]),
-                            row["tipo"].ToString() ?? ""
+                            row["tipo"].ToString() ?? "",
+                            row["movimiento"].ToString() ?? ""
+                            
                     );
                     auditorias.Add(auditoria);
                 }

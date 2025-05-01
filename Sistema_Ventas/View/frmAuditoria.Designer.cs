@@ -145,6 +145,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmAuditoria";
             Text = "Auditoria";
+            Load += frmAuditoria_Load_1;
             gbxBusquedaAuditoria.ResumeLayout(false);
             gbxBusquedaAuditoria.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAuditorias).EndInit();
