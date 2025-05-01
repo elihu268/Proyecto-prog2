@@ -59,6 +59,7 @@
             // 
             // cbox_rol
             // 
+            cbox_rol.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbox_rol.FormattingEnabled = true;
             cbox_rol.Location = new Point(23, 76);
             cbox_rol.Name = "cbox_rol";

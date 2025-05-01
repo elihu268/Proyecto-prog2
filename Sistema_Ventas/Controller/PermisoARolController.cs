@@ -8,6 +8,7 @@ using Sistema_Ventas.Utilities;
 using NLog;
 using Npgsql;
 using Sistema_Ventas.Model;
+using System.Security.Cryptography;
 
 namespace Sistema_Ventas.Controller
 {
@@ -29,38 +30,24 @@ namespace Sistema_Ventas.Controller
         }
         //asignar permiso
 
-        public void AsignarPermisosARol(int idRol, int idPermiso)
+        public void AsignarPermisosARol(int idRol, List<int> permisos)
         {
             try
             {
+                _permisoARolData.EliminarPermisosDeRol(idRol);//primero elimina los permisos que tenia, para que no se repitan
+                foreach (int idPermiso in permisos) {
+                    _permisoARolData.AgregarPermisoARol(idRol, idPermiso);
 
-                _permisoARolData.AgregarPermisoARol(idRol, idPermiso);
-
-                _logger.Debug($"se asigno el permiso{idPermiso} al rol: "+ idRol);
+                    _logger.Debug($"se asigno el permiso{idPermiso} al rol: " + idRol);
+                }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"error al asignar permiso{idPermiso} al rol: "+ idRol);
+                _logger.Error(ex, $"error al asignar permisos al rol: "+ idRol);
                 throw;
             }
         }
-        //eliminar
-        public void  EliminarPermisos(int idRol)
-        {
-            try
-            {
-                // 1. Eliminar todos los permisos actuales del puesto
-                _permisoARolData.EliminarPermisosDeRol(idRol);
-
-                
-
-                _logger.Debug($"Permisos eliminados para el rol: {idRol}");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Error al elimar permisos al rol: {idRol},{ex}");
-            }
-        }
+        
         public List<int> ObtenerIdsPermisosPorRol(int idRol)
         {
             try
