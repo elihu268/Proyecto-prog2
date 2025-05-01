@@ -26,6 +26,7 @@ namespace PuntodeVenta.View
             {
                 // Cargar datos en el DataGridView
                 // dataGridView1.DataSource = auditoriaController.ObtenerAuditorias();
+                 CargarAuditorias();
             }
             catch (Exception ex)
             {
@@ -33,8 +34,8 @@ namespace PuntodeVenta.View
             }
         }
 
-               private void CargarAditorias()
-        {
+               private void CargarAuditorias()
+               {
             try
             {
                 Cursor = Cursors.WaitCursor;
@@ -50,22 +51,21 @@ namespace PuntodeVenta.View
                     return;
                 }
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Nombre", typeof(string));
-                dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Telefono", typeof(string));
-                dt.Columns.Add("Estatus", typeof(string));
-                dt.Columns.Add("Rol", typeof(string));
+                dt.Columns.Add("Accion", typeof(string));
+                dt.Columns.Add("Fecha", typeof(string));
+                dt.Columns.Add("Ip Accesso", typeof(string));
+                dt.Columns.Add("Nombre del Equipo", typeof(string));
+                dt.Columns.Add("Usuario", typeof(string));
 
                 //llenado de la tabla
                 foreach (Auditoria auditoria in auditorias)
                 {
                     dt.Rows.Add(
                         auditoria.Accion,
-                        auditoria.Tipo,
-                        auditoria.UsuarioId,
-                        auditoria.IdMovimiento,
+                        auditoria.Fecha.ToString("dd/MM/yyyy HH:mm:ss"),
                         auditoria.IpAcceso,
-                        auditoria.NombreEquipo
+                        auditoria.NombreEquipo,
+                        auditoria.Persona.NombreCompleto
                         );
                 }
                 dgvAuditorias.DataSource = dt;
@@ -88,21 +88,22 @@ namespace PuntodeVenta.View
             dgvAuditorias.ReadOnly = true;
 
             // Ajustar el ancho de las columnas
-            dgvAuditorias.Columns["Nombre Completo"].Width = 200;
-            dgvAuditorias.Columns["Correo"].Width = 180;
-            dgvAuditorias.Columns["Teléfono"].Width = 120;
-            dgvAuditorias.Columns["Fecha Nacimiento"].Width = 120;
-            dgvAuditorias.Columns["Estatus"].Width = 100;
+            dgvAuditorias.Columns["Accion"].Width = 200;
+            dgvAuditorias.Columns["Fecha"].Width = 120;
+            dgvAuditorias.Columns["Ip Accesso"].Width = 120;
+            dgvAuditorias.Columns["Nombre del Equipo"].Width = 100;
+            dgvAuditorias.Columns["Usuario"].Width = 100;
+
 
             // Ocultar columna ID si es necesario
-            dgvAuditorias.Columns["ID"].Visible = false;
+            //dgvAuditorias.Columns["ID"].Visible = false;
 
             // Formato para las fechas
             dgvAuditorias.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
             // Alineación
-            dgvAuditorias.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvAuditorias.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+           // dgvAuditorias.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+           // dgvAuditorias.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // Color alternado de filas
             dgvAuditorias.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;

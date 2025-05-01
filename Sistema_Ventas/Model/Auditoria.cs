@@ -32,6 +32,8 @@ namespace Sistema_Ventas.Model
 
         public string NombreCompleto { get; set; }
 
+        public Persona Persona { get; set; }
+
         public Auditoria(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreEquipo)
         {
             Accion = accion;
@@ -56,7 +58,7 @@ namespace Sistema_Ventas.Model
             Tipo = tipo;
         }
 
-        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimientoo)
+        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimiento)
         {
             Accion = accion;
             Fecha = fecha;
@@ -64,7 +66,15 @@ namespace Sistema_Ventas.Model
             NombreEquipo = nombreEquipo;
             Tipo = tipo;
             UsuarioId = idUsuario;
-            IdMovimiento = idMovimientoo;
+            IdMovimiento = idMovimiento;
+        }
+        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, Persona persona)
+        {
+            Accion = accion;
+            Fecha = fecha;
+            IpAcceso = ip;
+            NombreEquipo = nombreEquipo;
+            Persona = persona;
         }
         public override string ToString()
         {

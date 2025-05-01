@@ -81,13 +81,13 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect(); // Desconectar de la base de datos
             }
         }
-        public async Task AuditoriaAdd(Auditoria auditoria)
+        public void AuditoriaAdd(Auditoria auditoria)
         {
             try
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
-                string query = @"INSERT INTO auditoria (accion, fecha, ip_acceso, nombre_equipo, tipo, usuario_id, id_movimiento)
-                               VALUES (@accion, @fecha, @ip_acceso, @nombre_equipo, @tipo, @usuario_id, @id_movimiento)";
+                string query = @"INSERT INTO bitacora (accion, fecha, ip_acceso, nombre_equipo, tipo, id_usuario, id_movimiento)
+                               VALUES (@accion, @fecha, @ip_acceso, @nombre_equipo, @tipo, @id_usuario, @id_movimiento)";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@accion", auditoria.Accion),
@@ -95,7 +95,7 @@ namespace Sistema_Ventas.Data
                     new NpgsqlParameter("@ip_acceso", auditoria.IpAcceso),
                     new NpgsqlParameter("@nombre_equipo", auditoria.NombreEquipo),
                     new NpgsqlParameter("@tipo", auditoria.Tipo),
-                    new NpgsqlParameter("@usuario_id", auditoria.UsuarioId ?? (object)DBNull.Value),
+                    new NpgsqlParameter("@id_usuario", auditoria.UsuarioId ?? (object)DBNull.Value),
                     new NpgsqlParameter("@id_movimiento", auditoria.IdMovimiento ?? (object)DBNull.Value)
                 };
                 _logger.Info("Ejecutando consulta: {0}", query);
