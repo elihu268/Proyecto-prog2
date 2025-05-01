@@ -31,7 +31,7 @@ namespace PuntodeVenta.View
             PoblaTipoFecha();
             PoblaRoles();
 
-          //  CargarUsuarios();
+            //  CargarUsuarios();
 
             //Se oculta el boton para cargar un nuevo usuario si no tiene el permiso.
             if (!Sesión.TienePermiso("USR_CREATE"))
@@ -79,16 +79,24 @@ namespace PuntodeVenta.View
         }
         private void PoblaRoles()
         {
-            Dictionary<int, string> list_roles = new Dictionary<int, string>
+            RolesController rc = new RolesController();
+
+            List<Rol> roles = rc.ObtenerRoles();
+
+            Dictionary<int, string> rolesD = new Dictionary<int, string>();
+
+            // Llenar el diccionario con los roles
+            foreach (var rol in roles)
             {
-                {1, "Administrador" },
-                {2, "Vendedor" },
-                {3, " " }
-            };
-            cbxRoles.DataSource = new BindingSource(list_roles, null);
+                rolesD.Add(rol.IdRol, rol.Codigo);
+            }
+
+            // Asignar el DataSource al ComboBox
+            cbxRoles.DataSource = new BindingSource(rolesD, null);
             cbxRoles.DisplayMember = "Value";
             cbxRoles.ValueMember = "Key";
-            cbxRoles.SelectedValue = 2;
+
+            // Establecer el estilo del ComboBox para que sea de selección única
             cbxRoles.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private bool DatosVacios()
@@ -365,10 +373,16 @@ namespace PuntodeVenta.View
             if (Sesión.TienePermiso("USR_EDIT"))
             {
                 // Código para mandar los datos de la fila seleccionada para editar
-            } else
+            }
+            else
             {
                 MessageBox.Show("No tiene permiso para editar usuarios", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
 
         }
     }

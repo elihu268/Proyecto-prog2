@@ -427,6 +427,7 @@
             btnBuscar.Text = "Actualizar";
             btnBuscar.TextAlign = ContentAlignment.MiddleRight;
             btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // txtBusqueda
             // 

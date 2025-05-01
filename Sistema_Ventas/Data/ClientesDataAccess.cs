@@ -35,26 +35,26 @@ namespace Sistema_Ventas.Data
 
         public List<Cliente> ObtenerClientes(int Activos)
         {
-             List<Cliente> clientes = new List<Cliente>();
+            List<Cliente> clientes = new List<Cliente>();
 
             try
             {
                 string query = @"
                    SELECT 
-    c.id_cliente,
-c.id_persona,
-    p.nombre_completo,
-    p.correo,
-    p.telefono,
-    p.fecha_nacimiento,
-    c.fecha_registro,
-    c.rfc,
-    c.tipo,
-p.estatus AS estatus_persona
-FROM  cliente c
-JOIN  personas p ON c.id_persona = p.id_persona
-WHERE  1 = 1 
-";
+                    c.id_cliente,
+                    c.id_persona,
+                    p.nombre_completo,
+                    p.correo,
+                    p.telefono,
+                    p.fecha_nacimiento,
+                    c.fecha_registro,
+                    c.rfc,
+                    c.tipo,
+                p.estatus AS estatus_persona
+                FROM  cliente c
+                JOIN  personas p ON c.id_persona = p.id_persona
+                WHERE  1 = 1 
+                ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
                 if (Activos == 2)
@@ -65,7 +65,7 @@ WHERE  1 = 1
                 query += "\nORDER BY c.id_cliente";
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
-                
+
                 foreach (DataRow row in resultado.Rows)
                 {
                     //es el reglon de una tabla el resultado: por cada row recorrer, forecah de reglones de datatable
@@ -91,6 +91,107 @@ WHERE  1 = 1
                 }
                 _logger.Debug($"Se obtuvieron{clientes.Count} resgistros de clientes");
                 return clientes;
+            }
+            catch (Exception ex)
+            {
+                //logear error
+                _logger.Error(ex, "Error al obtener informacion de los clientes de la base de datos");
+                _logger.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();//asegura cierre de la conexion
+            }
+        }
+
+        public DataTable ObtenerClientesFiltrados(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
+        {
+            DataTable clientesDataTable = new DataTable();
+            try
+            {
+                string query = @"
+                   SELECT 
+                        c.id_cliente,
+                        c.id_persona,
+                        p.nombre_completo,
+                        p.correo,
+                        p.telefono,
+                        p.fecha_nacimiento,
+                        c.fecha_registro,
+                        c.rfc,
+                        c.tipo,
+                    p.estatus AS estatus_persona
+                    FROM  cliente c
+                    JOIN  personas p ON c.id_persona = p.id_persona
+                    WHERE  1 = 1 
+                    ";
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+
+                if (soloActivos == 1)
+                {
+                    query += " AND p.estatus = @estatus ";
+                    parametros.Add(new NpgsqlParameter("@estatus", true));
+                }
+
+                if (tipoFecha == 1) // Nacimiento
+                {
+                    query += " AND p.fecha_nacimiento BETWEEN @FechaInicial AND @FechaFinal ";
+                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
+                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
+                }
+                else if (tipoFecha == 2) // Alta
+                {
+                    query += " AND c.fecha_registro BETWEEN @FechaInicial AND @FechaFinal ";
+                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
+                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
+                }
+                else if (tipoFecha == 3) // Baja
+                {
+                    query += " AND p.fecha_baja BETWEEN @FechaInicial AND @FechaFinal ";
+                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
+                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
+                }
+
+                if (!string.IsNullOrEmpty(busqueda))
+                {
+                    query += " AND (p.nombre_completo ILIKE @Busqueda OR c.rfc ILIKE @Busqueda OR p.correo ILIKE @Busqueda) ";
+                    parametros.Add(new NpgsqlParameter("@Busqueda", "%" + busqueda + "%"));
+                }
+
+                query += "\nORDER BY c.id_cliente";
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                // Asignar las columnas del DataTable
+                clientesDataTable.Columns.Add("ID", typeof(int));
+                clientesDataTable.Columns.Add("RFC", typeof(string));
+                clientesDataTable.Columns.Add("Nombre Completo", typeof(string));
+                clientesDataTable.Columns.Add("Tipo", typeof(string));
+                clientesDataTable.Columns.Add("Correo", typeof(string));
+                clientesDataTable.Columns.Add("Teléfono", typeof(string));
+                clientesDataTable.Columns.Add("Fecha Nacimiento", typeof(DateTime));
+                clientesDataTable.Columns.Add("Fecha de Registro", typeof(DateTime));
+                clientesDataTable.Columns.Add("Estatus", typeof(string));
+
+                // Llenar el DataTable con los resultados de la consulta
+                foreach (DataRow row in resultado.Rows)
+                {
+                    clientesDataTable.Rows.Add(
+                        Convert.ToInt32(row["id_cliente"]),
+                        row["rfc"].ToString() ?? "",
+                        row["nombre_completo"].ToString() ?? "",
+                        row["tipo"].ToString(),
+                        row["correo"].ToString() ?? "",
+                        row["telefono"].ToString() ?? "",
+                        row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                        Convert.ToDateTime(row["fecha_registro"]),
+                        row["estatus_persona"] != DBNull.Value && Convert.ToBoolean(row["estatus_persona"]) ? "Activo" : "Inactivo"
+                    );
+                }
+
+                _logger.Debug($"Se obtuvieron {clientesDataTable.Rows.Count} registros de clientes");
+                return clientesDataTable;
             }
             catch (Exception ex)
             {

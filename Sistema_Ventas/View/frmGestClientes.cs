@@ -238,13 +238,19 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.WaitCursor;
 
+                int tipoFecha = (cbxtipoFecha.SelectedValue != null) ? (int)cbxtipoFecha.SelectedValue : 0;
+                DateTime fechaInicial = dtpFechaInicio.Value.Date;
+                DateTime fechaFinal = dtpFechaFin.Value.Date.AddDays(1).AddSeconds(-1); // Para incluir hasta el último segundo del día final
+                string busqueda = txtBusqueda.Text.Trim();
+                int soloActivos = (int)(checkBoxActivos.Checked ? 1 : 0);
+
                 ClientesController clienteController = new ClientesController();
 
-                List<Cliente> clientes = clienteController.ObtenerClientes();
+                DataTable clientes = clienteController.ObtenerClientes(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
 
                 dgvGesClientes.DataSource = null;
 
-                if (clientes.Count == 0)
+                if (clientes.Rows.Count == 0)
                 {
                     //opcionalmente mostrar mensaje cuando no hay datos
                     if (!string.IsNullOrEmpty(txtBusqueda.Text))
@@ -254,38 +260,39 @@ namespace PuntodeVenta.View
                     return;
                 }
 
-                //Crear una tabla
-                DataTable dt = new DataTable();
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("RFC", typeof(string));
-                dt.Columns.Add("Nombre Completo", typeof(string));
-                dt.Columns.Add("Tipo", typeof(string));
-                dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Teléfono", typeof(string));
-                dt.Columns.Add("Fecha Nacimiento", typeof(DateTime));
-                dt.Columns.Add("Fecha de Registro", typeof(DateTime));
-                dt.Columns.Add("Estatus", typeof(string));
+                ////Crear una tabla
+                //DataTable dt = new DataTable();
+                //dt.Columns.Add("ID", typeof(int));
+                //dt.Columns.Add("RFC", typeof(string));
+                //dt.Columns.Add("Nombre Completo", typeof(string));
+                //dt.Columns.Add("Tipo", typeof(string));
+                //dt.Columns.Add("Correo", typeof(string));
+                //dt.Columns.Add("Teléfono", typeof(string));
+                //dt.Columns.Add("Fecha Nacimiento", typeof(DateTime));
+                //dt.Columns.Add("Fecha de Registro", typeof(DateTime));
+                //dt.Columns.Add("Estatus", typeof(string));
 
-                //llenar el dataTime con la info de los estudiantes
-                foreach (Cliente cliente in clientes)
-                {
-                    dt.Rows.Add(
-                        cliente.Id,
-                        cliente.Rfc,
-                        cliente.DatosPersonales.NombreCompleto,
-                        cliente.Tipo,
-                        cliente.DatosPersonales.Correo,
-                        cliente.DatosPersonales.Telefono,
-                        cliente.DatosPersonales.FechaNacimiento,
-                        cliente.FechaRegistro,
-                        cliente.DescripcionEstatus
-                        );
-                }
+                ////llenar el dataTime con la info de los estudiantes
+                //foreach (Cliente cliente in clientes)
+                //{
+                //    dt.Rows.Add(
+                //        cliente.Id,
+                //        cliente.Rfc,
+                //        cliente.DatosPersonales.NombreCompleto,
+                //        cliente.Tipo,
+                //        cliente.DatosPersonales.Correo,
+                //        cliente.DatosPersonales.Telefono,
+                //        cliente.DatosPersonales.FechaNacimiento,
+                //        cliente.FechaRegistro,
+                //        cliente.DescripcionEstatus
+                //        );
+                //}
 
                 //asignar el dataTime como origen de dattos
-                dgvGesClientes.DataSource = dt;
+                //dgvGesClientes.DataSource = dt;
+                dgvGesClientes.DataSource = clientes;
 
-                //configurar la paraencia
+                // Configurar el DataGridView
                 ConfigurarDataGridView();
 
             }

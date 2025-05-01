@@ -7,6 +7,7 @@ using Sistema_Ventas.Data;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using NLog;
+using System.Data;
 
 namespace Sistema_Ventas.Controller
 {
@@ -30,12 +31,27 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+
         public List<Cliente> ObtenerClientes(int Activo = 1)
         {
             try
             {
                 List<Cliente> clientes = _clientesData.ObtenerClientes(Activo);
                 _logger.Info($"Se obtuvieron {clientes.Count} ");
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener la lista de clientes");
+                throw;
+            }
+        }
+        public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
+        {
+            try
+            {
+                DataTable clientes = _clientesData.ObtenerClientesFiltrados(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
+                _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
                 return clientes;
             }
             catch (Exception ex)
