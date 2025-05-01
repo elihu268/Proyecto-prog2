@@ -31,7 +31,7 @@ namespace PuntodeVenta.View
             PoblaTipoFecha();
             PoblaRoles();
 
-          //  CargarUsuarios();
+            CargarUsuarios();
 
             //Se oculta el boton para cargar un nuevo usuario si no tiene el permiso.
             if (!Sesión.TienePermiso("USR_CREATE"))
@@ -164,7 +164,7 @@ namespace PuntodeVenta.View
                 }
                 else
                 {
-                    MessageBox.Show("Error al guardar el usuario: " + mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     switch (idUsuario)
                     {
                         case -2:
@@ -216,9 +216,9 @@ namespace PuntodeVenta.View
                     return;
                 }
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Nombre", typeof(string));
+                dt.Columns.Add("Nombre Completo", typeof(string));
                 dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Telefono", typeof(string));
+                dt.Columns.Add("Teléfono", typeof(string));
                 dt.Columns.Add("Estatus", typeof(string));
                 dt.Columns.Add("Rol", typeof(string));
 
@@ -255,17 +255,18 @@ namespace PuntodeVenta.View
             dgvUsuarios.Columns["Nombre Completo"].Width = 200;
             dgvUsuarios.Columns["Correo"].Width = 180;
             dgvUsuarios.Columns["Teléfono"].Width = 120;
-            dgvUsuarios.Columns["Fecha Nacimiento"].Width = 120;
             dgvUsuarios.Columns["Estatus"].Width = 100;
+            dgvUsuarios.Columns["Rol"].Width = 120;
+           
 
             // Ocultar columna ID si es necesario
-            dgvUsuarios.Columns["ID"].Visible = false;
+            //dgvUsuarios.Columns["ID"].Visible = false;
 
             // Formato para las fechas
-            dgvUsuarios.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+           // dgvUsuarios.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
             // Alineación
-            dgvUsuarios.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+         //   dgvUsuarios.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvUsuarios.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // Color alternado de filas

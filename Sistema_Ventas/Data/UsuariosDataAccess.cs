@@ -42,14 +42,14 @@ namespace Sistema_Ventas.Data
             // Aquí iría la lógica para obtener los usuarios de la base de datos
             try
             {
-                string query = "SELECT p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, r.descripcion as Rol FROM usuarios u JOIN personas p ON u.id_persona = p.id_persona JOIN roles r ON u.id_rol = r.id_rol WHERE 1 = 1  ";
+                string query = "SELECT u.id_usuario, p.id_persona, p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, u.id_rol, r.descripcion as Rol FROM usuarios u JOIN personas p ON u.id_persona = p.id_persona JOIN roles r ON u.id_rol = r.id_rol WHERE 1 = 1  ";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
                 if (activos == 2)
                 {
                     query += " AND p.estatus = @estatus ";
                     parameters.Add(new NpgsqlParameter("@estatus", 2));
                 }
-                query += " ORDER BY p.nombre_completo";
+                query += " ORDER BY u.id_usuario";
                 _logger.Info("Ejecutando consulta: {0}", query);
                 _dbAccess.Connect();
                 DataTable usuari = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
@@ -62,15 +62,13 @@ namespace Sistema_Ventas.Data
                         row["correo"].ToString() ?? "",
                         row["telefono"].ToString() ?? "",
                         row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
-                        Convert.ToBoolean(row["estatus_persona"]) // Changed from Convert.ToInt32 to Convert.ToBoolean
+                        Convert.ToBoolean(row["estatus"]) // Changed from Convert.ToInt32 to Convert.ToBoolean
                     );
                     Usuario usuario = new Usuario(
                         Convert.ToInt32(row["id_usuario"]),
                         Convert.ToInt32(row["id_persona"]),
                         Convert.ToInt32(row["id_rol"]),
-                        row["usuario"].ToString() ?? "",
-                        row["contrasena"].ToString() ?? "",
-                        // Convert.ToInt32(row["estatus"]) == 1,
+                        row["correo"].ToString() ?? "",
                         Convert.ToBoolean(row["estatus"]),
                         persona
                     );
@@ -100,8 +98,8 @@ namespace Sistema_Ventas.Data
                     _logger.Error("Error al agregar persona para el usuario");
                     return -1;
                 }
-                string query = "INSERT INTO Usuarios (id_persona, id_rol, usuario, contraseña, estatus) " +
-                    "VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
+                string query = @"INSERT INTO usuarios (id_persona, id_rol, usuario, contraseña, estatus) 
+                    VALUES (@id_persona, @id_rol, @cuenta, @contrasena, @estatus) RETURNING id_usuario";
 
                 NpgsqlParameter paramIdPersona = new NpgsqlParameter("@id_persona", idPersona);
                 NpgsqlParameter paramIdRol = new NpgsqlParameter("@id_rol", usuario.idRol);
@@ -110,7 +108,7 @@ namespace Sistema_Ventas.Data
                 NpgsqlParameter paramEstatus = new NpgsqlParameter("@estatus", usuario.Estatus);
 
                 _dbAccess.Connect();
-                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramIdRol, paramCuenta, paramContrasena,paramEstatus);
 
                 /*if (resultado != null && int.TryParse(resultado.ToString(), out int idUsuario))
                 {
