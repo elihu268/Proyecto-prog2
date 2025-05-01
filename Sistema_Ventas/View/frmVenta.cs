@@ -519,7 +519,7 @@ namespace Sistema_Ventas.View
                     txt_subtotal.Text = compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
                     txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
                     txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
-                    txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
+                    //txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
                 }
                 else
                 {
