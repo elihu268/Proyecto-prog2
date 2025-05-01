@@ -43,6 +43,7 @@ namespace Sistema_Ventas.Model
             Fecha = DateTime.Now;
         }
 
+        //int usuario
         public Auditoria(int? usuarioid, string nombreCompleto, string accion, DateTime fecha, string ip, string nombreEquipo, int idMovimiento, string tipo)
         {
            UsuarioId = usuarioid;
@@ -53,6 +54,17 @@ namespace Sistema_Ventas.Model
             NombreEquipo = nombreEquipo;
             IdMovimiento = idMovimiento;
             Tipo = tipo;
+        }
+
+        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimientoo)
+        {
+            Accion = accion;
+            Fecha = fecha;
+            IpAcceso = ip;
+            NombreEquipo = nombreEquipo;
+            Tipo = tipo;
+            UsuarioId = idUsuario;
+            IdMovimiento = idMovimientoo;
         }
         public override string ToString()
         {

@@ -148,9 +148,14 @@ namespace PuntodeVenta.View
                     Estatus = true,
                     DatosPersonales = persona
                 };
+                //agregar bitacora
+                AuditoriaController auditoriaController = new AuditoriaController();
+                string ip = System.Windows.Forms.SystemInformation.UserDomainName.ToString();
+                string nombreEquipo = System.Windows.Forms.SystemInformation.ComputerName.ToString();
+                
                 UsuariosController usuariosController = new UsuariosController();
                 var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
-
+                _ = auditoriaController.AudioriaAdd("Agregar Usuario", DateTime.Now, ip, nombreEquipo, "Agregar Usuario", idUsuario,1);
                 if (idUsuario > 0)
                 {
                     MessageBox.Show(mensaje, "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);

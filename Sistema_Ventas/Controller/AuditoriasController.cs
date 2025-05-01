@@ -44,11 +44,11 @@ namespace Sistema_Ventas.Controller
         }
 
 
-        public async Task AudioriaAdd(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreEquipo)
+        public async Task AudioriaAdd(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimiento)
         {
             try
             {
-                Auditoria auditoria = new Auditoria(accion, tipo, usuarioId,idMovimiento, ip, nombreEquipo);
+                Auditoria auditoria = new Auditoria(accion, fecha, ip, nombreEquipo, tipo, idUsuario,idMovimiento);
                 await _auditoriaDataAccess.AuditoriaAdd(auditoria);
                 _logger.Info("Auditoría agregada: {0}", auditoria.ToString());
             }
