@@ -41,11 +41,13 @@ namespace Sistema_Ventas.Data
                 foreach (DataRow row in auditoriaData.Rows)
                 {
                     Auditoria auditoria = new Auditoria(
-                        Convert.ToInt32(row["id"]),
-                        row["usuario"].ToString() ?? "",
-                        row["accion"].ToString() ?? "",
-                        Convert.ToDateTime(row["fecha_hora"]),
-                        row["detalles"].ToString() ?? ""
+                        Convert.ToString(row["accion"]),
+                        Convert.ToString(row["tipo"]),
+                        Convert.ToInt32(row["usuario_id"]),
+                        Convert.ToInt32(row["id_movimiento"]),
+                        Convert.ToString(row["ip_acceso"]),
+                        Convert.ToString(row["nombre_equipo"])
+
                     );
                     auditorias.Add(auditoria);
                 }
@@ -65,6 +67,45 @@ namespace Sistema_Ventas.Data
             catch (Exception ex)
             {
                 _logger.Error(ex, "Error al obtener auditorías");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect(); // Desconectar de la base de datos
+            }
+        }
+        public async Task AuditoriaAdd(Auditoria auditoria)
+        {
+            try
+            {
+                _dbAccess.Connect(); // Conectar a la base de datos
+                string query = "INSERT INTO auditoria (accion, fecha, ip_acceso, nombre_equipo, tipo, usuario_id, id_movimiento) " +
+                               "VALUES (@accion, @fecha, @ip_acceso, @nombre_equipo, @tipo, @usuario_id, @id_movimiento)";
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@accion", auditoria.Accion),
+                    new NpgsqlParameter("@fecha", auditoria.Fecha),
+                    new NpgsqlParameter("@ip_acceso", auditoria.IpAcceso),
+                    new NpgsqlParameter("@nombre_equipo", auditoria.NombreEquipo),
+                    new NpgsqlParameter("@tipo", auditoria.Tipo),
+                    new NpgsqlParameter("@usuario_id", auditoria.UsuarioId ?? (object)DBNull.Value),
+                    new NpgsqlParameter("@id_movimiento", auditoria.IdMovimiento ?? (object)DBNull.Value)
+                };
+                _logger.Info("Ejecutando consulta: {0}", query);
+                var resul = _dbAccess.ExecuteNonQuery(query, parameters.ToArray());
+                if (resul == 0)
+                {
+                    _logger.Warn("No se pudo agregar la auditoría");
+                }
+                else
+                {
+                    _logger.Info("Auditoría agregada exitosamente");
+                }
+                _logger.Info("Auditoría agregada: {0}", auditoria.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al agregar auditoría");
                 throw;
             }
             finally

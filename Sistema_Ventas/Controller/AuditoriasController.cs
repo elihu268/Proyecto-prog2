@@ -41,7 +41,26 @@ namespace Sistema_Ventas.Controller
                 Console.WriteLine("Error al obtener auditorías: " + ex.Message);
                 throw;
             }
+        }
 
+
+        public async Task AudioriaAdd(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreEquipo)
+        {
+            try
+            {
+                Auditoria auditoria = new Auditoria(accion, tipo, usuarioId,idMovimiento, ip, nombreEquipo);
+                await _auditoriaDataAccess.AuditoriaAdd(auditoria);
+                _logger.Info("Auditoría agregada: {0}", auditoria.ToString());
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                Console.WriteLine("Error al agregar auditoría: " + ex.Message);
+                throw;
+            }
         }
     }
 }
+
+    
+
