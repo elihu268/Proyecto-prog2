@@ -161,9 +161,9 @@ namespace PuntodeVenta.View
                     DateTime.Now,
                      System.Windows.Forms.SystemInformation.UserDomainName.ToString(),
                     System.Windows.Forms.SystemInformation.ComputerName.ToString(),
-                    "Usuario",
-                    idUsuario,
-                    0
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    1
                 );
                 auditoriaController.AudioriaAdd(auditoria);
                 if (idUsuario > 0)
