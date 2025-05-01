@@ -1,4 +1,5 @@
-﻿using Sistema_Ventas.Controller;
+﻿using DiseñoForms.View;
+using Sistema_Ventas.Controller;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using System;
@@ -51,6 +52,26 @@ namespace Sistema_Ventas.View
 
                 GuardarPermisosDelRol(idRolSeleccionado);
 
+                if (Sesión.IdRol == idRolSeleccionado)
+                {
+                    UsuariosController uc = new UsuariosController();
+                    // Si el rol seleccionado es el mismo que el del usuario actual, actualizar los permisos en la sesión
+                    Sesión.Permisos = uc.ObtenerPermisos(idRolSeleccionado);
+                    if (this.MdiParent != null)
+                    {
+                        if (this.MdiParent is MDI_Sistema_ventas mdiForm)
+                        {
+                            mdiForm.ActualizarVistaPorPermisos();
+                        }
+                        foreach (Form childForm in this.MdiParent.MdiChildren)
+                        {
+                            childForm.Close();
+                        }
+                        
+
+                    }
+                }
+
                 MessageBox.Show("Permisos asignados correctamente.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -63,10 +84,6 @@ namespace Sistema_Ventas.View
             }
 
         }
-
-
-
-
         private void frmAsignarPermisos_Load(object sender, EventArgs e)
         {
             InicializarVentanaPermisos();
@@ -220,8 +237,6 @@ namespace Sistema_Ventas.View
         
 
         }
-
-      
 
         private void dgv_permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

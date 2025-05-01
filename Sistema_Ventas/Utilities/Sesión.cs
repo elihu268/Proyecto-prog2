@@ -10,12 +10,14 @@ namespace Sistema_Ventas.Utilities
     {
         public static int IdUsuario { get; private set; }
         public static string UsuarioActual { get; private set; }
-        public static List<string> Permisos { get; private set; } = new List<string>();
+        public static int IdRol { get; private set; }
+        public static List<string> Permisos { get; set; } = new List<string>();
 
-        public static void IniciarSesion(int idUsuario, string usuario, List<string> permisos)
+        public static void IniciarSesion(int idUsuario, string usuario, int idRol, List<string> permisos)
         {
             IdUsuario = idUsuario;
             UsuarioActual = usuario;
+            IdRol = idRol;
             Permisos = permisos;
         }
 
@@ -23,6 +25,7 @@ namespace Sistema_Ventas.Utilities
         {
             IdUsuario = 0;
             UsuarioActual = null;
+            IdRol = 0;
             Permisos.Clear();
         }
 

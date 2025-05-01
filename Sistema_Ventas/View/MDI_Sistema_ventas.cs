@@ -277,5 +277,29 @@ namespace DiseñoForms.View
             AbreVentanaHija("frmasignarpermisos");
         }
 
+        public void ActualizarVistaPorPermisos()
+        {
+            // Permisos del strip de usuarios
+            usuariosToolStripMenuItem.Visible = Sesión.TienePermiso("USR_VIEW") || Sesión.TienePermiso("AUDIT_VIEW");
+            geUsuariosToolStripMenuItem.Visible = Sesión.TienePermiso("USR_VIEW");
+            auditoriasToolStripMenuItem.Visible = Sesión.TienePermiso("AUDIT_VIEW");
+
+            // Permisos del strip de ventas y clientes
+            clientesVentasToolStripMenuItem.Visible = Sesión.TienePermiso("CLI_VIEW") || Sesión.TienePermiso("SALE_CREATE") || Sesión.TienePermiso("CATALOG_VIEW");
+            geClientesToolStripMenuItem.Visible = Sesión.TienePermiso("CLI_VIEW");
+            geVentasToolStripMenuItem.Visible = Sesión.TienePermiso("SALE_CREATE");
+            cargaCatalogosToolStripMenuItem.Visible = Sesión.TienePermiso("CATALOG_VIEW");
+
+            // Permisos del strip de estadisticas
+            estadisticaAnalisisToolStripMenuItem.Visible = Sesión.TienePermiso("SALE_VIEW") || Sesión.TienePermiso("REPORT_VIEW");
+            apiVentasToolStripMenuItem.Visible = Sesión.TienePermiso("SALE_VIEW");
+            reportesToolStripMenuItem.Visible = Sesión.TienePermiso("REPORT_VIEW");
+
+            // Permisos del strip de seguridad
+            seguridadToolStripMenuItem.Visible = Sesión.TienePermiso("ROLE_ASSIGN") || Sesión.TienePermiso("ROLE_CREATE");
+            permisosToolStripMenuItem.Visible = Sesión.TienePermiso("ROLE_ASSIGN");
+            rolesToolStripMenuItem.Visible = Sesión.TienePermiso("ROLE_CREATE");
+        }
+
     }
 }
