@@ -31,7 +31,7 @@ namespace PuntodeVenta.View
             PoblaTipoFecha();
             PoblaRoles();
 
-            //CargarUsuarios();
+          //  CargarUsuarios();
 
             //Se oculta el boton para cargar un nuevo usuario si no tiene el permiso.
             if (!Sesión.TienePermiso("USR_CREATE"))

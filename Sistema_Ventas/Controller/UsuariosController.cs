@@ -69,7 +69,7 @@ namespace Sistema_Ventas.Controller
             catch (Exception ex)
             {
                 // Manejo de excepciones
-                _logger.Error($"Error al agregar usuario{usuario.DatosPersonales?.NombreCompleto ?? "sin nombre"}, correo {usuario.Cuenta}");
+                _logger.Error($"Error al agregar usuario{usuario.DatosPersonales?.NombreCompleto ?? "sin nombre"}, correo {usuario.Cuenta} {ex.Message}");
                 return (-4, "Error al agregar el usuario");
             }
         }

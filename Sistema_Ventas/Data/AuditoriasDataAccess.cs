@@ -33,7 +33,13 @@ namespace Sistema_Ventas.Data
             try
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
-                string query = "SELECT * FROM auditoria";
+                string query = @"SELECT u.id_usuario, p.nombre_completo, 
+                                b.accion, b.fecha, b.ip_acceso, 
+                                b.nombre_equipo, b.tipo
+	                                FROM bitacora b
+	                                JOIN usuarios u ON u.id_usuario = b.id_usuario
+	                                JOIN personas p on u.id_persona = p.id_persona
+	                                WHERE 1=1";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
                 _logger.Info("Ejecutando consulta: {0}", query);
                 DataTable auditoriaData = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
@@ -41,13 +47,14 @@ namespace Sistema_Ventas.Data
                 foreach (DataRow row in auditoriaData.Rows)
                 {
                     Auditoria auditoria = new Auditoria(
-                        Convert.ToString(row["accion"]),
-                        Convert.ToString(row["tipo"]),
-                        Convert.ToInt32(row["usuario_id"]),
-                        Convert.ToInt32(row["id_movimiento"]),
-                        Convert.ToString(row["ip_acceso"]),
-                        Convert.ToString(row["nombre_equipo"])
-
+                       Convert.ToInt32(row["id_usuario"]),
+                          row["nombre_completo"].ToString() ?? "",
+                            row["accion"].ToString() ?? "",
+                            Convert.ToDateTime(row["fecha"]),
+                            row["ip_acceso"].ToString() ?? "",
+                            row["nombre_equipo"].ToString() ?? "",
+                            Convert.ToInt32(row["id_movimiento"]),
+                            row["tipo"].ToString() ?? ""
                     );
                     auditorias.Add(auditoria);
                 }
@@ -79,8 +86,8 @@ namespace Sistema_Ventas.Data
             try
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
-                string query = "INSERT INTO auditoria (accion, fecha, ip_acceso, nombre_equipo, tipo, usuario_id, id_movimiento) " +
-                               "VALUES (@accion, @fecha, @ip_acceso, @nombre_equipo, @tipo, @usuario_id, @id_movimiento)";
+                string query = @"INSERT INTO auditoria (accion, fecha, ip_acceso, nombre_equipo, tipo, usuario_id, id_movimiento)
+                               VALUES (@accion, @fecha, @ip_acceso, @nombre_equipo, @tipo, @usuario_id, @id_movimiento)";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@accion", auditoria.Accion),

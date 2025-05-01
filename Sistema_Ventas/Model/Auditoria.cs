@@ -15,7 +15,7 @@ namespace Sistema_Ventas.Model
         [Required]
         public string Accion { get; set; }
 
-        public DateTime Fecha { get; set; } = DateTime.Now;
+        public DateTime Fecha { get; set; }
 
         [MaxLength(45)]
         public string IpAcceso { get; set; }
@@ -30,15 +30,29 @@ namespace Sistema_Ventas.Model
 
         public int? IdMovimiento { get; set; }
 
-        public Auditoria(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreqeuipo)
+        public string NombreCompleto { get; set; }
+
+        public Auditoria(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreEquipo)
         {
             Accion = accion;
             Tipo = tipo;
             UsuarioId = usuarioId;
             IdMovimiento = idMovimiento;
             IpAcceso = ip;
-            NombreEquipo = nombreqeuipo;
+            NombreEquipo = nombreEquipo;
             Fecha = DateTime.Now;
+        }
+
+        public Auditoria(int? usuarioid, string nombreCompleto, string accion, DateTime fecha, string ip, string nombreEquipo, int idMovimiento, string tipo)
+        {
+           UsuarioId = usuarioid;
+            NombreCompleto = nombreCompleto;
+            Accion = accion;
+            Fecha = fecha;
+            IpAcceso = ip;
+            NombreEquipo = nombreEquipo;
+            IdMovimiento = idMovimiento;
+            Tipo = tipo;
         }
         public override string ToString()
         {

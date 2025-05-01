@@ -70,6 +70,7 @@ namespace Sistema_Ventas.Data
                         Convert.ToInt32(row["id_rol"]),
                         row["usuario"].ToString() ?? "",
                         row["contrasena"].ToString() ?? "",
+                        // Convert.ToInt32(row["estatus"]) == 1,
                         Convert.ToBoolean(row["estatus"]),
                         persona
                     );
@@ -217,11 +218,11 @@ namespace Sistema_Ventas.Data
         {
             Usuario usuarioValido = null;
             string mensaje = "";
-            string query = "SELECT u.id_usuario, u.id_persona, u.id_rol, u.usuario, u.contraseña, u.estatus, " +
-                           "p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus AS estatus_persona " +
-                           "FROM usuarios u " +
-                           "JOIN personas p ON u.id_persona = p.id_persona " +
-                           "WHERE u.usuario = @usuario";
+            string query = @"SELECT u.id_usuario, u.id_persona, u.id_rol, u.usuario, u.contraseña, u.estatus,
+                           p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus AS estatus_persona 
+                           FROM usuarios u
+                           JOIN personas p ON u.id_persona = p.id_persona
+                           WHERE u.usuario = @usuario";
 
 
             List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
@@ -272,7 +273,7 @@ namespace Sistema_Ventas.Data
                     Convert.ToInt32(row["id_rol"]),
                     row["usuario"].ToString(),
                     row["contraseña"].ToString(),
-                    Convert.ToBoolean(row["estatus"]),
+                    Convert.ToBoolean(row["estatus_persona"]), // Cambiado a Convert.ToBoolean
                     persona
                 );                
             }
