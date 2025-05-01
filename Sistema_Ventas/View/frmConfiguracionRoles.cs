@@ -156,15 +156,21 @@ namespace Sistema_Ventas.View
         }
 
         /// <summary>
-        /// Evento Click para el botón de Actualizar: Ejecuta validación y actualización
+        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
         /// </summary>
-        private void btnActualizar_Click(object sender, EventArgs e)
+        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
         {
-            if (ActualizarRol())
-            {
-                MessageBox.Show("Datos actualizados exitosamente!!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
         }
+
+        /// <summary>
+        /// Evento Click para el botón de buscar un rol
+        /// </summary>
+        private void btnBuscarRol_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         /// <summary>
         /// Evento Click para el botón de Guardar: Ejecuta validación y guardado
@@ -194,36 +200,6 @@ namespace Sistema_Ventas.View
             }
         }
 
-        /// <summary>
-        /// Verifica campos obligatorios en el formulario de actualización
-        /// </summary>
-        /// <returns>True si existen campos vacíos</returns>
-        private bool DatosVaciosActualizarRol()
-        {
-            if (cbxTipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "" || txtBusquedaRol.Text == "")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Ejecuta el proceso completo de actualización de un rol
-        /// </summary>
-        /// <returns>True si la actualización fue exitosa</returns>
-        private bool ActualizarRol()
-        {
-            if (DatosVaciosActualizarRol())
-            {
-                MessageBox.Show("Favor de llenar los datos obligatorios ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
-
         private void dgvRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (Sesión.TienePermiso("ROLE_EDIT"))
@@ -246,5 +222,7 @@ namespace Sistema_Ventas.View
         {
 
         }
+
+
     }
 }

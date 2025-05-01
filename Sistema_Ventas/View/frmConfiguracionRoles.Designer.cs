@@ -47,13 +47,14 @@
             contextMenuRoles = new ContextMenuStrip(components);
             editRolToolStripMenuItem = new ToolStripMenuItem();
             gbxBusquedaRol = new GroupBox();
+            btnBuscarRol = new Button();
             cbxTipoFecha = new ComboBox();
             lblTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
             dtpFechaInicio = new DateTimePicker();
             lblFechaFin = new Label();
             lblFechaInicio = new Label();
-            btnActualizar = new Button();
+            btnActualizarDataGridView = new Button();
             txtBusquedaRol = new TextBox();
             lblBuscar = new Label();
             gbxHerramienta = new GroupBox();
@@ -241,26 +242,27 @@
             // 
             contextMenuRoles.Items.AddRange(new ToolStripItem[] { editRolToolStripMenuItem });
             contextMenuRoles.Name = "contextMenuRoles";
-            contextMenuRoles.Size = new Size(181, 48);
+            contextMenuRoles.Size = new Size(125, 26);
             contextMenuRoles.Text = "Roles";
             contextMenuRoles.Opening += contextMenuRoles_Opening;
             // 
             // editRolToolStripMenuItem
             // 
             editRolToolStripMenuItem.Name = "editRolToolStripMenuItem";
-            editRolToolStripMenuItem.Size = new Size(180, 22);
+            editRolToolStripMenuItem.Size = new Size(124, 22);
             editRolToolStripMenuItem.Text = "Editar Rol";
             editRolToolStripMenuItem.Click += editarRolesToolStripMenuItem_Click;
             // 
             // gbxBusquedaRol
             // 
+            gbxBusquedaRol.Controls.Add(btnBuscarRol);
             gbxBusquedaRol.Controls.Add(cbxTipoFecha);
             gbxBusquedaRol.Controls.Add(lblTipoFecha);
             gbxBusquedaRol.Controls.Add(dtpFechaFin);
             gbxBusquedaRol.Controls.Add(dtpFechaInicio);
             gbxBusquedaRol.Controls.Add(lblFechaFin);
             gbxBusquedaRol.Controls.Add(lblFechaInicio);
-            gbxBusquedaRol.Controls.Add(btnActualizar);
+            gbxBusquedaRol.Controls.Add(btnActualizarDataGridView);
             gbxBusquedaRol.Controls.Add(txtBusquedaRol);
             gbxBusquedaRol.Controls.Add(lblBuscar);
             gbxBusquedaRol.Dock = DockStyle.Top;
@@ -271,6 +273,21 @@
             gbxBusquedaRol.TabIndex = 13;
             gbxBusquedaRol.TabStop = false;
             gbxBusquedaRol.Text = "Busqueda";
+            // 
+            // btnBuscarRol
+            // 
+            btnBuscarRol.BackColor = SystemColors.ActiveCaption;
+            btnBuscarRol.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBuscarRol.Image = Properties.Resources.search;
+            btnBuscarRol.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscarRol.Location = new Point(350, 53);
+            btnBuscarRol.Name = "btnBuscarRol";
+            btnBuscarRol.Size = new Size(75, 30);
+            btnBuscarRol.TabIndex = 20;
+            btnBuscarRol.Text = "Buscar";
+            btnBuscarRol.TextAlign = ContentAlignment.MiddleRight;
+            btnBuscarRol.UseVisualStyleBackColor = false;
+            btnBuscarRol.Click += btnBuscarRol_Click;
             // 
             // cbxTipoFecha
             // 
@@ -328,20 +345,20 @@
             lblFechaInicio.TabIndex = 13;
             lblFechaInicio.Text = "Fecha inicio";
             // 
-            // btnActualizar
+            // btnActualizarDataGridView
             // 
-            btnActualizar.BackColor = SystemColors.ActiveCaption;
-            btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnActualizar.Image = Properties.Resources.actualizar;
-            btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(438, 53);
-            btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(95, 30);
-            btnActualizar.TabIndex = 2;
-            btnActualizar.Text = "Actualizar";
-            btnActualizar.TextAlign = ContentAlignment.MiddleRight;
-            btnActualizar.UseVisualStyleBackColor = false;
-            btnActualizar.Click += btnActualizar_Click;
+            btnActualizarDataGridView.BackColor = SystemColors.ActiveCaption;
+            btnActualizarDataGridView.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnActualizarDataGridView.Image = Properties.Resources.actualizar;
+            btnActualizarDataGridView.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActualizarDataGridView.Location = new Point(438, 53);
+            btnActualizarDataGridView.Name = "btnActualizarDataGridView";
+            btnActualizarDataGridView.Size = new Size(95, 30);
+            btnActualizarDataGridView.TabIndex = 2;
+            btnActualizarDataGridView.Text = "Actualizar";
+            btnActualizarDataGridView.TextAlign = ContentAlignment.MiddleRight;
+            btnActualizarDataGridView.UseVisualStyleBackColor = false;
+            btnActualizarDataGridView.Click += btnActualizarDataGridView_Click;
             // 
             // txtBusquedaRol
             // 
@@ -444,7 +461,7 @@
         private DateTimePicker dtpFechaInicio;
         private Label lblFechaFin;
         private Label lblFechaInicio;
-        private Button btnActualizar;
+        private Button btnActualizarDataGridView;
         private TextBox txtBusquedaRol;
         private Label lblBuscar;
         private GroupBox gbxAltaEdicionRol;
@@ -463,5 +480,6 @@
         private DataGridView dgvRoles;
         private ContextMenuStrip contextMenuRoles;
         private ToolStripMenuItem editRolToolStripMenuItem;
+        private Button btnBuscarRol;
     }
 }
