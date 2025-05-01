@@ -24,6 +24,16 @@ namespace Sistema_Ventas.Bussines
         {
             return Validaciones.EsMayorACero(cantidad);
         }
+        internal static (decimal resultado,bool valido) EsDescuentoValido(string descuento){
+            decimal desc=-1;
+            bool valido=false;
+            valido=Decimal.TryParse(descuento, out decimal val);
+            if (valido==true&&(desc<0||desc>50))
+            {
+                valido = false;
+            }
+            return (desc,valido);
+        }
         internal static bool CantidadEnRango(string cantidad, int cantidadStock)
         {
             try

@@ -167,6 +167,7 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("no se han agregado producto al carrito", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
                 return;
             }
+           
             CompraController compraController = new CompraController();
             Cliente cliente = (Cliente)cb_clientes.SelectedItem;
             if (compraController.InsertarCompra(cliente.Id, (int)cbox_estatus.SelectedValue, (int)cb_metodo.SelectedValue, detalles))
@@ -188,7 +189,7 @@ namespace Sistema_Ventas.View
             txt_IVA.Text = "";
             txt_subtotal.Text = "";
             txt_total.Text = "";
-            txt_descuento.Text = "";
+            //txt_descuento.Text = "";
 
             // Limpiar el DataGridView (dgv_carrito) y los detalles
             // Limpiar el DataTable vinculado al DataGridView
@@ -213,11 +214,11 @@ namespace Sistema_Ventas.View
             }
 
             // Verificar que el correo no sea vacío o inválido
-            /*if (string.IsNullOrEmpty(clienteSeleccionado.DatosPersonales.Correo) || !Utilities.Validaciones.EsCorreoValido(clienteSeleccionado.DatosPersonales.Correo))
+            if (string.IsNullOrEmpty(clienteSeleccionado.DatosPersonales.Correo) || !Utilities.Validaciones.EsCorreoValido(clienteSeleccionado.DatosPersonales.Correo))
             {
                 MessageBox.Show("Cliente no válido: correo inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
-            }*/
+            }
             return true;
 
         }
@@ -272,7 +273,7 @@ namespace Sistema_Ventas.View
             txt_subtotal.Text =  compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
             txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
             txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
-            txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
+            //txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
             ConfigurarDgvCarrito(detalles);
 
             //MessageBox.Show("Producto agregado a la compra.{}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
