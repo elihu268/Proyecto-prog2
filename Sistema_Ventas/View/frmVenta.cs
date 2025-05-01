@@ -20,6 +20,7 @@ namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
     {
+        //para que pueda se usado al agregar varios productos, si usa solo en el metodo hace varias listas conun solo producto
         private List<DetalleCompra> detalles = new List<DetalleCompra>();
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmVenta");
 
@@ -42,8 +43,9 @@ namespace Sistema_Ventas.View
             PoblaComboMetodo();//metodo de pago
             PoblaComboEstatus();//estatus de compra
             PoblacomboCliente();//cliente por correo
+            //notifica la baja existencia de un producto
             ProductosController productoController = new ProductosController();
-            List<Producto> listaProducto = productoController.ObtenerProductos();
+            List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
             var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaProducto);
             if (alerta)
             {
@@ -53,11 +55,11 @@ namespace Sistema_Ventas.View
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
-            PoblacomboProducto(listaProducto);//producto por codigo
-            PoblaDataProducto(listaProducto);
-            txt_nombre_prod.Text = "";
+            PoblacomboProducto(listaProducto);//producto por codigo para elegir en agregar producto
+            PoblaDataProducto(listaProducto);//para busqueda del producto
+            txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
             
-            _logger.Debug("se cargo correctamente los combos bos y el datagrid");
+            _logger.Debug("se cargo correctamente los datos de productos,clientes");
         }
         /// <summary>
         /// funcion que da una lista de valores al comntrol cb_metodo(comboBox metodo de pago)
@@ -111,18 +113,11 @@ namespace Sistema_Ventas.View
         }
         private void PoblacomboProducto(List<Producto> listaProducto)
         {
-           
-
-            cBox_codigo.Items.Clear(); // Limpia primero el combo
-
-            foreach (Producto p in listaProducto)
-            {
-                cBox_codigo.Items.Add(p.Codigo); 
-            }
+            cBox_codigo.DataSource = null;
             cBox_codigo.DataSource = listaProducto;
             cBox_codigo.DisplayMember = "Codigo";
             cBox_codigo.ValueMember = "IdProducto";
-            cBox_codigo.SelectedIndex = 0; // Para que no aparezca uno seleccionado por defecto
+            cBox_codigo.SelectedIndex = 0;
 
         }
 
