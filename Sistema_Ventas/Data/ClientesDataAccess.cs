@@ -105,6 +105,73 @@ WHERE  1 = 1
             }
         }
 
+        public List<Cliente> ObtenerClientePorNombre(string nombreCliente)
+        {
+            List<Cliente> clientes = new List<Cliente>();
+            try
+            {
+                string query = @"
+            SELECT 
+                c.id_cliente, 
+                p.id_persona, 
+                p.nombre_completo, 
+                p.correo, 
+                p.telefono, 
+                p.fecha_nacimiento, 
+                p.estatus, 
+                c.tipo, 
+                c.fecha_registro, 
+                c.rfc
+            FROM cliente c
+            INNER JOIN personas p ON c.id_persona = p.id_persona
+            WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombreCliente) AND p.estatus = TRUE
+        ";
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+                parametros.Add(new NpgsqlParameter("@nombreCliente", $"%{nombreCliente}%"));
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    // Crear el objeto Persona
+                    Persona persona = new Persona
+                    {
+                        Id = Convert.ToInt32(row["id_persona"]),
+                        NombreCompleto = row["nombre_completo"].ToString(),
+                        Correo = row["correo"].ToString(),
+                        Telefono = row["telefono"].ToString(),
+                        FechaNacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                        Estatus = Convert.ToBoolean(row["estatus"])
+                    };
+
+                    // Crear el objeto Cliente con el constructor adecuado
+                    Cliente cliente = new Cliente(
+                        Convert.ToInt32(row["id_cliente"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["tipo"]),
+                        Convert.ToDateTime(row["fecha_registro"]),
+                        row["rfc"].ToString(),
+                        persona
+                    );
+
+                    clientes.Add(cliente);
+                }
+
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener información de los clientes desde la base de datos");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect(); // Siempre cerrar conexión
+            }
+        }
+
+
         public int InsertarCliente(Cliente cliente)
         {
             try

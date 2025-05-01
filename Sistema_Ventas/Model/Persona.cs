@@ -51,6 +51,7 @@ namespace Sistema_Ventas.Model
         /// </summary>
 
         public bool Estatus { get; set; }
+        public string DescripcionEstatus => Estatus ? "Activo" : "Inactivo";
 
         //para recibir objeto con datos vacios, cuando se quiere depositar datos en el objeto
         public Persona()

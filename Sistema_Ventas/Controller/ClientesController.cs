@@ -45,6 +45,21 @@ namespace Sistema_Ventas.Controller
             }
         }
 
+        public List<Cliente> ObtenerClientePorNombre(String nombrecli)
+        {
+            try
+            {
+                List<Cliente> clientes = _clientesData.ObtenerClientePorNombre(nombrecli);
+                _logger.Info($"Se obtuvieron {clientes.Count} Clientes");
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener la lista de clientes con el nombre:{nombrecli} ");
+                throw;
+            }
+        }
+
         public (int id, string mensaje) RegistrarCliente(Cliente cliente)
         {
             try

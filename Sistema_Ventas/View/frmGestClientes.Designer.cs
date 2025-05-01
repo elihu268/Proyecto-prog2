@@ -60,6 +60,7 @@
             lbNombre = new Label();
             dgvGesClientes = new DataGridView();
             gbxBusqueda = new GroupBox();
+            btnBuscar = new Button();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
@@ -387,6 +388,7 @@
             // 
             // gbxBusqueda
             // 
+            gbxBusqueda.Controls.Add(btnBuscar);
             gbxBusqueda.Controls.Add(cbxtipoFecha);
             gbxBusqueda.Controls.Add(lbTipoFecha);
             gbxBusqueda.Controls.Add(dtpFechaFin);
@@ -406,6 +408,20 @@
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda de Clientes";
+            // 
+            // btnBuscar
+            // 
+            btnBuscar.BackColor = SystemColors.ActiveCaption;
+            btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBuscar.Image = Sistema_Ventas.Properties.Resources.search;
+            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscar.Location = new Point(405, 83);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(129, 44);
+            btnBuscar.TabIndex = 19;
+            btnBuscar.Text = "Buscar";
+            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // cbxtipoFecha
             // 
@@ -470,7 +486,7 @@
             btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(489, 85);
+            btnActualizar.Location = new Point(570, 83);
             btnActualizar.Margin = new Padding(4, 5, 4, 5);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(122, 46);
@@ -486,7 +502,7 @@
             txtBusqueda.Margin = new Padding(4, 5, 4, 5);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(324, 23);
+            txtBusqueda.Size = new Size(243, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBuscar
@@ -650,5 +666,6 @@
         private ToolTip ttipinfo;
         private Label lbl_obligatorios;
         private TextBox txt_fecha_registro;
+        private Button btnBuscar;
     }
 }

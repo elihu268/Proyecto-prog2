@@ -34,7 +34,7 @@ namespace Sistema_Ventas.Model
         /// indica si el cliente 
         /// </summary>
         public int Estatus { get; set; }
-        public string? DescripcionEstatus { get; }
+
         public Persona DatosPersonales { get; set; }
 
         //CONSTRUCTORES

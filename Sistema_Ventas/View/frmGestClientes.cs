@@ -278,7 +278,7 @@ namespace PuntodeVenta.View
                         cliente.DatosPersonales.Telefono,
                         cliente.DatosPersonales.FechaNacimiento,
                         cliente.FechaRegistro,
-                        cliente.DescripcionEstatus
+                        cliente.DatosPersonales.DescripcionEstatus
                         );
                 }
 
@@ -301,6 +301,55 @@ namespace PuntodeVenta.View
             }
         }
 
+        private void BuscarCliente()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+                {
+                    MessageBox.Show("Ingrese el nombre del cliente que desea buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                ClientesController clienteController = new ClientesController();
+                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.Trim().ToLower());
+
+                if (clientes.Count == 0)
+                {
+                    dgvGesClientes.DataSource = null; // Limpiar si no hay resultados
+                    MessageBox.Show("No se encontraron clientes con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Crear un DataTable para mostrar en el DataGridView
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("RFC", typeof(string));
+                dt.Columns.Add("Nombre Completo", typeof(string));
+                dt.Columns.Add("Tipo", typeof(int));
+                dt.Columns.Add("Correo", typeof(string));
+                dt.Columns.Add("Teléfono", typeof(string));
+                dt.Columns.Add("Fecha Nacimiento", typeof(string));
+                dt.Columns.Add("Fecha de Registro", typeof(string));
+                dt.Columns.Add("Estatus", typeof(string));
+
+                ConfigurarDataGridViewClientes(clientes); // Aplica los estilos
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+
+
+
         private void LimpiarCampos()
         {
             txtNombreCliente.Clear();
@@ -310,6 +359,59 @@ namespace PuntodeVenta.View
             txtrfcCliente.Clear();
             cbxEstatus.SelectedValue = 2;
         }
+
+        public void ConfigurarDataGridViewClientes(List<Cliente> clientes)
+        {
+            dgvGesClientes.DataSource = null;
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("RFC", typeof(string));
+            dt.Columns.Add("Nombre Completo", typeof(string));
+            dt.Columns.Add("Tipo", typeof(int));
+            dt.Columns.Add("Correo", typeof(string));
+            dt.Columns.Add("Teléfono", typeof(string));
+            dt.Columns.Add("Fecha Nacimiento", typeof(string));
+            dt.Columns.Add("Fecha de Registro", typeof(string));
+            dt.Columns.Add("Estatus", typeof(string));
+
+            foreach (Cliente cliente in clientes)
+            {
+                dt.Rows.Add(
+                    cliente.Id,
+                    cliente.Rfc,
+                    cliente.NombreCompletoCliente,
+                    cliente.Tipo,
+                    cliente.DatosPersonales?.Correo ?? "",
+                    cliente.DatosPersonales?.Telefono ?? "",
+                    cliente.DatosPersonales?.FechaNacimiento?.ToString("dd/MM/yyyy") ?? "",
+                    cliente.FechaRegistro?.ToString("dd/MM/yyyy") ?? "",
+                    cliente.DatosPersonales?.Estatus == true ? "Activo" : "Inactivo"
+                );
+            }
+
+            dgvGesClientes.DataSource = dt;
+
+            // Configuración visual, igual que la que ya tienes
+            dgvGesClientes.AllowUserToAddRows = false;
+            dgvGesClientes.AllowUserToDeleteRows = false;
+            dgvGesClientes.ReadOnly = true;
+            dgvGesClientes.Columns["ID"].Visible = false;
+            dgvGesClientes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dgvGesClientes.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvGesClientes.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dgvGesClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvGesClientes.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            dgvGesClientes.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // Estilo de cabeceras
+            dgvGesClientes.EnableHeadersVisualStyles = false;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
 
         private void ConfigurarDataGridView()
         {
@@ -391,6 +493,9 @@ namespace PuntodeVenta.View
             }
         }
 
-        
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            BuscarCliente();
+        }
     }
 }
