@@ -32,18 +32,14 @@ namespace Sistema_Ventas.Controller
             }
         }
 
-        /// <summary>
-        /// Calcula el subtotal de la compra.
-        /// </summary>
+        
         public decimal DatosCompraSubtotal(List<DetalleCompra> detalles)
         {
             decimal subtotal = detalles.Sum(d => d.Cantidad * d.Productoi.Precio);
             return subtotal;
         }
 
-        /// <summary>
-        /// Calcula el IVA de la compra.
-        /// </summary>
+       
         public decimal DatosCompraIva(List<DetalleCompra> detalles)
         {
             decimal subtotal = DatosCompraSubtotal(detalles);
@@ -51,9 +47,6 @@ namespace Sistema_Ventas.Controller
             return iva;
         }
 
-        /// <summary>
-        /// Calcula el descuento de la compra.
-        /// </summary>
         public decimal DatosCompraDescuento()
         {
             decimal des = 0;
@@ -72,21 +65,26 @@ namespace Sistema_Ventas.Controller
             return total;
         }
 
-        /// <summary>
-        /// Inserta una nueva compra junto con sus detalles.
-        /// </summary>
+       /// <summary>
+       /// insertar compra, perimmero la compra luego los detalles
+       /// </summary>
+       /// <param name="idCliente"> cliente </param>
+       /// <param name="estatus">estatsu de la compra</param>
+       /// <param name="metodo">metodo de pago</param>
+       /// <param name="detalles">arrelo de detalles que tendran el mismo cliente e id de copra</param>
+       /// <returns>verdadero si se inserto bien la compra con sus detalle</returns>
         public bool InsertarCompra(int idCliente, int estatus, int metodo, List<DetalleCompra> detalles)
         {
             decimal subtotal = DatosCompraSubtotal(detalles);
             decimal iva = DatosCompraIva(detalles);
             decimal descuento = DatosCompraDescuento();
             decimal total = subtotal + iva - descuento;
-
+            //calculo para la compra
             try
             {
                 int id_Compra = _compraData.InsertarCompra(idCliente, estatus, metodo, iva, subtotal, descuento, total);
-
-                foreach (var detalle in detalles)
+                //insertar primero compra
+                foreach (var detalle in detalles)//insertar los detalle
                 {
                     bool detalleAgregado = _detalleData.AgregarProductoADetalle(id_Compra, detalle.Productoi, detalle.Cantidad);
                     if (!detalleAgregado)
@@ -94,7 +92,7 @@ namespace Sistema_Ventas.Controller
                         _logger.Error($"Error al agregar el producto {detalle.Productoi.IdProducto} al detalle de compra.");
                         return false;
                     }
-
+                    //modificar la existencia del producto
                     bool existenciaModificada = _productoData.ModificarExistencia(detalle.Productoi.IdProducto, detalle.Cantidad);
                     if (!existenciaModificada)
                     {

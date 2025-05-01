@@ -26,23 +26,31 @@ namespace Sistema_Ventas.Data
         }
 
         /// <summary>
-        /// Inserta una nueva compra en la base de datos.
+        /// insertar una compra en labd
         /// </summary>
+        /// <param name="idCliente"> id del cliente</param>
+        /// <param name="estatus">estatus de la compra-0,1,2-proceso,...</param>
+        /// <param name="metodoPago">tarjeta,efectivo</param>
+        /// <param name="iva">se calcula en controller</param>
+        /// <param name="subtotal"></param>
+        /// <param name="descuento"></param>
+        /// <param name="total"></param>
+        /// <returns></returns>
         public int InsertarCompra(int idCliente, int estatus, int metodoPago, decimal iva, decimal subtotal, decimal descuento, decimal total)
         {
             try
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
 
-                // Generar el código único de la compra
+                // para generar un codigo unico de la compra
                 string codigoCompra = "COMP-" + DateTime.Now.Ticks.ToString();
 
-                // Query de inserción
+                // Query 
                 string insertCompraQuery = @"
                     INSERT INTO compra (id_cliente, codigo, metodo_de_pago, iva, subtotal, descuento, total, fecha_de_compra, estatus)
                     VALUES (@id_cliente, @codigo, @metodo_pago, @iva, @subtotal, @descuento, @total, @fecha, @estatus)
                     RETURNING id_compra;";
-
+                //debe retornar el id inertar despues en detalle
                 // Parámetros
                 List<NpgsqlParameter> parametrosCompra = new List<NpgsqlParameter>
                 {
@@ -56,7 +64,7 @@ namespace Sistema_Ventas.Data
                     new NpgsqlParameter("@fecha", DateTime.Now),
                     new NpgsqlParameter("@estatus", estatus)
                 };
-
+                //creacion de parametros
                 // Ejecutar la inserción y obtener el ID de la compra
                 var result = _dbAccess.ExecuteScalar(insertCompraQuery, parametrosCompra.ToArray());
 
@@ -66,7 +74,8 @@ namespace Sistema_Ventas.Data
                 }
                 else
                 {
-                    throw new Exception("No se pudo obtener el ID de la compra.");
+                  _logger.Error("No se pudo obtener el ID de la compra.");
+                    return -1;
                 }
             }
             catch (Exception ex)
@@ -80,81 +89,7 @@ namespace Sistema_Ventas.Data
             }
         }
 
-        /// <summary>
-        /// Inserta una compra y sus detalles sin usar transacciones.
-        /// </summary>
-        public bool InsertarCompraConDetalles(Compra compra, List<DetalleCompra> detalles)
-        {
-            try
-            {
-                _dbAccess.Connect();
-
-                // Insertar compra principal
-                string insertCompraQuery = @"
-                    INSERT INTO compra (id_cliente, codigo, metodo_de_pago, iva, subtotal, descuento, total, fecha_de_compra, estatus)
-                    VALUES (@id_cliente, @codigo, @metodo_pago, @iva, @subtotal, @descuento, @total, @fecha, @estatus)
-                    RETURNING id_compra;";
-
-                List<NpgsqlParameter> parametrosCompra = new List<NpgsqlParameter>
-                {
-                    new NpgsqlParameter("@id_cliente", compra.IdCliente),
-                    new NpgsqlParameter("@codigo", compra.Codigo),
-                    new NpgsqlParameter("@metodo_pago", compra.MetodoPago),
-                    new NpgsqlParameter("@iva", compra.Iva),
-                    new NpgsqlParameter("@subtotal", compra.Subtotal),
-                    new NpgsqlParameter("@descuento", compra.Descuento),
-                    new NpgsqlParameter("@total", compra.Total),
-                    new NpgsqlParameter("@fecha", compra.FechaCompra),
-                    new NpgsqlParameter("@estatus", compra.Estatus)
-                };
-
-                var idCompraObj = _dbAccess.ExecuteScalar(insertCompraQuery, parametrosCompra.ToArray());
-                if (idCompraObj == null)
-                {
-                    throw new Exception("No se pudo insertar la compra principal.");
-                }
-
-                int idCompraGenerado = Convert.ToInt32(idCompraObj);
-
-                // Insertar detalles uno por uno
-                foreach (var detalle in detalles)
-                {
-                    try
-                    {
-                        string insertDetalleQuery = @"
-                            INSERT INTO detalle_compra (id_compra, id_producto, cantidad, total_por_unidad)
-                            VALUES (@id_compra, @id_producto, @cantidad, @total_por_unidad);";
-
-                        List<NpgsqlParameter> parametrosDetalle = new List<NpgsqlParameter>
-                        {
-                            new NpgsqlParameter("@id_compra", idCompraGenerado),
-                            new NpgsqlParameter("@id_producto", detalle.IdProducto),
-                            new NpgsqlParameter("@cantidad", detalle.Cantidad),
-                            new NpgsqlParameter("@total_por_unidad", detalle.TotalPorUnidad)
-                        };
-
-                        _dbAccess.ExecuteNonQuery(insertDetalleQuery, parametrosDetalle.ToArray());
-                    }
-                    catch (Exception exDetalle)
-                    {
-                        _logger.Error(exDetalle, $"Error al insertar detalle para producto ID {detalle.IdProducto}");
-                        // Continuar con el siguiente detalle
-                    }
-                }
-
-                _logger.Info("Compra y detalles insertados correctamente (sin transacción). Comprueba si hay errores en los detalles.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error general al insertar la compra y detalles");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
+        
 
         /// <summary>
         /// Obtiene una lista de todas las compras registradas en la base de datos.
