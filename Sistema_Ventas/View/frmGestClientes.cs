@@ -66,9 +66,9 @@ namespace PuntodeVenta.View
         {
             Dictionary<int, string> list_tipofecha = new Dictionary<int, string>
             {
-                { 1, "Nacimiento" },
-                { 2, "Alta" },
-                { 3, "Baja" }
+
+                { 1, "Alta" },
+                { 2, "Baja" }
             };
             cbxtipoFecha.DataSource = new BindingSource(list_tipofecha, null);
             cbxtipoFecha.DisplayMember = "Value";
@@ -273,7 +273,7 @@ namespace PuntodeVenta.View
                         cliente.Id,
                         cliente.Rfc,
                         cliente.DatosPersonales.NombreCompleto,
-                        cliente.Tipo,
+                        cliente.DescripcionTipo,
                         cliente.DatosPersonales.Correo,
                         cliente.DatosPersonales.Telefono,
                         cliente.DatosPersonales.FechaNacimiento,
@@ -307,46 +307,50 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.WaitCursor;
 
-                if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+                if (txtBusqueda.Text == "")
                 {
-                    MessageBox.Show("Ingrese el nombre del cliente que desea buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Ingrese el nombre del cliente que desee buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
+                // Recuperar los valores de los filtros
+                DateTime? fechaInicio = dtpFechaInicio.Value.Date;
+                DateTime? fechaFin = dtpFechaFin.Value.Date;
+                int tipoFecha = Convert.ToInt32(cbxtipoFecha.SelectedValue);
+
+                // Recuperar el estado (activo o inactivo)
+                bool? estado = null;
+                if (cbxtipoFecha.SelectedItem != null)
+                {
+                    string estadoSeleccionado = cbxtipoFecha.SelectedItem.ToString();
+                    if (estadoSeleccionado == "Activo") estado = true;
+                    else if (estadoSeleccionado == "Inactivo") estado = false;
+                    // Si es "Todos" o no se seleccionó nada, se queda en null (sin filtro)
+                }
+
+                // Obtener los clientes con los filtros aplicados
                 ClientesController clienteController = new ClientesController();
-                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.Trim().ToLower());
+                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.ToLower(), fechaInicio, fechaFin, estado);
 
                 if (clientes.Count == 0)
                 {
-                    dgvGesClientes.DataSource = null; // Limpiar si no hay resultados
-                    MessageBox.Show("No se encontraron clientes con ese nombre", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No se encontraron clientes con los criterios de búsqueda especificados", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Crear un DataTable para mostrar en el DataGridView
-                DataTable dt = new DataTable();
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("RFC", typeof(string));
-                dt.Columns.Add("Nombre Completo", typeof(string));
-                dt.Columns.Add("Tipo", typeof(int));
-                dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Teléfono", typeof(string));
-                dt.Columns.Add("Fecha Nacimiento", typeof(string));
-                dt.Columns.Add("Fecha de Registro", typeof(string));
-                dt.Columns.Add("Estatus", typeof(string));
-
-                ConfigurarDataGridViewClientes(clientes); // Aplica los estilos
-
+                ConfigurarDataGridViewClientes(clientes); // Asegúrate de pasar los datos correctamente a tu DataGridView
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al buscar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
+                // Restaurar el cursor
                 Cursor = Cursors.Default;
             }
         }
+
 
 
 
@@ -368,7 +372,7 @@ namespace PuntodeVenta.View
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("RFC", typeof(string));
             dt.Columns.Add("Nombre Completo", typeof(string));
-            dt.Columns.Add("Tipo", typeof(int));
+            dt.Columns.Add("Tipo", typeof(string));
             dt.Columns.Add("Correo", typeof(string));
             dt.Columns.Add("Teléfono", typeof(string));
             dt.Columns.Add("Fecha Nacimiento", typeof(string));
@@ -381,7 +385,7 @@ namespace PuntodeVenta.View
                     cliente.Id,
                     cliente.Rfc,
                     cliente.NombreCompletoCliente,
-                    cliente.Tipo,
+                    cliente.Tipo == 1 ? "Físico" : "Moral",
                     cliente.DatosPersonales?.Correo ?? "",
                     cliente.DatosPersonales?.Telefono ?? "",
                     cliente.DatosPersonales?.FechaNacimiento?.ToString("dd/MM/yyyy") ?? "",
@@ -496,6 +500,16 @@ namespace PuntodeVenta.View
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             BuscarCliente();
+        }
+
+        private void cbxtipoFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

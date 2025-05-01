@@ -44,21 +44,26 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
-
-        public List<Cliente> ObtenerClientePorNombre(String nombrecli)
+        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? estado)
         {
             try
             {
-                List<Cliente> clientes = _clientesData.ObtenerClientePorNombre(nombrecli);
-                _logger.Info($"Se obtuvieron {clientes.Count} Clientes");
+                // Llamada a la capa de datos
+                List<Cliente> clientes = _clientesData.ObtenerClientePorNombre(nombrecli, fechaInicio, fechaFin, estado);
+
+                // Log de la consulta
+                _logger.Info($"Se obtuvieron {clientes.Count} clientes con el nombre '{nombrecli}' entre {fechaInicio:dd/MM/yyyy} y {fechaFin:dd/MM/yyyy}, usando tipo de estado {estado}");
+
                 return clientes;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al obtener la lista de clientes con el nombre:{nombrecli} ");
+                // Log de error
+                _logger.Error(ex, $"Error al obtener la lista de clientes con el nombre '{nombrecli}' y rango de fechas");
                 throw;
             }
         }
+
 
         public (int id, string mensaje) RegistrarCliente(Cliente cliente)
         {

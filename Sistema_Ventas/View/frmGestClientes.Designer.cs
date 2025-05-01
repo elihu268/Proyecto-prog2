@@ -431,6 +431,7 @@
             cbxtipoFecha.Name = "cbxtipoFecha";
             cbxtipoFecha.Size = new Size(111, 23);
             cbxtipoFecha.TabIndex = 18;
+            cbxtipoFecha.SelectedIndexChanged += cbxtipoFecha_SelectedIndexChanged;
             // 
             // lbTipoFecha
             // 
@@ -459,6 +460,8 @@
             dtpFechaInicio.Name = "dtpFechaInicio";
             dtpFechaInicio.Size = new Size(140, 23);
             dtpFechaInicio.TabIndex = 15;
+            dtpFechaInicio.Value = new DateTime(2025, 1, 1, 0, 0, 0, 0);
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             // 
             // lbFechaFin
             // 

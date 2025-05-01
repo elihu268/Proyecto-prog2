@@ -8,6 +8,7 @@ using NLog;
 using Sistema_Ventas.Model;
 using Npgsql;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sistema_Ventas.Data
 {
@@ -105,39 +106,45 @@ WHERE  1 = 1
             }
         }
 
-        public List<Cliente> ObtenerClientePorNombre(string nombreCliente)
+        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
         {
             List<Cliente> clientes = new List<Cliente>();
             try
             {
                 string query = @"
-            SELECT 
-                c.id_cliente, 
-                p.id_persona, 
-                p.nombre_completo, 
-                p.correo, 
-                p.telefono, 
-                p.fecha_nacimiento, 
-                p.estatus, 
-                c.tipo, 
-                c.fecha_registro, 
-                c.rfc
+            SELECT c.id_cliente, c.id_persona, c.tipo, c.fecha_registro, c.rfc,
+                   p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus
             FROM cliente c
             INNER JOIN personas p ON c.id_persona = p.id_persona
-            WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombreCliente) AND p.estatus = TRUE
-        ";
+            WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombre)
+              AND c.fecha_registro BETWEEN @fechaInicio AND @fechaFin";
 
-                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-                parametros.Add(new NpgsqlParameter("@nombreCliente", $"%{nombreCliente}%"));
+                // Agregar filtro de estatus si se eligió uno específico
+                if (tipoEstado.HasValue)
+                {
+                    query += " AND p.estatus = @estatus";
+                }
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+        {
+            new NpgsqlParameter("@nombre", $"%{nombrecli}%"),
+            new NpgsqlParameter("@fechaInicio", fechaInicio),
+            new NpgsqlParameter("@fechaFin", fechaFin)
+        };
+
+                if (tipoEstado.HasValue)
+                {
+                    parametros.Add(new NpgsqlParameter("@estatus", tipoEstado.Value));
+                }
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    // Crear el objeto Persona
+
                     Persona persona = new Persona
                     {
-                        Id = Convert.ToInt32(row["id_persona"]),
+
                         NombreCompleto = row["nombre_completo"].ToString(),
                         Correo = row["correo"].ToString(),
                         Telefono = row["telefono"].ToString(),
@@ -145,7 +152,7 @@ WHERE  1 = 1
                         Estatus = Convert.ToBoolean(row["estatus"])
                     };
 
-                    // Crear el objeto Cliente con el constructor adecuado
+
                     Cliente cliente = new Cliente(
                         Convert.ToInt32(row["id_cliente"]),
                         Convert.ToInt32(row["id_persona"]),
@@ -162,14 +169,15 @@ WHERE  1 = 1
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener información de los clientes desde la base de datos");
+                _logger.Error(ex, "Error al obtener los clientes con filtros");
                 throw;
             }
             finally
             {
-                _dbAccess.Disconnect(); // Siempre cerrar conexión
+                _dbAccess.Disconnect();
             }
         }
+
 
 
         public int InsertarCliente(Cliente cliente)
