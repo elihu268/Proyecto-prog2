@@ -44,6 +44,8 @@
             lblCodigo = new Label();
             lblIdRol = new Label();
             dgvRoles = new DataGridView();
+            contextMenuRoles = new ContextMenuStrip(components);
+            editRolToolStripMenuItem = new ToolStripMenuItem();
             gbxBusquedaRol = new GroupBox();
             cbxTipoFecha = new ComboBox();
             lblTipoFecha = new Label();
@@ -58,7 +60,6 @@
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
-            contextMenuRoles = new ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -67,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
+            contextMenuRoles.SuspendLayout();
             gbxBusquedaRol.SuspendLayout();
             gbxHerramienta.SuspendLayout();
             SuspendLayout();
@@ -223,17 +225,32 @@
             // dgvRoles
             // 
             dgvRoles.AllowUserToAddRows = false;
+            dgvRoles.AllowUserToDeleteRows = false;
             dgvRoles.BackgroundColor = SystemColors.ActiveCaption;
             dgvRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRoles.ContextMenuStrip = contextMenuRoles;
             dgvRoles.Dock = DockStyle.Fill;
-            dgvRoles.Enabled = false;
             dgvRoles.Location = new Point(0, 141);
             dgvRoles.Margin = new Padding(2);
             dgvRoles.Name = "dgvRoles";
-            dgvRoles.ReadOnly = true;
             dgvRoles.RowHeadersWidth = 62;
             dgvRoles.Size = new Size(590, 199);
             dgvRoles.TabIndex = 14;
+            // 
+            // contextMenuRoles
+            // 
+            contextMenuRoles.Items.AddRange(new ToolStripItem[] { editRolToolStripMenuItem });
+            contextMenuRoles.Name = "contextMenuRoles";
+            contextMenuRoles.Size = new Size(181, 48);
+            contextMenuRoles.Text = "Roles";
+            contextMenuRoles.Opening += contextMenuRoles_Opening;
+            // 
+            // editRolToolStripMenuItem
+            // 
+            editRolToolStripMenuItem.Name = "editRolToolStripMenuItem";
+            editRolToolStripMenuItem.Size = new Size(180, 22);
+            editRolToolStripMenuItem.Text = "Editar Rol";
+            editRolToolStripMenuItem.Click += editarRolesToolStripMenuItem_Click;
             // 
             // gbxBusquedaRol
             // 
@@ -383,11 +400,6 @@
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // contextMenuRoles
-            // 
-            contextMenuRoles.Name = "contextMenuRoles";
-            contextMenuRoles.Size = new Size(61, 4);
-            // 
             // frmConfiguracionRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -410,6 +422,7 @@
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).EndInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
+            contextMenuRoles.ResumeLayout(false);
             gbxBusquedaRol.ResumeLayout(false);
             gbxBusquedaRol.PerformLayout();
             gbxHerramienta.ResumeLayout(false);
@@ -449,5 +462,6 @@
         private Label lblInfo;
         private DataGridView dgvRoles;
         private ContextMenuStrip contextMenuRoles;
+        private ToolStripMenuItem editRolToolStripMenuItem;
     }
 }

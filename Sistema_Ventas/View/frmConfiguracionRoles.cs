@@ -237,6 +237,11 @@ namespace Sistema_Ventas.View
 
         }
 
+        private void editarRolesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void contextMenuRoles_Opening(object sender, CancelEventArgs e)
         {
 
