@@ -120,7 +120,7 @@
             // lblInfo
             // 
             lblInfo.AutoSize = true;
-            lblInfo.Location = new Point(85, 214);
+            lblInfo.Location = new Point(85, 217);
             lblInfo.Name = "lblInfo";
             lblInfo.Size = new Size(124, 15);
             lblInfo.TabIndex = 23;
@@ -129,12 +129,13 @@
             // picBoxFormato
             // 
             picBoxFormato.Image = Properties.Resources.iconoPregunta;
-            picBoxFormato.Location = new Point(184, 84);
+            picBoxFormato.Location = new Point(184, 87);
             picBoxFormato.Name = "picBoxFormato";
             picBoxFormato.Size = new Size(32, 36);
             picBoxFormato.TabIndex = 22;
             picBoxFormato.TabStop = false;
             toolTipCodigo.SetToolTip(picBoxFormato, "3 mayusculas que son el tipo de rol - 3 numeros que consisten en la categoria");
+            picBoxFormato.Click += picBoxFormato_Click;
             // 
             // numIdRol
             // 
@@ -166,7 +167,7 @@
             // 
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(13, 178);
+            cbxEstatus.Location = new Point(13, 181);
             cbxEstatus.Name = "cbxEstatus";
             cbxEstatus.Size = new Size(203, 23);
             cbxEstatus.TabIndex = 19;
@@ -174,7 +175,7 @@
             // lblEstatus
             // 
             lblEstatus.AutoSize = true;
-            lblEstatus.Location = new Point(13, 160);
+            lblEstatus.Location = new Point(13, 163);
             lblEstatus.Name = "lblEstatus";
             lblEstatus.Size = new Size(52, 15);
             lblEstatus.TabIndex = 18;
@@ -182,7 +183,7 @@
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(13, 134);
+            txtDescripcion.Location = new Point(13, 137);
             txtDescripcion.MaxLength = 200;
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.Size = new Size(203, 23);
@@ -190,7 +191,7 @@
             // 
             // txtCodigo
             // 
-            txtCodigo.Location = new Point(13, 88);
+            txtCodigo.Location = new Point(13, 91);
             txtCodigo.MaxLength = 15;
             txtCodigo.Name = "txtCodigo";
             txtCodigo.Size = new Size(165, 23);
@@ -199,7 +200,7 @@
             // lblDescripcion
             // 
             lblDescripcion.AutoSize = true;
-            lblDescripcion.Location = new Point(13, 116);
+            lblDescripcion.Location = new Point(13, 119);
             lblDescripcion.Name = "lblDescripcion";
             lblDescripcion.Size = new Size(78, 15);
             lblDescripcion.TabIndex = 13;
@@ -208,7 +209,7 @@
             // lblCodigo
             // 
             lblCodigo.AutoSize = true;
-            lblCodigo.Location = new Point(13, 70);
+            lblCodigo.Location = new Point(13, 73);
             lblCodigo.Name = "lblCodigo";
             lblCodigo.Size = new Size(53, 15);
             lblCodigo.TabIndex = 11;
@@ -237,6 +238,7 @@
             dgvRoles.RowHeadersWidth = 62;
             dgvRoles.Size = new Size(590, 199);
             dgvRoles.TabIndex = 14;
+            dgvRoles.CellContentClick += dgvRoles_CellContentClick_1;
             // 
             // contextMenuRoles
             // 
@@ -297,6 +299,7 @@
             cbxTipoFecha.Name = "cbxTipoFecha";
             cbxTipoFecha.Size = new Size(87, 23);
             cbxTipoFecha.TabIndex = 18;
+            cbxTipoFecha.SelectedIndexChanged += cbxTipoFecha_SelectedIndexChanged;
             // 
             // lblTipoFecha
             // 
@@ -316,6 +319,7 @@
             dtpFechaFin.Size = new Size(100, 23);
             dtpFechaFin.TabIndex = 16;
             dtpFechaFin.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
+            dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
             // 
             // dtpFechaInicio
             // 
@@ -326,6 +330,7 @@
             dtpFechaInicio.Size = new Size(100, 23);
             dtpFechaInicio.TabIndex = 15;
             dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             // 
             // lblFechaFin
             // 
@@ -367,6 +372,7 @@
             txtBusquedaRol.Name = "txtBusquedaRol";
             txtBusquedaRol.Size = new Size(240, 23);
             txtBusquedaRol.TabIndex = 1;
+            txtBusquedaRol.TextChanged += txtBusquedaRol_TextChanged;
             // 
             // lblBuscar
             // 

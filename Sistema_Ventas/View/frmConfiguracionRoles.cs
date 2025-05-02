@@ -156,14 +156,6 @@ namespace Sistema_Ventas.View
         }
 
         /// <summary>
-        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
-        /// </summary>
-        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Evento Click para el botón de buscar un rol
         /// </summary>
         private void btnBuscarRol_Click(object sender, EventArgs e)
@@ -171,6 +163,13 @@ namespace Sistema_Ventas.View
 
         }
 
+        /// <summary>
+        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
+        /// </summary>
+        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
+        {
+
+        }
 
         /// <summary>
         /// Evento Click para el botón de Guardar: Ejecuta validación y guardado
@@ -223,6 +222,34 @@ namespace Sistema_Ventas.View
 
         }
 
+        private void picBoxFormato_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void cbxTipoFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaFin_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBusquedaRol_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvRoles_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
