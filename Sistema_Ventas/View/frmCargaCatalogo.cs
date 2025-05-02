@@ -23,7 +23,7 @@ namespace Sistema_Ventas.View
         {
             InitializeComponent();
             Formas.InicializarForma(this, parent);
-            CargarCatalogo();
+
         }
 
         private void frmCatalogo_Load(object sender, EventArgs e)
@@ -32,6 +32,7 @@ namespace Sistema_Ventas.View
             {
                 btnCargaCatalogo.Visible = false;
             }
+            CargarCatalogo();
         }
 
         private void btnCargaCatalogo_Click(object sender, EventArgs e)
@@ -56,6 +57,7 @@ namespace Sistema_Ventas.View
                 }
             }
         }
+
         private void CargarCatalogo()
         {
             try
@@ -65,46 +67,18 @@ namespace Sistema_Ventas.View
 
                 List<Producto> productos = productoController.ObtenerProductos();
 
-                dgvCatalogo.DataSource = null;
-
-                //Crear una tabla
-                DataTable dt = new DataTable();
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("Codigo", typeof(string));
-                dt.Columns.Add("Nombre", typeof(string));
-                dt.Columns.Add("Precio", typeof(string));
-                dt.Columns.Add("Descripcion", typeof(string));
-                dt.Columns.Add("Existencia", typeof(string));
-                dt.Columns.Add("Estatus", typeof(string));
-
-                //llenar el dataTime con la info de los estudiantes
-                foreach (Producto producto in productos)
-                {
-                    dt.Rows.Add(
-                        producto.IdProducto,
-                        producto.Codigo,
-                        producto.Nombre,
-                        producto.Precio,
-                        producto.Descripcion,
-                        producto.Existencia
-                     );
-                }
-
-                //asignar el dataTime como origen de dattos
-                dgvCatalogo.DataSource = dt;
-
-                //configurar la paraencia
+                // Delegar toda la lógica de presentación a ConfigurarDataGridView
                 ConfigurarDataGridView(productos);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar estudiantes. Contacta al administrador del sistema",
+                MessageBox.Show("Error al cargar productos. Contacta al administrador del sistema",
                     "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                //restaurar cursor, no tener bolita de carga
+
                 Cursor = Cursors.Default;
             }
         }
@@ -112,8 +86,22 @@ namespace Sistema_Ventas.View
 
         private void ConfigurarDataGridView(List<Producto> productos)
         {
-
             dgvCatalogo.DataSource = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             DataTable dt = new DataTable();
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));
@@ -121,8 +109,11 @@ namespace Sistema_Ventas.View
             dt.Columns.Add("Precio", typeof(decimal));
             dt.Columns.Add("Descripcion", typeof(string));
             dt.Columns.Add("Existencia", typeof(int));
+            dt.Columns.Add("Estatus", typeof(string)); // Incluimos "Estatus"
 
-            // Llenar el DataTable con los productos encontrados
+
+
+
             foreach (Producto prd in productos)
             {
                 dt.Rows.Add(
@@ -135,48 +126,65 @@ namespace Sistema_Ventas.View
                 );
             }
 
-            // Asignar el DataTable al DataGridView
+
             dgvCatalogo.DataSource = dt;
 
-            // Configuración básica
+            // Configuraciones visuales
             dgvCatalogo.AllowUserToAddRows = false;
             dgvCatalogo.AllowUserToDeleteRows = false;
             dgvCatalogo.ReadOnly = true;
             dgvCatalogo.Columns["ID"].Visible = false;
-            // Ajuste automático de las columnas
+
             dgvCatalogo.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
-            // Ajustar la altura de las filas
+
             dgvCatalogo.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-            // Alineación de las columnas
-            dgvCatalogo.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
             dgvCatalogo.Columns["Codigo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Nombre"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCatalogo.Columns["Precio"].DefaultCellStyle.Format = "C2";
             dgvCatalogo.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvCatalogo.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            // Color alternado de filas
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
             dgvCatalogo.AlternatingRowsDefaultCellStyle.BackColor = Color.LightCyan;
 
-            // Selección de fila completa
+
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
             dgvCatalogo.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            // Estilo de las cabeceras
+
             dgvCatalogo.EnableHeadersVisualStyles = false;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgvCatalogo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            // Permitir desplazamiento si el contenido es largo
-            dgvCatalogo.ScrollBars = ScrollBars.Both;
 
-            // Ajustar el DataGridView al tamaño del contenedor
-            //dgv_productos.Dock = DockStyle.Fill;
+            dgvCatalogo.ScrollBars = ScrollBars.Both;
         }
+
+
+
+
+
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
