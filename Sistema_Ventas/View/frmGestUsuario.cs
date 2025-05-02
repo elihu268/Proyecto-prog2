@@ -151,13 +151,10 @@ namespace PuntodeVenta.View
                 };
                 
                 //agregar bitacora
-                AuditoriaController auditoriaController = new AuditoriaController();
-                string ip = System.Windows.Forms.SystemInformation.UserDomainName.ToString();
-                string nombreEquipo = System.Windows.Forms.SystemInformation.ComputerName.ToString();
-                
+                        
                 UsuariosController usuariosController = new UsuariosController();
                 var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
-               
+                AuditoriaController auditoriaController = new AuditoriaController();
                 Auditoria auditoria = new Auditoria(
                     "Agregar Usuario",
                     DateTime.Now,
@@ -165,7 +162,7 @@ namespace PuntodeVenta.View
                     System.Windows.Forms.SystemInformation.ComputerName.ToString(),
                     Sesión.UsuarioActual,
                     Sesión.IdUsuario,
-                    0
+                    idUsuario
                 );
                 auditoriaController.AudioriaAdd(auditoria);
                 if (idUsuario > 0)
