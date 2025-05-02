@@ -125,9 +125,12 @@ namespace Sistema_Ventas.View
         private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idRol;
-            if (cbox_rol.SelectedValue != null && int.TryParse(cbox_rol.SelectedValue.ToString(), out  idRol))
+            if (cbox_rol.SelectedValue != null && int.TryParse(cbox_rol.SelectedValue.ToString(), out idRol))
             {
-                 idRol = (int)cbox_rol.SelectedValue;
+                // && int.TryParse(cbox_rol.SelectedValue.ToString(), out  idRol) tarda por la bd, asique el tryparse se asgeura que sea un numero(idrol)
+                //aparece exception: 'Unable to cast object of type 'Sistema_Ventas.Model.Rol' to type 'System.Int32'.'
+
+                idRol = (int)cbox_rol.SelectedValue;
                 CargarPermisosPorRol(idRol);
             }
         }
@@ -169,14 +172,13 @@ namespace Sistema_Ventas.View
                         permiso.Codigo,
                         permiso.Descripcion,
                         permiso.Estatus,
-                        permisosDelRol.Contains(permiso.IdPermiso) // true si está asignado
+                        permisosDelRol.Contains(permiso.IdPermiso) // aparece marcado (true si el arreglo permisosdelrol tiene el id de ese permso
                     );
                 }
 
                 dgv_permisos.DataSource = dt;
                 dgv_permisos.Columns["ID"].Visible = false;
                 dgv_permisos.Columns["Estatus"].Visible = false;
-                dgv_permisos.Columns["Asignado"].HeaderText = "Asignado al Rol";
                 dgv_permisos.Columns["Asignado"].Width = 100;
                 dgv_permisos.ReadOnly = false;
                 foreach (DataGridViewColumn col in dgv_permisos.Columns)
