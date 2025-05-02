@@ -9,6 +9,7 @@ using Sistema_Ventas.Utilities;
 using NLog;
 using System.Data;
 using System.Runtime.CompilerServices;
+using Npgsql;
 
 namespace Sistema_Ventas.Controller
 {
@@ -75,6 +76,26 @@ namespace Sistema_Ventas.Controller
             catch (Exception ex)
             {
                 _logger.Error(ex, "Error al obtener el cliente por ID");
+                throw;
+            }
+        }
+
+        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? estado)
+        {
+            try
+            {
+                // Llamada a la capa de datos
+                List<Cliente> clientes = _clientesData.ObtenerClientePorNombre(nombrecli, fechaInicio, fechaFin, estado);
+
+                // Log de la consulta
+                _logger.Info($"Se obtuvieron {clientes.Count} clientes con el nombre '{nombrecli}' entre {fechaInicio:dd/MM/yyyy} y {fechaFin:dd/MM/yyyy}, usando tipo de estado {estado}");
+
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                // Log de error
+                _logger.Error(ex, $"Error al obtener la lista de clientes con el nombre '{nombrecli}' y rango de fechas");
                 throw;
             }
         }

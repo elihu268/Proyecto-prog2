@@ -39,6 +39,7 @@
             ContentPanel = new ToolStripContentPanel();
             scClientes = new SplitContainer();
             gbxActulizardatos = new GroupBox();
+            btnActualizarInfo = new Button();
             lbl_obligatorios = new Label();
             pbxInformacionrfc = new PictureBox();
             txtrfcCliente = new TextBox();
@@ -77,7 +78,6 @@
             btncollapse = new Button();
             lbtitle = new Label();
             ttipinfo = new ToolTip(components);
-            btnActualizarInfo = new Button();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
@@ -178,6 +178,23 @@
             gbxActulizardatos.TabIndex = 0;
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
+            // 
+            // btnActualizarInfo
+            // 
+            btnActualizarInfo.BackColor = SystemColors.ActiveCaption;
+            btnActualizarInfo.FlatAppearance.BorderSize = 0;
+            btnActualizarInfo.FlatStyle = FlatStyle.Flat;
+            btnActualizarInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActualizarInfo.Image = Sistema_Ventas.Properties.Resources.guardar;
+            btnActualizarInfo.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActualizarInfo.Location = new Point(144, 387);
+            btnActualizarInfo.Name = "btnActualizarInfo";
+            btnActualizarInfo.Size = new Size(97, 31);
+            btnActualizarInfo.TabIndex = 36;
+            btnActualizarInfo.Text = "Actualizar";
+            btnActualizarInfo.TextAlign = ContentAlignment.MiddleRight;
+            btnActualizarInfo.UseVisualStyleBackColor = false;
+            btnActualizarInfo.Click += btnActualizarInfo_Click;
             // 
             // lbl_obligatorios
             // 
@@ -394,29 +411,33 @@
             // btnBuscar
             // 
             btnBuscar.BackColor = SystemColors.ActiveCaption;
+            btnBuscar.Cursor = Cursors.Hand;
+            btnBuscar.FlatAppearance.BorderSize = 0;
+            btnBuscar.FlatStyle = FlatStyle.Flat;
             btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.Image = Sistema_Ventas.Properties.Resources.search;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(405, 83);
+            btnBuscar.Location = new Point(242, 53);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(129, 44);
+            btnBuscar.Size = new Size(99, 28);
             btnBuscar.TabIndex = 19;
             btnBuscar.Text = "Buscar";
             btnBuscar.UseVisualStyleBackColor = false;
             btnBuscar.Click += btnBuscar_Click;
-            //
+            // 
             // checkBoxActivos
             // 
             checkBoxActivos.BackColor = SystemColors.GradientActiveCaption;
             checkBoxActivos.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBoxActivos.ForeColor = SystemColors.ControlText;
-            checkBoxActivos.Location = new Point(346, 61);
+            checkBoxActivos.Location = new Point(354, 57);
             checkBoxActivos.Name = "checkBoxActivos";
             checkBoxActivos.Size = new Size(104, 24);
             checkBoxActivos.TabIndex = 19;
             checkBoxActivos.Text = "Sólo Activos";
             checkBoxActivos.TextAlign = ContentAlignment.MiddleRight;
             checkBoxActivos.UseVisualStyleBackColor = false;
+            checkBoxActivos.CheckedChanged += checkBoxActivos_CheckedChanged;
             // 
             // cbxtipoFecha
             // 
@@ -452,8 +473,8 @@
             dtpFechaInicio.Name = "dtpFechaInicio";
             dtpFechaInicio.Size = new Size(110, 23);
             dtpFechaInicio.TabIndex = 15;
-            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             dtpFechaInicio.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             // 
             // lbFechaFin
             // 
@@ -482,7 +503,7 @@
             btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(570, 83);
+            btnActualizar.Location = new Point(465, 53);
             btnActualizar.Margin = new Padding(4, 5, 4, 5);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(95, 30);
@@ -497,7 +518,7 @@
             txtBusqueda.Location = new Point(108, 54);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(243, 23);
+            txtBusqueda.Size = new Size(128, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBuscar
@@ -585,23 +606,6 @@
             // 
             ttipinfo.Tag = "xd";
             ttipinfo.ToolTipTitle = "RFC";
-            // 
-            // btnActualizarInfo
-            // 
-            btnActualizarInfo.BackColor = SystemColors.ActiveCaption;
-            btnActualizarInfo.FlatAppearance.BorderSize = 0;
-            btnActualizarInfo.FlatStyle = FlatStyle.Flat;
-            btnActualizarInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnActualizarInfo.Image = Sistema_Ventas.Properties.Resources.guardar;
-            btnActualizarInfo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizarInfo.Location = new Point(144, 387);
-            btnActualizarInfo.Name = "btnActualizarInfo";
-            btnActualizarInfo.Size = new Size(97, 31);
-            btnActualizarInfo.TabIndex = 36;
-            btnActualizarInfo.Text = "Actualizar";
-            btnActualizarInfo.TextAlign = ContentAlignment.MiddleRight;
-            btnActualizarInfo.UseVisualStyleBackColor = false;
-            btnActualizarInfo.Click += btnActualizarInfo_Click;
             // 
             // frmGestClientes
             // 

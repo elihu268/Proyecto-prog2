@@ -109,60 +109,8 @@ namespace Sistema_Ventas.View
                 Cursor = Cursors.Default;
             }
 
-        }
+        }      
         
-        private void frmAsignarPermisos_Load(object sender, EventArgs e)
-        {
-            InicializarVentanaPermisos();
-        }
-        private void InicializarVentanaPermisos()
-        {
-            
-            PoblacboxRol(); // Llena el ComboBox de roles
-            if (cbox_rol.Items.Count > 0)
-            {
-                int idRol = (int)cbox_rol.SelectedValue;
-                CargarPermisosPorRol(idRol);
-            }
-        }
-        public void PoblacboxRol()
-        {
-            RolesController rolesController = new RolesController();
-
-            // Obtener la lista de roles
-            List<Rol> listaRoles = rolesController.ObtenerRoles();
-
-            cbox_rol.Items.Clear(); 
-            cbox_rol.DataSource = listaRoles;
-            cbox_rol.DisplayMember = "Codigo";
-            cbox_rol.ValueMember = "Idrol";
-            cbox_rol.SelectedIndex = 0;
-        }
-
-
-
-        private void GuardarPermisosDelRol(int idRol)
-        {
-            PermisoARolController permisoARolController = new PermisoARolController();
-
-            // 1. Eliminar todos los permisos actuales del puesto
-            permisoARolController.EliminarPermisos(idRol);
-
-            // 2. Insertar los permisos seleccionados
-            foreach (DataGridViewRow fila in dgv_permisos.Rows)
-            {
-                if (!fila.IsNewRow)
-                {
-                    bool asignado = Convert.ToBoolean(fila.Cells["Asignado"].Value);
-                    int idPermiso = Convert.ToInt32(fila.Cells["ID"].Value);
-
-                    if (asignado)
-                    {
-                        permisoARolController.AsignarPermisosARol(idRol, idPermiso);
-                    }
-                }
-            } 
-        }
 
          /// <summary>
         /// obtener los id de permisos seleccionados

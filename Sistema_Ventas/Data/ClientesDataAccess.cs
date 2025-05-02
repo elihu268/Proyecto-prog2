@@ -322,6 +322,74 @@ namespace Sistema_Ventas.Data
             }
         }
 
+        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
+        {
+            List<Cliente> clientes = new List<Cliente>();
+            try
+            {
+                string query = @"SELECT c.id_cliente, c.id_persona, c.tipo, c.fecha_registro, c.rfc,
+                    p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus
+             FROM cliente c
+             INNER JOIN personas p ON c.id_persona = p.id_persona
+ WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombre)
+               AND c.fecha_registro BETWEEN @fechaInicio AND @fechaFin";
+                // Agregar filtro de estatus si se eligió uno específico
+                if (tipoEstado.HasValue)
+                {
+                    query += " AND p.estatus = @estatus";
+                }
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+         {
+             new NpgsqlParameter("@nombre", $"%{nombrecli}%"),
+             new NpgsqlParameter("@fechaInicio", fechaInicio),
+             new NpgsqlParameter("@fechaFin", fechaFin)
+         };
+
+                if (tipoEstado.HasValue)
+                {
+                    parametros.Add(new NpgsqlParameter("@estatus", tipoEstado.Value));
+                }
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                foreach (DataRow row in resultado.Rows)
+                {
+
+                    Persona persona = new Persona
+                    {
+                        NombreCompleto = row["nombre_completo"].ToString(),
+                        Correo = row["correo"].ToString(),
+                        Telefono = row["telefono"].ToString(),
+                        FechaNacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                        Estatus = Convert.ToBoolean(row["estatus"])
+                    };
+
+
+                    Cliente cliente = new Cliente(
+                         Convert.ToInt32(row["id_cliente"]),
+                         Convert.ToInt32(row["id_persona"]),
+                         Convert.ToInt32(row["tipo"]),
+                         Convert.ToDateTime(row["fecha_registro"]),
+                         row["rfc"].ToString(),
+                         persona
+                     );
+
+                    clientes.Add(cliente);
+                }
+
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener los clientes con filtros");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
         public Cliente ObtenerClientePorId(int idCliente)
         {
             try

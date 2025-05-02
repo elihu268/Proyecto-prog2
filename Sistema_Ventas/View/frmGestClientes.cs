@@ -549,9 +549,9 @@ namespace PuntodeVenta.View
             {
                 MessageBox.Show("Error al intentar guardar los cambios. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
-    
+
 
         private void dtpfechaRegistroCliente_ValueChanged(object sender, EventArgs e)
         {
@@ -594,6 +594,11 @@ namespace PuntodeVenta.View
         }
 
         private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxActivos_CheckedChanged(object sender, EventArgs e)
         {
 
         }
