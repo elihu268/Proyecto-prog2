@@ -106,78 +106,6 @@ namespace Sistema_Ventas.Data
             }
         }
 
-
-//        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
-//       {
-//            List<Cliente> clientes = new List<Cliente>();
-//            try
-//            {
-//                string query = @"
-//            SELECT c.id_cliente, c.id_persona, c.tipo, c.fecha_registro, c.rfc,
-//                   p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus
-//            FROM cliente c
-//            INNER JOIN personas p ON c.id_persona = p.id_persona
-//            WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombre)
-//              AND c.fecha_registro BETWEEN @fechaInicio AND @fechaFin";
-//
-//                // Agregar filtro de estatus si se eligió uno específico
-//                if (tipoEstado.HasValue)
-//                {
-//                    query += " AND p.estatus = @estatus";
-//                }
-//
-//              List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
-//        {
-//            new NpgsqlParameter("@nombre", $"%{nombrecli}%"),
-//            new NpgsqlParameter("@fechaInicio", fechaInicio),
-//            new NpgsqlParameter("@fechaFin", fechaFin)
-//        };
-//
-//                if (tipoEstado.HasValue)
-//                {
-//                    parametros.Add(new NpgsqlParameter("@estatus", tipoEstado.Value));
-//                }
-//
-//                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
-//
-//                foreach (DataRow row in resultado.Rows)
-//                {
-//
-//                    Persona persona = new Persona
-//                    {
-//
-//                        NombreCompleto = row["nombre_completo"].ToString(),
-//                        Correo = row["correo"].ToString(),
-//                        Telefono = row["telefono"].ToString(),
-//                        FechaNacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-//                        Estatus = Convert.ToBoolean(row["estatus"])
-//                    };
-//
-//
-//                    Cliente cliente = new Cliente(
- //                       Convert.ToInt32(row["id_cliente"]),
- //                       Convert.ToInt32(row["id_persona"]),
-//                        Convert.ToInt32(row["tipo"]),
-//                        Convert.ToDateTime(row["fecha_registro"]),
-//                        row["rfc"].ToString(),
-//                        persona
-//                    );
-//
-//                    clientes.Add(cliente);
-//                }
-//
-//                return clientes;
-//            }
-//            catch (Exception ex)
-//            {
-//                _logger.Error(ex, "Error al obtener los clientes con filtros");
-//            }
-//            finally
-//            {
-//                _dbAccess.Disconnect();
-//            }
-//        }
-
         public DataTable ObtenerClientesFiltrados(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
         {
             DataTable clientesDataTable = new DataTable();
@@ -287,24 +215,25 @@ namespace Sistema_Ventas.Data
 
                 if (idPersona <= 0)
                 {
-                    _logger.Error($"No se pudo insertar la persona para el cliente{cliente.Rfc}");
+                    _logger.Error($"No se pudo insertar la persona para el cliente {cliente.Rfc}");
                     return -1;
                 }
                 cliente.IdPersona = idPersona;
 
                 string query = @"
-                    INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc)
-	                    VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc)
-	                    RETURNING id_cliente ";
+            INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc, estatus)
+            VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc, @Estatus)
+            RETURNING id_cliente";
 
                 NpgsqlParameter paramIdPersona = _dbAccess.CreateParameter("@IdPersona", cliente.IdPersona);
                 NpgsqlParameter paramTipo = _dbAccess.CreateParameter("@Tipo", cliente.Tipo);
                 NpgsqlParameter paramFechaRegistro = _dbAccess.CreateParameter("@FechaRegistro", cliente.FechaRegistro);
                 NpgsqlParameter paramRfc = _dbAccess.CreateParameter("@Rfc", cliente.Rfc);
+                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", cliente.Estatus);
 
                 _dbAccess.Connect();
 
-                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramTipo, paramFechaRegistro, paramRfc);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramTipo, paramFechaRegistro, paramRfc, paramEstatus);
 
                 int idCliente_generado = Convert.ToInt32(resultado);
                 _logger.Info($"Cliente insertado correctamente con ID {idCliente_generado}");
@@ -321,6 +250,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
 
         public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
         {

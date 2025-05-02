@@ -87,21 +87,6 @@ namespace Sistema_Ventas.View
         private void ConfigurarDataGridView(List<Producto> productos)
         {
             dgvCatalogo.DataSource = null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             DataTable dt = new DataTable();
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));
@@ -110,9 +95,6 @@ namespace Sistema_Ventas.View
             dt.Columns.Add("Descripcion", typeof(string));
             dt.Columns.Add("Existencia", typeof(int));
             dt.Columns.Add("Estatus", typeof(string)); // Incluimos "Estatus"
-
-
-
 
             foreach (Producto prd in productos)
             {
@@ -126,7 +108,6 @@ namespace Sistema_Ventas.View
                 );
             }
 
-
             dgvCatalogo.DataSource = dt;
 
             // Configuraciones visuales
@@ -134,58 +115,25 @@ namespace Sistema_Ventas.View
             dgvCatalogo.AllowUserToDeleteRows = false;
             dgvCatalogo.ReadOnly = true;
             dgvCatalogo.Columns["ID"].Visible = false;
-
             dgvCatalogo.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-
             dgvCatalogo.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-
             dgvCatalogo.Columns["Codigo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Nombre"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Precio"].DefaultCellStyle.Format = "C2";
             dgvCatalogo.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvCatalogo.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
             dgvCatalogo.AlternatingRowsDefaultCellStyle.BackColor = Color.LightCyan;
-
-
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
             dgvCatalogo.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-
             dgvCatalogo.EnableHeadersVisualStyles = false;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvCatalogo.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgvCatalogo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-
             dgvCatalogo.ScrollBars = ScrollBars.Both;
         }
-
-
-
-
-
-
-
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             CargarCatalogo();
