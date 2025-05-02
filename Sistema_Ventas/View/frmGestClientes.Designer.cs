@@ -680,7 +680,6 @@
         private ToolTip ttipinfo;
         private Label lbl_obligatorios;
         private Button btnBuscar;
-        private CheckBox checkBoxActivos;
         private ContextMenuStrip cmsEdit;
         private ToolStripMenuItem editarToolStripMenuItem;
         private Button btnActualizarInfo;

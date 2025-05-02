@@ -220,20 +220,19 @@ namespace Sistema_Ventas.Data
                 }
                 cliente.IdPersona = idPersona;
 
+                // Insertar solo los campos necesarios en cliente
                 string query = @"
-            INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc, estatus)
-            VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc, @Estatus)
+            INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc)
+            VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc)
             RETURNING id_cliente;";
 
                 NpgsqlParameter paramIdPersona = _dbAccess.CreateParameter("@IdPersona", cliente.IdPersona);
                 NpgsqlParameter paramTipo = _dbAccess.CreateParameter("@Tipo", cliente.Tipo);
                 NpgsqlParameter paramFechaRegistro = _dbAccess.CreateParameter("@FechaRegistro", cliente.FechaRegistro);
                 NpgsqlParameter paramRfc = _dbAccess.CreateParameter("@Rfc", cliente.Rfc);
-                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", cliente.Estatus); // nuevo parámetro
 
                 _dbAccess.Connect();
-
-                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramTipo, paramFechaRegistro, paramRfc, paramEstatus);
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdPersona, paramTipo, paramFechaRegistro, paramRfc);
 
                 int idCliente_generado = Convert.ToInt32(resultado);
                 _logger.Info($"Cliente insertado correctamente con ID {idCliente_generado}");
@@ -286,7 +285,6 @@ namespace Sistema_Ventas.Data
 
                 foreach (DataRow row in resultado.Rows)
                 {
-
                     Persona persona = new Persona
                     {
                         NombreCompleto = row["nombre_completo"].ToString(),
@@ -295,7 +293,6 @@ namespace Sistema_Ventas.Data
                         FechaNacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
                         Estatus = Convert.ToBoolean(row["estatus"])
                     };
-
 
                     Cliente cliente = new Cliente(
                          Convert.ToInt32(row["id_cliente"]),

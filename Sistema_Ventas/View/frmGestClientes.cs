@@ -150,7 +150,6 @@ namespace PuntodeVenta.View
                     Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 1,
                     Rfc = txtrfcCliente.Text.Trim(),
                     FechaRegistro = DateTime.Now,
-                    Estatus = true,
                     DatosPersonales = persona
                 };
 
@@ -247,45 +246,63 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.WaitCursor;
 
-                int tipoFecha = (cbxtipoFecha.SelectedValue != null) ? (int)cbxtipoFecha.SelectedValue : 0;
-                DateTime fechaInicial = dtpFechaInicio.Value.Date;
-                DateTime fechaFinal = dtpFechaFin.Value.Date.AddDays(1).AddSeconds(-1); // Para incluir hasta el último segundo del día final
-                string busqueda = txtBusqueda.Text.Trim();
-                int soloActivos = (int)(checkBoxActivos.Checked ? 1 : 0);
-
                 ClientesController clienteController = new ClientesController();
-
-                DataTable clientes = clienteController.ObtenerClientes(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
 
                 dgvGesClientes.DataSource = null;
 
-                if (clientes.Rows.Count == 0)
+                if (clientes.Count == 0)
                 {
-                    //opcionalmente mostrar mensaje cuando no hay datos
                     if (!string.IsNullOrEmpty(txtBusqueda.Text))
                     {
-                        MessageBox.Show("No se encontraron clientes con el criterio de busqueda especificado", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No se encontraron clientes con el criterio de búsqueda especificado", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     return;
                 }
 
-                dgvGesClientes.DataSource = clientes;
+                // Crear una tabla
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("RFC", typeof(string));
+                dt.Columns.Add("Nombre Completo", typeof(string));
+                dt.Columns.Add("Tipo", typeof(string));
+                dt.Columns.Add("Correo", typeof(string));
+                dt.Columns.Add("Teléfono", typeof(string));
+                dt.Columns.Add("Fecha Nacimiento", typeof(DateTime));
+                dt.Columns.Add("Fecha de Registro", typeof(DateTime));
+                dt.Columns.Add("Estatus", typeof(string));
 
-                // Configurar el DataGridView
+                // Llenar el DataTable con los clientes
+                foreach (Cliente cliente in clientes)
+                {
+                    dt.Rows.Add(
+                        cliente.Id,
+                        cliente.Rfc,
+                        cliente.DatosPersonales?.NombreCompleto ?? "",
+                        cliente.DescripcionTipo,
+
+                        cliente.DatosPersonales?.Correo ?? "",
+                        cliente.DatosPersonales?.Telefono ?? "",
+                        cliente.DatosPersonales?.FechaNacimiento ?? DateTime.MinValue,
+                        cliente.FechaRegistro ?? DateTime.MinValue,
+                        cliente.DatosPersonales.Estatus ? "Activo" : "Inactivo"
+
+                    );
+                }
+
+                dgvGesClientes.DataSource = dt;
+
                 ConfigurarDataGridView();
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar estudiantes. Contacta al administrador del sistema",
-                    "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                //restaurar cursor, no tener bolita de carga
                 Cursor = Cursors.Default;
             }
         }
+
 
         private void BuscarCliente()
         {
@@ -299,22 +316,19 @@ namespace PuntodeVenta.View
                     return;
                 }
 
-                // Recuperar los valores de los filtros
                 DateTime? fechaInicio = dtpFechaInicio.Value.Date;
                 DateTime? fechaFin = dtpFechaFin.Value.Date;
-                int tipoFecha = Convert.ToInt32(cbxtipoFecha.SelectedValue);
 
                 // Recuperar el estado (activo o inactivo)
                 bool? estado = null;
-                if (cbxtipoFecha.SelectedItem != null)
+                if (cbxEstatusFiltro.SelectedItem != null)
                 {
-                    string estadoSeleccionado = cbxtipoFecha.SelectedItem.ToString();
+                    string estadoSeleccionado = cbxEstatusFiltro.SelectedItem.ToString();
                     if (estadoSeleccionado == "Activo") estado = true;
                     else if (estadoSeleccionado == "Inactivo") estado = false;
                     // Si es "Todos" o no se seleccionó nada, se queda en null (sin filtro)
                 }
 
-                // Obtener los clientes con los filtros aplicados
                 ClientesController clienteController = new ClientesController();
                 List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.ToLower(), fechaInicio, fechaFin, estado);
 
@@ -332,13 +346,9 @@ namespace PuntodeVenta.View
             }
             finally
             {
-                // Restaurar el cursor
                 Cursor = Cursors.Default;
             }
         }
-
-
-
 
         private void LimpiarCampos()
         {
@@ -401,7 +411,6 @@ namespace PuntodeVenta.View
             dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgvGesClientes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
-
 
         private void ConfigurarDataGridView()
         {

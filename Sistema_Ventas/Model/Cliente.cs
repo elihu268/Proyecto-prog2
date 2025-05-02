@@ -35,16 +35,12 @@ namespace Sistema_Ventas.Model
         /// <summary>
         /// indica si el cliente 
         /// </summary>
-        public bool Estatus { get; set; }
-
-
         public Persona DatosPersonales { get; set; }
 
         //CONSTRUCTORES
         public Cliente() { 
             Rfc = string.Empty;
             FechaRegistro = DateTime.Now;
-            Estatus = true;
             DatosPersonales = new Persona();
         }
 
@@ -53,7 +49,6 @@ namespace Sistema_Ventas.Model
             this.Tipo = tipo;
             this.Rfc = rfc;
             this.FechaRegistro = DateTime.Now;
-            this.Estatus = true;
             this.DatosPersonales = datosPersonales;
         }
 
