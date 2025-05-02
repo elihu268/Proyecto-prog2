@@ -1,32 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sistema_Ventas.Data;
+﻿using Sistema_Ventas.Data;
 using Sistema_Ventas.Utilities;
 using NLog;
 using Sistema_Ventas.Model;
+
 namespace Sistema_Ventas.Controller
 {
+    /// <summary>
+    /// Controlador para gestionar operaciones relacionadas con roles en el sistema.
+    /// </summary>
     internal class RolesController
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Controller.RolesController");
         private readonly RolesDataAccess _rolesData;
 
+        /// <summary>
+        /// Constructor del controlador de roles.
+        /// </summary>
         public RolesController()
         {
             try
             {
                 _rolesData = new RolesDataAccess();
-
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "error al inicializar el controlador de roles");
+                _logger.Error(ex, "Error al inicializar el controlador de roles");
                 throw;
             }
         }
+
+        /// <summary>
+        /// Obtiene una lista de roles desde la base de datos.
+        /// </summary>
+        /// <returns>Lista de roles activos.</returns>
         public List<Rol> ObtenerRoles()
         {
             try
@@ -38,6 +44,119 @@ namespace Sistema_Ventas.Controller
             catch (Exception ex)
             {
                 _logger.Error(ex, "Error al obtener la lista de roles");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registra un nuevo rol en el sistema.
+        /// </summary>
+        /// <param name="rol">Objeto rol con los datos a registrar.</param>
+        /// <returns>Tupla con ID del nuevo rol y mensaje.</returns>
+        public (int id, string mensaje) RegistrarRol(Rol rol)
+        {
+            try
+            {
+                if (_rolesData.ExisteCodigo(rol.Codigo))
+                {
+                    _logger.Warn($"Intento de registrar rol con código duplicado: {rol.Codigo}");
+                    return (-2, $"El código '{rol.Codigo}' ya existe en el sistema.");
+                }
+
+                int idRol = _rolesData.InsertarRol(rol);
+
+                if (idRol <= 0)
+                {
+                    return (-1, "Error al registrar el rol en la base de datos.");
+                }
+
+                _logger.Info($"Rol registrado exitosamente con ID: {idRol}");
+                return (idRol, "Rol registrado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error inesperado al registrar el rol");
+                return (-3, $"Error inesperado: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Obtiene los detalles de un rol por su ID.
+        /// </summary>
+        /// <param name="id">ID del rol.</param>
+        /// <returns>Objeto Rol o null si no se encuentra.</returns>
+        public Rol? ObtenerDetalleRol(int id)
+        {
+            try
+            {
+                _logger.Debug($"Solicitando detalle del rol con ID: {id}");
+                return _rolesData.ObtenerRolPorId(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener detalles del rol con ID: {id}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Actualiza un rol existente en el sistema.
+        /// </summary>
+        /// <param name="rol">Objeto rol con datos actualizados.</param>
+        /// <returns>Tupla con resultado y mensaje.</returns>
+        public (bool exito, string mensaje) ActualizarRol(Rol rol)
+        {
+            try
+            {
+                if (rol == null || rol.IdRol <= 0)
+                {
+                    return (false, "Datos del rol no válidos");
+                }
+
+                var rolExistente = _rolesData.ObtenerRolPorId(rol.IdRol);
+                if (rolExistente == null)
+                {
+                    return (false, $"No se encontró el rol con ID {rol.IdRol}");
+                }
+
+                if (rol.Codigo != rolExistente.Codigo && _rolesData.ExisteCodigo(rol.Codigo))
+                {
+                    return (false, $"El código '{rol.Codigo}' ya está registrado en el sistema");
+                }
+
+                _logger.Info($"Actualizando rol con ID: {rol.IdRol}, Código: {rol.Codigo}");
+                bool actualizado = _rolesData.ActualizarRol(rol);
+
+                if (!actualizado)
+                {
+                    _logger.Error($"Error al actualizar el rol con ID {rol.IdRol}");
+                    return (false, "Error al actualizar el rol en la base de datos");
+                }
+
+                _logger.Info($"Rol con ID {rol.IdRol} actualizado exitosamente");
+                return (true, "Rol actualizado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error inesperado al actualizar el rol con ID {rol?.IdRol}");
+                return (false, $"Error inesperado: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Busca roles que coincidan con un término dado.
+        /// </summary>
+        /// <param name="termino">Texto de búsqueda.</param>
+        /// <returns>Lista de roles coincidentes.</returns>
+        public List<Rol> BuscarRoles(string termino)
+        {
+            try
+            {
+                return _rolesData.BuscarRoles(termino);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al buscar roles con el término '{termino}'");
                 throw;
             }
         }

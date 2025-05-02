@@ -77,6 +77,35 @@ namespace Sistema_Ventas.Data
         }
 
         /// <summary>
+        /// Verifica si un código de rol ya existe en la base de datos.
+        /// </summary>
+        /// <param name="codigo">Código a verificar.</param>
+        /// <returns>True si ya existe, False si no.</returns>
+        public bool ExisteCodigo(string codigo)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM roles WHERE codigo = @Codigo";
+                var parametro = _dbAccess.CreateParameter("@Codigo", codigo);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
+                int cantidad = Convert.ToInt32(resultado);
+
+                return cantidad > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al verificar existencia del código '{codigo}'");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
         /// Inserta un nuevo rol en la base de datos.
         /// </summary>
         /// <param name="rol">Objeto Rol con la información a insertar.</param>
@@ -85,6 +114,13 @@ namespace Sistema_Ventas.Data
         {
             try
             {
+                // Verifica que no exista un código duplicado
+                if (ExisteCodigo(rol.Codigo))
+                {
+                    _logger.Warn($"Ya existe un rol con el código '{rol.Codigo}'. No se puede insertar.");
+                    return -1;
+                }
+
                 string query = @"INSERT INTO roles (codigo, descripcion, estatus)
                                  VALUES (@Codigo, @Descripcion, @Estatus)
                                  RETURNING id_rol";
@@ -229,6 +265,50 @@ namespace Sistema_Ventas.Data
             {
                 _logger.Error(ex, $"Error al cambiar el estatus del rol con ID {idRol}");
                 return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Busca roles dinámicamente por coincidencia de código o descripción.
+        /// </summary>
+        /// <param name="termino">Texto a buscar (parcial o completo).</param>
+        /// <returns>Lista de roles que coinciden con el criterio.</returns>
+        public List<Rol> BuscarRoles(string termino)
+        {
+            List<Rol> roles = new List<Rol>();
+
+            try
+            {
+                string query = @"SELECT id_rol, codigo, descripcion, estatus
+                                 FROM roles
+                                 WHERE codigo ILIKE @Termino OR descripcion ILIKE @Termino";
+
+                var parametro = _dbAccess.CreateParameter("@Termino", $"%{termino}%");
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Rol rol = new Rol(
+                        Convert.ToInt32(row["id_rol"]),
+                        row["codigo"].ToString() ?? "",
+                        row["descripcion"].ToString() ?? "",
+                        Convert.ToBoolean(row["estatus"])
+                    );
+                    roles.Add(rol);
+                }
+
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al buscar roles con término '{termino}'");
+                return roles;
             }
             finally
             {
