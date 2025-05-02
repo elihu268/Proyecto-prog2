@@ -1,0 +1,239 @@
+﻿using Sistema_Ventas.Utilities;
+using Sistema_Ventas.Model;
+using NLog;
+using Npgsql;
+using System.Data;
+
+namespace Sistema_Ventas.Data
+{
+    /// <summary>
+    /// Clase responsable del acceso a datos para la entidad "Rol".
+    /// Proporciona métodos para CRUD y manipulación de roles en la base de datos PostgreSQL.
+    /// </summary>
+    public class RolesDataAccess
+    {
+        private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Data.RolesDataAccess");
+        private readonly PostgreSQLDataAccess _dbAccess;
+
+        /// <summary>
+        /// Constructor que inicializa la instancia de acceso a base de datos.
+        /// </summary>
+        public RolesDataAccess()
+        {
+            try
+            {
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, "Error al inicializar RolesDataAccess");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la lista de roles desde la base de datos.
+        /// </summary>
+        /// <param name="soloActivos">Si es verdadero, solo devuelve roles con estatus activo.</param>
+        /// <returns>Lista de objetos Rol.</returns>
+        public List<Rol> ObtenerRoles(bool soloActivos = true)
+        {
+            List<Rol> roles = new List<Rol>();
+
+            try
+            {
+                string query = "SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE 1=1";
+                if (soloActivos)
+                {
+                    query += " AND estatus = true";
+                }
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Rol rol = new Rol(
+                        Convert.ToInt32(row["id_rol"]),
+                        row["codigo"].ToString() ?? "",
+                        row["descripcion"].ToString() ?? "",
+                        Convert.ToBoolean(row["estatus"])
+                    );
+                    roles.Add(rol);
+                }
+
+                _logger.Info($"Se obtuvieron {roles.Count} roles");
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener los roles");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Inserta un nuevo rol en la base de datos.
+        /// </summary>
+        /// <param name="rol">Objeto Rol con la información a insertar.</param>
+        /// <returns>ID generado del nuevo rol o -1 en caso de error.</returns>
+        public int InsertarRol(Rol rol)
+        {
+            try
+            {
+                string query = @"INSERT INTO roles (codigo, descripcion, estatus)
+                                 VALUES (@Codigo, @Descripcion, @Estatus)
+                                 RETURNING id_rol";
+
+                var parametros = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@Codigo", rol.Codigo),
+                    _dbAccess.CreateParameter("@Descripcion", rol.Descripcion),
+                    _dbAccess.CreateParameter("@Estatus", rol.Estatus)
+                };
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametros);
+                int idGenerado = Convert.ToInt32(resultado);
+
+                _logger.Info($"Rol insertado correctamente con ID: {idGenerado}");
+                return idGenerado;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al insertar el rol");
+                return -1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Actualiza la información de un rol existente en la base de datos.
+        /// </summary>
+        /// <param name="rol">Objeto Rol con la información actualizada.</param>
+        /// <returns>True si se actualizó exitosamente, False en caso contrario.</returns>
+        public bool ActualizarRol(Rol rol)
+        {
+            try
+            {
+                string query = @"UPDATE roles
+                                 SET codigo = @Codigo,
+                                     descripcion = @Descripcion,
+                                     estatus = @Estatus
+                                 WHERE id_rol = @IdRol";
+
+                var parametros = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@Codigo", rol.Codigo),
+                    _dbAccess.CreateParameter("@Descripcion", rol.Descripcion),
+                    _dbAccess.CreateParameter("@Estatus", rol.Estatus),
+                    _dbAccess.CreateParameter("@IdRol", rol.IdRol)
+                };
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros);
+
+                bool exito = filasAfectadas > 0;
+                if (!exito)
+                {
+                    _logger.Warn($"No se encontró el rol con ID {rol.IdRol} para actualizar");
+                }
+                else
+                {
+                    _logger.Info($"Rol con ID {rol.IdRol} actualizado correctamente");
+                }
+
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar el rol con ID {rol.IdRol}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un rol específico por su identificador.
+        /// </summary>
+        /// <param name="id">ID del rol a buscar.</param>
+        /// <returns>Objeto Rol si se encuentra, null si no existe.</returns>
+        public Rol? ObtenerRolPorId(int id)
+        {
+            try
+            {
+                string query = "SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE id_rol = @IdRol";
+                var parametro = _dbAccess.CreateParameter("@IdRol", id);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
+
+                if (resultado.Rows.Count == 0)
+                {
+                    _logger.Warn($"No se encontró ningún rol con ID {id}");
+                    return null;
+                }
+
+                DataRow row = resultado.Rows[0];
+                return new Rol(
+                    Convert.ToInt32(row["id_rol"]),
+                    row["codigo"].ToString() ?? "",
+                    row["descripcion"].ToString() ?? "",
+                    Convert.ToBoolean(row["estatus"])
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener el rol con ID {id}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Cambia el estatus (activo/inactivo) de un rol.
+        /// </summary>
+        /// <param name="idRol">ID del rol a modificar.</param>
+        /// <param name="nuevoEstatus">Nuevo valor booleano del estatus.</param>
+        /// <returns>True si la operación fue exitosa, False en caso contrario.</returns>
+        public bool CambiarEstatusRol(int idRol, bool nuevoEstatus)
+        {
+            try
+            {
+                string query = "UPDATE roles SET estatus = @NuevoEstatus WHERE id_rol = @IdRol";
+
+                var parametros = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@NuevoEstatus", nuevoEstatus),
+                    _dbAccess.CreateParameter("@IdRol", idRol)
+                };
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros);
+                return filasAfectadas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al cambiar el estatus del rol con ID {idRol}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+    }
+}

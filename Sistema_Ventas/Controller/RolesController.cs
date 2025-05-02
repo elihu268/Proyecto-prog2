@@ -12,13 +12,13 @@ namespace Sistema_Ventas.Controller
     internal class RolesController
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Controller.RolesController");
-        private readonly RolesDataAccesscs _rolesData;
+        private readonly RolesDataAccess _rolesData;
 
         public RolesController()
         {
             try
             {
-                _rolesData = new RolesDataAccesscs();
+                _rolesData = new RolesDataAccess();
 
             }
             catch (Exception ex)
@@ -31,7 +31,7 @@ namespace Sistema_Ventas.Controller
         {
             try
             {
-                List<Rol> roles = _rolesData.obtenerRoles();
+                List<Rol> roles = _rolesData.ObtenerRoles();
                 _logger.Info($"Se obtuvieron {roles.Count} roles");
                 return roles;
             }
