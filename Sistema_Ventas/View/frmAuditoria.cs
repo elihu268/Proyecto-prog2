@@ -100,6 +100,9 @@ namespace PuntodeVenta.View
 
             // Ocultar columna ID si es necesario
             dgvAuditorias.Columns["ID"].Visible = false;
+            dgvAuditorias.Columns["Movimiento"].Visible = false;
+            ///dgvAuditorias.Columns[""].Visible = false;
+
 
             // Formato para las fechas
             dgvAuditorias.Columns["Fecha"].DefaultCellStyle.Format = "dd/MM/yyyy";

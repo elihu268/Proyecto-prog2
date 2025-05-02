@@ -258,9 +258,9 @@ namespace Sistema_Ventas.Data
                 row = result.Rows[0];
                 Persona persona = new Persona(
                     Convert.ToInt32(row["id_persona"]),
-                    row["nombre_completo"].ToString(),
-                    row["correo"].ToString(),
-                    row["telefono"].ToString(),
+                    row["nombre_completo"].ToString() ?? "",
+                    row["correo"].ToString() ??"",
+                    row["telefono"].ToString() ?? "",
                     row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
                     Convert.ToBoolean(row["estatus_persona"])
                 );
@@ -269,8 +269,8 @@ namespace Sistema_Ventas.Data
                     Convert.ToInt32(row["id_usuario"]),
                     Convert.ToInt32(row["id_persona"]),
                     Convert.ToInt32(row["id_rol"]),
-                    row["usuario"].ToString(),
-                    row["contraseña"].ToString(),
+                    row["usuario"].ToString() ?? "",
+                    row["contraseña"].ToString() ?? "",
                     Convert.ToBoolean(row["estatus_persona"]), // Cambiado a Convert.ToBoolean
                     persona
                 );                

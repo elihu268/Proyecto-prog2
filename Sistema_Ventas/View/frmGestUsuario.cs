@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
+using System.Net;
 
 
 namespace PuntodeVenta.View
@@ -156,14 +157,15 @@ namespace PuntodeVenta.View
                 
                 UsuariosController usuariosController = new UsuariosController();
                 var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
+               
                 Auditoria auditoria = new Auditoria(
                     "Agregar Usuario",
                     DateTime.Now,
-                     System.Windows.Forms.SystemInformation.UserDomainName.ToString(),
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
                     System.Windows.Forms.SystemInformation.ComputerName.ToString(),
                     Sesión.UsuarioActual,
                     Sesión.IdUsuario,
-                    1
+                    0
                 );
                 auditoriaController.AudioriaAdd(auditoria);
                 if (idUsuario > 0)
