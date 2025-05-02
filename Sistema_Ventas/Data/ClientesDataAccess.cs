@@ -211,6 +211,7 @@ namespace Sistema_Ventas.Data
         {
             try
             {
+                // Insertar en la tabla personas (incluye estatus)
                 int idPersona = _personasData.InsertarPersona(cliente.DatosPersonales);
 
                 if (idPersona <= 0)
@@ -220,7 +221,7 @@ namespace Sistema_Ventas.Data
                 }
                 cliente.IdPersona = idPersona;
 
-                // Insertar solo los campos necesarios en cliente
+                // Insertar en la tabla cliente
                 string query = @"
             INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc)
             VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc)
@@ -252,34 +253,41 @@ namespace Sistema_Ventas.Data
 
 
 
+
         public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
         {
             List<Cliente> clientes = new List<Cliente>();
             try
             {
-                string query = @"SELECT c.id_cliente, c.id_persona, c.tipo, c.fecha_registro, c.rfc,
-                    p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus
-             FROM cliente c
-             INNER JOIN personas p ON c.id_persona = p.id_persona
- WHERE LOWER(p.nombre_completo) LIKE LOWER(@nombre)
-               AND c.fecha_registro BETWEEN @fechaInicio AND @fechaFin";
-                // Agregar filtro de estatus si se eligió uno específico
-                if (tipoEstado.HasValue)
-                {
-                    query += " AND p.estatus = @estatus";
-                }
+                string query = @"
+            SELECT c.id_cliente, c.id_persona, c.tipo, c.fecha_registro, c.rfc,
+                   p.nombre_completo, p.correo, p.telefono, p.fecha_nacimiento, p.estatus
+            FROM cliente c
+            INNER JOIN personas p ON c.id_persona = p.id_persona
+            WHERE (@nombre IS NULL OR LOWER(p.nombre_completo) LIKE @nombre)
+              AND (@fechaInicio IS NULL OR c.fecha_registro >= @fechaInicio)
+              AND (@fechaFin IS NULL OR c.fecha_registro <= @fechaFin)
+              AND (@estatus IS NULL OR p.estatus = @estatus);";
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
-         {
-             new NpgsqlParameter("@nombre", $"%{nombrecli}%"),
-             new NpgsqlParameter("@fechaInicio", fechaInicio),
-             new NpgsqlParameter("@fechaFin", fechaFin)
-         };
-
-                if (tipoEstado.HasValue)
-                {
-                    parametros.Add(new NpgsqlParameter("@estatus", tipoEstado.Value));
-                }
+        {
+            new NpgsqlParameter("@nombre", NpgsqlTypes.NpgsqlDbType.Varchar)
+            {
+                Value = nombrecli != null ? $"%{nombrecli}%" : DBNull.Value
+            },
+            new NpgsqlParameter("@fechaInicio", NpgsqlTypes.NpgsqlDbType.Date)
+            {
+                Value = fechaInicio.HasValue ? (object)fechaInicio.Value : DBNull.Value
+            },
+            new NpgsqlParameter("@fechaFin", NpgsqlTypes.NpgsqlDbType.Date)
+            {
+                Value = fechaFin.HasValue ? (object)fechaFin.Value : DBNull.Value
+            },
+            new NpgsqlParameter("@estatus", NpgsqlTypes.NpgsqlDbType.Boolean)
+            {
+                Value = tipoEstado.HasValue ? (object)tipoEstado.Value : DBNull.Value
+            }
+        };
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 
@@ -290,18 +298,22 @@ namespace Sistema_Ventas.Data
                         NombreCompleto = row["nombre_completo"].ToString(),
                         Correo = row["correo"].ToString(),
                         Telefono = row["telefono"].ToString(),
-                        FechaNacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-                        Estatus = Convert.ToBoolean(row["estatus"])
+                        FechaNacimiento = row["fecha_nacimiento"] != DBNull.Value
+                            ? Convert.ToDateTime(row["fecha_nacimiento"])
+                            : (DateTime?)null,
+                        Estatus = row["estatus"] != DBNull.Value
+                            ? Convert.ToBoolean(row["estatus"])
+                            : false
                     };
 
                     Cliente cliente = new Cliente(
-                         Convert.ToInt32(row["id_cliente"]),
-                         Convert.ToInt32(row["id_persona"]),
-                         Convert.ToInt32(row["tipo"]),
-                         Convert.ToDateTime(row["fecha_registro"]),
-                         row["rfc"].ToString(),
-                         persona
-                     );
+                        Convert.ToInt32(row["id_cliente"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["tipo"]),
+                        Convert.ToDateTime(row["fecha_registro"]),
+                        row["rfc"].ToString(),
+                        persona
+                    );
 
                     clientes.Add(cliente);
                 }
@@ -318,6 +330,8 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
+
         public Cliente ObtenerClientePorId(int idCliente)
         {
             try

@@ -48,38 +48,40 @@ namespace PuntodeVenta.View
         {
             scClientes.Panel1Collapsed = true;
             PoblaComboEstatus();
-            PoblaTipoFecha();
+            PoblarComboEstatusFiltro();
             PoblaTipoCliente();
         }
         private void PoblaComboEstatus()
         {
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
-            {
-                {1, "Alta" },
-                {0, "Baja" }
-            };
-            //asignar el diccionario al combobox
-            cbxEstatus.DataSource = new BindingSource(list_estatus, null);
-            cbxEstatus.DisplayMember = "Value"; //lo que se muesta
-            cbxEstatus.ValueMember = "Key"; // lo que se guarda como seleccionado 0,1,2
+    {
+        {1, "Alta" },
+        {0, "Baja" }
+    };
 
-            cbxEstatus.SelectedValue = 1;
+            cbxEstatus.DataSource = new BindingSource(list_estatus, null);
+            cbxEstatus.DisplayMember = "Value";  // Lo que se muestra (Alta/Baja)
+            cbxEstatus.ValueMember = "Key";     // Lo que se guarda (1 o 0)
+
+            cbxEstatus.SelectedValue = 1;       // Establece el valor predeterminado (Alta)
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
         }
-        private void PoblaTipoFecha()
-        {
-            Dictionary<int, string> list_tipofecha = new Dictionary<int, string>
-            {
 
-                { 1, "Alta" },
-                { 2, "Baja" }
-            };
-            cbxtipoFecha.DataSource = new BindingSource(list_tipofecha, null);
-            cbxtipoFecha.DisplayMember = "Value";
-            cbxtipoFecha.ValueMember = "Key";
-            cbxtipoFecha.SelectedValue = 1;
-            cbxtipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
+        private void PoblarComboEstatusFiltro()
+        {
+            Dictionary<string, object> estatusFiltro = new Dictionary<string, object>
+    {
+        { "Todos", null },
+        { "Activo", true },
+        { "Inactivo", false }
+    };
+
+            cbxEstatusFiltro.DataSource = new BindingSource(estatusFiltro, null);
+            cbxEstatusFiltro.DisplayMember = "Key";
+            cbxEstatusFiltro.ValueMember = "Value";
+            cbxEstatusFiltro.DropDownStyle = ComboBoxStyle.DropDownList;
         }
+
         private void PoblaTipoCliente()
         {
             Dictionary<int, string> list_tipoclinte = new Dictionary<int, string>
@@ -138,20 +140,25 @@ namespace PuntodeVenta.View
                     return;
                 }
 
+                Console.WriteLine("Valor de Estatus seleccionado: " + cbxEstatus.SelectedValue); // Depuración
+
+
                 Persona persona = new Persona(
                     txtNombreCliente.Text.Trim(),
                     txtCorreoCliente.Text.Trim(),
                     txtTelefonoCliente.Text.Trim());
 
                 persona.FechaNacimiento = dtpNacimientoCliente.Value;
+                persona.Estatus = Convert.ToInt32(cbxEstatus.SelectedValue) == 1;
 
                 Cliente cliente = new Cliente
                 {
-                    Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 1,
+                    Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxTipoCliente.SelectedValue : 1,
                     Rfc = txtrfcCliente.Text.Trim(),
                     FechaRegistro = DateTime.Now,
                     DatosPersonales = persona
                 };
+
 
                 ClientesController clientesController = new ClientesController();
 
@@ -247,6 +254,7 @@ namespace PuntodeVenta.View
                 Cursor = Cursors.WaitCursor;
 
                 ClientesController clienteController = new ClientesController();
+                List<Cliente> clientes = clienteController.ObtenerClientes();
 
                 dgvGesClientes.DataSource = null;
 
@@ -303,47 +311,41 @@ namespace PuntodeVenta.View
             }
         }
 
-
         private void BuscarCliente()
         {
             try
             {
                 Cursor = Cursors.WaitCursor;
 
-                if (txtBusqueda.Text == "")
-                {
-                    MessageBox.Show("Ingrese el nombre del cliente que desee buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                string nombre = string.IsNullOrWhiteSpace(txtBusqueda.Text)
+                    ? null
+                    : txtBusqueda.Text.ToLower();
 
                 DateTime? fechaInicio = dtpFechaInicio.Value.Date;
                 DateTime? fechaFin = dtpFechaFin.Value.Date;
 
-                // Recuperar el estado (activo o inactivo)
-                bool? estado = null;
-                if (cbxEstatusFiltro.SelectedItem != null)
+                bool? estatus = null;
+                if (cbxEstatusFiltro.SelectedValue != null)
                 {
-                    string estadoSeleccionado = cbxEstatusFiltro.SelectedItem.ToString();
-                    if (estadoSeleccionado == "Activo") estado = true;
-                    else if (estadoSeleccionado == "Inactivo") estado = false;
-                    // Si es "Todos" o no se seleccionó nada, se queda en null (sin filtro)
+                    estatus = cbxEstatusFiltro.SelectedValue as bool?;
                 }
 
                 ClientesController clienteController = new ClientesController();
-                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.ToLower(), fechaInicio, fechaFin, estado);
+                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(nombre, fechaInicio, fechaFin, estatus);
 
                 if (clientes.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron clientes con los criterios de búsqueda especificados", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No se encontraron clientes con los criterios de búsqueda.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                ConfigurarDataGridViewClientes(clientes); // Asegúrate de pasar los datos correctamente a tu DataGridView
+                ConfigurarDataGridViewClientes(clientes);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al buscar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al buscar clientes:\n{ex.Message}", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             finally
             {
                 Cursor = Cursors.Default;
@@ -540,6 +542,7 @@ namespace PuntodeVenta.View
                 if (resultado)
                 {
                     MessageBox.Show("Cliente actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtrfcCliente.Enabled = true;
                 }
                 else
                 {

@@ -49,21 +49,21 @@ namespace Sistema_Ventas.Controller
             }
         }
 
-        public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
-        {
-            try
-            {
-                DataTable clientes = _clientesData.ObtenerClientesFiltrados(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
-                _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
-                return clientes;
-            }
-            catch (Exception ex)
-            {
+        //public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
+        //{
+        //    try
+        //    {
+        //        DataTable clientes = _clientesData.ObtenerClientesFiltrados(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
+        //        _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
+        //        return clientes;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                _logger.Error(ex, "Error al obtener la lista de clientes");
-                throw;
-            }
-        }
+        //        _logger.Error(ex, "Error al obtener la lista de clientes");
+        //        throw;
+        //    }
+        //}
       
         public Cliente ObtenerClientePorId(int id)
         {
