@@ -150,7 +150,7 @@ namespace PuntodeVenta.View
                     Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 1,
                     Rfc = txtrfcCliente.Text.Trim(),
                     FechaRegistro = DateTime.Now,
-                    Estatus = 1,
+                    Estatus = true,
                     DatosPersonales = persona
                 };
 

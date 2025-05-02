@@ -223,13 +223,13 @@ namespace Sistema_Ventas.Data
                 string query = @"
             INSERT INTO cliente(id_persona, tipo, fecha_registro, rfc, estatus)
             VALUES (@IdPersona, @Tipo, @FechaRegistro, @Rfc, @Estatus)
-            RETURNING id_cliente";
+            RETURNING id_cliente;";
 
                 NpgsqlParameter paramIdPersona = _dbAccess.CreateParameter("@IdPersona", cliente.IdPersona);
                 NpgsqlParameter paramTipo = _dbAccess.CreateParameter("@Tipo", cliente.Tipo);
                 NpgsqlParameter paramFechaRegistro = _dbAccess.CreateParameter("@FechaRegistro", cliente.FechaRegistro);
                 NpgsqlParameter paramRfc = _dbAccess.CreateParameter("@Rfc", cliente.Rfc);
-                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", cliente.Estatus);
+                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", cliente.Estatus); // nuevo parámetro
 
                 _dbAccess.Connect();
 
@@ -250,6 +250,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
 
 
         public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? tipoEstado)
