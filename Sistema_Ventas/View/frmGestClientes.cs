@@ -70,9 +70,9 @@ namespace PuntodeVenta.View
         {
             Dictionary<int, string> list_tipofecha = new Dictionary<int, string>
             {
-                { 1, "Nacimiento" },
-                { 2, "Alta" },
-                { 3, "Baja" }
+
+                { 1, "Alta" },
+                { 2, "Baja" }
             };
             cbxtipoFecha.DataSource = new BindingSource(list_tipofecha, null);
             cbxtipoFecha.DisplayMember = "Value";
@@ -287,6 +287,59 @@ namespace PuntodeVenta.View
             }
         }
 
+        private void BuscarCliente()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                if (txtBusqueda.Text == "")
+                {
+                    MessageBox.Show("Ingrese el nombre del cliente que desee buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Recuperar los valores de los filtros
+                DateTime? fechaInicio = dtpFechaInicio.Value.Date;
+                DateTime? fechaFin = dtpFechaFin.Value.Date;
+                int tipoFecha = Convert.ToInt32(cbxtipoFecha.SelectedValue);
+
+                // Recuperar el estado (activo o inactivo)
+                bool? estado = null;
+                if (cbxtipoFecha.SelectedItem != null)
+                {
+                    string estadoSeleccionado = cbxtipoFecha.SelectedItem.ToString();
+                    if (estadoSeleccionado == "Activo") estado = true;
+                    else if (estadoSeleccionado == "Inactivo") estado = false;
+                    // Si es "Todos" o no se seleccionó nada, se queda en null (sin filtro)
+                }
+
+                // Obtener los clientes con los filtros aplicados
+                ClientesController clienteController = new ClientesController();
+                List<Cliente> clientes = clienteController.ObtenerClientePorNombre(txtBusqueda.Text.ToLower(), fechaInicio, fechaFin, estado);
+
+                if (clientes.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron clientes con los criterios de búsqueda especificados", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                ConfigurarDataGridViewClientes(clientes); // Asegúrate de pasar los datos correctamente a tu DataGridView
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar clientes. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Restaurar el cursor
+                Cursor = Cursors.Default;
+            }
+        }
+
+
+
+
         private void LimpiarCampos()
         {
             txtNombreCliente.Clear();
@@ -296,6 +349,59 @@ namespace PuntodeVenta.View
             txtrfcCliente.Clear();
             cbxEstatus.SelectedValue = 2;
         }
+
+        public void ConfigurarDataGridViewClientes(List<Cliente> clientes)
+        {
+            dgvGesClientes.DataSource = null;
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("RFC", typeof(string));
+            dt.Columns.Add("Nombre Completo", typeof(string));
+            dt.Columns.Add("Tipo", typeof(string));
+            dt.Columns.Add("Correo", typeof(string));
+            dt.Columns.Add("Teléfono", typeof(string));
+            dt.Columns.Add("Fecha Nacimiento", typeof(string));
+            dt.Columns.Add("Fecha de Registro", typeof(string));
+            dt.Columns.Add("Estatus", typeof(string));
+
+            foreach (Cliente cliente in clientes)
+            {
+                dt.Rows.Add(
+                    cliente.Id,
+                    cliente.Rfc,
+                    cliente.NombreCompletoCliente,
+                    cliente.Tipo == 1 ? "Físico" : "Moral",
+                    cliente.DatosPersonales?.Correo ?? "",
+                    cliente.DatosPersonales?.Telefono ?? "",
+                    cliente.DatosPersonales?.FechaNacimiento?.ToString("dd/MM/yyyy") ?? "",
+                    cliente.FechaRegistro?.ToString("dd/MM/yyyy") ?? "",
+                    cliente.DatosPersonales?.Estatus == true ? "Activo" : "Inactivo"
+                );
+            }
+
+            dgvGesClientes.DataSource = dt;
+
+            // Configuración visual, igual que la que ya tienes
+            dgvGesClientes.AllowUserToAddRows = false;
+            dgvGesClientes.AllowUserToDeleteRows = false;
+            dgvGesClientes.ReadOnly = true;
+            dgvGesClientes.Columns["ID"].Visible = false;
+            dgvGesClientes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dgvGesClientes.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvGesClientes.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dgvGesClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvGesClientes.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            dgvGesClientes.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // Estilo de cabeceras
+            dgvGesClientes.EnableHeadersVisualStyles = false;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
+            dgvGesClientes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
 
         private void ConfigurarDataGridView()
         {
@@ -477,6 +583,19 @@ namespace PuntodeVenta.View
 
         }
 
-        
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            BuscarCliente();
+        }
+
+        private void cbxtipoFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

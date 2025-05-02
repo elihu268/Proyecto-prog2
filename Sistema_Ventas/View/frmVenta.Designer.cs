@@ -66,11 +66,9 @@
             lbl_metodo = new Label();
             txt_total = new TextBox();
             txt_IVA = new TextBox();
-            txt_descuento = new TextBox();
             txt_subtotal = new TextBox();
             cb_metodo = new ComboBox();
             btn_cobrar = new Button();
-            lbl_descuento = new Label();
             lbl_total = new Label();
             lbl_IVA = new Label();
             lbl_subtotal = new Label();
@@ -380,11 +378,9 @@
             gpbox_carrito.Controls.Add(lbl_metodo);
             gpbox_carrito.Controls.Add(txt_total);
             gpbox_carrito.Controls.Add(txt_IVA);
-            gpbox_carrito.Controls.Add(txt_descuento);
             gpbox_carrito.Controls.Add(txt_subtotal);
             gpbox_carrito.Controls.Add(cb_metodo);
             gpbox_carrito.Controls.Add(btn_cobrar);
-            gpbox_carrito.Controls.Add(lbl_descuento);
             gpbox_carrito.Controls.Add(lbl_total);
             gpbox_carrito.Controls.Add(lbl_IVA);
             gpbox_carrito.Controls.Add(lbl_subtotal);
@@ -405,7 +401,7 @@
             dgv_carrito.Location = new Point(23, 64);
             dgv_carrito.Name = "dgv_carrito";
             dgv_carrito.RowHeadersWidth = 62;
-            dgv_carrito.Size = new Size(465, 184);
+            dgv_carrito.Size = new Size(465, 204);
             dgv_carrito.TabIndex = 26;
             // 
             // cms_eliminar
@@ -482,21 +478,11 @@
             txt_IVA.Size = new Size(150, 31);
             txt_IVA.TabIndex = 17;
             // 
-            // txt_descuento
-            // 
-            txt_descuento.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txt_descuento.Enabled = false;
-            txt_descuento.Location = new Point(323, 295);
-            txt_descuento.MaxLength = 5;
-            txt_descuento.Name = "txt_descuento";
-            txt_descuento.Size = new Size(150, 31);
-            txt_descuento.TabIndex = 16;
-            // 
             // txt_subtotal
             // 
             txt_subtotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txt_subtotal.Enabled = false;
-            txt_subtotal.Location = new Point(323, 254);
+            txt_subtotal.Location = new Point(323, 297);
             txt_subtotal.MaxLength = 6;
             txt_subtotal.Name = "txt_subtotal";
             txt_subtotal.Size = new Size(150, 31);
@@ -527,16 +513,6 @@
             btn_cobrar.UseVisualStyleBackColor = false;
             btn_cobrar.Click += btn_cobrar_Click;
             // 
-            // lbl_descuento
-            // 
-            lbl_descuento.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lbl_descuento.AutoSize = true;
-            lbl_descuento.Location = new Point(196, 298);
-            lbl_descuento.Name = "lbl_descuento";
-            lbl_descuento.Size = new Size(101, 25);
-            lbl_descuento.TabIndex = 12;
-            lbl_descuento.Text = "Descuento";
-            // 
             // lbl_total
             // 
             lbl_total.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -561,7 +537,7 @@
             // 
             lbl_subtotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lbl_subtotal.AutoSize = true;
-            lbl_subtotal.Location = new Point(213, 261);
+            lbl_subtotal.Location = new Point(217, 295);
             lbl_subtotal.Name = "lbl_subtotal";
             lbl_subtotal.Size = new Size(83, 25);
             lbl_subtotal.TabIndex = 8;
@@ -621,11 +597,9 @@
         private Label lbl_metodo;
         private TextBox txt_total;
         private TextBox txt_IVA;
-        private TextBox txt_descuento;
         private TextBox txt_subtotal;
         private ComboBox cb_metodo;
         private Button btn_cobrar;
-        private Label lbl_descuento;
         private Label lbl_total;
         private Label lbl_IVA;
         private Label lbl_subtotal;

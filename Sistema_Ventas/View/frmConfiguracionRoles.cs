@@ -156,14 +156,19 @@ namespace Sistema_Ventas.View
         }
 
         /// <summary>
-        /// Evento Click para el botón de Actualizar: Ejecuta validación y actualización
+        /// Evento Click para el botón de buscar un rol
         /// </summary>
-        private void btnActualizar_Click(object sender, EventArgs e)
+        private void btnBuscarRol_Click(object sender, EventArgs e)
         {
-            if (ActualizarRol())
-            {
-                MessageBox.Show("Datos actualizados exitosamente!!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
+        }
+
+        /// <summary>
+        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
+        /// </summary>
+        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -194,36 +199,6 @@ namespace Sistema_Ventas.View
             }
         }
 
-        /// <summary>
-        /// Verifica campos obligatorios en el formulario de actualización
-        /// </summary>
-        /// <returns>True si existen campos vacíos</returns>
-        private bool DatosVaciosActualizarRol()
-        {
-            if (cbxTipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "" || txtBusquedaRol.Text == "")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Ejecuta el proceso completo de actualización de un rol
-        /// </summary>
-        /// <returns>True si la actualización fue exitosa</returns>
-        private bool ActualizarRol()
-        {
-            if (DatosVaciosActualizarRol())
-            {
-                MessageBox.Show("Favor de llenar los datos obligatorios ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
-
         private void dgvRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (Sesión.TienePermiso("ROLE_EDIT"))
@@ -237,7 +212,42 @@ namespace Sistema_Ventas.View
 
         }
 
+        private void editarRolesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void contextMenuRoles_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void picBoxFormato_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxTipoFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaFin_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBusquedaRol_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvRoles_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

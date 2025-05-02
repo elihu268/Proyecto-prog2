@@ -51,5 +51,14 @@ namespace Sistema_Ventas.Model
             Estatus = estatus;
             DatosPersonales = datospersonale;
         }
+        public Usuario(int idUsuario, int idPersona, int idrol, string cuenta, bool estatus, Persona datospersonale)
+        {
+            IdUsuario = idUsuario;
+            IdPersona = idPersona;
+            idRol = idrol;
+            Cuenta = cuenta;
+            Estatus = estatus;
+            DatosPersonales = datospersonale;
+        }
     }
 }

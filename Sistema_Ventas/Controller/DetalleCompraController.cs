@@ -31,6 +31,12 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+        /// <summary>
+        /// para validar que la cantidad que desea comprar no supera la existencia
+        /// </summary>
+        /// <param name="codigo">saber que producto es</param>
+        /// <param name="cantidad">cantidad que desea comprar</param>
+        /// <returns>verdadero si encuentra el producto y que la cantidad que desea comprar ssea valida</returns>
         public bool ValidarCantidad(string codigo, string cantidad)
         {
             try

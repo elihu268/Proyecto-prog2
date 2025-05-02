@@ -24,6 +24,16 @@ namespace Sistema_Ventas.Bussines
         {
             return Validaciones.EsMayorACero(cantidad);
         }
+        internal static (decimal resultado,bool valido) EsDescuentoValido(string descuento){
+            decimal desc=-1;
+            bool valido=false;
+            valido=Decimal.TryParse(descuento, out decimal val);
+            if (valido==true&&(desc<0||desc>50))
+            {
+                valido = false;
+            }
+            return (desc,valido);
+        }
         internal static bool CantidadEnRango(string cantidad, int cantidadStock)
         {
             try
@@ -53,10 +63,14 @@ namespace Sistema_Ventas.Bussines
             return nvoStock;
         }
     
-     
+     /// <summary>
+     /// funcion para mostrar una notificacion si hay productos con existencia menor a la minima
+     /// </summary>
+     /// <param name="productos">lista de productos activos</param>
+     /// <returns> bool para saber si hay productos con existencia minima, string para saber cuales son</returns>
       internal static (bool hay, string mnj)AlertaExistencia(List<Producto> productos)
         {
-            int existenciaMinima = int.Parse(ConfigurationManager.AppSettings["ExistenciaMinima"]);
+            int existenciaMinima = int.Parse(ConfigurationManager.AppSettings["ExistenciaMinima"]);//toma la variable appconfig 
             string mensaje = "\t\t¡Alerta!\n";
             bool hay = false;
             foreach (var producto in productos)
@@ -64,7 +78,7 @@ namespace Sistema_Ventas.Bussines
                 if (producto.Existencia <= existenciaMinima)
                 {
                   
-                         mensaje+= $" ⚫ El producto '{producto.Nombre}' tiene  {producto.Existencia} en existencia.\n";
+                         mensaje+= $"➮ El producto '{producto.Nombre}' tiene  {producto.Existencia} en existencia.\n";
                     hay= true;
                 }
             }

@@ -47,6 +47,7 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+
         public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
         {
             try
@@ -57,11 +58,12 @@ namespace Sistema_Ventas.Controller
             }
             catch (Exception ex)
             {
+
                 _logger.Error(ex, "Error al obtener la lista de clientes");
                 throw;
             }
         }
-
+      
         public Cliente ObtenerClientePorId(int id)
         {
             try

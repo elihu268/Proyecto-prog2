@@ -30,7 +30,13 @@ namespace Sistema_Ventas.Model
 
         public int? IdMovimiento { get; set; }
 
+        public String Movimiento { get; set; }
+
         public string NombreCompleto { get; set; }
+
+        public string Cuenta { get; set; }
+
+        public Persona Persona { get; set; }
 
         public Auditoria(string accion, string tipo, int? usuarioId, int? idMovimiento, string ip, string nombreEquipo)
         {
@@ -43,16 +49,38 @@ namespace Sistema_Ventas.Model
             Fecha = DateTime.Now;
         }
 
-        public Auditoria(int? usuarioid, string nombreCompleto, string accion, DateTime fecha, string ip, string nombreEquipo, int idMovimiento, string tipo)
+        //int usuario
+        public Auditoria(int? usuarioid, string nombreCompleto, string cuenta, string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, string idMovimiento)
         {
            UsuarioId = usuarioid;
             NombreCompleto = nombreCompleto;
+            Cuenta = cuenta;
             Accion = accion;
             Fecha = fecha;
             IpAcceso = ip;
             NombreEquipo = nombreEquipo;
-            IdMovimiento = idMovimiento;
             Tipo = tipo;
+            Movimiento = idMovimiento;
+            
+        }
+
+        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, int idUsuario, int idMovimiento)
+        {
+            Accion = accion;
+            Fecha = fecha;
+            IpAcceso = ip;
+            NombreEquipo = nombreEquipo;
+            Tipo = tipo;
+            UsuarioId = idUsuario;
+            IdMovimiento = idMovimiento;
+        }
+        public Auditoria(string accion, DateTime fecha, string ip, string nombreEquipo, string tipo, Persona persona)
+        {
+            Accion = accion;
+            Fecha = fecha;
+            IpAcceso = ip;
+            NombreEquipo = nombreEquipo;
+            Persona = persona;
         }
         public override string ToString()
         {

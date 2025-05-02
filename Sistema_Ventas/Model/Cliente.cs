@@ -22,6 +22,8 @@ namespace Sistema_Ventas.Model
         /// 
         /// </summary>
         public int Tipo { get; set; }
+        public string DescripcionTipo => Tipo == 1 ? "Físico" : "Moral";
+
         /// <summary>
         /// fecha en la que se dio de alta o modifico
         /// </summary>
@@ -34,7 +36,7 @@ namespace Sistema_Ventas.Model
         /// indica si el cliente 
         /// </summary>
         public int Estatus { get; set; }
-        public string? DescripcionEstatus { get; }
+
         public Persona DatosPersonales { get; set; }
 
         //CONSTRUCTORES

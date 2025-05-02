@@ -44,21 +44,23 @@
             lblCodigo = new Label();
             lblIdRol = new Label();
             dgvRoles = new DataGridView();
+            contextMenuRoles = new ContextMenuStrip(components);
+            editRolToolStripMenuItem = new ToolStripMenuItem();
             gbxBusquedaRol = new GroupBox();
+            btnBuscarRol = new Button();
             cbxTipoFecha = new ComboBox();
             lblTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
             dtpFechaInicio = new DateTimePicker();
             lblFechaFin = new Label();
             lblFechaInicio = new Label();
-            btnActualizar = new Button();
+            btnActualizarDataGridView = new Button();
             txtBusquedaRol = new TextBox();
             lblBuscar = new Label();
             gbxHerramienta = new GroupBox();
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
-            contextMenuRoles = new ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -67,6 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
+            contextMenuRoles.SuspendLayout();
             gbxBusquedaRol.SuspendLayout();
             gbxHerramienta.SuspendLayout();
             SuspendLayout();
@@ -117,7 +120,7 @@
             // lblInfo
             // 
             lblInfo.AutoSize = true;
-            lblInfo.Location = new Point(85, 214);
+            lblInfo.Location = new Point(85, 217);
             lblInfo.Name = "lblInfo";
             lblInfo.Size = new Size(124, 15);
             lblInfo.TabIndex = 23;
@@ -126,12 +129,13 @@
             // picBoxFormato
             // 
             picBoxFormato.Image = Properties.Resources.iconoPregunta;
-            picBoxFormato.Location = new Point(184, 84);
+            picBoxFormato.Location = new Point(184, 87);
             picBoxFormato.Name = "picBoxFormato";
             picBoxFormato.Size = new Size(32, 36);
             picBoxFormato.TabIndex = 22;
             picBoxFormato.TabStop = false;
             toolTipCodigo.SetToolTip(picBoxFormato, "3 mayusculas que son el tipo de rol - 3 numeros que consisten en la categoria");
+            picBoxFormato.Click += picBoxFormato_Click;
             // 
             // numIdRol
             // 
@@ -163,7 +167,7 @@
             // 
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(13, 178);
+            cbxEstatus.Location = new Point(13, 181);
             cbxEstatus.Name = "cbxEstatus";
             cbxEstatus.Size = new Size(203, 23);
             cbxEstatus.TabIndex = 19;
@@ -171,7 +175,7 @@
             // lblEstatus
             // 
             lblEstatus.AutoSize = true;
-            lblEstatus.Location = new Point(13, 160);
+            lblEstatus.Location = new Point(13, 163);
             lblEstatus.Name = "lblEstatus";
             lblEstatus.Size = new Size(52, 15);
             lblEstatus.TabIndex = 18;
@@ -179,7 +183,7 @@
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(13, 134);
+            txtDescripcion.Location = new Point(13, 137);
             txtDescripcion.MaxLength = 200;
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.Size = new Size(203, 23);
@@ -187,7 +191,7 @@
             // 
             // txtCodigo
             // 
-            txtCodigo.Location = new Point(13, 88);
+            txtCodigo.Location = new Point(13, 91);
             txtCodigo.MaxLength = 15;
             txtCodigo.Name = "txtCodigo";
             txtCodigo.Size = new Size(165, 23);
@@ -196,7 +200,7 @@
             // lblDescripcion
             // 
             lblDescripcion.AutoSize = true;
-            lblDescripcion.Location = new Point(13, 116);
+            lblDescripcion.Location = new Point(13, 119);
             lblDescripcion.Name = "lblDescripcion";
             lblDescripcion.Size = new Size(78, 15);
             lblDescripcion.TabIndex = 13;
@@ -205,7 +209,7 @@
             // lblCodigo
             // 
             lblCodigo.AutoSize = true;
-            lblCodigo.Location = new Point(13, 70);
+            lblCodigo.Location = new Point(13, 73);
             lblCodigo.Name = "lblCodigo";
             lblCodigo.Size = new Size(53, 15);
             lblCodigo.TabIndex = 11;
@@ -223,27 +227,44 @@
             // dgvRoles
             // 
             dgvRoles.AllowUserToAddRows = false;
+            dgvRoles.AllowUserToDeleteRows = false;
             dgvRoles.BackgroundColor = SystemColors.ActiveCaption;
             dgvRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRoles.ContextMenuStrip = contextMenuRoles;
             dgvRoles.Dock = DockStyle.Fill;
-            dgvRoles.Enabled = false;
             dgvRoles.Location = new Point(0, 141);
             dgvRoles.Margin = new Padding(2);
             dgvRoles.Name = "dgvRoles";
-            dgvRoles.ReadOnly = true;
             dgvRoles.RowHeadersWidth = 62;
             dgvRoles.Size = new Size(590, 199);
             dgvRoles.TabIndex = 14;
+            dgvRoles.CellContentClick += dgvRoles_CellContentClick_1;
+            // 
+            // contextMenuRoles
+            // 
+            contextMenuRoles.Items.AddRange(new ToolStripItem[] { editRolToolStripMenuItem });
+            contextMenuRoles.Name = "contextMenuRoles";
+            contextMenuRoles.Size = new Size(125, 26);
+            contextMenuRoles.Text = "Roles";
+            contextMenuRoles.Opening += contextMenuRoles_Opening;
+            // 
+            // editRolToolStripMenuItem
+            // 
+            editRolToolStripMenuItem.Name = "editRolToolStripMenuItem";
+            editRolToolStripMenuItem.Size = new Size(124, 22);
+            editRolToolStripMenuItem.Text = "Editar Rol";
+            editRolToolStripMenuItem.Click += editarRolesToolStripMenuItem_Click;
             // 
             // gbxBusquedaRol
             // 
+            gbxBusquedaRol.Controls.Add(btnBuscarRol);
             gbxBusquedaRol.Controls.Add(cbxTipoFecha);
             gbxBusquedaRol.Controls.Add(lblTipoFecha);
             gbxBusquedaRol.Controls.Add(dtpFechaFin);
             gbxBusquedaRol.Controls.Add(dtpFechaInicio);
             gbxBusquedaRol.Controls.Add(lblFechaFin);
             gbxBusquedaRol.Controls.Add(lblFechaInicio);
-            gbxBusquedaRol.Controls.Add(btnActualizar);
+            gbxBusquedaRol.Controls.Add(btnActualizarDataGridView);
             gbxBusquedaRol.Controls.Add(txtBusquedaRol);
             gbxBusquedaRol.Controls.Add(lblBuscar);
             gbxBusquedaRol.Dock = DockStyle.Top;
@@ -255,6 +276,21 @@
             gbxBusquedaRol.TabStop = false;
             gbxBusquedaRol.Text = "Busqueda";
             // 
+            // btnBuscarRol
+            // 
+            btnBuscarRol.BackColor = SystemColors.ActiveCaption;
+            btnBuscarRol.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBuscarRol.Image = Properties.Resources.search;
+            btnBuscarRol.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscarRol.Location = new Point(350, 53);
+            btnBuscarRol.Name = "btnBuscarRol";
+            btnBuscarRol.Size = new Size(75, 30);
+            btnBuscarRol.TabIndex = 20;
+            btnBuscarRol.Text = "Buscar";
+            btnBuscarRol.TextAlign = ContentAlignment.MiddleRight;
+            btnBuscarRol.UseVisualStyleBackColor = false;
+            btnBuscarRol.Click += btnBuscarRol_Click;
+            // 
             // cbxTipoFecha
             // 
             cbxTipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -263,6 +299,7 @@
             cbxTipoFecha.Name = "cbxTipoFecha";
             cbxTipoFecha.Size = new Size(87, 23);
             cbxTipoFecha.TabIndex = 18;
+            cbxTipoFecha.SelectedIndexChanged += cbxTipoFecha_SelectedIndexChanged;
             // 
             // lblTipoFecha
             // 
@@ -282,6 +319,7 @@
             dtpFechaFin.Size = new Size(100, 23);
             dtpFechaFin.TabIndex = 16;
             dtpFechaFin.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
+            dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
             // 
             // dtpFechaInicio
             // 
@@ -292,6 +330,7 @@
             dtpFechaInicio.Size = new Size(100, 23);
             dtpFechaInicio.TabIndex = 15;
             dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             // 
             // lblFechaFin
             // 
@@ -311,20 +350,20 @@
             lblFechaInicio.TabIndex = 13;
             lblFechaInicio.Text = "Fecha inicio";
             // 
-            // btnActualizar
+            // btnActualizarDataGridView
             // 
-            btnActualizar.BackColor = SystemColors.ActiveCaption;
-            btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnActualizar.Image = Properties.Resources.actualizar;
-            btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(438, 53);
-            btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(95, 30);
-            btnActualizar.TabIndex = 2;
-            btnActualizar.Text = "Actualizar";
-            btnActualizar.TextAlign = ContentAlignment.MiddleRight;
-            btnActualizar.UseVisualStyleBackColor = false;
-            btnActualizar.Click += btnActualizar_Click;
+            btnActualizarDataGridView.BackColor = SystemColors.ActiveCaption;
+            btnActualizarDataGridView.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnActualizarDataGridView.Image = Properties.Resources.actualizar;
+            btnActualizarDataGridView.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActualizarDataGridView.Location = new Point(438, 53);
+            btnActualizarDataGridView.Name = "btnActualizarDataGridView";
+            btnActualizarDataGridView.Size = new Size(95, 30);
+            btnActualizarDataGridView.TabIndex = 2;
+            btnActualizarDataGridView.Text = "Actualizar";
+            btnActualizarDataGridView.TextAlign = ContentAlignment.MiddleRight;
+            btnActualizarDataGridView.UseVisualStyleBackColor = false;
+            btnActualizarDataGridView.Click += btnActualizarDataGridView_Click;
             // 
             // txtBusquedaRol
             // 
@@ -333,6 +372,7 @@
             txtBusquedaRol.Name = "txtBusquedaRol";
             txtBusquedaRol.Size = new Size(240, 23);
             txtBusquedaRol.TabIndex = 1;
+            txtBusquedaRol.TextChanged += txtBusquedaRol_TextChanged;
             // 
             // lblBuscar
             // 
@@ -383,11 +423,6 @@
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // contextMenuRoles
-            // 
-            contextMenuRoles.Name = "contextMenuRoles";
-            contextMenuRoles.Size = new Size(61, 4);
-            // 
             // frmConfiguracionRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -410,6 +445,7 @@
             ((System.ComponentModel.ISupportInitialize)picBoxFormato).EndInit();
             ((System.ComponentModel.ISupportInitialize)numIdRol).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
+            contextMenuRoles.ResumeLayout(false);
             gbxBusquedaRol.ResumeLayout(false);
             gbxBusquedaRol.PerformLayout();
             gbxHerramienta.ResumeLayout(false);
@@ -431,7 +467,7 @@
         private DateTimePicker dtpFechaInicio;
         private Label lblFechaFin;
         private Label lblFechaInicio;
-        private Button btnActualizar;
+        private Button btnActualizarDataGridView;
         private TextBox txtBusquedaRol;
         private Label lblBuscar;
         private GroupBox gbxAltaEdicionRol;
@@ -449,5 +485,7 @@
         private Label lblInfo;
         private DataGridView dgvRoles;
         private ContextMenuStrip contextMenuRoles;
+        private ToolStripMenuItem editRolToolStripMenuItem;
+        private Button btnBuscarRol;
     }
 }

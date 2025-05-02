@@ -23,8 +23,34 @@ namespace Sistema_Ventas.View
             Formas.InicializarForma(this, parent);
         }
 
-        
-      
+
+        private void InicializarVentanaPermisos()
+        {
+
+            PoblacboxRol(); // Llena el ComboBox de roles
+            if (cbox_rol.Items.Count > 0)
+            {
+                int idRol = (int)cbox_rol.SelectedValue;
+                CargarPermisosPorRol(idRol);
+            }
+        }
+
+        /// <summary>
+        /// llena con la lista de roles el combo
+        /// </summary>
+        public void PoblacboxRol()
+        {
+            RolesController rolesController = new RolesController();
+
+            // Obtener la lista de roles
+            List<Rol> listaRoles = rolesController.ObtenerRoles();
+
+            cbox_rol.Items.Clear();
+            cbox_rol.DataSource = listaRoles;
+            cbox_rol.DisplayMember = "Codigo";
+            cbox_rol.ValueMember = "Idrol";
+            cbox_rol.SelectedIndex = 0;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             AsignarPermiso();
@@ -41,16 +67,16 @@ namespace Sistema_Ventas.View
                     return;
                 }
 
-                var permisosSeleccionados = SeleccionoPermiso();
-                if (permisosSeleccionados.Count == 0)
+                List<int> permisosSeleccionados = SeleccionoPermiso();
+                if (permisosSeleccionados.Count == 0)//si no selecciono permisos
                 {
                     MessageBox.Show("Por favor seleccione al menos un permiso.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 int idRolSeleccionado = (int)cbox_rol.SelectedValue; //  SelectedValue = ID del rol
-
-                GuardarPermisosDelRol(idRolSeleccionado);
+                PermisoARolController permisoARolController = new PermisoARolController();
+                permisoARolController.AsignarPermisosARol(idRolSeleccionado, permisosSeleccionados);
 
                 if (Sesión.IdRol == idRolSeleccionado)
                 {
@@ -84,6 +110,7 @@ namespace Sistema_Ventas.View
             }
 
         }
+        
         private void frmAsignarPermisos_Load(object sender, EventArgs e)
         {
             InicializarVentanaPermisos();
@@ -137,31 +164,46 @@ namespace Sistema_Ventas.View
             } 
         }
 
-
+         /// <summary>
+        /// obtener los id de permisos seleccionados
+        /// </summary>
+        /// <returns>lista de los id de los permisos seleccionaos</returns>
         private List<int> SeleccionoPermiso()
         {
             List<int> permisosSeleccionados = new List<int>();
 
-            foreach (DataGridViewRow row in dgv_permisos.Rows)
+            foreach (DataGridViewRow row in dgv_permisos.Rows)//recorre todas las filas de la tabla
             {
-                bool seleccionado = Convert.ToBoolean(row.Cells["Asignado"].Value);
+                bool seleccionado = Convert.ToBoolean(row.Cells["Asignado"].Value);//marca true o false si el check de la columna asignado due seleccionado
 
-                if (seleccionado)
+                if (seleccionado)//si fue seleccionado obtener el id
                 {
                     int idPermiso = Convert.ToInt32(row.Cells["ID"].Value); // Leer la columna "ID"
-                    permisosSeleccionados.Add(idPermiso);
+                    permisosSeleccionados.Add(idPermiso);//agregar a la lista
                 }
             }
 
             return permisosSeleccionados;
         }
+        private void frmAsignarPermisos_Load(object sender, EventArgs e)
+        {
+            InicializarVentanaPermisos();
+        }
+        
+
+
+
+       
 
         private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idRol;
-            if (cbox_rol.SelectedValue != null && int.TryParse(cbox_rol.SelectedValue.ToString(), out  idRol))
+            if (cbox_rol.SelectedValue != null && int.TryParse(cbox_rol.SelectedValue.ToString(), out idRol))
             {
-                 idRol = (int)cbox_rol.SelectedValue;
+                // && int.TryParse(cbox_rol.SelectedValue.ToString(), out  idRol) tarda por la bd, asique el tryparse se asgeura que sea un numero(idrol)
+                //aparece exception: 'Unable to cast object of type 'Sistema_Ventas.Model.Rol' to type 'System.Int32'.'
+
+                idRol = (int)cbox_rol.SelectedValue;
                 CargarPermisosPorRol(idRol);
             }
         }
@@ -192,8 +234,9 @@ namespace Sistema_Ventas.View
                 dt.Columns.Add("ID", typeof(int));
                 dt.Columns.Add("Código", typeof(string));
                 dt.Columns.Add("Descripción", typeof(string));
-                dt.Columns.Add("Estatus", typeof(bool));
-                dt.Columns.Add("Asignado", typeof(bool)); // checkbox
+                dt.Columns.Add("Estatus", typeof(bool));//en la tabla apareceria como ches: estatus palomeado: estatus activo
+                //en la bd es boolean
+                dt.Columns.Add("Asignado", typeof(bool)); // al ponerlo como bool automaticamente aparece como check
 
                 foreach (var permiso in permisos)
                 {
@@ -202,14 +245,13 @@ namespace Sistema_Ventas.View
                         permiso.Codigo,
                         permiso.Descripcion,
                         permiso.Estatus,
-                        permisosDelRol.Contains(permiso.IdPermiso) // true si está asignado
+                        permisosDelRol.Contains(permiso.IdPermiso) // aparece marcado (true si el arreglo permisosdelrol tiene el id de ese permso
                     );
                 }
 
                 dgv_permisos.DataSource = dt;
                 dgv_permisos.Columns["ID"].Visible = false;
                 dgv_permisos.Columns["Estatus"].Visible = false;
-                dgv_permisos.Columns["Asignado"].HeaderText = "Asignado al Rol";
                 dgv_permisos.Columns["Asignado"].Width = 100;
                 dgv_permisos.ReadOnly = false;
                 foreach (DataGridViewColumn col in dgv_permisos.Columns)

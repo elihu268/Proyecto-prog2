@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PuntodeVenta.View
 {
-    public partial class frmAuditoria: Form
+    public partial class frmAuditoria : Form
     {
         public frmAuditoria(Form parent)
         {
@@ -22,18 +22,10 @@ namespace PuntodeVenta.View
         }
         private void frmAuditoria_Load(object sender, EventArgs e)
         {
-            try
-            {
-                // Cargar datos en el DataGridView
-                // dataGridView1.DataSource = auditoriaController.ObtenerAuditorias();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar auditorías: " + ex.Message);
-            }
+            CargarAuditorias();
         }
 
-               private void CargarAditorias()
+        private void CargarAuditorias()
         {
             try
             {
@@ -50,22 +42,29 @@ namespace PuntodeVenta.View
                     return;
                 }
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Nombre", typeof(string));
+                // Definición de columnas
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("Nombre Completo", typeof(string));
                 dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Telefono", typeof(string));
-                dt.Columns.Add("Estatus", typeof(string));
-                dt.Columns.Add("Rol", typeof(string));
-
+                dt.Columns.Add("Accion", typeof(string));
+                dt.Columns.Add("Fecha", typeof(string));
+                dt.Columns.Add("Ip Accesso", typeof(string));
+                dt.Columns.Add("Nombre del Equipo", typeof(string));
+                dt.Columns.Add("Tipo", typeof(string));
+                dt.Columns.Add("Movimiento", typeof(string));
                 //llenado de la tabla
                 foreach (Auditoria auditoria in auditorias)
                 {
                     dt.Rows.Add(
+                        auditoria.Id,
+                        auditoria.NombreCompleto,
+                        auditoria.Cuenta,
                         auditoria.Accion,
-                        auditoria.Tipo,
-                        auditoria.UsuarioId,
-                        auditoria.IdMovimiento,
+                        auditoria.Fecha.ToString("dd/MM/yyyy HH:mm:ss"),
                         auditoria.IpAcceso,
-                        auditoria.NombreEquipo
+                        auditoria.NombreEquipo,
+                        auditoria.Tipo,
+                        auditoria.Movimiento ?? auditoria.IdMovimiento.ToString()
                         );
                 }
                 dgvAuditorias.DataSource = dt;
@@ -88,21 +87,29 @@ namespace PuntodeVenta.View
             dgvAuditorias.ReadOnly = true;
 
             // Ajustar el ancho de las columnas
+            dgvAuditorias.Columns["ID"].Width = 50;
             dgvAuditorias.Columns["Nombre Completo"].Width = 200;
-            dgvAuditorias.Columns["Correo"].Width = 180;
-            dgvAuditorias.Columns["Teléfono"].Width = 120;
-            dgvAuditorias.Columns["Fecha Nacimiento"].Width = 120;
-            dgvAuditorias.Columns["Estatus"].Width = 100;
+            dgvAuditorias.Columns["Correo"].Width = 200;
+            dgvAuditorias.Columns["Accion"].Width = 150;
+            dgvAuditorias.Columns["Fecha"].Width = 120;
+            dgvAuditorias.Columns["Ip Accesso"].Width = 120;
+            dgvAuditorias.Columns["Nombre del Equipo"].Width = 200;
+            dgvAuditorias.Columns["Tipo"].Width = 100;
+            dgvAuditorias.Columns["Movimiento"].Width = 180;
+
 
             // Ocultar columna ID si es necesario
             dgvAuditorias.Columns["ID"].Visible = false;
+            dgvAuditorias.Columns["Movimiento"].Visible = false;
+            ///dgvAuditorias.Columns[""].Visible = false;
+
 
             // Formato para las fechas
-            dgvAuditorias.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvAuditorias.Columns["Fecha"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
             // Alineación
-            dgvAuditorias.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvAuditorias.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            // dgvAuditorias.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            // dgvAuditorias.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // Color alternado de filas
             dgvAuditorias.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
@@ -121,5 +128,10 @@ namespace PuntodeVenta.View
             dgvAuditorias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
         }
+
+        private void frmAuditoria_Load_1(object sender, EventArgs e)
+        {
+            CargarAuditorias();
+        }
     }
-    }
+}

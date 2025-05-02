@@ -60,6 +60,7 @@
             cmsEdit = new ContextMenuStrip(components);
             editarToolStripMenuItem = new ToolStripMenuItem();
             gbxBusqueda = new GroupBox();
+            btnBuscar = new Button();
             checkBoxActivos = new CheckBox();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
@@ -370,6 +371,7 @@
             // 
             // gbxBusqueda
             // 
+            gbxBusqueda.Controls.Add(btnBuscar);
             gbxBusqueda.Controls.Add(checkBoxActivos);
             gbxBusqueda.Controls.Add(cbxtipoFecha);
             gbxBusqueda.Controls.Add(lbTipoFecha);
@@ -389,6 +391,20 @@
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda de Clientes";
             // 
+            // btnBuscar
+            // 
+            btnBuscar.BackColor = SystemColors.ActiveCaption;
+            btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBuscar.Image = Sistema_Ventas.Properties.Resources.search;
+            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscar.Location = new Point(405, 83);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(129, 44);
+            btnBuscar.TabIndex = 19;
+            btnBuscar.Text = "Buscar";
+            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
+            //
             // checkBoxActivos
             // 
             checkBoxActivos.BackColor = SystemColors.GradientActiveCaption;
@@ -409,6 +425,7 @@
             cbxtipoFecha.Name = "cbxtipoFecha";
             cbxtipoFecha.Size = new Size(87, 23);
             cbxtipoFecha.TabIndex = 18;
+            cbxtipoFecha.SelectedIndexChanged += cbxtipoFecha_SelectedIndexChanged;
             // 
             // lbTipoFecha
             // 
@@ -435,6 +452,7 @@
             dtpFechaInicio.Name = "dtpFechaInicio";
             dtpFechaInicio.Size = new Size(110, 23);
             dtpFechaInicio.TabIndex = 15;
+            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
             dtpFechaInicio.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
             // lbFechaFin
@@ -464,7 +482,8 @@
             btnActualizar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(460, 54);
+            btnActualizar.Location = new Point(570, 83);
+            btnActualizar.Margin = new Padding(4, 5, 4, 5);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(95, 30);
             btnActualizar.TabIndex = 2;
@@ -478,7 +497,7 @@
             txtBusqueda.Location = new Point(108, 54);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(220, 23);
+            txtBusqueda.Size = new Size(243, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBuscar
@@ -656,6 +675,7 @@
         private PictureBox pbxInformacionrfc;
         private ToolTip ttipinfo;
         private Label lbl_obligatorios;
+        private Button btnBuscar;
         private CheckBox checkBoxActivos;
         private ContextMenuStrip cmsEdit;
         private ToolStripMenuItem editarToolStripMenuItem;
