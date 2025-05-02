@@ -39,13 +39,11 @@
             ContentPanel = new ToolStripContentPanel();
             scClientes = new SplitContainer();
             gbxActulizardatos = new GroupBox();
-            txt_fecha_registro = new TextBox();
             lbl_obligatorios = new Label();
             pbxInformacionrfc = new PictureBox();
             txtrfcCliente = new TextBox();
             cbxTipoCliente = new ComboBox();
             lbfrcCliente = new Label();
-            lbfechaRegistroCli = new Label();
             lbtipoCliente = new Label();
             btnGuardar = new Button();
             cbxEstatus = new ComboBox();
@@ -59,7 +57,10 @@
             lbCorreo = new Label();
             lbNombre = new Label();
             dgvGesClientes = new DataGridView();
+            cmsEdit = new ContextMenuStrip(components);
+            editarToolStripMenuItem = new ToolStripMenuItem();
             gbxBusqueda = new GroupBox();
+            checkBoxActivos = new CheckBox();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
@@ -75,7 +76,7 @@
             btncollapse = new Button();
             lbtitle = new Label();
             ttipinfo = new ToolTip(components);
-            checkBoxActivos = new CheckBox();
+            btnActualizarInfo = new Button();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
@@ -83,6 +84,7 @@
             gbxActulizardatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxInformacionrfc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvGesClientes).BeginInit();
+            cmsEdit.SuspendLayout();
             gbxBusqueda.SuspendLayout();
             gbxHerramientas.SuspendLayout();
             SuspendLayout();
@@ -149,13 +151,12 @@
             // 
             // gbxActulizardatos
             // 
-            gbxActulizardatos.Controls.Add(txt_fecha_registro);
+            gbxActulizardatos.Controls.Add(btnActualizarInfo);
             gbxActulizardatos.Controls.Add(lbl_obligatorios);
             gbxActulizardatos.Controls.Add(pbxInformacionrfc);
             gbxActulizardatos.Controls.Add(txtrfcCliente);
             gbxActulizardatos.Controls.Add(cbxTipoCliente);
             gbxActulizardatos.Controls.Add(lbfrcCliente);
-            gbxActulizardatos.Controls.Add(lbfechaRegistroCli);
             gbxActulizardatos.Controls.Add(lbtipoCliente);
             gbxActulizardatos.Controls.Add(btnGuardar);
             gbxActulizardatos.Controls.Add(cbxEstatus);
@@ -177,18 +178,10 @@
             gbxActulizardatos.TabStop = false;
             gbxActulizardatos.Text = "Alta o Actulizacion";
             // 
-            // txt_fecha_registro
-            // 
-            txt_fecha_registro.Location = new Point(6, 294);
-            txt_fecha_registro.Margin = new Padding(2);
-            txt_fecha_registro.Name = "txt_fecha_registro";
-            txt_fecha_registro.Size = new Size(206, 23);
-            txt_fecha_registro.TabIndex = 36;
-            // 
             // lbl_obligatorios
             // 
             lbl_obligatorios.AutoSize = true;
-            lbl_obligatorios.Location = new Point(6, 378);
+            lbl_obligatorios.Location = new Point(6, 369);
             lbl_obligatorios.Margin = new Padding(2, 0, 2, 0);
             lbl_obligatorios.Name = "lbl_obligatorios";
             lbl_obligatorios.Size = new Size(121, 15);
@@ -207,7 +200,7 @@
             // 
             // txtrfcCliente
             // 
-            txtrfcCliente.Location = new Point(6, 337);
+            txtrfcCliente.Location = new Point(6, 341);
             txtrfcCliente.MaxLength = 13;
             txtrfcCliente.Name = "txtrfcCliente";
             txtrfcCliente.Size = new Size(133, 23);
@@ -216,7 +209,7 @@
             // cbxTipoCliente
             // 
             cbxTipoCliente.FormattingEnabled = true;
-            cbxTipoCliente.Location = new Point(6, 252);
+            cbxTipoCliente.Location = new Point(6, 293);
             cbxTipoCliente.Name = "cbxTipoCliente";
             cbxTipoCliente.Size = new Size(121, 23);
             cbxTipoCliente.TabIndex = 27;
@@ -225,25 +218,16 @@
             // lbfrcCliente
             // 
             lbfrcCliente.AutoSize = true;
-            lbfrcCliente.Location = new Point(8, 324);
+            lbfrcCliente.Location = new Point(8, 321);
             lbfrcCliente.Name = "lbfrcCliente";
             lbfrcCliente.Size = new Size(32, 15);
             lbfrcCliente.TabIndex = 26;
             lbfrcCliente.Text = "RFC*";
             // 
-            // lbfechaRegistroCli
-            // 
-            lbfechaRegistroCli.AutoSize = true;
-            lbfechaRegistroCli.Location = new Point(8, 282);
-            lbfechaRegistroCli.Name = "lbfechaRegistroCli";
-            lbfechaRegistroCli.Size = new Size(100, 15);
-            lbfechaRegistroCli.TabIndex = 25;
-            lbfechaRegistroCli.Text = "Fecha de Registro";
-            // 
             // lbtipoCliente
             // 
             lbtipoCliente.AutoSize = true;
-            lbtipoCliente.Location = new Point(8, 239);
+            lbtipoCliente.Location = new Point(8, 273);
             lbtipoCliente.Name = "lbtipoCliente";
             lbtipoCliente.Size = new Size(94, 15);
             lbtipoCliente.TabIndex = 24;
@@ -258,7 +242,7 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(95, 410);
+            btnGuardar.Location = new Point(8, 387);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(95, 31);
             btnGuardar.TabIndex = 20;
@@ -270,7 +254,7 @@
             // cbxEstatus
             // 
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(6, 209);
+            cbxEstatus.Location = new Point(6, 245);
             cbxEstatus.Name = "cbxEstatus";
             cbxEstatus.Size = new Size(121, 23);
             cbxEstatus.TabIndex = 19;
@@ -279,7 +263,7 @@
             // lbEstatus
             // 
             lbEstatus.AutoSize = true;
-            lbEstatus.Location = new Point(8, 196);
+            lbEstatus.Location = new Point(8, 225);
             lbEstatus.Name = "lbEstatus";
             lbEstatus.Size = new Size(49, 15);
             lbEstatus.TabIndex = 18;
@@ -288,14 +272,14 @@
             // dtpNacimientoCliente
             // 
             dtpNacimientoCliente.Format = DateTimePickerFormat.Short;
-            dtpNacimientoCliente.Location = new Point(6, 167);
+            dtpNacimientoCliente.Location = new Point(6, 197);
             dtpNacimientoCliente.Name = "dtpNacimientoCliente";
             dtpNacimientoCliente.Size = new Size(206, 23);
             dtpNacimientoCliente.TabIndex = 17;
             // 
             // txtTelefonoCliente
             // 
-            txtTelefonoCliente.Location = new Point(6, 127);
+            txtTelefonoCliente.Location = new Point(6, 149);
             txtTelefonoCliente.MaxLength = 12;
             txtTelefonoCliente.Name = "txtTelefonoCliente";
             txtTelefonoCliente.Size = new Size(206, 23);
@@ -303,7 +287,7 @@
             // 
             // txtCorreoCliente
             // 
-            txtCorreoCliente.Location = new Point(6, 87);
+            txtCorreoCliente.Location = new Point(6, 101);
             txtCorreoCliente.MaxLength = 15;
             txtCorreoCliente.Name = "txtCorreoCliente";
             txtCorreoCliente.Size = new Size(206, 23);
@@ -311,7 +295,7 @@
             // 
             // txtNombreCliente
             // 
-            txtNombreCliente.Location = new Point(6, 48);
+            txtNombreCliente.Location = new Point(6, 53);
             txtNombreCliente.MaxLength = 100;
             txtNombreCliente.Name = "txtNombreCliente";
             txtNombreCliente.Size = new Size(203, 23);
@@ -320,7 +304,7 @@
             // lbTelefono
             // 
             lbTelefono.AutoSize = true;
-            lbTelefono.Location = new Point(6, 114);
+            lbTelefono.Location = new Point(6, 129);
             lbTelefono.Name = "lbTelefono";
             lbTelefono.Size = new Size(58, 15);
             lbTelefono.TabIndex = 13;
@@ -329,7 +313,7 @@
             // lbNacimiento
             // 
             lbNacimiento.AutoSize = true;
-            lbNacimiento.Location = new Point(8, 154);
+            lbNacimiento.Location = new Point(8, 177);
             lbNacimiento.Name = "lbNacimiento";
             lbNacimiento.Size = new Size(119, 15);
             lbNacimiento.TabIndex = 12;
@@ -338,7 +322,7 @@
             // lbCorreo
             // 
             lbCorreo.AutoSize = true;
-            lbCorreo.Location = new Point(8, 74);
+            lbCorreo.Location = new Point(8, 81);
             lbCorreo.Name = "lbCorreo";
             lbCorreo.Size = new Size(47, 15);
             lbCorreo.TabIndex = 11;
@@ -360,6 +344,7 @@
             dgvGesClientes.AllowUserToOrderColumns = true;
             dgvGesClientes.BackgroundColor = SystemColors.GradientInactiveCaption;
             dgvGesClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGesClientes.ContextMenuStrip = cmsEdit;
             dgvGesClientes.Dock = DockStyle.Fill;
             dgvGesClientes.Location = new Point(0, 143);
             dgvGesClientes.Name = "dgvGesClientes";
@@ -368,6 +353,20 @@
             dgvGesClientes.Size = new Size(567, 326);
             dgvGesClientes.TabIndex = 2;
             dgvGesClientes.CellContentClick += dgvGesClientes_CellContentClick;
+            // 
+            // cmsEdit
+            // 
+            cmsEdit.Items.AddRange(new ToolStripItem[] { editarToolStripMenuItem });
+            cmsEdit.Name = "cmsEdit";
+            cmsEdit.Size = new Size(105, 26);
+            cmsEdit.Opening += contextMenuStrip1_Opening;
+            // 
+            // editarToolStripMenuItem
+            // 
+            editarToolStripMenuItem.Name = "editarToolStripMenuItem";
+            editarToolStripMenuItem.Size = new Size(104, 22);
+            editarToolStripMenuItem.Text = "Editar";
+            editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
             // 
             // gbxBusqueda
             // 
@@ -389,6 +388,19 @@
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda de Clientes";
+            // 
+            // checkBoxActivos
+            // 
+            checkBoxActivos.BackColor = SystemColors.GradientActiveCaption;
+            checkBoxActivos.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBoxActivos.ForeColor = SystemColors.ControlText;
+            checkBoxActivos.Location = new Point(346, 61);
+            checkBoxActivos.Name = "checkBoxActivos";
+            checkBoxActivos.Size = new Size(104, 24);
+            checkBoxActivos.TabIndex = 19;
+            checkBoxActivos.Text = "Sólo Activos";
+            checkBoxActivos.TextAlign = ContentAlignment.MiddleRight;
+            checkBoxActivos.UseVisualStyleBackColor = false;
             // 
             // cbxtipoFecha
             // 
@@ -555,18 +567,22 @@
             ttipinfo.Tag = "xd";
             ttipinfo.ToolTipTitle = "RFC";
             // 
-            // checkBoxActivos
+            // btnActualizarInfo
             // 
-            checkBoxActivos.BackColor = SystemColors.GradientActiveCaption;
-            checkBoxActivos.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBoxActivos.ForeColor = SystemColors.ControlText;
-            checkBoxActivos.Location = new Point(346, 61);
-            checkBoxActivos.Name = "checkBoxActivos";
-            checkBoxActivos.Size = new Size(104, 24);
-            checkBoxActivos.TabIndex = 19;
-            checkBoxActivos.Text = "Sólo Activos";
-            checkBoxActivos.TextAlign = ContentAlignment.MiddleRight;
-            checkBoxActivos.UseVisualStyleBackColor = false;
+            btnActualizarInfo.BackColor = SystemColors.ActiveCaption;
+            btnActualizarInfo.FlatAppearance.BorderSize = 0;
+            btnActualizarInfo.FlatStyle = FlatStyle.Flat;
+            btnActualizarInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActualizarInfo.Image = Sistema_Ventas.Properties.Resources.guardar;
+            btnActualizarInfo.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActualizarInfo.Location = new Point(144, 387);
+            btnActualizarInfo.Name = "btnActualizarInfo";
+            btnActualizarInfo.Size = new Size(97, 31);
+            btnActualizarInfo.TabIndex = 36;
+            btnActualizarInfo.Text = "Actualizar";
+            btnActualizarInfo.TextAlign = ContentAlignment.MiddleRight;
+            btnActualizarInfo.UseVisualStyleBackColor = false;
+            btnActualizarInfo.Click += btnActualizarInfo_Click;
             // 
             // frmGestClientes
             // 
@@ -588,6 +604,7 @@
             gbxActulizardatos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbxInformacionrfc).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvGesClientes).EndInit();
+            cmsEdit.ResumeLayout(false);
             gbxBusqueda.ResumeLayout(false);
             gbxBusqueda.PerformLayout();
             gbxHerramientas.ResumeLayout(false);
@@ -634,13 +651,14 @@
         private Label lbtitle;
         private ComboBox cbxTipoCliente;
         private Label lbfrcCliente;
-        private Label lbfechaRegistroCli;
         private Label lbtipoCliente;
         private TextBox txtrfcCliente;
         private PictureBox pbxInformacionrfc;
         private ToolTip ttipinfo;
         private Label lbl_obligatorios;
-        private TextBox txt_fecha_registro;
         private CheckBox checkBoxActivos;
+        private ContextMenuStrip cmsEdit;
+        private ToolStripMenuItem editarToolStripMenuItem;
+        private Button btnActualizarInfo;
     }
 }

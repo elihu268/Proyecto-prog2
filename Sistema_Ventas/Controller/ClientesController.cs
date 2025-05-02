@@ -8,6 +8,7 @@ using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using NLog;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace Sistema_Ventas.Controller
 {
@@ -61,6 +62,42 @@ namespace Sistema_Ventas.Controller
             }
         }
 
+        public Cliente ObtenerClientePorId(int id)
+        {
+            try
+            {
+                Cliente cliente = _clientesData.ObtenerClientePorId(id);
+                _logger.Info($"Se obtuvo el cliente con ID: {cliente.Id}");
+                return cliente;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el cliente por ID");
+                throw;
+            }
+        }
+
+        public bool ActualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                _logger.Info($"Actualizando cliente con ID: {cliente.Id}");
+                bool resultado = _clientesData.ActualizarCliente(cliente);
+                if (!resultado)
+                {
+                    _logger.Error($"Error al actualizar el cliente con ID: {cliente.Id}");
+                    return false;
+                }
+                _logger.Info($"Cliente actualizado exitosamente con ID: {cliente.Id}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al actualizar el cliente");
+                throw;
+            }
+        }
+
         public (int id, string mensaje) RegistrarCliente(Cliente cliente)
         {
             try
@@ -88,12 +125,5 @@ namespace Sistema_Ventas.Controller
                 return (-4, $"Error inesperado: {ex.Message}");
             }
         }
-
-
-
-
-
-
-
     }
 }

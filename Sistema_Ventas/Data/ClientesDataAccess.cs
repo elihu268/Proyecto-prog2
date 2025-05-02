@@ -248,6 +248,116 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect();
             }
         }
+
+        public Cliente ObtenerClientePorId(int idCliente)
+        {
+            try
+            {
+                string query = @"
+                    SELECT 
+                        c.id_cliente,
+                        c.id_persona,
+                        p.nombre_completo,
+                        p.correo,
+                        p.telefono,
+                        p.fecha_nacimiento,
+                        c.fecha_registro,
+                        c.rfc,
+                        c.tipo,
+                        p.estatus AS estatus_persona
+                    FROM cliente c
+                    JOIN personas p ON c.id_persona = p.id_persona
+                    WHERE c.id_cliente = @IdCliente";
+                NpgsqlParameter paramIdCliente = _dbAccess.CreateParameter("@IdCliente", idCliente);
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, paramIdCliente);
+                if (resultado.Rows.Count == 0)
+                {
+                    return null;
+                }
+                DataRow row = resultado.Rows[0];
+                Persona persona = new Persona(                         
+                    Convert.ToInt32(row["id_persona"]),
+                    row["nombre_completo"].ToString() ?? "",
+                    row["correo"].ToString() ?? "",
+                    row["telefono"].ToString() ?? "",
+                    row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                    Convert.ToBoolean(row["estatus_persona"])
+                );
+                Cliente cliente = new Cliente(
+                    Convert.ToInt32(row["id_cliente"]),
+                    Convert.ToInt32(row["id_persona"]),
+                    Convert.ToInt32(row["tipo"]),
+                    Convert.ToDateTime(row["fecha_registro"]),
+                    row["rfc"].ToString() ?? "",
+                    persona
+                );
+                return cliente;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener el cliente con ID {idCliente}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        public bool ActualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                string query = @"
+                    UPDATE cliente
+                    SET 
+                        rfc = @rfc,
+                        tipo = @tipo,
+                        fecha_registro = @fecha_registro,
+                        id_persona = @id_persona
+                    WHERE id_cliente = @id_cliente;
+                
+                    UPDATE personas
+                    SET 
+                        nombre_completo = @nombre_completo,
+                        correo = @correo,
+                        telefono = @telefono,
+                        fecha_nacimiento = @fecha_nacimiento,
+                        estatus = @estatus
+                    WHERE id_persona = @id_persona;
+                ";
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@rfc", cliente.Rfc),
+                    new NpgsqlParameter("@tipo", cliente.Tipo),
+                    new NpgsqlParameter("@fecha_registro", cliente.FechaRegistro),
+                    new NpgsqlParameter("@id_persona", cliente.DatosPersonales.Id),
+                    new NpgsqlParameter("@id_cliente", cliente.Id),
+                    new NpgsqlParameter("@nombre_completo", cliente.DatosPersonales.NombreCompleto),
+                    new NpgsqlParameter("@correo", cliente.DatosPersonales.Correo),
+                    new NpgsqlParameter("@telefono", cliente.DatosPersonales.Telefono),
+                    new NpgsqlParameter("@fecha_nacimiento", cliente.DatosPersonales.FechaNacimiento),
+                    new NpgsqlParameter("@estatus", cliente.DatosPersonales.Estatus)
+                };
+
+                // Ejecutar la consulta
+                _dbAccess.Connect();
+                int rowsAffected = _dbAccess.ExecuteNonQuery(query, parametros.ToArray());
+
+                // Si se actualizaron filas, devolver verdadero
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar el cliente con ID {cliente.Id}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
         public bool ExisteRfc(string rfc)
         {
             try
