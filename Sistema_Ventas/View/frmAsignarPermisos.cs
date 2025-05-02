@@ -1,4 +1,5 @@
-﻿using Sistema_Ventas.Controller;
+﻿using DiseñoForms.View;
+using Sistema_Ventas.Controller;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using System;
@@ -77,6 +78,26 @@ namespace Sistema_Ventas.View
                 PermisoARolController permisoARolController = new PermisoARolController();
                 permisoARolController.AsignarPermisosARol(idRolSeleccionado, permisosSeleccionados);
 
+                if (Sesión.IdRol == idRolSeleccionado)
+                {
+                    UsuariosController uc = new UsuariosController();
+                    // Si el rol seleccionado es el mismo que el del usuario actual, actualizar los permisos en la sesión
+                    Sesión.Permisos = uc.ObtenerPermisos(idRolSeleccionado);
+                    if (this.MdiParent != null)
+                    {
+                        if (this.MdiParent is MDI_Sistema_ventas mdiForm)
+                        {
+                            mdiForm.ActualizarVistaPorPermisos();
+                        }
+                        foreach (Form childForm in this.MdiParent.MdiChildren)
+                        {
+                            childForm.Close();
+                        }
+                        
+
+                    }
+                }
+
                 MessageBox.Show("Permisos asignados correctamente.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -89,9 +110,61 @@ namespace Sistema_Ventas.View
             }
 
         }
-       
+        
+        private void frmAsignarPermisos_Load(object sender, EventArgs e)
+        {
+            InicializarVentanaPermisos();
+        }
+        private void InicializarVentanaPermisos()
+        {
+            
+            PoblacboxRol(); // Llena el ComboBox de roles
+            if (cbox_rol.Items.Count > 0)
+            {
+                int idRol = (int)cbox_rol.SelectedValue;
+                CargarPermisosPorRol(idRol);
+            }
+        }
+        public void PoblacboxRol()
+        {
+            RolesController rolesController = new RolesController();
 
-        /// <summary>
+            // Obtener la lista de roles
+            List<Rol> listaRoles = rolesController.ObtenerRoles();
+
+            cbox_rol.Items.Clear(); 
+            cbox_rol.DataSource = listaRoles;
+            cbox_rol.DisplayMember = "Codigo";
+            cbox_rol.ValueMember = "Idrol";
+            cbox_rol.SelectedIndex = 0;
+        }
+
+
+
+        private void GuardarPermisosDelRol(int idRol)
+        {
+            PermisoARolController permisoARolController = new PermisoARolController();
+
+            // 1. Eliminar todos los permisos actuales del puesto
+            permisoARolController.EliminarPermisos(idRol);
+
+            // 2. Insertar los permisos seleccionados
+            foreach (DataGridViewRow fila in dgv_permisos.Rows)
+            {
+                if (!fila.IsNewRow)
+                {
+                    bool asignado = Convert.ToBoolean(fila.Cells["Asignado"].Value);
+                    int idPermiso = Convert.ToInt32(fila.Cells["ID"].Value);
+
+                    if (asignado)
+                    {
+                        permisoARolController.AsignarPermisosARol(idRol, idPermiso);
+                    }
+                }
+            } 
+        }
+
+         /// <summary>
         /// obtener los id de permisos seleccionados
         /// </summary>
         /// <returns>lista de los id de los permisos seleccionaos</returns>
@@ -206,8 +279,6 @@ namespace Sistema_Ventas.View
         
 
         }
-
-      
 
         private void dgv_permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

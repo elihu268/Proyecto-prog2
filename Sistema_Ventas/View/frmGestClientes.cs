@@ -35,6 +35,11 @@ namespace PuntodeVenta.View
             {
                 btnCargaMasiva.Visible = false;
             }
+            if (!Sesión.TienePermiso("CLI_EDIT"))
+            {
+                cmsEdit.Visible = false;
+            }
+            btnActualizarInfo.Visible = false;
         }
         /// <summary>
         /// metodo para darle caracteristicas a frm despues de su creacion
@@ -42,7 +47,6 @@ namespace PuntodeVenta.View
         private void InicializarFrmClientes()
         {
             scClientes.Panel1Collapsed = true;
-            txt_fecha_registro.Text = DateTime.Now.ToString("dd/MM/yyyy");
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaTipoCliente();
@@ -145,7 +149,7 @@ namespace PuntodeVenta.View
                 {
                     Tipo = cbxTipoCliente.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 1,
                     Rfc = txtrfcCliente.Text.Trim(),
-                    FechaRegistro = DateTime.ParseExact(txt_fecha_registro.Text.Trim(), "dd/MM/yyyy", null),
+                    FechaRegistro = DateTime.Now,
                     Estatus = 1,
                     DatosPersonales = persona
                 };
@@ -200,11 +204,16 @@ namespace PuntodeVenta.View
             {
                 scClientes.Panel1Collapsed = false;
                 btncollapse.Text = "Ocultar Captura";
+                btnGuardar.Visible = true;
+                btnActualizarInfo.Visible = false;
             }
             else
             {
                 scClientes.Panel1Collapsed = true;
                 btncollapse.Text = "Captura Rapida";
+                LimpiarCampos(); // Limpiar los campos al ocultar el panel
+                btnGuardar.Visible = true;
+                btnActualizarInfo.Visible = false;
             }
         }
 
@@ -238,13 +247,19 @@ namespace PuntodeVenta.View
             {
                 Cursor = Cursors.WaitCursor;
 
+                int tipoFecha = (cbxtipoFecha.SelectedValue != null) ? (int)cbxtipoFecha.SelectedValue : 0;
+                DateTime fechaInicial = dtpFechaInicio.Value.Date;
+                DateTime fechaFinal = dtpFechaFin.Value.Date.AddDays(1).AddSeconds(-1); // Para incluir hasta el último segundo del día final
+                string busqueda = txtBusqueda.Text.Trim();
+                int soloActivos = (int)(checkBoxActivos.Checked ? 1 : 0);
+
                 ClientesController clienteController = new ClientesController();
 
-                List<Cliente> clientes = clienteController.ObtenerClientes();
+                DataTable clientes = clienteController.ObtenerClientes(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
 
                 dgvGesClientes.DataSource = null;
 
-                if (clientes.Count == 0)
+                if (clientes.Rows.Count == 0)
                 {
                     //opcionalmente mostrar mensaje cuando no hay datos
                     if (!string.IsNullOrEmpty(txtBusqueda.Text))
@@ -254,38 +269,9 @@ namespace PuntodeVenta.View
                     return;
                 }
 
-                //Crear una tabla
-                DataTable dt = new DataTable();
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("RFC", typeof(string));
-                dt.Columns.Add("Nombre Completo", typeof(string));
-                dt.Columns.Add("Tipo", typeof(string));
-                dt.Columns.Add("Correo", typeof(string));
-                dt.Columns.Add("Teléfono", typeof(string));
-                dt.Columns.Add("Fecha Nacimiento", typeof(DateTime));
-                dt.Columns.Add("Fecha de Registro", typeof(DateTime));
-                dt.Columns.Add("Estatus", typeof(string));
+                dgvGesClientes.DataSource = clientes;
 
-                //llenar el dataTime con la info de los estudiantes
-                foreach (Cliente cliente in clientes)
-                {
-                    dt.Rows.Add(
-                        cliente.Id,
-                        cliente.Rfc,
-                        cliente.DatosPersonales.NombreCompleto,
-                        cliente.DescripcionTipo,
-                        cliente.DatosPersonales.Correo,
-                        cliente.DatosPersonales.Telefono,
-                        cliente.DatosPersonales.FechaNacimiento,
-                        cliente.FechaRegistro,
-                        cliente.DatosPersonales.DescripcionEstatus
-                        );
-                }
-
-                //asignar el dataTime como origen de dattos
-                dgvGesClientes.DataSource = dt;
-
-                //configurar la paraencia
+                // Configurar el DataGridView
                 ConfigurarDataGridView();
 
             }
@@ -465,6 +451,108 @@ namespace PuntodeVenta.View
             dgvGesClientes.ColumnHeadersHeight = 35;
         }
 
+        private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvGesClientes.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del cliente de la fila seleccionada (suponiendo que el ID está en la primera columna del DataGridView)
+                int clienteId = Convert.ToInt32(dgvGesClientes.SelectedRows[0].Cells["ID"].Value);
+
+                // Llamar al controlador para obtener los datos del cliente a partir del ID
+                ClientesController clienteController = new ClientesController();
+                Cliente cliente = clienteController.ObtenerClientePorId(clienteId);
+
+                if (cliente != null)
+                {
+                    // Mostrar el panel de captura para edición (si está colapsado)
+                    if (scClientes.Panel1Collapsed)
+                    {
+                        scClientes.Panel1Collapsed = false;
+                        btncollapse.Text = "Ocultar Captura";
+                    }
+
+                    // Rellenar los controles con los datos del cliente para edición
+                    txtNombreCliente.Text = cliente.DatosPersonales.NombreCompleto;
+                    txtCorreoCliente.Text = cliente.DatosPersonales.Correo;
+                    txtTelefonoCliente.Text = cliente.DatosPersonales.Telefono;
+                    cbxTipoCliente.SelectedValue = cliente.Tipo;
+                    txtrfcCliente.Text = cliente.Rfc;
+                    dtpNacimientoCliente.Value = cliente.DatosPersonales.FechaNacimiento ?? DateTime.Now;
+                    cbxEstatus.SelectedValue = cliente.DatosPersonales.Estatus ? 1 : 0;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo encontrar el cliente para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                btnActualizarInfo.Visible = true;
+                btnGuardar.Visible = false;
+                txtrfcCliente.Enabled = false; // Deshabilitar el campo RFC para evitar cambios
+
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona una fila para editar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+        }
+
+        private void btnActualizarInfo_Click(object sender, EventArgs e)
+        {
+            ActualizarCliente();
+        }
+
+        private void ActualizarCliente()
+        {
+            try
+            {
+                int clienteId = Convert.ToInt32(dgvGesClientes.SelectedRows[0].Cells["ID"].Value);
+                ClientesController clienteController = new ClientesController();
+                Cliente cliente = clienteController.ObtenerClientePorId(clienteId);
+                Cliente nuevaInfo = new Cliente
+                {
+                    Id = cliente.Id,
+                    Rfc = txtrfcCliente.Text.Trim(),
+                    Tipo = Convert.ToInt32(cbxTipoCliente.SelectedValue),
+                    FechaRegistro = cliente.FechaRegistro,
+                    DatosPersonales = new Persona
+                    {
+                        Id = cliente.IdPersona,
+                        NombreCompleto = txtNombreCliente.Text.Trim(),
+                        Correo = txtCorreoCliente.Text.Trim(),
+                        Telefono = txtTelefonoCliente.Text.Trim(),
+                        FechaNacimiento = dtpNacimientoCliente.Value,
+                        Estatus = cbxEstatus.SelectedValue.ToString() == "1"
+                    }
+                };
+
+                bool resultado = clienteController.ActualizarCliente(nuevaInfo);
+
+                if (resultado)
+                {
+                    MessageBox.Show("Cliente actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Hubo un error al actualizar el cliente. Intente nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                // Limpiar los campos después de la actualización
+                LimpiarCampos();
+                btnGuardar.Visible = true;
+                btnActualizarInfo.Visible = false;
+                scClientes.Panel1Collapsed = true;
+                btncollapse.Text = "Captura Rapida";
+                CargarClientes();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar guardar los cambios. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+    
+
         private void dtpfechaRegistroCliente_ValueChanged(object sender, EventArgs e)
         {
 
@@ -487,14 +575,12 @@ namespace PuntodeVenta.View
 
         private void dgvGesClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Sesión.TienePermiso("CLI_EDIT"))
-            {
-                // Código para mandar los datos de la fila seleccionada para editar
-            }
-            else
-            {
-                MessageBox.Show("No tiene permiso para editar clientes", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)

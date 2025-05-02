@@ -7,6 +7,8 @@ using Sistema_Ventas.Data;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Utilities;
 using NLog;
+using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace Sistema_Ventas.Controller
 {
@@ -30,6 +32,7 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+
         public List<Cliente> ObtenerClientes(int Activo = 1)
         {
             try
@@ -44,26 +47,58 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
-        public List<Cliente> ObtenerClientePorNombre(string nombrecli, DateTime? fechaInicio, DateTime? fechaFin, bool? estado)
+
+        public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
         {
             try
             {
-                // Llamada a la capa de datos
-                List<Cliente> clientes = _clientesData.ObtenerClientePorNombre(nombrecli, fechaInicio, fechaFin, estado);
-
-                // Log de la consulta
-                _logger.Info($"Se obtuvieron {clientes.Count} clientes con el nombre '{nombrecli}' entre {fechaInicio:dd/MM/yyyy} y {fechaFin:dd/MM/yyyy}, usando tipo de estado {estado}");
-
+                DataTable clientes = _clientesData.ObtenerClientesFiltrados(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
+                _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
                 return clientes;
             }
             catch (Exception ex)
             {
-                // Log de error
-                _logger.Error(ex, $"Error al obtener la lista de clientes con el nombre '{nombrecli}' y rango de fechas");
+
+                _logger.Error(ex, "Error al obtener la lista de clientes");
+                throw;
+            }
+        }
+      
+        public Cliente ObtenerClientePorId(int id)
+        {
+            try
+            {
+                Cliente cliente = _clientesData.ObtenerClientePorId(id);
+                _logger.Info($"Se obtuvo el cliente con ID: {cliente.Id}");
+                return cliente;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el cliente por ID");
                 throw;
             }
         }
 
+        public bool ActualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                _logger.Info($"Actualizando cliente con ID: {cliente.Id}");
+                bool resultado = _clientesData.ActualizarCliente(cliente);
+                if (!resultado)
+                {
+                    _logger.Error($"Error al actualizar el cliente con ID: {cliente.Id}");
+                    return false;
+                }
+                _logger.Info($"Cliente actualizado exitosamente con ID: {cliente.Id}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al actualizar el cliente");
+                throw;
+            }
+        }
 
         public (int id, string mensaje) RegistrarCliente(Cliente cliente)
         {
@@ -92,12 +127,5 @@ namespace Sistema_Ventas.Controller
                 return (-4, $"Error inesperado: {ex.Message}");
             }
         }
-
-
-
-
-
-
-
     }
 }

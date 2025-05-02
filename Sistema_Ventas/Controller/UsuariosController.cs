@@ -84,10 +84,8 @@ namespace Sistema_Ventas.Controller
                 // Si el usuario es válido, se obtienen los permisos de ese usuario
                 if (usuarioValido != null)
                 {
-                    // Si la validación es exitosa, se obtiene el permiso del usuario y se inicia la sesión
-                    List<string> permisos = _usuariosDataAccess.ObtenerPermisos(usuarioValido.idRol);
-                    Sesión.IniciarSesion(usuarioValido.IdUsuario, usuarioValido.Cuenta, permisos);
-
+                    // Si la validación es exitosa, se obtiene el permiso del usuario y se inicia la sesión                    
+                    Sesión.IniciarSesion(usuarioValido.IdUsuario, usuarioValido.Cuenta, usuarioValido.idRol, ObtenerPermisos(usuarioValido.idRol));
                     return mensaje;  // Éxito
                 }
 
@@ -100,6 +98,22 @@ namespace Sistema_Ventas.Controller
                 _logger.Error($"Intento Fallido de inicio de sesion con la credencial " + usuario);
                 throw;
             }            
+        }
+        
+        public List<string> ObtenerPermisos(int idRol)
+        {
+            try
+            {
+                // Obtener los permisos del usuario
+                List<string> permisos = _usuariosDataAccess.ObtenerPermisos(idRol);
+                return permisos;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                _logger.Error($"Error al obtener permisos: " + ex.Message);
+                throw;
+            }
         }
 
     }
