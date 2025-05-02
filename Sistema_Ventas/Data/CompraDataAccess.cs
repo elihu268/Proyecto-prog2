@@ -42,8 +42,8 @@ namespace Sistema_Ventas.Data
             {
                 _dbAccess.Connect(); // Conectar a la base de datos
 
-                // para generar un codigo unico de la compra
-                string codigoCompra = "COMP-" + DateTime.Now.Ticks.ToString();
+                // para generar un codigo unico de la compra-con la fecha: año,mes,dia-,hora,mes y segundo
+                string codigoCompra = "COMP-" + DateTime.Now.ToString("yyMMdd-HHmmss");
 
                 // Query 
                 string insertCompraQuery = @"
