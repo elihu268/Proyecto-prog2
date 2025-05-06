@@ -212,6 +212,78 @@ namespace Sistema_Ventas.Data
             }
         }
 
+        public List<Usuario> ObtenerUsuarioPorNnombre(string nombreUsr, DateTime? fechaInicio, DateTime? fechaFin, bool? estatus)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+            try
+            {
+                string query = @"SELECT u.id_usuario, p.id_persona, p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, u.id_rol, r.descripcion as Rol
+                                FROM usuarios u 
+                            JOIN personas p ON u.id_persona = p.id_persona 
+                            JOIN roles r ON u.id_rol = r.id_rol 
+                            WHERE (@nombre IS null OR LOWER(p.nombre_completo) LIKE @nombre) AND
+                            (@fechaInicio IS null OR p.fecha_nacimiento >= @fechaInicio) AND
+                            (@fechaFin IS null OR p.fecha_nacimiento <= @fechaFin) AND
+                            (@estatus IS null OR p.estatus = @estatus)
+                            ";
+
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@nombre", $"%{nombreUsr}%")
+                    {
+                        Value = nombreUsr !=null ? $"%{nombreUsr}%" : DBNull.Value
+                    },
+                    new NpgsqlParameter("@fechaInicio",NpgsqlTypes.NpgsqlDbType.Date)
+                    {
+                        Value = fechaInicio.HasValue ? (object)fechaInicio.Value : DBNull.Value
+                        },
+                    new NpgsqlParameter("@fechaFin", NpgsqlTypes.NpgsqlDbType.Date)
+                    {
+                        Value = fechaFin.HasValue ? (object)fechaFin.Value : DBNull.Value
+                    },
+                    new NpgsqlParameter("@estatus", NpgsqlTypes.NpgsqlDbType.Boolean)
+                    {
+                        Value = estatus.HasValue ? (object)estatus.Value : DBNull.Value
+                    }
+                };
+
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+                foreach (DataRow row in result.Rows)
+                {
+                    Persona persona = new Persona()
+                    {
+
+                        NombreCompleto = row["nombre_completo"].ToString() ?? "",
+                        Correo = row["correo"].ToString() ?? "",
+                        Telefono = row["telefono"].ToString() ?? "",
+                        FechaNacimiento = row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                        Estatus = row["estatus"] != DBNull.Value ? Convert.ToBoolean(row["estatus"]) : false
+                    };
+                    Usuario usuario = new Usuario(
+                        Convert.ToInt32(row["id_usuario"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["id_rol"]),
+                        row["correo"].ToString() ?? "",
+                        Convert.ToBoolean(row["estatus"]),
+                        persona
+                    );
+                    usuarios.Add(usuario);
+                }
+                _logger.Info("Consulta ejecutada con éxito, se encontraron {0} usuarios", usuarios.Count);
+                return usuarios;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener usuarios por nombre");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
         public (Usuario, string) ValidarUsuario(string usuario, string contrasena)
         {
             Usuario usuarioValido = null;

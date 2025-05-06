@@ -99,7 +99,21 @@ namespace Sistema_Ventas.Controller
                 throw;
             }            
         }
-        
+        public List<Usuario> ObtenerUsuarioPorNombre(string nombreUsr, DateTime? fechaInicio, DateTime? fechaFin, bool? estatus)
+        {
+            try
+            {
+                // Obtener los usuarios por rol
+                List<Usuario> usuarios = _usuariosDataAccess.ObtenerUsuarioPorNnombre(nombreUsr, fechaInicio, fechaFin, estatus);
+                return usuarios;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                _logger.Error($"Error al obtener usuarios por rol: " + ex.Message);
+                throw;
+            }
+        }
         public List<string> ObtenerPermisos(int idRol)
         {
             try

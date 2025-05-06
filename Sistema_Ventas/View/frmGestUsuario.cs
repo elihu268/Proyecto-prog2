@@ -31,6 +31,7 @@ namespace PuntodeVenta.View
             PoblaComboEstatus();
             PoblaTipoFecha();
             PoblaRoles();
+            PoblaEstatus();
             CargarUsuarios();
 
 
@@ -78,6 +79,21 @@ namespace PuntodeVenta.View
             cbxtipoFecha.SelectedValue = 1;
             cbxtipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
         }
+        private void PoblaEstatus()
+        {
+            Dictionary<int, string> list_estatus = new Dictionary<int, string>
+            {
+                {1, "Alta" },
+                {0, "Baja" }
+            };
+            //asignar el diccionario al combobox
+            cbxEstatusB.DataSource = new BindingSource(list_estatus, null);
+            cbxEstatusB.DisplayMember = "Value"; //lo que se muesta
+            cbxEstatusB.ValueMember = "Key"; // lo que se guarda como seleccionado 0,1,2
+            cbxEstatusB.SelectedValue = 1;
+            cbxEstatusB.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+
         private void PoblaRoles()
         {
             RolesController rc = new RolesController();
@@ -262,6 +278,50 @@ namespace PuntodeVenta.View
                 Cursor = Cursors.Default;
             }
         }
+        private void CargarBusquedaUsuarios(List<Usuario> usuarios)
+        {
+            dgvUsuarios.DataSource = null;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Nombre Completo", typeof(string));
+            dt.Columns.Add("Correo", typeof(string));
+            dt.Columns.Add("Teléfono", typeof(string));
+            dt.Columns.Add("Estatus", typeof(string));
+            dt.Columns.Add("Rol", typeof(string));
+
+            //llenado de la tabla
+            foreach (Usuario usuario in usuarios)
+            {
+                dt.Rows.Add(
+                    usuario.DatosPersonales.NombreCompleto,
+                    usuario.DatosPersonales.Correo,
+                    usuario.DatosPersonales.Telefono,
+                    usuario.Estatus,
+                    usuario.idRol);
+            }
+            dgvUsuarios.DataSource = dt;
+            // Configurar el DataGridView
+            dgvUsuarios.DataSource = dt;
+            dgvUsuarios.Columns["Nombre Completo"].HeaderText = "Nombre Completo";
+            dgvUsuarios.Columns["Correo"].HeaderText = "Correo";
+            dgvUsuarios.Columns["Teléfono"].HeaderText = "Teléfono";
+            dgvUsuarios.Columns["Estatus"].HeaderText = "Estatus";
+            dgvUsuarios.Columns["Rol"].HeaderText = "Rol";
+            // Configurar el DataGridView
+            dgvUsuarios.Columns["Nombre Completo"].Width = 200;
+            dgvUsuarios.Columns["Correo"].Width = 180;
+            dgvUsuarios.Columns["Teléfono"].Width = 120;
+            dgvUsuarios.Columns["Estatus"].Width = 100;
+            dgvUsuarios.Columns["Rol"].Width = 120;
+
+            dgvUsuarios.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            // Color alternado de filas
+            dgvUsuarios.EnableHeadersVisualStyles = false;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.Font = new Font(dgvUsuarios.Font, FontStyle.Bold);
+            dgvUsuarios.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            
+        }
         private void ConfigurarDGV()
         {
             dgvUsuarios.AllowUserToAddRows = false;
@@ -395,10 +455,42 @@ namespace PuntodeVenta.View
             }
 
         }
+        private void buscarUsuario()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? null : txtBusqueda.Text.ToLower();
+                DateTime? fechaInicio = dtpFechaInicio.Value;
+                DateTime? fechaFin = dtpFechaFin.Value;
+
+                bool? estatus = null;
+                if (cbxEstatus.SelectedValue != null)
+                {
+                    estatus = cbxEstatus.SelectedValue as bool?;
+                }
+                UsuariosController usuariosController = new UsuariosController();
+                List<Usuario> usuarios = usuariosController.ObtenerUsuarioPorNombre(busqueda, fechaInicio, fechaFin, estatus);
+                if(usuarios.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron resultados para la busqueda", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                CargarBusquedaUsuarios(usuarios);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-
+            buscarUsuario();
         }
     }
 }

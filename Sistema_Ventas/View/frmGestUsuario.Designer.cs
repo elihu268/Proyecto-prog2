@@ -71,6 +71,8 @@
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
             tooltip_passwor = new ToolTip(components);
+            cbxEstatusB = new ComboBox();
+            lbEstatusB = new Label();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -84,6 +86,7 @@
             // 
             // scUsuarios
             // 
+            scUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             scUsuarios.Location = new Point(0, 32);
             scUsuarios.Name = "scUsuarios";
             // 
@@ -96,8 +99,8 @@
             scUsuarios.Panel2.Controls.Add(dgvUsuarios);
             scUsuarios.Panel2.Controls.Add(gbxBusqueda);
             scUsuarios.Panel2.Controls.Add(gbxherramientas);
-            scUsuarios.Size = new Size(876, 412);
-            scUsuarios.SplitterDistance = 292;
+            scUsuarios.Size = new Size(1070, 521);
+            scUsuarios.SplitterDistance = 356;
             scUsuarios.TabIndex = 0;
             // 
             // gbxUsuarios
@@ -128,7 +131,7 @@
             gbxUsuarios.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxUsuarios.Location = new Point(0, 0);
             gbxUsuarios.Name = "gbxUsuarios";
-            gbxUsuarios.Size = new Size(292, 412);
+            gbxUsuarios.Size = new Size(356, 521);
             gbxUsuarios.TabIndex = 1;
             gbxUsuarios.TabStop = false;
             gbxUsuarios.Text = "Datos del Usuario";
@@ -335,15 +338,17 @@
             dgvUsuarios.BackgroundColor = SystemColors.GradientInactiveCaption;
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsuarios.Dock = DockStyle.Fill;
-            dgvUsuarios.Location = new Point(0, 131);
+            dgvUsuarios.Location = new Point(0, 147);
             dgvUsuarios.Name = "dgvUsuarios";
             dgvUsuarios.RowHeadersWidth = 62;
-            dgvUsuarios.Size = new Size(580, 281);
+            dgvUsuarios.Size = new Size(710, 374);
             dgvUsuarios.TabIndex = 2;
             // 
             // gbxBusqueda
             // 
             gbxBusqueda.BackColor = SystemColors.GradientInactiveCaption;
+            gbxBusqueda.Controls.Add(lbEstatusB);
+            gbxBusqueda.Controls.Add(cbxEstatusB);
             gbxBusqueda.Controls.Add(cbxtipoFecha);
             gbxBusqueda.Controls.Add(lbTipoFecha);
             gbxBusqueda.Controls.Add(dtpFechaFin);
@@ -357,7 +362,7 @@
             gbxBusqueda.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxBusqueda.Location = new Point(0, 57);
             gbxBusqueda.Name = "gbxBusqueda";
-            gbxBusqueda.Size = new Size(580, 74);
+            gbxBusqueda.Size = new Size(710, 90);
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda";
@@ -382,24 +387,24 @@
             // dtpFechaFin
             // 
             dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(423, 15);
+            dtpFechaFin.Location = new Point(413, 17);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(110, 23);
+            dtpFechaFin.Size = new Size(114, 23);
             dtpFechaFin.TabIndex = 10;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(282, 17);
+            dtpFechaInicio.Location = new Point(252, 17);
             dtpFechaInicio.Margin = new Padding(2);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(78, 23);
+            dtpFechaInicio.Size = new Size(93, 23);
             dtpFechaInicio.TabIndex = 9;
             // 
             // lbFechaFin
             // 
             lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(365, 19);
+            lbFechaFin.Location = new Point(350, 20);
             lbFechaFin.Name = "lbFechaFin";
             lbFechaFin.Size = new Size(57, 15);
             lbFechaFin.TabIndex = 8;
@@ -408,7 +413,7 @@
             // lbFechaInicio
             // 
             lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(207, 21);
+            lbFechaInicio.Location = new Point(176, 23);
             lbFechaInicio.Name = "lbFechaInicio";
             lbFechaInicio.Size = new Size(71, 15);
             lbFechaInicio.TabIndex = 7;
@@ -420,7 +425,7 @@
             btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(449, 44);
+            btnBuscar.Location = new Point(429, 56);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(94, 30);
             btnBuscar.TabIndex = 2;
@@ -431,7 +436,7 @@
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(137, 45);
+            txtBusqueda.Location = new Point(139, 61);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
             txtBusqueda.Size = new Size(267, 23);
@@ -440,7 +445,7 @@
             // lbBusqueda
             // 
             lbBusqueda.AutoSize = true;
-            lbBusqueda.Location = new Point(10, 44);
+            lbBusqueda.Location = new Point(12, 61);
             lbBusqueda.Name = "lbBusqueda";
             lbBusqueda.Size = new Size(123, 15);
             lbBusqueda.TabIndex = 0;
@@ -456,7 +461,7 @@
             gbxherramientas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxherramientas.Location = new Point(0, 0);
             gbxherramientas.Name = "gbxherramientas";
-            gbxherramientas.Size = new Size(580, 57);
+            gbxherramientas.Size = new Size(710, 57);
             gbxherramientas.TabIndex = 0;
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
@@ -513,17 +518,34 @@
             lbTitulo.ForeColor = SystemColors.ActiveCaptionText;
             lbTitulo.Location = new Point(0, 0);
             lbTitulo.Name = "lbTitulo";
-            lbTitulo.Size = new Size(876, 29);
+            lbTitulo.Size = new Size(1070, 29);
             lbTitulo.TabIndex = 1;
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // cbxEstatusB
+            // 
+            cbxEstatusB.FormattingEnabled = true;
+            cbxEstatusB.Location = new Point(605, 16);
+            cbxEstatusB.Name = "cbxEstatusB";
+            cbxEstatusB.Size = new Size(102, 23);
+            cbxEstatusB.TabIndex = 13;
+            // 
+            // lbEstatusB
+            // 
+            lbEstatusB.AutoSize = true;
+            lbEstatusB.Location = new Point(555, 19);
+            lbEstatusB.Name = "lbEstatusB";
+            lbEstatusB.Size = new Size(44, 15);
+            lbEstatusB.TabIndex = 14;
+            lbEstatusB.Text = "Estatus";
             // 
             // frmGestUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(876, 444);
+            ClientSize = new Size(1070, 553);
             Controls.Add(lbTitulo);
             Controls.Add(scUsuarios);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -588,5 +610,7 @@
         private Label lbl_obligatorios;
         private PictureBox pbox_passwor;
         private ToolTip tooltip_passwor;
+        private ComboBox cbxEstatusB;
+        private Label lbEstatusB;
     }
 }
