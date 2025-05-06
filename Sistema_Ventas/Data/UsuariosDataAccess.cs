@@ -229,7 +229,7 @@ namespace Sistema_Ventas.Data
 
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@nombre", $"%{nombreUsr}%")
+                    new NpgsqlParameter("@nombre", NpgsqlTypes.NpgsqlDbType.Varchar)
                     {
                         Value = nombreUsr !=null ? $"%{nombreUsr}%" : DBNull.Value
                     },

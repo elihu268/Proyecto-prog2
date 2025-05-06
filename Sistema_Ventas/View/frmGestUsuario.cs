@@ -460,7 +460,7 @@ namespace PuntodeVenta.View
             try
             {
                 Cursor = Cursors.WaitCursor;
-                string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? null : txtBusqueda.Text.ToLower();
+                string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? "": busqueda = txtBusqueda.Text.Trim();
                 DateTime? fechaInicio = dtpFechaInicio.Value;
                 DateTime? fechaFin = dtpFechaFin.Value;
 
