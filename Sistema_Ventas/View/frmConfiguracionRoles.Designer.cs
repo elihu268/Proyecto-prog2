@@ -48,19 +48,17 @@
             editRolToolStripMenuItem = new ToolStripMenuItem();
             gbxBusquedaRol = new GroupBox();
             btnBuscarRol = new Button();
-            cbxTipoFecha = new ComboBox();
-            lblTipoFecha = new Label();
-            dtpFechaFin = new DateTimePicker();
-            dtpFechaInicio = new DateTimePicker();
-            lblFechaFin = new Label();
-            lblFechaInicio = new Label();
+            cbxEstatusBusqueda = new ComboBox();
+            lblEstatusBusqueda = new Label();
+            lblCodigoBusqueda = new Label();
             btnActualizarDataGridView = new Button();
-            txtBusquedaRol = new TextBox();
-            lblBuscar = new Label();
+            txtDescBusqueda = new TextBox();
+            lblDescBusqueda = new Label();
             gbxHerramienta = new GroupBox();
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
+            cbxCodigoBusqueda = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -135,7 +133,6 @@
             picBoxFormato.TabIndex = 22;
             picBoxFormato.TabStop = false;
             toolTipCodigo.SetToolTip(picBoxFormato, "3 mayusculas que son el tipo de rol - 3 numeros que consisten en la categoria");
-            picBoxFormato.Click += picBoxFormato_Click;
             // 
             // numIdRol
             // 
@@ -238,7 +235,6 @@
             dgvRoles.RowHeadersWidth = 62;
             dgvRoles.Size = new Size(590, 199);
             dgvRoles.TabIndex = 14;
-            dgvRoles.CellContentClick += dgvRoles_CellContentClick_1;
             // 
             // contextMenuRoles
             // 
@@ -246,27 +242,23 @@
             contextMenuRoles.Name = "contextMenuRoles";
             contextMenuRoles.Size = new Size(125, 26);
             contextMenuRoles.Text = "Roles";
-            contextMenuRoles.Opening += contextMenuRoles_Opening;
             // 
             // editRolToolStripMenuItem
             // 
             editRolToolStripMenuItem.Name = "editRolToolStripMenuItem";
             editRolToolStripMenuItem.Size = new Size(124, 22);
             editRolToolStripMenuItem.Text = "Editar Rol";
-            editRolToolStripMenuItem.Click += editarRolesToolStripMenuItem_Click;
             // 
             // gbxBusquedaRol
             // 
             gbxBusquedaRol.Controls.Add(btnBuscarRol);
-            gbxBusquedaRol.Controls.Add(cbxTipoFecha);
-            gbxBusquedaRol.Controls.Add(lblTipoFecha);
-            gbxBusquedaRol.Controls.Add(dtpFechaFin);
-            gbxBusquedaRol.Controls.Add(dtpFechaInicio);
-            gbxBusquedaRol.Controls.Add(lblFechaFin);
-            gbxBusquedaRol.Controls.Add(lblFechaInicio);
+            gbxBusquedaRol.Controls.Add(lblCodigoBusqueda);
+            gbxBusquedaRol.Controls.Add(cbxCodigoBusqueda);
+            gbxBusquedaRol.Controls.Add(cbxEstatusBusqueda);
+            gbxBusquedaRol.Controls.Add(lblEstatusBusqueda);
             gbxBusquedaRol.Controls.Add(btnActualizarDataGridView);
-            gbxBusquedaRol.Controls.Add(txtBusquedaRol);
-            gbxBusquedaRol.Controls.Add(lblBuscar);
+            gbxBusquedaRol.Controls.Add(txtDescBusqueda);
+            gbxBusquedaRol.Controls.Add(lblDescBusqueda);
             gbxBusquedaRol.Dock = DockStyle.Top;
             gbxBusquedaRol.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxBusquedaRol.Location = new Point(0, 48);
@@ -282,7 +274,7 @@
             btnBuscarRol.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscarRol.Image = Properties.Resources.search;
             btnBuscarRol.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscarRol.Location = new Point(350, 53);
+            btnBuscarRol.Location = new Point(335, 54);
             btnBuscarRol.Name = "btnBuscarRol";
             btnBuscarRol.Size = new Size(75, 30);
             btnBuscarRol.TabIndex = 20;
@@ -291,64 +283,32 @@
             btnBuscarRol.UseVisualStyleBackColor = false;
             btnBuscarRol.Click += btnBuscarRol_Click;
             // 
-            // cbxTipoFecha
+            // cbxEstatusBusqueda
             // 
-            cbxTipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbxTipoFecha.FormattingEnabled = true;
-            cbxTipoFecha.Location = new Point(93, 25);
-            cbxTipoFecha.Name = "cbxTipoFecha";
-            cbxTipoFecha.Size = new Size(87, 23);
-            cbxTipoFecha.TabIndex = 18;
-            cbxTipoFecha.SelectedIndexChanged += cbxTipoFecha_SelectedIndexChanged;
+            cbxEstatusBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxEstatusBusqueda.FormattingEnabled = true;
+            cbxEstatusBusqueda.Location = new Point(93, 25);
+            cbxEstatusBusqueda.Name = "cbxEstatusBusqueda";
+            cbxEstatusBusqueda.Size = new Size(87, 23);
+            cbxEstatusBusqueda.TabIndex = 18;
             // 
-            // lblTipoFecha
+            // lblEstatusBusqueda
             // 
-            lblTipoFecha.AutoSize = true;
-            lblTipoFecha.Location = new Point(9, 28);
-            lblTipoFecha.Name = "lblTipoFecha";
-            lblTipoFecha.Size = new Size(79, 15);
-            lblTipoFecha.TabIndex = 17;
-            lblTipoFecha.Text = "Tipo de fecha";
+            lblEstatusBusqueda.AutoSize = true;
+            lblEstatusBusqueda.Location = new Point(9, 28);
+            lblEstatusBusqueda.Name = "lblEstatusBusqueda";
+            lblEstatusBusqueda.Size = new Size(80, 15);
+            lblEstatusBusqueda.TabIndex = 17;
+            lblEstatusBusqueda.Text = "Estatus del rol";
             // 
-            // dtpFechaFin
+            // lblCodigoBusqueda
             // 
-            dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(433, 25);
-            dtpFechaFin.MaxDate = new DateTime(2025, 3, 13, 6, 39, 35, 0);
-            dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(100, 23);
-            dtpFechaFin.TabIndex = 16;
-            dtpFechaFin.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
-            dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
-            // 
-            // dtpFechaInicio
-            // 
-            dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(264, 25);
-            dtpFechaInicio.MaxDate = new DateTime(2025, 3, 13, 6, 38, 54, 0);
-            dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(100, 23);
-            dtpFechaInicio.TabIndex = 15;
-            dtpFechaInicio.Value = new DateTime(2025, 3, 13, 0, 0, 0, 0);
-            dtpFechaInicio.ValueChanged += dtpFechaInicio_ValueChanged;
-            // 
-            // lblFechaFin
-            // 
-            lblFechaFin.AutoSize = true;
-            lblFechaFin.Location = new Point(372, 28);
-            lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(55, 15);
-            lblFechaFin.TabIndex = 14;
-            lblFechaFin.Text = "Fecha fin";
-            // 
-            // lblFechaInicio
-            // 
-            lblFechaInicio.AutoSize = true;
-            lblFechaInicio.Location = new Point(188, 28);
-            lblFechaInicio.Name = "lblFechaInicio";
-            lblFechaInicio.Size = new Size(70, 15);
-            lblFechaInicio.TabIndex = 13;
-            lblFechaInicio.Text = "Fecha inicio";
+            lblCodigoBusqueda.AutoSize = true;
+            lblCodigoBusqueda.Location = new Point(9, 62);
+            lblCodigoBusqueda.Name = "lblCodigoBusqueda";
+            lblCodigoBusqueda.Size = new Size(81, 15);
+            lblCodigoBusqueda.TabIndex = 13;
+            lblCodigoBusqueda.Text = "Código del rol";
             // 
             // btnActualizarDataGridView
             // 
@@ -356,7 +316,7 @@
             btnActualizarDataGridView.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizarDataGridView.Image = Properties.Resources.actualizar;
             btnActualizarDataGridView.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizarDataGridView.Location = new Point(438, 53);
+            btnActualizarDataGridView.Location = new Point(437, 54);
             btnActualizarDataGridView.Name = "btnActualizarDataGridView";
             btnActualizarDataGridView.Size = new Size(95, 30);
             btnActualizarDataGridView.TabIndex = 2;
@@ -365,23 +325,22 @@
             btnActualizarDataGridView.UseVisualStyleBackColor = false;
             btnActualizarDataGridView.Click += btnActualizarDataGridView_Click;
             // 
-            // txtBusquedaRol
+            // txtDescBusqueda
             // 
-            txtBusquedaRol.Location = new Point(93, 57);
-            txtBusquedaRol.MaxLength = 50;
-            txtBusquedaRol.Name = "txtBusquedaRol";
-            txtBusquedaRol.Size = new Size(240, 23);
-            txtBusquedaRol.TabIndex = 1;
-            txtBusquedaRol.TextChanged += txtBusquedaRol_TextChanged;
+            txtDescBusqueda.Location = new Point(262, 25);
+            txtDescBusqueda.MaxLength = 50;
+            txtDescBusqueda.Name = "txtDescBusqueda";
+            txtDescBusqueda.Size = new Size(316, 23);
+            txtDescBusqueda.TabIndex = 1;
             // 
-            // lblBuscar
+            // lblDescBusqueda
             // 
-            lblBuscar.AutoSize = true;
-            lblBuscar.Location = new Point(9, 61);
-            lblBuscar.Name = "lblBuscar";
-            lblBuscar.Size = new Size(70, 15);
-            lblBuscar.TabIndex = 0;
-            lblBuscar.Text = "Buscar roles";
+            lblDescBusqueda.AutoSize = true;
+            lblDescBusqueda.Location = new Point(186, 25);
+            lblDescBusqueda.Name = "lblDescBusqueda";
+            lblDescBusqueda.Size = new Size(70, 30);
+            lblDescBusqueda.TabIndex = 0;
+            lblDescBusqueda.Text = "Descripción\r\ndel rol";
             // 
             // gbxHerramienta
             // 
@@ -423,6 +382,15 @@
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // cbxCodigoBusqueda
+            // 
+            cbxCodigoBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxCodigoBusqueda.FormattingEnabled = true;
+            cbxCodigoBusqueda.Location = new Point(93, 59);
+            cbxCodigoBusqueda.Name = "cbxCodigoBusqueda";
+            cbxCodigoBusqueda.Size = new Size(170, 23);
+            cbxCodigoBusqueda.TabIndex = 18;
+            // 
             // frmConfiguracionRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -461,15 +429,12 @@
         private Button btnCargaMasiva;
         private Button btnColapsar;
         private GroupBox gbxBusquedaRol;
-        private ComboBox cbxTipoFecha;
-        private Label lblTipoFecha;
-        private DateTimePicker dtpFechaFin;
-        private DateTimePicker dtpFechaInicio;
-        private Label lblFechaFin;
-        private Label lblFechaInicio;
+        private ComboBox cbxEstatusBusqueda;
+        private Label lblEstatusBusqueda;
+        private Label lblCodigoBusqueda;
         private Button btnActualizarDataGridView;
-        private TextBox txtBusquedaRol;
-        private Label lblBuscar;
+        private TextBox txtDescBusqueda;
+        private Label lblDescBusqueda;
         private GroupBox gbxAltaEdicionRol;
         private Button btnGuardar;
         private ComboBox cbxEstatus;
@@ -487,5 +452,6 @@
         private ContextMenuStrip contextMenuRoles;
         private ToolStripMenuItem editRolToolStripMenuItem;
         private Button btnBuscarRol;
+        private ComboBox cbxCodigoBusqueda;
     }
 }

@@ -27,7 +27,6 @@ namespace Sistema_Ventas.View
         private void frmConfiguracionRoles_Load(object sender, EventArgs e)
         {
             scRoles.Panel1Collapsed = true;
-            PoblaTipoFecha();
             PoblaComboEstatus();
 
             // Se registra información indicando que el formulario ha sido cargado
@@ -36,22 +35,6 @@ namespace Sistema_Ventas.View
             // Mensaje de depuración que indica que comienza la carga inicial de datos
             _logger.Debug("Iniciando carga de datos y configuraciones iniciales para roles.");
 
-        }
-
-        /// <summary>
-        /// Carga los tipos de fecha disponibles en el ComboBox correspondiente
-        /// </summary>
-        private void PoblaTipoFecha()
-        {
-            Dictionary<int, string> lista_tipoFecha = new Dictionary<int, string>
-            {
-                { 1, "Alta" },
-                { 2, "Baja" }
-            };
-            cbxTipoFecha.DataSource = new BindingSource(lista_tipoFecha, null);
-            cbxTipoFecha.DisplayMember = "Value";
-            cbxTipoFecha.ValueMember = "Key";
-            cbxTipoFecha.SelectedValue = 1;
         }
 
         /// <summary>
@@ -119,21 +102,6 @@ namespace Sistema_Ventas.View
             return true;
         }
 
-        /// <summary>
-        /// Evento Click para el botón de buscar un rol
-        /// </summary>
-        private void btnBuscarRol_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
-        /// </summary>
-        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
-        {
-
-        }
 
         /// <summary>
         /// Evento Click para el botón de Guardar: Ejecuta validación y guardado
@@ -163,49 +131,23 @@ namespace Sistema_Ventas.View
             }
         }
 
-        private void dgvRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Evento Click para el botón de buscar un rol
+        /// </summary>
+        private void btnBuscarRol_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void editarRolesToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
+        /// </summary>
+        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void contextMenuRoles_Opening(object sender, CancelEventArgs e)
-        {
 
-        }
 
-        private void picBoxFormato_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cbxTipoFecha_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dtpFechaFin_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtBusquedaRol_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvRoles_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }
