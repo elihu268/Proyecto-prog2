@@ -37,13 +37,13 @@ namespace Sistema_Ventas.Data
                                 b.accion, b.fecha, b.ip_acceso, 
                                 b.nombre_equipo, b.tipo,
                                 CASE 
-					WHEN b.id_movimiento = 0 THEN 'USUARIO AGREGADO'
-					WHEN b.id_movimiento = 1 THEN 'ACTUALIZACION USUARIO'
-					WHEN b.id_movimiento = 2 THEN 'BAJA USUARIO'
+					                WHEN b.id_movimiento = 0 THEN 'USUARIO AGREGADO'
+					                WHEN b.id_movimiento = 1 THEN 'ACTUALIZACION USUARIO'
+					                WHEN b.id_movimiento = 2 THEN 'BAJA USUARIO'
 	                                WHEN b.id_movimiento = 3 THEN 'VENTA'
 	                                WHEN b.id_movimiento = 4 THEN 'MODIFICACION'
 	                                WHEN b.id_movimiento = 5 THEN 'CANCELACION'
-					WHEN b.id_movimiento = 6 THEN 'CLIENTE AGREGADO'
+					                WHEN b.id_movimiento = 6 THEN 'CLIENTE AGREGADO'
 	                                ELSE
 	                                'Desconocido'
 	                                END AS movimiento
@@ -133,5 +133,67 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Disconnect(); // Desconectar de la base de datos
             }
         }
+        public List<Auditoria> ObtenerAuditoriasBusqueda(string nombre,DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            List<Auditoria> auditorias = new List<Auditoria>();
+            try
+            {
+                string query = @"SELECT u.id_usuario, p.nombre_completo, p.correo,
+                                b.accion, b.fecha, b.ip_acceso, 
+                                b.nombre_equipo, b.tipo, b.id_movimiento
+                                FROM bitacora b
+                                   INNER JOIN usuarios u ON u.id_usuario = b.id_usuario
+                                   INNER JOIN personas p on u.id_persona = p.id_persona
+                                    WHERE (@nombre IS NULL OR LOWER (p.nombre_completo) LIKE @nombre)
+                                    AND (@fechaInicio IS NULL OR b.fecha >= @fechaInicio)
+                                     AND (@fechaFin IS NULL OR b.fecha <= @fechaFin);";
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@nombre", NpgsqlTypes.NpgsqlDbType.Varchar)
+                    {
+                        Value=nombre!= null ? $"%{nombre}%" : (object)DBNull.Value
+                    },
+                    new NpgsqlParameter("@fechaInicio", NpgsqlTypes.NpgsqlDbType.Date)
+                    {
+                        Value=fechaInicio != null ? fechaInicio.Value : (object)DBNull.Value
+                    },
+                    new NpgsqlParameter("@fechaFin", NpgsqlTypes.NpgsqlDbType.Date)
+                    {
+                        Value=fechaFin != null ? fechaFin.Value : (object)DBNull.Value
+                    }
+
+                };
+                DataTable auditoriaData = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+                _logger.Info("Ejecutando consulta: {0}", query);
+                foreach (DataRow row in auditoriaData.Rows)
+                {
+                    Auditoria auditoria = new Auditoria(
+                       Convert.ToInt32(row["id_usuario"]),
+                          row["nombre_completo"].ToString() ?? "",
+                          row["correo"].ToString() ?? "",
+                          row["accion"].ToString() ?? "",
+                            Convert.ToDateTime(row["fecha"]),
+                            row["ip_acceso"].ToString() ?? "",
+                            row["nombre_equipo"].ToString() ?? "",
+                            row["tipo"].ToString() ?? "",
+                            row["id_movimiento"].ToString() ?? ""
+                    );
+                    auditorias.Add(auditoria);
+
+                }
+                return auditorias;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener auditorías por usuario");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect(); // Desconectar de la base de datos
+            }
+        }
+            
     }
 }

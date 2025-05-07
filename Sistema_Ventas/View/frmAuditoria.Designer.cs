@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAuditoria));
             gbxBusquedaAuditoria = new GroupBox();
             dtpFechaFin = new DateTimePicker();
-            stpFechaInicio = new DateTimePicker();
+            dtpFechaInicio = new DateTimePicker();
             lbFechaFin = new Label();
             lbFechaInicio = new Label();
             btnBuscarAuditoria = new Button();
@@ -45,7 +45,7 @@
             // gbxBusquedaAuditoria
             // 
             gbxBusquedaAuditoria.Controls.Add(dtpFechaFin);
-            gbxBusquedaAuditoria.Controls.Add(stpFechaInicio);
+            gbxBusquedaAuditoria.Controls.Add(dtpFechaInicio);
             gbxBusquedaAuditoria.Controls.Add(lbFechaFin);
             gbxBusquedaAuditoria.Controls.Add(lbFechaInicio);
             gbxBusquedaAuditoria.Controls.Add(btnBuscarAuditoria);
@@ -68,13 +68,13 @@
             dtpFechaFin.Size = new Size(137, 23);
             dtpFechaFin.TabIndex = 6;
             // 
-            // stpFechaInicio
+            // dtpFechaInicio
             // 
-            stpFechaInicio.Format = DateTimePickerFormat.Short;
-            stpFechaInicio.Location = new Point(96, 22);
-            stpFechaInicio.Name = "stpFechaInicio";
-            stpFechaInicio.Size = new Size(137, 23);
-            stpFechaInicio.TabIndex = 5;
+            dtpFechaInicio.Format = DateTimePickerFormat.Short;
+            dtpFechaInicio.Location = new Point(96, 22);
+            dtpFechaInicio.Name = "dtpFechaInicio";
+            dtpFechaInicio.Size = new Size(137, 23);
+            dtpFechaInicio.TabIndex = 5;
             // 
             // lbFechaFin
             // 
@@ -106,6 +106,7 @@
             btnBuscarAuditoria.Text = "Buscar";
             btnBuscarAuditoria.TextAlign = ContentAlignment.MiddleRight;
             btnBuscarAuditoria.UseVisualStyleBackColor = false;
+            btnBuscarAuditoria.Click += btnBuscarAuditoria_Click;
             // 
             // txtBusqueda
             // 
@@ -159,7 +160,7 @@
         private TextBox txtBusqueda;
         private Label lbBusqueda;
         private DateTimePicker dtpFechaFin;
-        private DateTimePicker stpFechaInicio;
+        private DateTimePicker dtpFechaInicio;
         private Label lbFechaFin;
         private Label lbFechaInicio;
         private DataGridView dgvAuditorias;

@@ -23,6 +23,7 @@ namespace PuntodeVenta.View
         private void frmAuditoria_Load(object sender, EventArgs e)
         {
             CargarAuditorias();
+            
         }
 
         private void CargarAuditorias()
@@ -100,7 +101,8 @@ namespace PuntodeVenta.View
 
             // Ocultar columna ID si es necesario
             dgvAuditorias.Columns["ID"].Visible = false;
-            dgvAuditorias.Columns["Movimiento"].Visible = false;
+            dgvAuditorias.Columns["Tipo"].Visible = false;
+            //dgvAuditorias.Columns["Movimiento"].Visible = false;
             ///dgvAuditorias.Columns[""].Visible = false;
 
 
@@ -132,6 +134,75 @@ namespace PuntodeVenta.View
         private void frmAuditoria_Load_1(object sender, EventArgs e)
         {
             CargarAuditorias();
+            dtpFechaInicio.Value = DateTime.Now.AddDays(-1);
+            //txtBusqueda.Visible = false;
         }
+
+        private void btnBuscarAuditoria_Click(object sender, EventArgs e)
+        {
+            ObtenerAuditoriasBusqueda();
+        }
+        
+        public void ObtenerAuditoriasBusqueda()
+        {
+            
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                string nombre = string.IsNullOrWhiteSpace(txtBusqueda.Text) ? "": txtBusqueda.Text.ToLower();
+                DateTime? fechaInicio = dtpFechaInicio.Value;
+                DateTime? fechaFin = dtpFechaFin.Value;
+
+                AuditoriaController auditoriaController = new AuditoriaController();
+                List<Auditoria> auditorias = auditoriaController.ObtenerAuditoriasBusqueda(nombre, fechaInicio, fechaFin);
+                if (auditorias.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron resultados para la busqueda", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ConfigurarBusquedaAuditorias(auditorias);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los auditorias: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+        private void ConfigurarBusquedaAuditorias(List<Auditoria> auditorias)
+        {
+            dgvAuditorias.DataSource = null;
+            DataTable dt = new DataTable();
+            // Definición de columnas
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Nombre Completo", typeof(string));
+            dt.Columns.Add("Correo", typeof(string));
+            dt.Columns.Add("Accion", typeof(string));
+            dt.Columns.Add("Fecha", typeof(string));
+            dt.Columns.Add("Ip Accesso", typeof(string));
+            dt.Columns.Add("Nombre del Equipo", typeof(string));
+            dt.Columns.Add("Tipo", typeof(string));
+            dt.Columns.Add("Movimiento", typeof(string));
+            //llenado de la tabla
+            foreach (Auditoria auditoria in auditorias)
+            {
+                dt.Rows.Add(
+                    auditoria.Id,
+                    auditoria.NombreCompleto,
+                    auditoria.Cuenta,
+                    auditoria.Accion,
+                    auditoria.Fecha.ToString("dd/MM/yyyy HH:mm:ss"),
+                    auditoria.IpAcceso,
+                    auditoria.NombreEquipo,
+                    auditoria.Tipo,
+                    auditoria.Movimiento ?? auditoria.IdMovimiento.ToString()
+                    );
+            }
+            dgvAuditorias.DataSource = dt;
+            ConfigurarDGV();
+        }
+
     }
 }

@@ -58,6 +58,21 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+        public List<Auditoria> ObtenerAuditoriasBusqueda(string nombre, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            try
+            {
+                List<Auditoria> auditorias = _auditoriaDataAccess.ObtenerAuditoriasBusqueda(nombre, fechaInicio, fechaFin);
+                _logger.Info("Auditorías obtenidas por búsqueda: {0}", auditorias.Count);
+                return auditorias;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                Console.WriteLine("Error al obtener auditorías por búsqueda: " + ex.Message);
+                throw;
+            }
+        }
     }
 }
 
