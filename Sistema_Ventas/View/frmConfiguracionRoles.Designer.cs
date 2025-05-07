@@ -253,6 +253,7 @@
             dgvRoles.RowHeadersWidth = 62;
             dgvRoles.Size = new Size(590, 199);
             dgvRoles.TabIndex = 14;
+            dgvRoles.CellContentClick += dgvRoles_CellContentClick;
             // 
             // contextMenuRoles
             // 

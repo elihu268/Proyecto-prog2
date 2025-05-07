@@ -43,6 +43,21 @@ namespace Sistema_Ventas.View
         }
 
         /// <summary>
+        /// Permite la manipulación dependiendo de la sesión
+        /// </summary>
+        private void dgvRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Sesión.TienePermiso("ROLE_EDIT"))
+            {
+                // Código para mandar los datos de la fila seleccionada para editar
+            }
+            else
+            {
+                MessageBox.Show("No tiene permiso para editar roles", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
         /// Llena el ComboBox de estatus en captura
         /// </summary>
         private void PoblaComboEstatus()
@@ -184,7 +199,7 @@ namespace Sistema_Ventas.View
         }
 
         /// <summary>
-        /// Carga todos los roles sin aplicar filtros
+        /// Carga todos los roles
         /// </summary>
         private void CargarTodosRoles()
         {
@@ -373,6 +388,7 @@ namespace Sistema_Ventas.View
                 btnGuardar.Enabled = true;
             }
         }
+
 
     }
 }
