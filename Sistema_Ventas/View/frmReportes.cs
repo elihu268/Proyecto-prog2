@@ -163,7 +163,9 @@ namespace PuntodeVenta.View
                 }
 
                 CompraController compraController = new CompraController();
-                List<Compra> compras = compraController.BuscarCompras(idCliente, fechaInicio, fechaFin, 1);
+                List<Compra> compras = compraController.BuscarCompras(idCliente, idProducto, fechaInicio, fechaFin, 1);
+
+
                 AuditoriaController auditoriaController = new AuditoriaController();
                 Auditoria auditoria = new Auditoria(
                     "Generacion Reporte",
@@ -175,6 +177,7 @@ namespace PuntodeVenta.View
                     Sesión.IdUsuario
                 );
                 auditoriaController.AudioriaAdd(auditoria);
+
 
                 MostrarReporteVentas(compras);
             }
@@ -228,9 +231,61 @@ namespace PuntodeVenta.View
 
             dgvReporteVentas.DataSource = dt;
 
-            dgvReporteVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ConfigurarDataGridView();
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            dgvReporteVentas.AllowUserToAddRows = false;
+            dgvReporteVentas.AllowUserToDeleteRows = false;
             dgvReporteVentas.ReadOnly = true;
+
+            // Ajustar ancho de columnas automáticamente
+            dgvReporteVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Alineaciones
+            dgvReporteVentas.Columns["ID Compra"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvReporteVentas.Columns["Código"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Cliente"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Subtotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["IVA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Descuento"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Fecha de Compra"].DefaultCellStyle.Format = "dd/MM/yyyy";
+
+            // Estilo alternado
+            dgvReporteVentas.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+
+            // Selección de fila completa
             dgvReporteVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Cabecera
+            dgvReporteVentas.EnableHeadersVisualStyles = false;
+            dgvReporteVentas.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvReporteVentas.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvReporteVentas.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
+            dgvReporteVentas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvReporteVentas.ColumnHeadersHeight = 30;
+        }
+
+        private void dgvReporteVentas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Validar que no sea encabezado
+            {
+                int idCompra = Convert.ToInt32(dgvReporteVentas.Rows[e.RowIndex].Cells["ID Compra"].Value);
+
+                DetalleCompraController detalleController = new DetalleCompraController();
+                List<DetalleCompra> detalles = detalleController.ObtenerDetallePorCompra(idCompra);
+
+                string mensaje = $"Detalle de la compra #{idCompra}:\n\n";
+
+                foreach (var detalle in detalles)
+                {
+                    mensaje += $"- {detalle.Productoi?.Nombre ?? "Producto"}: {detalle.Cantidad} x {detalle.Productoi?.Precio:C} = {detalle.TotalPorUnidad:C}\n";
+                }
+
+                MessageBox.Show(mensaje, "Detalle de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void cbxNomProducto_SelectedIndexChanged(object sender, EventArgs e) { }
@@ -240,8 +295,6 @@ namespace PuntodeVenta.View
         private void lblNomProducto_Click(object sender, EventArgs e) { }
 
         private void lblFechaFin_Click(object sender, EventArgs e) { }
-
-        private void dgvReporteVentas_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
         private void gbxFiltroVentas_Enter(object sender, EventArgs e) { }
 

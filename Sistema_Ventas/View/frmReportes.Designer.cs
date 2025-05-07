@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportes));
             gbxFiltroVentas = new GroupBox();
+            picBoxReportes = new PictureBox();
             cbFecha = new CheckBox();
             lblNomProducto = new Label();
             cbxNomProducto = new ComboBox();
@@ -43,13 +45,16 @@
             lblFechaInicio = new Label();
             btnGenerarReporte = new Button();
             dgvReporteVentas = new DataGridView();
+            toolTipDetalle = new ToolTip(components);
             gbxFiltroVentas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picBoxReportes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvReporteVentas).BeginInit();
             SuspendLayout();
             // 
             // gbxFiltroVentas
             // 
             gbxFiltroVentas.BackColor = SystemColors.GradientInactiveCaption;
+            gbxFiltroVentas.Controls.Add(picBoxReportes);
             gbxFiltroVentas.Controls.Add(cbFecha);
             gbxFiltroVentas.Controls.Add(lblNomProducto);
             gbxFiltroVentas.Controls.Add(cbxNomProducto);
@@ -66,11 +71,22 @@
             gbxFiltroVentas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxFiltroVentas.Location = new Point(0, 0);
             gbxFiltroVentas.Name = "gbxFiltroVentas";
-            gbxFiltroVentas.Size = new Size(587, 197);
+            gbxFiltroVentas.Size = new Size(587, 212);
             gbxFiltroVentas.TabIndex = 0;
             gbxFiltroVentas.TabStop = false;
             gbxFiltroVentas.Text = "Filtrado de ventas";
             gbxFiltroVentas.Enter += gbxFiltroVentas_Enter;
+            // 
+            // picBoxReportes
+            // 
+            picBoxReportes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            picBoxReportes.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
+            picBoxReportes.Location = new Point(285, 134);
+            picBoxReportes.Name = "picBoxReportes";
+            picBoxReportes.Size = new Size(33, 32);
+            picBoxReportes.TabIndex = 23;
+            picBoxReportes.TabStop = false;
+            toolTipDetalle.SetToolTip(picBoxReportes, "Haz doble clic sobre un registro para ver los detalles de la compra");
             // 
             // cbFecha
             // 
@@ -205,7 +221,7 @@
             btnGenerarReporte.BackColor = SystemColors.ActiveCaption;
             btnGenerarReporte.Image = Sistema_Ventas.Properties.Resources.generarReporte;
             btnGenerarReporte.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGenerarReporte.Location = new Point(266, 144);
+            btnGenerarReporte.Location = new Point(266, 171);
             btnGenerarReporte.MaximumSize = new Size(75, 30);
             btnGenerarReporte.Name = "btnGenerarReporte";
             btnGenerarReporte.Size = new Size(75, 30);
@@ -228,7 +244,7 @@
             dgvReporteVentas.RowHeadersWidth = 62;
             dgvReporteVentas.Size = new Size(587, 230);
             dgvReporteVentas.TabIndex = 5;
-            dgvReporteVentas.CellContentClick += dgvReporteVentas_CellContentClick;
+            dgvReporteVentas.CellDoubleClick += dgvReporteVentas_CellDoubleClick;
             // 
             // frmReportes
             // 
@@ -244,6 +260,7 @@
             Load += frmReportes_Load;
             gbxFiltroVentas.ResumeLayout(false);
             gbxFiltroVentas.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picBoxReportes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvReporteVentas).EndInit();
             ResumeLayout(false);
         }
@@ -264,5 +281,7 @@
         private ComboBox cbxNomProducto;
         private CheckBox cbFecha;
         private DataGridView dgvReporteVentas;
+        private PictureBox picBoxReportes;
+        private ToolTip toolTipDetalle;
     }
 }

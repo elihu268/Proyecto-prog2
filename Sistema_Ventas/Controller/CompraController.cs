@@ -112,13 +112,13 @@ namespace Sistema_Ventas.Controller
         }
 
         /// <summary>
-        /// Busca compras aplicando filtros opcionales.
+        /// Busca compras aplicando filtros opcionales, incluyendo cliente, producto, fechas y estatus.
         /// </summary>
-        public List<Compra> BuscarCompras(int? idCliente = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
+        public List<Compra> BuscarCompras(int? idCliente = null, int? idProducto = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
         {
             try
             {
-                var compras = _compraData.BuscarCompras(idCliente, fechaInicio, fechaFin, estatus);
+                var compras = _compraData.BuscarCompras(idCliente, idProducto, fechaInicio, fechaFin, estatus);
                 _logger.Info($"Compras obtenidas con filtros: {compras.Count} registros encontrados");
                 return compras;
             }
@@ -128,6 +128,7 @@ namespace Sistema_Ventas.Controller
                 throw;
             }
         }
+
 
         /// <summary>
         /// Obtiene el detalle de una compra incluyendo sus productos.

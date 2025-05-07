@@ -69,5 +69,24 @@ namespace Sistema_Ventas.Controller
                 return false;
             }
         }
+
+
+        /// <summary>
+        /// Obtiene la lista de detalles de una compra específica
+        /// </summary>
+        /// <param name="idCompra">ID de la compra</param>
+        /// <returns>Lista de objetos DetalleCompra</returns>
+        public List<DetalleCompra> ObtenerDetallePorCompra(int idCompra)
+        {
+            try
+            {
+                return _detalleData.ObtenerDetallePorCompra(idCompra);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener detalles de la compra con ID {idCompra}");
+                return new List<DetalleCompra>();
+            }
+        }
     }
 }

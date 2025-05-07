@@ -252,9 +252,9 @@ namespace Sistema_Ventas.Data
         }
 
         /// <summary>
-        /// Busca compras basadas en filtros opcionales: cliente, rango de fechas y estatus.
+        /// Busca compras basadas en filtros opcionales: cliente, producto, rango de fechas y estatus.
         /// </summary>
-        public List<Compra> BuscarCompras(int? idCliente = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
+        public List<Compra> BuscarCompras(int? idCliente = null, int? idProducto = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = null)
         {
             List<Compra> compras = new List<Compra>();
             try
@@ -262,7 +262,7 @@ namespace Sistema_Ventas.Data
                 _dbAccess.Connect();
 
                 string query = @"
-            SELECT 
+            SELECT DISTINCT
                 c.id_compra,
                 c.id_cliente,
                 c.codigo,
@@ -277,30 +277,37 @@ namespace Sistema_Ventas.Data
             FROM compra c
             LEFT JOIN cliente cli ON c.id_cliente = cli.id_cliente
             LEFT JOIN personas p ON cli.id_persona = p.id_persona
-            WHERE 1=1"; // Condición inicial
+            LEFT JOIN detalle_compra dc ON c.id_compra = dc.id_compra
+            WHERE 1=1";
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
-                // Aplicar filtros dinámicamente
                 if (idCliente.HasValue)
                 {
                     query += " AND c.id_cliente = @id_cliente";
                     parametros.Add(new NpgsqlParameter("@id_cliente", idCliente.Value));
                 }
+
+                if (idProducto.HasValue)
+                {
+                    query += " AND dc.id_producto = @id_producto";
+                    parametros.Add(new NpgsqlParameter("@id_producto", idProducto.Value));
+                }
+
                 if (fechaInicio.HasValue && fechaFin.HasValue)
                 {
                     query += " AND c.fecha_de_compra BETWEEN @fechaInicio AND @fechaFin";
                     parametros.Add(new NpgsqlParameter("@fechaInicio", fechaInicio.Value));
                     parametros.Add(new NpgsqlParameter("@fechaFin", fechaFin.Value));
                 }
+
                 if (estatus.HasValue)
                 {
-                    query += " AND c.estatus = CAST(@estatus AS VARCHAR)";
+                    query += " AND c.estatus = @estatus";
                     parametros.Add(new NpgsqlParameter("@estatus", estatus.Value.ToString()));
                 }
 
-
-                query += " ORDER BY c.fecha_de_compra DESC;";
+                query += " ORDER BY c.id_compra;";
 
                 var result = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 

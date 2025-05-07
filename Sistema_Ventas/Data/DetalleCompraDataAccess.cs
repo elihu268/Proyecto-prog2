@@ -74,50 +74,50 @@ namespace Sistema_Ventas.Data
         /// <summary>
         /// Obtiene todos los detalles de una compra específica por su ID.
         /// </summary>
-        public List<DetalleCompra> ObtenerDetallePorCompra(int idCompra)
-        {
-            List<DetalleCompra> detalles = new List<DetalleCompra>();
-            try
-            {
-                _dbAccess.Connect();
+        //public List<DetalleCompra> ObtenerDetallePorCompra(int idCompra)
+        //{
+        //    List<DetalleCompra> detalles = new List<DetalleCompra>();
+        //    try
+        //    {
+        //        _dbAccess.Connect();
 
-                string query = @"
-                    SELECT id_detalle, id_compra, id_producto, cantidad, total_por_unidad
-                    FROM detalle_compra
-                    WHERE id_compra = @id_compra;
-                ";
+        //        string query = @"
+        //            SELECT id_detalle, id_compra, id_producto, cantidad, total_por_unidad
+        //            FROM detalle_compra
+        //            WHERE id_compra = @id_compra;
+        //        ";
 
-                var param = _dbAccess.CreateParameter("@id_compra", idCompra);
+        //        var param = _dbAccess.CreateParameter("@id_compra", idCompra);
 
-                var result = _dbAccess.ExecuteQuery_Reader(query, param);
+        //        var result = _dbAccess.ExecuteQuery_Reader(query, param);
 
-                foreach (System.Data.DataRow row in result.Rows)
-                {
-                    DetalleCompra detalle = new DetalleCompra
-                    {
-                        IdDetalle = Convert.ToInt32(row["id_detalle"]),
-                        IdCompra = Convert.ToInt32(row["id_compra"]),
-                        IdProducto = Convert.ToInt32(row["id_producto"]),
-                        Cantidad = Convert.ToInt32(row["cantidad"]),
-                        TotalPorUnidad = Convert.ToDecimal(row["total_por_unidad"])
-                    };
+        //        foreach (System.Data.DataRow row in result.Rows)
+        //        {
+        //            DetalleCompra detalle = new DetalleCompra
+        //            {
+        //                IdDetalle = Convert.ToInt32(row["id_detalle"]),
+        //                IdCompra = Convert.ToInt32(row["id_compra"]),
+        //                IdProducto = Convert.ToInt32(row["id_producto"]),
+        //                Cantidad = Convert.ToInt32(row["cantidad"]),
+        //                TotalPorUnidad = Convert.ToDecimal(row["total_por_unidad"])
+        //            };
 
-                    detalles.Add(detalle);
-                }
+        //            detalles.Add(detalle);
+        //        }
 
-                _logger.Info($"Se encontraron {detalles.Count} detalles para la compra ID {idCompra}");
-                return detalles;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, $"Error al obtener los detalles de la compra ID {idCompra}");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
+        //        _logger.Info($"Se encontraron {detalles.Count} detalles para la compra ID {idCompra}");
+        //        return detalles;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.Error(ex, $"Error al obtener los detalles de la compra ID {idCompra}");
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        _dbAccess.Disconnect();
+        //    }
+        //}
 
         /// <summary>
         /// Actualiza la cantidad y el total por unidad de un detalle de compra.
@@ -158,5 +158,72 @@ namespace Sistema_Ventas.Data
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los detalles de una compra específica por su ID, incluyendo información del producto.
+        /// </summary>
+        public List<DetalleCompra> ObtenerDetallePorCompra(int idCompra)
+        {
+            List<DetalleCompra> detalles = new List<DetalleCompra>();
+            try
+            {
+                _dbAccess.Connect();
+
+                string query = @"
+            SELECT 
+                d.id_detalle, 
+                d.id_compra, 
+                d.id_producto, 
+                d.cantidad, 
+                d.total_por_unidad,
+                p.cod_producto,
+                p.nombre AS nombre_producto,
+                p.precio
+            FROM detalle_compra d
+            INNER JOIN producto p ON d.id_producto = p.id_producto
+            WHERE d.id_compra = @id_compra;
+        ";
+
+                var param = _dbAccess.CreateParameter("@id_compra", idCompra);
+
+                var result = _dbAccess.ExecuteQuery_Reader(query, param);
+
+                foreach (System.Data.DataRow row in result.Rows)
+                {
+                    // Crear el objeto producto
+                    Producto producto = new Producto
+                    {
+                        IdProducto = Convert.ToInt32(row["id_producto"]),
+                        Codigo = row["cod_producto"].ToString() ?? "",
+                        Nombre = row["nombre_producto"].ToString() ?? "",
+                        Precio = Convert.ToDecimal(row["precio"])
+                    };
+
+                    // Crear el detalle con producto embebido
+                    DetalleCompra detalle = new DetalleCompra
+                    {
+                        IdDetalle = Convert.ToInt32(row["id_detalle"]),
+                        IdCompra = Convert.ToInt32(row["id_compra"]),
+                        IdProducto = producto.IdProducto,
+                        Cantidad = Convert.ToInt32(row["cantidad"]),
+                        TotalPorUnidad = Convert.ToDecimal(row["total_por_unidad"]),
+                        Productoi = producto
+                    };
+
+                    detalles.Add(detalle);
+                }
+
+                _logger.Info($"Se encontraron {detalles.Count} detalles para la compra ID {idCompra}");
+                return detalles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener los detalles de la compra ID {idCompra}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }
