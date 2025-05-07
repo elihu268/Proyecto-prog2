@@ -555,7 +555,7 @@ namespace PuntodeVenta.View
                     IdUsuario = idUsuario,
                     idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
                     Cuenta = txtCorreo.Text.Trim(),
-                    Estatus = cbxEstatus.SelectedValue.ToString() == "1" ? true : false,
+                    Estatus = cbxEstatus.SelectedValue != null,
                     DatosPersonales = new Persona
                     {
                         Id = usuario.IdPersona,
