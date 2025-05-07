@@ -37,7 +37,7 @@ namespace PuntodeVenta.View
             }
             if (!Sesión.TienePermiso("CLI_EDIT"))
             {
-                cmsEdit.Visible = false;
+                cmsEdit.Enabled = false;
             }
             btnActualizarInfo.Visible = false;
         }

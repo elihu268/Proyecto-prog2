@@ -48,6 +48,10 @@ namespace PuntodeVenta.View
                 // Si no tiene el permiso, ocultar el botón
                 btnCarga.Visible = false;
             }
+            if (!Sesión.TienePermiso("USR_EDIT"))
+            {
+                menuStrip.Enabled = false;
+            }
 
         }
         //creacion del direccion en la cual se mostrara en el combobox de estatus
@@ -454,18 +458,6 @@ namespace PuntodeVenta.View
               return true;
           }*/
 
-        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (Sesión.TienePermiso("USR_EDIT"))
-            {
-                // Código para mandar los datos de la fila seleccionada para editar
-            }
-            else
-            {
-                MessageBox.Show("No tiene permiso para editar usuarios", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-        }
         private void buscarUsuario()
         {
             try
