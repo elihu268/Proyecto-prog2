@@ -17,6 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using NLog;
 using Sistema_Ventas.Bussines;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Net;
 namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
@@ -182,6 +183,17 @@ namespace Sistema_Ventas.View
 
             CompraController compraController = new CompraController();
             Cliente cliente = (Cliente)cb_clientes.SelectedItem;
+            AuditoriaController auditoriaController = new AuditoriaController();
+            Auditoria auditoria = new Auditoria(
+                "Compra Terminada",
+                DateTime.Now,
+                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                Sesión.UsuarioActual,
+                Sesión.IdUsuario,
+                cliente.Id
+            );
+            auditoriaController.AudioriaAdd(auditoria);
             if (compraController.InsertarCompra(cliente.Id, (int)cbox_estatus.SelectedValue, (int)cb_metodo.SelectedValue, detalles))
             {
                 MessageBox.Show("compra generada correctamente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;

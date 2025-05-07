@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,12 +78,23 @@ namespace Sistema_Ventas.View
                 int idRolSeleccionado = (int)cbox_rol.SelectedValue; //  SelectedValue = ID del rol
                 PermisoARolController permisoARolController = new PermisoARolController();
                 permisoARolController.AsignarPermisosARol(idRolSeleccionado, permisosSeleccionados);
-
+               
                 if (Sesión.IdRol == idRolSeleccionado)
                 {
                     UsuariosController uc = new UsuariosController();
                     // Si el rol seleccionado es el mismo que el del usuario actual, actualizar los permisos en la sesión
                     Sesión.Permisos = uc.ObtenerPermisos(idRolSeleccionado);
+                    AuditoriaController auditoriaController = new AuditoriaController();
+                    Auditoria auditoria = new Auditoria(
+                        "Asignar Permisos",
+                        DateTime.Now,
+                        Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                        System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                        Sesión.UsuarioActual,
+                        Sesión.IdUsuario,
+                        idRolSeleccionado
+                    );
+                    auditoriaController.AudioriaAdd(auditoria);
                     if (this.MdiParent != null)
                     {
                         if (this.MdiParent is MDI_Sistema_ventas mdiForm)
