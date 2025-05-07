@@ -74,6 +74,29 @@ namespace Sistema_Ventas.Controller
             }
         }
 
+        public bool ActualizarUsuario(Usuario usuario)
+        {
+            try
+            {
+                // Actualizar el usuario
+                _logger.Info("Actualizando usuario: {0}", usuario.Cuenta);
+                bool resultado = _usuariosDataAccess.ActualizarUsuario(usuario);
+                if (!resultado)
+                {
+                    _logger.Info("Usuario actualizado con éxito, ID: {0}", usuario.IdUsuario);
+                    return false;
+                }
+                    _logger.Warn("Error al actualizar el usuario, ID: {0}", usuario.IdUsuario);
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                _logger.Error($"Error al actualizar usuario {usuario.DatosPersonales?.NombreCompleto ?? "sin nombre"}, correo {usuario.Cuenta} {ex.Message}");
+                throw;
+            }
+        }
+
         public string ValidarUsuario(string usuario, string contraseña)
         {
             try
@@ -111,6 +134,21 @@ namespace Sistema_Ventas.Controller
             {
                 // Manejo de excepciones
                 _logger.Error($"Error al obtener usuarios por rol: " + ex.Message);
+                throw;
+            }
+        }
+        public Usuario ObtenerPorId(int idUsuario)
+        {
+            try
+            {
+                // Obtener el usuario por ID
+                Usuario usuario = _usuariosDataAccess.ObtenerPorId(idUsuario);
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                _logger.Error($"Error al obtener usuario por ID: " + ex.Message);
                 throw;
             }
         }

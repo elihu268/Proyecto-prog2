@@ -42,7 +42,8 @@ namespace Sistema_Ventas.Data
             // Aquí iría la lógica para obtener los usuarios de la base de datos
             try
             {
-                string query = "SELECT u.id_usuario, p.id_persona, p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, u.id_rol, r.descripcion as Rol FROM usuarios u JOIN personas p ON u.id_persona = p.id_persona JOIN roles r ON u.id_rol = r.id_rol WHERE 1 = 1  ";
+                string query =@"SELECT u.id_usuario, p.id_persona, p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, u.id_rol, r.descripcion as Rol 
+                                FROM usuarios u JOIN personas p ON u.id_persona = p.id_persona JOIN roles r ON u.id_rol = r.id_rol WHERE 1 = 1  ";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
                 if (activos == 2)
                 {
@@ -165,7 +166,7 @@ namespace Sistema_Ventas.Data
 
             }// Placeholder
         }
-        public bool ActualizarUsuario(Usuario usuario)
+        /*public bool ActualizarUsuario(Usuario usuario)
         {
             // Aquí iría la lógica para actualizar un usuario existente en la base de datos
             try
@@ -210,7 +211,7 @@ namespace Sistema_Ventas.Data
             {
 
             }
-        }
+        }*/
 
         public List<Usuario> ObtenerUsuarioPorNnombre(string nombreUsr, bool? estatus)
         {
@@ -272,6 +273,107 @@ namespace Sistema_Ventas.Data
             {
                 _dbAccess.Disconnect();
             }
+        }
+
+        public Usuario ObtenerPorId(int idUser)
+        {
+            try
+            {
+                string query = @"SELECT u.id_usuario, p.id_persona, p.nombre_completo, p.fecha_nacimiento, p.correo, p.telefono, p.estatus, u.id_rol, r.descripcion as Rol
+                                FROM usuarios u 
+                            INNER JOIN personas p ON u.id_persona = p.id_persona 
+                            INNER JOIN roles r ON u.id_rol = r.id_rol 
+                            WHERE u.id_usuario = @idUser";
+                NpgsqlParameter paramIdUser = new NpgsqlParameter("@idUser", idUser);
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, paramIdUser);
+                if(result.Rows.Count > 0)
+                {
+                    DataRow row = result.Rows[0];
+                    Persona persona = new Persona()
+                    {
+                        NombreCompleto = row["nombre_completo"].ToString() ?? "",
+                        Correo = row["correo"].ToString() ?? "",
+                        Telefono = row["telefono"].ToString() ?? "",
+                        FechaNacimiento = row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                        Estatus = row["estatus"] != DBNull.Value ? Convert.ToBoolean(row["estatus"]) : false
+                    };
+                    Usuario usuario = new Usuario(
+                        Convert.ToInt32(row["id_usuario"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["id_rol"]),
+                        row["correo"].ToString() ?? "",
+                        Convert.ToBoolean(row["estatus"]),
+                        persona
+                    );
+                    return usuario;
+                }
+                else
+                {
+                    _logger.Warn("No se encontró el usuario con ID: {0}", idUser);
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener usuario por ID");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+        public bool ActualizarUsuario(Usuario usuario)
+        {
+            try
+            {
+                string query = @"UPDATE usuarios 
+                            SET id_rol = @id_rol, 
+                            usuario = @usuario, 
+                            estatus = @estatus 
+                            WHERE id_usuario = @id_usuario;
+                            
+                            UPDATE personas
+                                SET 
+                                nombre_completo = @nombre_completo,
+                                correo = @correo,
+                                telefono = @telefono,
+                                fecha_nacimiento = @fecha_nacimiento,
+                                estatus = @estatus
+                            WHERE id_persona = @id_persona; ";
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@id_usuario", usuario.IdUsuario),
+                    new NpgsqlParameter("@id_rol", usuario.idRol),
+                    new NpgsqlParameter("@usuario", usuario.Cuenta),
+                    new NpgsqlParameter("@estatus", usuario.Estatus),
+                    new NpgsqlParameter("@id_persona", usuario.DatosPersonales.Id),
+                    new NpgsqlParameter("@nombre_completo", usuario.DatosPersonales.NombreCompleto),
+                    new NpgsqlParameter("@correo", usuario.DatosPersonales.Correo),
+                    new NpgsqlParameter("@telefono", usuario.DatosPersonales.Telefono),
+                    new NpgsqlParameter("@fecha_nacimiento", usuario.DatosPersonales.FechaNacimiento ?? (object)DBNull.Value),
+                    new NpgsqlParameter("@estatus_persona", usuario.DatosPersonales.Estatus)
+                };
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parameters.ToArray());
+
+                return filasAfectadas > 0;
+                
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al actualizar usuario");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
         }
 
         public (Usuario, string) ValidarUsuario(string usuario, string contrasena)

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestUsuario));
             scUsuarios = new SplitContainer();
             gbxUsuarios = new GroupBox();
+            button1 = new Button();
             pbox_passwor = new PictureBox();
             lbl_obligatorios = new Label();
             lbconfirmcontraAlert = new Label();
@@ -54,15 +55,11 @@
             lbCorreo = new Label();
             lbNombre = new Label();
             dgvUsuarios = new DataGridView();
+            menuStrip = new ContextMenuStrip(components);
+            editarToolStripMenuItem = new ToolStripMenuItem();
             gbxBusqueda = new GroupBox();
             lbEstatusB = new Label();
             cbxEstatusB = new ComboBox();
-            cbxtipoFecha = new ComboBox();
-            lbTipoFecha = new Label();
-            dtpFechaFin = new DateTimePicker();
-            dtpFechaInicio = new DateTimePicker();
-            lbFechaFin = new Label();
-            lbFechaInicio = new Label();
             btnBuscar = new Button();
             txtBusqueda = new TextBox();
             lbBusqueda = new Label();
@@ -73,8 +70,6 @@
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
             tooltip_passwor = new ToolTip(components);
-            menuStrip = new ContextMenuStrip(components);
-            editarToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -82,9 +77,9 @@
             gbxUsuarios.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbox_passwor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
+            menuStrip.SuspendLayout();
             gbxBusqueda.SuspendLayout();
             gbxherramientas.SuspendLayout();
-            menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // scUsuarios
@@ -102,13 +97,14 @@
             scUsuarios.Panel2.Controls.Add(dgvUsuarios);
             scUsuarios.Panel2.Controls.Add(gbxBusqueda);
             scUsuarios.Panel2.Controls.Add(gbxherramientas);
-            scUsuarios.Size = new Size(1070, 521);
-            scUsuarios.SplitterDistance = 356;
+            scUsuarios.Size = new Size(955, 521);
+            scUsuarios.SplitterDistance = 317;
             scUsuarios.TabIndex = 0;
             // 
             // gbxUsuarios
             // 
             gbxUsuarios.BackColor = SystemColors.GradientActiveCaption;
+            gbxUsuarios.Controls.Add(button1);
             gbxUsuarios.Controls.Add(pbox_passwor);
             gbxUsuarios.Controls.Add(lbl_obligatorios);
             gbxUsuarios.Controls.Add(lbconfirmcontraAlert);
@@ -134,10 +130,25 @@
             gbxUsuarios.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxUsuarios.Location = new Point(0, 0);
             gbxUsuarios.Name = "gbxUsuarios";
-            gbxUsuarios.Size = new Size(356, 521);
+            gbxUsuarios.Size = new Size(317, 521);
             gbxUsuarios.TabIndex = 1;
             gbxUsuarios.TabStop = false;
             gbxUsuarios.Text = "Datos del Usuario";
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ActiveCaption;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button1.Image = Sistema_Ventas.Properties.Resources.actualizar;
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
+            button1.Location = new Point(167, 411);
+            button1.Name = "button1";
+            button1.Size = new Size(92, 36);
+            button1.TabIndex = 36;
+            button1.Text = "Actualizar";
+            button1.TextAlign = ContentAlignment.MiddleRight;
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // pbox_passwor
             // 
@@ -238,7 +249,7 @@
             btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Sistema_Ventas.Properties.Resources.guardar;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(198, 373);
+            btnGuardar.Location = new Point(18, 411);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(88, 36);
             btnGuardar.TabIndex = 25;
@@ -340,24 +351,32 @@
             // 
             dgvUsuarios.BackgroundColor = SystemColors.GradientInactiveCaption;
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUsuarios.ContextMenuStrip = menuStrip;
             dgvUsuarios.Dock = DockStyle.Fill;
             dgvUsuarios.Location = new Point(0, 147);
             dgvUsuarios.Name = "dgvUsuarios";
             dgvUsuarios.RowHeadersWidth = 62;
-            dgvUsuarios.Size = new Size(710, 374);
+            dgvUsuarios.Size = new Size(634, 374);
             dgvUsuarios.TabIndex = 2;
+            // 
+            // menuStrip
+            // 
+            menuStrip.Items.AddRange(new ToolStripItem[] { editarToolStripMenuItem });
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(105, 26);
+            // 
+            // editarToolStripMenuItem
+            // 
+            editarToolStripMenuItem.Name = "editarToolStripMenuItem";
+            editarToolStripMenuItem.Size = new Size(104, 22);
+            editarToolStripMenuItem.Text = "Editar";
+            editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
             // 
             // gbxBusqueda
             // 
             gbxBusqueda.BackColor = SystemColors.GradientInactiveCaption;
             gbxBusqueda.Controls.Add(lbEstatusB);
             gbxBusqueda.Controls.Add(cbxEstatusB);
-            gbxBusqueda.Controls.Add(cbxtipoFecha);
-            gbxBusqueda.Controls.Add(lbTipoFecha);
-            gbxBusqueda.Controls.Add(dtpFechaFin);
-            gbxBusqueda.Controls.Add(dtpFechaInicio);
-            gbxBusqueda.Controls.Add(lbFechaFin);
-            gbxBusqueda.Controls.Add(lbFechaInicio);
             gbxBusqueda.Controls.Add(btnBuscar);
             gbxBusqueda.Controls.Add(txtBusqueda);
             gbxBusqueda.Controls.Add(lbBusqueda);
@@ -365,7 +384,7 @@
             gbxBusqueda.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxBusqueda.Location = new Point(0, 57);
             gbxBusqueda.Name = "gbxBusqueda";
-            gbxBusqueda.Size = new Size(710, 90);
+            gbxBusqueda.Size = new Size(634, 90);
             gbxBusqueda.TabIndex = 1;
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda";
@@ -373,71 +392,21 @@
             // lbEstatusB
             // 
             lbEstatusB.AutoSize = true;
-            lbEstatusB.Location = new Point(555, 19);
+            lbEstatusB.Location = new Point(458, 71);
             lbEstatusB.Name = "lbEstatusB";
             lbEstatusB.Size = new Size(44, 15);
             lbEstatusB.TabIndex = 14;
             lbEstatusB.Text = "Estatus";
+            lbEstatusB.Click += lbEstatusB_Click;
             // 
             // cbxEstatusB
             // 
             cbxEstatusB.FormattingEnabled = true;
-            cbxEstatusB.Location = new Point(605, 16);
+            cbxEstatusB.Location = new Point(508, 67);
             cbxEstatusB.Name = "cbxEstatusB";
             cbxEstatusB.Size = new Size(102, 23);
             cbxEstatusB.TabIndex = 13;
-            // 
-            // cbxtipoFecha
-            // 
-            cbxtipoFecha.FormattingEnabled = true;
-            cbxtipoFecha.Location = new Point(83, 17);
-            cbxtipoFecha.Name = "cbxtipoFecha";
-            cbxtipoFecha.Size = new Size(87, 23);
-            cbxtipoFecha.TabIndex = 12;
-            // 
-            // lbTipoFecha
-            // 
-            lbTipoFecha.AutoSize = true;
-            lbTipoFecha.Location = new Point(12, 19);
-            lbTipoFecha.Name = "lbTipoFecha";
-            lbTipoFecha.Size = new Size(65, 15);
-            lbTipoFecha.TabIndex = 11;
-            lbTipoFecha.Text = "Tipo Fecha";
-            // 
-            // dtpFechaFin
-            // 
-            dtpFechaFin.Format = DateTimePickerFormat.Short;
-            dtpFechaFin.Location = new Point(413, 17);
-            dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(114, 23);
-            dtpFechaFin.TabIndex = 10;
-            // 
-            // dtpFechaInicio
-            // 
-            dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            dtpFechaInicio.Location = new Point(252, 17);
-            dtpFechaInicio.Margin = new Padding(2);
-            dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(93, 23);
-            dtpFechaInicio.TabIndex = 9;
-            // 
-            // lbFechaFin
-            // 
-            lbFechaFin.AutoSize = true;
-            lbFechaFin.Location = new Point(350, 20);
-            lbFechaFin.Name = "lbFechaFin";
-            lbFechaFin.Size = new Size(57, 15);
-            lbFechaFin.TabIndex = 8;
-            lbFechaFin.Text = "Fecha Fin";
-            // 
-            // lbFechaInicio
-            // 
-            lbFechaInicio.AutoSize = true;
-            lbFechaInicio.Location = new Point(176, 23);
-            lbFechaInicio.Name = "lbFechaInicio";
-            lbFechaInicio.Size = new Size(71, 15);
-            lbFechaInicio.TabIndex = 7;
-            lbFechaInicio.Text = "Fecha Inicio";
+          //  cbxEstatusB.SelectedIndexChanged += this.cbxEstatusB_SelectedIndexChanged;
             // 
             // btnBuscar
             // 
@@ -445,7 +414,7 @@
             btnBuscar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.Image = Sistema_Ventas.Properties.Resources.actualizar;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(429, 56);
+            btnBuscar.Location = new Point(364, 60);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(94, 30);
             btnBuscar.TabIndex = 2;
@@ -459,7 +428,7 @@
             txtBusqueda.Location = new Point(139, 61);
             txtBusqueda.MaxLength = 100;
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(267, 23);
+            txtBusqueda.Size = new Size(212, 23);
             txtBusqueda.TabIndex = 1;
             // 
             // lbBusqueda
@@ -481,7 +450,7 @@
             gbxherramientas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxherramientas.Location = new Point(0, 0);
             gbxherramientas.Name = "gbxherramientas";
-            gbxherramientas.Size = new Size(710, 57);
+            gbxherramientas.Size = new Size(634, 57);
             gbxherramientas.TabIndex = 0;
             gbxherramientas.TabStop = false;
             gbxherramientas.Text = "herramientas";
@@ -538,30 +507,17 @@
             lbTitulo.ForeColor = SystemColors.ActiveCaptionText;
             lbTitulo.Location = new Point(0, 0);
             lbTitulo.Name = "lbTitulo";
-            lbTitulo.Size = new Size(1070, 29);
+            lbTitulo.Size = new Size(955, 29);
             lbTitulo.TabIndex = 1;
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // menuStrip
-            // 
-            menuStrip.Items.AddRange(new ToolStripItem[] { editarToolStripMenuItem });
-            menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(181, 48);
-            // 
-            // editarToolStripMenuItem
-            // 
-            editarToolStripMenuItem.Name = "editarToolStripMenuItem";
-            editarToolStripMenuItem.Size = new Size(180, 22);
-            editarToolStripMenuItem.Text = "Editar";
-            editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
             // 
             // frmGestUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(1070, 553);
+            ClientSize = new Size(955, 553);
             Controls.Add(lbTitulo);
             Controls.Add(scUsuarios);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -576,11 +532,11 @@
             gbxUsuarios.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbox_passwor).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
+            menuStrip.ResumeLayout(false);
             gbxBusqueda.ResumeLayout(false);
             gbxBusqueda.PerformLayout();
             gbxherramientas.ResumeLayout(false);
             gbxherramientas.PerformLayout();
-            menuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -608,12 +564,6 @@
         private Button btnBuscar;
         private TextBox txtBusqueda;
         private Label lbBusqueda;
-        private DateTimePicker dtpFechaFin;
-        private DateTimePicker dtpFechaInicio;
-        private Label lbFechaFin;
-        private Label lbFechaInicio;
-        private Label lbTipoFecha;
-        private ComboBox cbxtipoFecha;
         private OpenFileDialog ofdArchivo;
         private Label lbCargaMasiva;
         private DataGridView dgvUsuarios;
@@ -631,5 +581,6 @@
         private Label lbEstatusB;
         private ContextMenuStrip menuStrip;
         private ToolStripMenuItem editarToolStripMenuItem;
+        private Button button1;
     }
 }

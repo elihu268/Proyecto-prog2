@@ -28,11 +28,12 @@ namespace PuntodeVenta.View
         private void frmGestUsuario_Load(object sender, EventArgs e)
         {
             scUsuarios.Panel1Collapsed = true;
+            CargarUsuarios();
             PoblaComboEstatus();
-            PoblaTipoFecha();
+            //PoblaTipoFecha();
             PoblaRoles();
             PoblaEstatus();
-            CargarUsuarios();
+
 
 
             //Se oculta el boton para cargar un nuevo usuario si no tiene el permiso.
@@ -52,20 +53,21 @@ namespace PuntodeVenta.View
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
         {
-            Dictionary<int, string> list_estatus = new Dictionary<int, string>
-            {
-                {1, "Alta" },
-                {0, "Baja" }
+           Dictionary<string, object> list_estat = new Dictionary<string, object>
+            {  
+                 {"Alta",true },
+                {"Baja",false }
             };
             //asignar el diccionario al combobox
-            cbxEstatus.DataSource = new BindingSource(list_estatus, null);
-            cbxEstatus.DisplayMember = "Value"; //lo que se muesta
-            cbxEstatus.ValueMember = "Key"; // lo que se guarda como seleccionado 0,1,2
-
-            cbxEstatus.SelectedValue = 1;
+            cbxEstatus.DataSource = new BindingSource(list_estat, null);
+            cbxEstatus.DisplayMember = "Key"; //lo que se muesta
+            cbxEstatus.ValueMember = "Value"; // lo que se guarda como seleccionado 0,1,2
+            cbxEstatus.SelectedValue = true;
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxEstatus.SelectedIndex = 0;
+
         }
-        private void PoblaTipoFecha()
+        /*private void PoblaTipoFecha()
         {
             Dictionary<int, string> list_tipofecha = new Dictionary<int, string>
             {
@@ -78,20 +80,23 @@ namespace PuntodeVenta.View
             cbxtipoFecha.ValueMember = "Key";
             cbxtipoFecha.SelectedValue = 1;
             cbxtipoFecha.DropDownStyle = ComboBoxStyle.DropDownList;
-        }
+        }*/
         private void PoblaEstatus()
         {
-            Dictionary<int, string> list_estatus = new Dictionary<int, string>
+            Dictionary<string, object> list_estat = new Dictionary<string, object>
             {
-                {1, "Alta" },
-                {0, "Baja" }
+
+                {"Todos", "" },
+                {"Activo",true },
+                {"Inactivo",false }
             };
             //asignar el diccionario al combobox
-            cbxEstatusB.DataSource = new BindingSource(list_estatus, null);
-            cbxEstatusB.DisplayMember = "Value"; //lo que se muesta
-            cbxEstatusB.ValueMember = "Key"; // lo que se guarda como seleccionado 0,1,2
-            cbxEstatusB.SelectedValue = 1;
+            cbxEstatusB.DataSource = new BindingSource(list_estat, null);
+            cbxEstatusB.DisplayMember = "Key"; //lo que se muesta
+            cbxEstatusB.ValueMember = "Value"; // lo que se guarda como seleccionado 0,1,2
+            cbxEstatusB.SelectedValue = "";
             cbxEstatusB.DropDownStyle = ComboBoxStyle.DropDownList;
+
         }
 
         private void PoblaRoles()
@@ -249,6 +254,7 @@ namespace PuntodeVenta.View
                     return;
                 }
                 DataTable dt = new DataTable();
+                dt.Columns.Add("ID", typeof(int));
                 dt.Columns.Add("Nombre Completo", typeof(string));
                 dt.Columns.Add("Correo", typeof(string));
                 dt.Columns.Add("Teléfono", typeof(string));
@@ -259,6 +265,7 @@ namespace PuntodeVenta.View
                 foreach (Usuario usuario in usuarios)
                 {
                     dt.Rows.Add(
+                        usuario.IdUsuario,
                         usuario.DatosPersonales.NombreCompleto,
                         usuario.DatosPersonales.Correo,
                         usuario.DatosPersonales.Telefono,
@@ -282,6 +289,7 @@ namespace PuntodeVenta.View
         {
             dgvUsuarios.DataSource = null;
             DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("Nombre Completo", typeof(string));
             dt.Columns.Add("Correo", typeof(string));
             dt.Columns.Add("Teléfono", typeof(string));
@@ -292,6 +300,7 @@ namespace PuntodeVenta.View
             foreach (Usuario usuario in usuarios)
             {
                 dt.Rows.Add(
+                    usuario.IdUsuario,
                     usuario.DatosPersonales.NombreCompleto,
                     usuario.DatosPersonales.Correo,
                     usuario.DatosPersonales.Telefono,
@@ -301,6 +310,7 @@ namespace PuntodeVenta.View
             dgvUsuarios.DataSource = dt;
             // Configurar el DataGridView
             dgvUsuarios.DataSource = dt;
+            dgvUsuarios.Columns["ID"].Visible = false; // Ocultar la columna ID
             dgvUsuarios.Columns["Nombre Completo"].HeaderText = "Nombre Completo";
             dgvUsuarios.Columns["Correo"].HeaderText = "Correo";
             dgvUsuarios.Columns["Teléfono"].HeaderText = "Teléfono";
@@ -329,6 +339,7 @@ namespace PuntodeVenta.View
             dgvUsuarios.ReadOnly = true;
 
             // Ajustar el ancho de las columnas
+            dgvUsuarios.Columns["ID"].Visible = false; // Ocultar la columna ID
             dgvUsuarios.Columns["Nombre Completo"].Width = 200;
             dgvUsuarios.Columns["Correo"].Width = 180;
             dgvUsuarios.Columns["Teléfono"].Width = 120;
@@ -433,15 +444,15 @@ namespace PuntodeVenta.View
             cbxRoles.SelectedValue = 2;
             dtpFechaNacimiento.Value = DateTime.Now;
         }
-        private bool Datosbusqueda()
-        {
-            if (cbxtipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "")
-            {
-                MessageBox.Show("Seleccione una fecha", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
+        /*  private bool Datosbusqueda()
+          {
+              if (cbxtipoFecha.Text == "" || dtpFechaInicio.Text == "" || dtpFechaFin.Text == "")
+              {
+                  MessageBox.Show("Seleccione una fecha", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                  return false;
+              }
+              return true;
+          }*/
 
         private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -463,9 +474,9 @@ namespace PuntodeVenta.View
                 string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? "" : busqueda = txtBusqueda.Text.Trim();
 
                 bool? estatus = null;
-                if (cbxEstatus.SelectedValue != null)
+                if (cbxEstatusB.SelectedValue != null)
                 {
-                    estatus = cbxEstatus.SelectedValue as bool?;
+                    estatus = cbxEstatusB.SelectedValue as bool?;
                 }
                 UsuariosController usuariosController = new UsuariosController();
                 List<Usuario> usuarios = usuariosController.ObtenerUsuarioPorNombre(busqueda, estatus);
@@ -492,6 +503,95 @@ namespace PuntodeVenta.View
         }
 
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dgvUsuarios.SelectedRows[0].Cells["ID"].Value);
+                UsuariosController usuariosController = new UsuariosController();
+                Usuario usuario = usuariosController.ObtenerPorId(idUsuario);
+                if (usuario != null)
+                {
+                    if (scUsuarios.Panel1Collapsed)
+                    {
+                        scUsuarios.Panel1Collapsed = false;
+                        btncargaUsuario.Text = "Ocultar Captura";
+                    }
+                    // Llenar los campos con la información del usuario
+                    txtNombre.Text = usuario.DatosPersonales.NombreCompleto;
+                    txtCorreo.Text = usuario.Cuenta;
+                    txtTelefono.Text = usuario.DatosPersonales.Telefono;
+                    cbxEstatus.SelectedValue = usuario.Estatus ? 1 : 0;
+                    cbxRoles.SelectedValue = usuario.idRol;
+                    dtpFechaNacimiento.Value = usuario.DatosPersonales.FechaNacimiento ?? DateTime.Now;
+                    // Mostrar el panel de captura
+                    scUsuarios.Panel1Collapsed = false;
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el usuario seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                button1.Visible = true;
+                btnGuardar.Visible = false;
+                txtCorreo.Enabled = false;
+                txtContrasena.Enabled = false;
+                txtConfContrasena.Enabled = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ActualizarUsuario();
+        }
+        public void ActualizarUsuario()
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(dgvUsuarios.SelectedRows[0].Cells["ID"].Value);
+                UsuariosController usuariosController = new UsuariosController();
+                Usuario usuario = usuariosController.ObtenerPorId(idUsuario);
+                Usuario nuevainformacion = new Usuario
+                {
+                    IdUsuario = idUsuario,
+                    idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
+                    Cuenta = txtCorreo.Text.Trim(),
+                    Estatus = cbxEstatus.SelectedValue.ToString() == "1" ? true : false,
+                    DatosPersonales = new Persona
+                    {
+                        Id = usuario.IdPersona,
+                        FechaNacimiento = dtpFechaNacimiento.Value,
+                        Telefono = txtTelefono.Text.Trim(),
+                        Correo = txtCorreo.Text.Trim(),
+                        NombreCompleto = txtNombre.Text.Trim(),
+                        Estatus = cbxEstatus.SelectedValue.ToString() == "1"
+                    }
+                };
+                bool resultado = usuariosController.ActualizarUsuario(nuevainformacion);
+                if (resultado)
+                {
+                    MessageBox.Show("Usuario actualizado con éxito", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtConfContrasena.Enabled = true;
+                    txtContrasena.Enabled = true;
+                    txtCorreo.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("Error al actualizar el usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                LimpiarCampos();
+                btnGuardar.Visible = true;
+                button1.Visible = false;
+                scUsuarios.Panel1Collapsed = true;
+                btncargaUsuario.Text = "Captura Rapida";
+                CargarUsuarios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void lbEstatusB_Click(object sender, EventArgs e)
         {
 
         }
