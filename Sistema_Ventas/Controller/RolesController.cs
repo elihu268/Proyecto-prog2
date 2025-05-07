@@ -100,6 +100,25 @@ namespace Sistema_Ventas.Controller
         }
 
         /// <summary>
+        /// Obtiene el siguiente ID disponible para la tabla de roles.
+        /// </summary>
+        /// <returns>El siguiente ID sugerido para un nuevo rol.</returns>
+        public int ObtenerSiguienteId()
+        {
+            try
+            {
+                int id = _rolesData.ObtenerSiguienteIdRol();
+                _logger.Debug($"Siguiente ID sugerido desde controlador: {id}");
+                return id;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el siguiente ID desde el controlador");
+                return 1; // valor por defecto
+            }
+        }
+
+        /// <summary>
         /// Actualiza un rol existente en el sistema.
         /// </summary>
         /// <param name="rol">Objeto rol con datos actualizados.</param>

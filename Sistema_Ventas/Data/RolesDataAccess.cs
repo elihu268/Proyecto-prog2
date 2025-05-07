@@ -342,6 +342,33 @@ namespace Sistema_Ventas.Data
             }
         }
 
+        /// <summary>
+        /// Obtiene el siguiente ID disponible para la tabla de roles.
+        /// Este valor se calcula consultando el máximo ID actual más uno.
+        /// </summary>
+        /// <returns>ID sugerido para el siguiente rol (int), o 1 si no hay registros.</returns>
+        public int ObtenerSiguienteIdRol()
+        {
+            try
+            {
+                string query = "SELECT COALESCE(MAX(id_rol), 0) + 1 FROM roles";
 
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query);
+                int siguienteId = Convert.ToInt32(resultado);
+
+                _logger.Debug($"Siguiente ID disponible para rol: {siguienteId}");
+                return siguienteId;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el siguiente ID disponible para roles");
+                return 1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }

@@ -4,7 +4,6 @@ using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
 using System.Data;
 using NLog;
-using System.Net;
 
 namespace Sistema_Ventas.View
 {
@@ -30,11 +29,14 @@ namespace Sistema_Ventas.View
         /// </summary>
         private void frmConfiguracionRoles_Load(object sender, EventArgs e)
         {
+            numIdRol.Value = _rolesController.ObtenerSiguienteId();
+            numIdRol.ReadOnly = true;
+            numIdRol.Enabled = false;
             scRoles.Panel1Collapsed = true;
             PoblaComboEstatus();
             PoblarComboFiltroEstatus();
             PoblarComboCodigos();
-            CargarRoles();
+            CargarRolesActivos();
 
             _logger.Info("El formulario de configuración de roles ha sido cargado correctamente.");
             _logger.Debug("Iniciando carga de datos y configuraciones iniciales para roles.");
@@ -92,49 +94,71 @@ namespace Sistema_Ventas.View
         /// </summary>
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (DatosVaciosGuardarRol())
+            try
             {
-                MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!DatosValidosGuardarRol()) return;
+                // Mostrar cursor de espera mientras se procesa
+                Cursor = Cursors.WaitCursor;
 
-            Rol nuevoRol = new Rol
-            {
-                Codigo = txtCodigo.Text.Trim(),
-                Descripcion = txtDescripcion.Text.Trim(),
-                Estatus = (int)cbxEstatus.SelectedValue == 1
-            };
+                // Desactivar temporalmente los botones de acción
+                btnGuardar.Enabled = false;
+                btnEditarRol.Enabled = false;
 
-            var (id, mensaje) = _rolesController.RegistrarRol(nuevoRol);
-            AuditoriaController auditoriaController = new AuditoriaController();
-            Auditoria auditoria = new Auditoria(
-                "Guardar Rol",
-                DateTime.Now,
-                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
-                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
-                Sesión.UsuarioActual,
-                Sesión.IdUsuario,
-                id
-            );
-            auditoriaController.AudioriaAdd(auditoria);
-            if (id > 0)
-            {
-                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
-                CargarRoles();
+                // Validar si hay campos obligatorios vacíos
+                if (DatosVaciosGuardarRol())
+                {
+                    MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validar formato del código ingresado
+                if (!DatosValidosGuardarRol())
+                {
+                    return;
+                }
+
+                // Crear una nueva instancia de Rol con los datos del formulario
+                Rol nuevoRol = new Rol
+                {
+                    Codigo = txtCodigo.Text.Trim(),
+                    Descripcion = txtDescripcion.Text.Trim(),
+                    Estatus = (int)cbxEstatus.SelectedValue == 1
+                };
+
+                // Llamar al controlador para registrar el nuevo rol
+                var (id, mensaje) = _rolesController.RegistrarRol(nuevoRol);
+
+                if (id > 0)
+                {
+                    // Registro exitoso
+                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
+                    CargarRolesActivos();
+                }
+                else
+                {
+                    // Hubo advertencias o errores al guardar
+                    MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCodigo.Focus();
+                    txtCodigo.SelectAll();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtCodigo.Focus();
-                txtCodigo.SelectAll();
+                // Manejo de errores no controlados
+                MessageBox.Show($"Ocurrió un error al guardar el rol:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Restaurar estado visual al finalizar el proceso
+                Cursor = Cursors.Default;
+                btnGuardar.Enabled = true;
+                btnEditarRol.Enabled = true;
             }
         }
 
         private void btnActualizarDataGridView_Click(object sender, EventArgs e)
         {
-            CargarRoles();
+            CargarTodosRoles();
         }
 
         /// <summary>
@@ -153,11 +177,30 @@ namespace Sistema_Ventas.View
         /// <summary>
         /// Carga todos los roles activos por defecto en la tabla
         /// </summary>
-        private void CargarRoles()
+        private void CargarRolesActivos()
         {
             List<Rol> roles = _rolesController.ObtenerRoles();
             ConfigurarDataGridViewRoles(roles);
         }
+
+        /// <summary>
+        /// Carga todos los roles sin aplicar filtros
+        /// </summary>
+        private void CargarTodosRoles()
+        {
+            try
+            {
+                List<Rol> roles = _rolesController.ObtenerRolesFiltrados();
+                ConfigurarDataGridViewRoles(roles);
+                _logger.Info("Se cargaron todos los roles.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar todos los roles.\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.Error(ex, "Error al cargar todos los roles");
+            }
+        }
+
 
         /// <summary>
         /// Aplica la configuración y carga de datos al DataGridView de roles
@@ -178,11 +221,12 @@ namespace Sistema_Ventas.View
             }
 
             dgvRoles.DataSource = dt;
+            dgvRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvRoles.Columns["ID"].Visible = false;
-            dgvRoles.Columns["Código"].Width = 120;
-            dgvRoles.Columns["Descripción"].Width = 220;
-            dgvRoles.Columns["Estatus"].Width = 100;
+            //dgvRoles.Columns["Código"].Width = 120;
+            //dgvRoles.Columns["Descripción"].Width = 220;
+            //dgvRoles.Columns["Estatus"].Width = 100;
 
             dgvRoles.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -242,7 +286,7 @@ namespace Sistema_Ventas.View
 
         private void LimpiarCampos()
         {
-            numIdRol.Value = 0;
+            numIdRol.Value = _rolesController.ObtenerSiguienteId();
             txtCodigo.Clear();
             txtDescripcion.Clear();
             cbxEstatus.SelectedValue = 1;
@@ -250,63 +294,85 @@ namespace Sistema_Ventas.View
             btnEditarRol.Visible = false;
         }
 
+
         private void btnEditarRol_Click(object sender, EventArgs e)
         {
-            // Validar que el ID del rol sea mayor que cero
-            if (numIdRol.Value <= 0)
+            try
             {
-                MessageBox.Show("Debe seleccionar un rol para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Validar campos vacíos
-            if (DatosVaciosGuardarRol())
-            {
-                MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Validar formato del código
-            if (!DatosValidosGuardarRol())
-            {
-                return;
-            }
-            // Crear un objeto Rol con los datos actualizados
-            Rol rolActualizado = new Rol
-            {
-                IdRol = (int)numIdRol.Value,
-                Codigo = txtCodigo.Text.Trim(),
-                Descripcion = txtDescripcion.Text.Trim(),
-                Estatus = (int)cbxEstatus.SelectedValue == 1
-            };
-            // Llamar al controlador para actualizar el rol
-            var (exito, mensaje) = _rolesController.ActualizarRol(rolActualizado);
-            AuditoriaController auditoriaController = new AuditoriaController();
-            Auditoria auditoria = new Auditoria(
-                "Actualizar Rol",
-                DateTime.Now,
-                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
-                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
-                Sesión.UsuarioActual,
-                Sesión.IdUsuario,
-                rolActualizado.IdRol
-            );
-            auditoriaController.AudioriaAdd(auditoria);
+                // Cambia el cursor a modo espera para indicar procesamiento
+                Cursor = Cursors.WaitCursor;
 
-            if (exito)
-            {
-                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
-                btnGuardar.Visible = true;
-                btnEditarRol.Visible = false;
-                CargarRoles();
+                // Desactiva temporalmente los botones de acción para evitar múltiples clics
+                btnEditarRol.Enabled = false;
+                btnGuardar.Enabled = false;
 
-                // Ocultar panel de captura
-                scRoles.Panel1Collapsed = true;
-                btnColapsar.Text = "Mostrar captura";
+                // Validar que el ID del rol sea mayor que cero
+                if (numIdRol.Value <= 0)
+                {
+                    MessageBox.Show("Debe seleccionar un rol para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validar campos vacíos
+                if (DatosVaciosGuardarRol())
+                {
+                    MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validar formato del código
+                if (!DatosValidosGuardarRol())
+                {
+                    return;
+                }
+
+                // Crear un objeto Rol con los datos actualizados
+                Rol rolActualizado = new Rol
+                {
+                    IdRol = (int)numIdRol.Value,
+                    Codigo = txtCodigo.Text.Trim(),
+                    Descripcion = txtDescripcion.Text.Trim(),
+                    Estatus = (int)cbxEstatus.SelectedValue == 1
+                };
+
+                // Llamar al controlador para actualizar el rol
+                var (exito, mensaje) = _rolesController.ActualizarRol(rolActualizado);
+
+                if (exito)
+                {
+                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Limpiar campos de entrada
+                    LimpiarCampos();
+
+                    // Restaurar visibilidad de botones
+                    btnGuardar.Visible = true;
+                    btnEditarRol.Visible = false;
+
+                    // Recargar los datos actualizados en la tabla
+                    CargarRolesActivos();
+
+                    // Ocultar panel de captura
+                    scRoles.Panel1Collapsed = true;
+                    btnColapsar.Text = "Mostrar captura";
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ocurrió un error al intentar actualizar el rol.\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Restaurar el cursor y reactivar botones al final del proceso
+                Cursor = Cursors.Default;
+                btnEditarRol.Enabled = true;
+                btnGuardar.Enabled = true;
             }
         }
+
     }
 }
