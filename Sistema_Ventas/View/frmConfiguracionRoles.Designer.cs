@@ -149,7 +149,7 @@
             picBoxFormato.Size = new Size(32, 36);
             picBoxFormato.TabIndex = 22;
             picBoxFormato.TabStop = false;
-            toolTipCodigo.SetToolTip(picBoxFormato, "3 mayusculas que son el tipo de rol - 3 numeros que consisten en la categoria");
+            toolTipCodigo.SetToolTip(picBoxFormato, "2 a 4 mayúsculas que son el tipo de rol - 4 dígitos que consisten en la categoria");
             // 
             // numIdRol
             // 

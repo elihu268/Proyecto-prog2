@@ -192,6 +192,9 @@ namespace Sistema_Ventas.View
 
                 if (rol != null)
                 {
+                    btnGuardar.Visible = false;
+                    btnEditarRol.Visible = true;
+
                     numIdRol.Value = rol.IdRol;
                     txtCodigo.Text = rol.Codigo;
                     txtDescripcion.Text = rol.Descripcion;
@@ -231,11 +234,56 @@ namespace Sistema_Ventas.View
             txtCodigo.Clear();
             txtDescripcion.Clear();
             cbxEstatus.SelectedValue = 1;
+            btnGuardar.Visible = true;
+            btnEditarRol.Visible = false;
         }
 
         private void btnEditarRol_Click(object sender, EventArgs e)
         {
+            // Validar que el ID del rol sea mayor que cero
+            if (numIdRol.Value <= 0)
+            {
+                MessageBox.Show("Debe seleccionar un rol para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Validar campos vacíos
+            if (DatosVaciosGuardarRol())
+            {
+                MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Validar formato del código
+            if (!DatosValidosGuardarRol())
+            {
+                return;
+            }
+            // Crear un objeto Rol con los datos actualizados
+            Rol rolActualizado = new Rol
+            {
+                IdRol = (int)numIdRol.Value,
+                Codigo = txtCodigo.Text.Trim(),
+                Descripcion = txtDescripcion.Text.Trim(),
+                Estatus = (int)cbxEstatus.SelectedValue == 1
+            };
+            // Llamar al controlador para actualizar el rol
+            var (exito, mensaje) = _rolesController.ActualizarRol(rolActualizado);
 
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiarCampos();
+                btnGuardar.Visible = true;
+                btnEditarRol.Visible = false;
+                CargarRoles();
+
+                // Ocultar panel de captura
+                scRoles.Panel1Collapsed = true;
+                btnColapsar.Text = "Mostrar captura";
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

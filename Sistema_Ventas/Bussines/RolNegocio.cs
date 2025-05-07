@@ -17,7 +17,7 @@ namespace Sistema_Ventas.Bussines
         /// <returns>retorna verdadero si es un formato de codigo de rol</returns>
         public static bool EsCodigoValido(string codigo)
         {
-            string patron = @"^[A-Z]{2,4}-\d{3,4}$";
+            string patron = @"^[A-Z]{2,4}-\d{4}$";
             return Regex.IsMatch(codigo, patron);
         }
 
