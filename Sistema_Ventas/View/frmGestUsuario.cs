@@ -53,7 +53,7 @@ namespace PuntodeVenta.View
         //creacion del direccion en la cual se mostrara en el combobox de estatus
         private void PoblaComboEstatus()
         {
-           Dictionary<string, object> list_estat = new Dictionary<string, object>
+           Dictionary<string, bool> list_estat = new Dictionary<string, bool>
             {  
                  {"Alta",true },
                 {"Baja",false }
@@ -61,10 +61,8 @@ namespace PuntodeVenta.View
             //asignar el diccionario al combobox
             cbxEstatus.DataSource = new BindingSource(list_estat, null);
             cbxEstatus.DisplayMember = "Key"; //lo que se muesta
-            cbxEstatus.ValueMember = "Value"; // lo que se guarda como seleccionado 0,1,2
-            cbxEstatus.SelectedValue = true;
+            cbxEstatus.ValueMember = "Value"; // lo que se guarda como seleccionado 0,1,
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbxEstatus.SelectedIndex = 0;
 
         }
         /*private void PoblaTipoFecha()
@@ -521,9 +519,10 @@ namespace PuntodeVenta.View
                     txtNombre.Text = usuario.DatosPersonales.NombreCompleto;
                     txtCorreo.Text = usuario.Cuenta;
                     txtTelefono.Text = usuario.DatosPersonales.Telefono;
-                    cbxEstatus.SelectedValue = usuario.Estatus ? 1 : 0;
+                    //cbxEstatus.SelectedValue = usuario.Estatus ? 1 : 0;
                     cbxRoles.SelectedValue = usuario.idRol;
                     dtpFechaNacimiento.Value = usuario.DatosPersonales.FechaNacimiento ?? DateTime.Now;
+                    cbxEstatus.SelectedValue = usuario.DatosPersonales.Estatus ? true : false;
                     // Mostrar el panel de captura
                     scUsuarios.Panel1Collapsed = false;
                 }
@@ -555,7 +554,7 @@ namespace PuntodeVenta.View
                     IdUsuario = idUsuario,
                     idRol = cbxRoles.SelectedValue != null ? (int)cbxRoles.SelectedValue : 1,
                     Cuenta = txtCorreo.Text.Trim(),
-                    Estatus = cbxEstatus.SelectedValue != null,
+                    Estatus = (bool)cbxEstatus.SelectedValue,
                     DatosPersonales = new Persona
                     {
                         Id = usuario.IdPersona,
@@ -563,10 +562,23 @@ namespace PuntodeVenta.View
                         Telefono = txtTelefono.Text.Trim(),
                         Correo = txtCorreo.Text.Trim(),
                         NombreCompleto = txtNombre.Text.Trim(),
-                        Estatus = cbxEstatus.SelectedValue.ToString() == "1"
+                        Estatus = (bool)cbxEstatus.SelectedValue,
                     }
                 };
                 bool resultado = usuariosController.ActualizarUsuario(nuevainformacion);
+
+                //agregar bitacora
+                AuditoriaController auditoriaController = new AuditoriaController();
+                Auditoria auditoria = new Auditoria(
+                    "Actualizar Usuario",
+                    DateTime.Now,
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                    System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    idUsuario
+                );
+                auditoriaController.AudioriaAdd(auditoria);
                 if (resultado)
                 {
                     MessageBox.Show("Usuario actualizado con éxito", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);

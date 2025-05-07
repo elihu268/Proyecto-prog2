@@ -12,6 +12,7 @@ using static Sistema_Ventas.Bussines.ClientesNegocio;
 using Sistema_Ventas.Utilities;
 using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
+using System.Net;
 
 namespace PuntodeVenta.View
 {
@@ -163,7 +164,17 @@ namespace PuntodeVenta.View
                 ClientesController clientesController = new ClientesController();
 
                 var (idCliente, mensaje) = clientesController.RegistrarCliente(cliente);
-
+                AuditoriaController auditoriaController = new AuditoriaController();
+                Auditoria auditoria = new Auditoria(
+                    "Agregar Cliente",
+                    DateTime.Now,
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                    System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    idCliente
+                );
+                auditoriaController.AudioriaAdd(auditoria);
                 //Verificar el resultado
                 if (idCliente > 0)
                 {
@@ -538,7 +549,17 @@ namespace PuntodeVenta.View
                 };
 
                 bool resultado = clienteController.ActualizarCliente(nuevaInfo);
-
+                AuditoriaController auditoriaController = new AuditoriaController();
+                Auditoria auditoria = new Auditoria(
+                    "Actualizar Cliente",
+                    DateTime.Now,
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                    System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    clienteId
+                );
+                auditoriaController.AudioriaAdd(auditoria);
                 if (resultado)
                 {
                     MessageBox.Show("Cliente actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

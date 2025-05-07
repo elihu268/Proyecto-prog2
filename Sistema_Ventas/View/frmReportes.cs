@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using NLog;
 using Sistema_Ventas.Controller;
 using Sistema_Ventas.Model;
+using System.Net;
 
 namespace PuntodeVenta.View
 {
@@ -172,7 +173,17 @@ namespace PuntodeVenta.View
 
                 CompraController compraController = new CompraController();
                 List<Compra> compras = compraController.BuscarCompras(idCliente, fechaInicio, fechaFin, 1);
-
+                AuditoriaController auditoriaController = new AuditoriaController();
+                Auditoria auditoria = new Auditoria(
+                    "Generacion Reporte",
+                    DateTime.Now,
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                    System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    Sesión.IdUsuario
+                );
+                auditoriaController.AudioriaAdd(auditoria);
                 MostrarReporteVentas(compras);
             }
             catch (Exception ex)

@@ -4,6 +4,7 @@ using Sistema_Ventas.Model;
 using Sistema_Ventas.Controller;
 using System.Data;
 using NLog;
+using System.Net;
 
 namespace Sistema_Ventas.View
 {
@@ -106,6 +107,17 @@ namespace Sistema_Ventas.View
             };
 
             var (id, mensaje) = _rolesController.RegistrarRol(nuevoRol);
+            AuditoriaController auditoriaController = new AuditoriaController();
+            Auditoria auditoria = new Auditoria(
+                "Guardar Rol",
+                DateTime.Now,
+                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                Sesión.UsuarioActual,
+                Sesión.IdUsuario,
+                id
+            );
+            auditoriaController.AudioriaAdd(auditoria);
             if (id > 0)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -267,6 +279,17 @@ namespace Sistema_Ventas.View
             };
             // Llamar al controlador para actualizar el rol
             var (exito, mensaje) = _rolesController.ActualizarRol(rolActualizado);
+            AuditoriaController auditoriaController = new AuditoriaController();
+            Auditoria auditoria = new Auditoria(
+                "Actualizar Rol",
+                DateTime.Now,
+                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                Sesión.UsuarioActual,
+                Sesión.IdUsuario,
+                rolActualizado.IdRol
+            );
+            auditoriaController.AudioriaAdd(auditoria);
 
             if (exito)
             {
