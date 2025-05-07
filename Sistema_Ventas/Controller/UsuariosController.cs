@@ -99,12 +99,12 @@ namespace Sistema_Ventas.Controller
                 throw;
             }            
         }
-        public List<Usuario> ObtenerUsuarioPorNombre(string nombreUsr, DateTime? fechaInicio, DateTime? fechaFin, bool? estatus)
+        public List<Usuario> ObtenerUsuarioPorNombre(string nombreUsr, bool? estatus)
         {
             try
             {
                 // Obtener los usuarios por rol
-                List<Usuario> usuarios = _usuariosDataAccess.ObtenerUsuarioPorNnombre(nombreUsr, fechaInicio, fechaFin, estatus);
+                List<Usuario> usuarios = _usuariosDataAccess.ObtenerUsuarioPorNnombre(nombreUsr, estatus);
                 return usuarios;
             }
             catch (Exception ex)

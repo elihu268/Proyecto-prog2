@@ -55,6 +55,8 @@
             lbNombre = new Label();
             dgvUsuarios = new DataGridView();
             gbxBusqueda = new GroupBox();
+            lbEstatusB = new Label();
+            cbxEstatusB = new ComboBox();
             cbxtipoFecha = new ComboBox();
             lbTipoFecha = new Label();
             dtpFechaFin = new DateTimePicker();
@@ -71,8 +73,8 @@
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
             tooltip_passwor = new ToolTip(components);
-            cbxEstatusB = new ComboBox();
-            lbEstatusB = new Label();
+            menuStrip = new ContextMenuStrip(components);
+            editarToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -82,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             gbxBusqueda.SuspendLayout();
             gbxherramientas.SuspendLayout();
+            menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // scUsuarios
@@ -142,7 +145,7 @@
             pbox_passwor.Location = new Point(146, 300);
             pbox_passwor.Margin = new Padding(2);
             pbox_passwor.Name = "pbox_passwor";
-            pbox_passwor.Size = new Size(25, 25);
+            pbox_passwor.Size = new Size(34, 40);
             pbox_passwor.TabIndex = 35;
             pbox_passwor.TabStop = false;
             tooltip_passwor.SetToolTip(pbox_passwor, "por lo menos_ 8 caracteres, una mayuscula, un numero, un caracter especial");
@@ -367,6 +370,23 @@
             gbxBusqueda.TabStop = false;
             gbxBusqueda.Text = "Busqueda";
             // 
+            // lbEstatusB
+            // 
+            lbEstatusB.AutoSize = true;
+            lbEstatusB.Location = new Point(555, 19);
+            lbEstatusB.Name = "lbEstatusB";
+            lbEstatusB.Size = new Size(44, 15);
+            lbEstatusB.TabIndex = 14;
+            lbEstatusB.Text = "Estatus";
+            // 
+            // cbxEstatusB
+            // 
+            cbxEstatusB.FormattingEnabled = true;
+            cbxEstatusB.Location = new Point(605, 16);
+            cbxEstatusB.Name = "cbxEstatusB";
+            cbxEstatusB.Size = new Size(102, 23);
+            cbxEstatusB.TabIndex = 13;
+            // 
             // cbxtipoFecha
             // 
             cbxtipoFecha.FormattingEnabled = true;
@@ -523,22 +543,18 @@
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // cbxEstatusB
+            // menuStrip
             // 
-            cbxEstatusB.FormattingEnabled = true;
-            cbxEstatusB.Location = new Point(605, 16);
-            cbxEstatusB.Name = "cbxEstatusB";
-            cbxEstatusB.Size = new Size(102, 23);
-            cbxEstatusB.TabIndex = 13;
+            menuStrip.Items.AddRange(new ToolStripItem[] { editarToolStripMenuItem });
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(181, 48);
             // 
-            // lbEstatusB
+            // editarToolStripMenuItem
             // 
-            lbEstatusB.AutoSize = true;
-            lbEstatusB.Location = new Point(555, 19);
-            lbEstatusB.Name = "lbEstatusB";
-            lbEstatusB.Size = new Size(44, 15);
-            lbEstatusB.TabIndex = 14;
-            lbEstatusB.Text = "Estatus";
+            editarToolStripMenuItem.Name = "editarToolStripMenuItem";
+            editarToolStripMenuItem.Size = new Size(180, 22);
+            editarToolStripMenuItem.Text = "Editar";
+            editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
             // 
             // frmGestUsuario
             // 
@@ -564,6 +580,7 @@
             gbxBusqueda.PerformLayout();
             gbxherramientas.ResumeLayout(false);
             gbxherramientas.PerformLayout();
+            menuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -612,5 +629,7 @@
         private ToolTip tooltip_passwor;
         private ComboBox cbxEstatusB;
         private Label lbEstatusB;
+        private ContextMenuStrip menuStrip;
+        private ToolStripMenuItem editarToolStripMenuItem;
     }
 }

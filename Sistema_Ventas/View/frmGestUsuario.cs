@@ -173,9 +173,9 @@ namespace PuntodeVenta.View
                     Estatus = true,
                     DatosPersonales = persona
                 };
-                
+
                 //agregar bitacora
-                        
+
                 UsuariosController usuariosController = new UsuariosController();
                 var (idUsuario, mensaje) = usuariosController.AgregarUsuario(usuario);
                 AuditoriaController auditoriaController = new AuditoriaController();
@@ -320,7 +320,7 @@ namespace PuntodeVenta.View
             dgvUsuarios.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvUsuarios.ColumnHeadersDefaultCellStyle.Font = new Font(dgvUsuarios.Font, FontStyle.Bold);
             dgvUsuarios.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            
+
         }
         private void ConfigurarDGV()
         {
@@ -334,16 +334,16 @@ namespace PuntodeVenta.View
             dgvUsuarios.Columns["Teléfono"].Width = 120;
             dgvUsuarios.Columns["Estatus"].Width = 100;
             dgvUsuarios.Columns["Rol"].Width = 120;
-           
+
 
             // Ocultar columna ID si es necesario
             //dgvUsuarios.Columns["ID"].Visible = false;
 
             // Formato para las fechas
-           // dgvUsuarios.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            // dgvUsuarios.Columns["Fecha Nacimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
             // Alineación
-         //   dgvUsuarios.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            //   dgvUsuarios.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvUsuarios.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // Color alternado de filas
@@ -460,9 +460,7 @@ namespace PuntodeVenta.View
             try
             {
                 Cursor = Cursors.WaitCursor;
-                string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? "": busqueda = txtBusqueda.Text.Trim();
-                DateTime? fechaInicio = dtpFechaInicio.Value;
-                DateTime? fechaFin = dtpFechaFin.Value;
+                string busqueda = string.IsNullOrEmpty(txtBusqueda.Text) ? "" : busqueda = txtBusqueda.Text.Trim();
 
                 bool? estatus = null;
                 if (cbxEstatus.SelectedValue != null)
@@ -470,8 +468,8 @@ namespace PuntodeVenta.View
                     estatus = cbxEstatus.SelectedValue as bool?;
                 }
                 UsuariosController usuariosController = new UsuariosController();
-                List<Usuario> usuarios = usuariosController.ObtenerUsuarioPorNombre(busqueda, fechaInicio, fechaFin, estatus);
-                if(usuarios.Count == 0)
+                List<Usuario> usuarios = usuariosController.ObtenerUsuarioPorNombre(busqueda, estatus);
+                if (usuarios.Count == 0)
                 {
                     MessageBox.Show("No se encontraron resultados para la busqueda", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -491,6 +489,11 @@ namespace PuntodeVenta.View
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             buscarUsuario();
+        }
+
+        private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
