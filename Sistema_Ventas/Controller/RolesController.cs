@@ -144,21 +144,46 @@ namespace Sistema_Ventas.Controller
         }
 
         /// <summary>
-        /// Busca roles que coincidan con un término dado.
+        /// Cambia el estatus (activo/inactivo) de un rol existente.
         /// </summary>
-        /// <param name="termino">Texto de búsqueda.</param>
-        /// <returns>Lista de roles coincidentes.</returns>
-        public List<Rol> BuscarRoles(string termino)
+        /// <param name="idRol">ID del rol a modificar.</param>
+        /// <param name="nuevoEstatus">Nuevo estatus booleano.</param>
+        /// <returns>True si se realizó el cambio, false en caso contrario.</returns>
+        public bool CambiarEstatus(int idRol, bool nuevoEstatus)
         {
             try
             {
-                return _rolesData.BuscarRoles(termino);
+                return _rolesData.CambiarEstatusRol(idRol, nuevoEstatus);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al buscar roles con el término '{termino}'");
-                throw;
+                _logger.Error(ex, $"Error al cambiar estatus del rol con ID {idRol}");
+                return false;
             }
         }
+
+        /// <summary>
+        /// Obtiene una lista de roles filtrados por código, descripción y estatus.
+        /// Todos los parámetros son opcionales
+        /// </summary>
+        /// <param name="codigo">Código exacto del rol (opcional)</param>
+        /// <param name="descripcion">Texto parcial para búsqueda en descripción (opcional)</param>
+        /// <param name="estatus">1 para activos, 0 para inactivos, null para todos (opcional)</param>
+        /// <returns>Lista de roles que coincidan con los filtros</returns>
+        public List<Rol> ObtenerRolesFiltrados(string? codigo = null, string? descripcion = null, int? estatus = null)
+        {
+            try
+            {
+                var roles = _rolesData.ObtenerRolesFiltrados(codigo, descripcion, estatus);
+                _logger.Info($"Se obtuvieron {roles.Count} roles con filtros aplicados.");
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener roles filtrados desde el controlador.");
+                return new List<Rol>();
+            }
+        }
+
     }
 }

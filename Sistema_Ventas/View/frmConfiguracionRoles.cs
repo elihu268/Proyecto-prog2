@@ -1,6 +1,8 @@
 ﻿using Sistema_Ventas.Bussines;
 using Sistema_Ventas.Utilities;
-using System.ComponentModel;
+using Sistema_Ventas.Model;
+using Sistema_Ventas.Controller;
+using System.Data;
 using NLog;
 
 namespace Sistema_Ventas.View
@@ -11,10 +13,11 @@ namespace Sistema_Ventas.View
     public partial class frmConfiguracionRoles : Form
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmConfiguracionRoles");
+        private readonly RolesController _rolesController = new RolesController();
+
         /// <summary>
         /// Inicializa una nueva instancia del formulario de configuración de roles
         /// </summary>
-        /// <param name="parent">Formulario padre para posicionamiento</param>
         public frmConfiguracionRoles(Form parent)
         {
             InitializeComponent();
@@ -28,126 +31,211 @@ namespace Sistema_Ventas.View
         {
             scRoles.Panel1Collapsed = true;
             PoblaComboEstatus();
+            PoblarComboFiltroEstatus();
+            PoblarComboCodigos();
+            CargarRoles();
 
-            // Se registra información indicando que el formulario ha sido cargado
             _logger.Info("El formulario de configuración de roles ha sido cargado correctamente.");
-
-            // Mensaje de depuración que indica que comienza la carga inicial de datos
             _logger.Debug("Iniciando carga de datos y configuraciones iniciales para roles.");
-
         }
 
         /// <summary>
-        /// Carga los estados disponibles en el ComboBox de estatus
+        /// Llena el ComboBox de estatus en captura
         /// </summary>
         private void PoblaComboEstatus()
         {
             Dictionary<int, string> lista_estatus = new Dictionary<int, string>
             {
                 { 1, "Activo" },
-                { 2, "Inactivo" }
+                { 0, "Inactivo" }
             };
-            //Asignar el diccionario al combobox
             cbxEstatus.DataSource = new BindingSource(lista_estatus, null);
-            cbxEstatus.DisplayMember = "Value"; // lo que se muesta
-            cbxEstatus.ValueMember = "Key"; // lo que se guarda como seleccionado 1, 2
-            cbxEstatus.SelectedValue = 1; // opc seleccionada por default
+            cbxEstatus.DisplayMember = "Value";
+            cbxEstatus.ValueMember = "Key";
+            cbxEstatus.SelectedValue = 1;
+            cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
-        /// Verifica campos obligatorios en el formulario de guardado
+        /// Llena el ComboBox de estatus para filtros
         /// </summary>
-        /// <returns>True si existen campos vacíos</returns>
-        private bool DatosVaciosGuardarRol()
+        private void PoblarComboFiltroEstatus()
         {
-            if (numIdRol.Text == "" || txtCodigo.Text == "" || txtDescripcion.Text == "" || cbxEstatus.Text == "")
+            Dictionary<string, object?> estatusFiltro = new Dictionary<string, object?>
             {
-                return true;
+                { "Activo", 1 },
+                { "Inactivo", 0 }
+            };
+            cbxEstatusBusqueda.DataSource = new BindingSource(estatusFiltro, null);
+            cbxEstatusBusqueda.DisplayMember = "Key";
+            cbxEstatusBusqueda.ValueMember = "Value";
+        }
+
+        /// <summary>
+        /// Llena el ComboBox con todos los códigos de rol disponibles
+        /// </summary>
+        private void PoblarComboCodigos()
+        {
+            List<Rol> roles = _rolesController.ObtenerRoles();
+            Dictionary<string, string> codigos = roles.ToDictionary(r => r.Codigo, r => r.Codigo);
+            codigos.Add("Sin especificar", "");
+
+            cbxCodigoBusqueda.DataSource = new BindingSource(codigos, null);
+            cbxCodigoBusqueda.DisplayMember = "Key";
+            cbxCodigoBusqueda.ValueMember = "Value";
+            cbxCodigoBusqueda.SelectedValue = "";
+        }
+
+        /// <summary>
+        /// Ejecuta el proceso de guardado de un nuevo rol (validando campos)
+        /// </summary>
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            if (DatosVaciosGuardarRol())
+            {
+                MessageBox.Show("Favor de llenar los datos obligatorios", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!DatosValidosGuardarRol()) return;
+
+            Rol nuevoRol = new Rol
+            {
+                Codigo = txtCodigo.Text.Trim(),
+                Descripcion = txtDescripcion.Text.Trim(),
+                Estatus = (int)cbxEstatus.SelectedValue == 1
+            };
+
+            var (id, mensaje) = _rolesController.RegistrarRol(nuevoRol);
+            if (id > 0)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiarCampos();
+                CargarRoles();
             }
             else
             {
-                return false;
+                MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCodigo.Focus();
+                txtCodigo.SelectAll();
             }
         }
 
+        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
+        {
+            CargarRoles();
+        }
+
         /// <summary>
-        /// Valida las reglas de negocio para el código del rol
+        /// Carga los roles en el DataGridView aplicando los filtros seleccionados
         /// </summary>
-        /// <returns>True si el código es válido</returns>
+        private void btnBuscarRol_Click(object sender, EventArgs e)
+        {
+            string? codigo = cbxCodigoBusqueda.SelectedValue?.ToString();
+            string? descripcion = string.IsNullOrWhiteSpace(txtDescBusqueda.Text) ? null : txtDescBusqueda.Text.Trim();
+            int? estatus = cbxEstatusBusqueda.SelectedValue as int?;
+
+            List<Rol> rolesFiltrados = _rolesController.ObtenerRolesFiltrados(codigo, descripcion, estatus);
+            ConfigurarDataGridViewRoles(rolesFiltrados);
+        }
+
+        /// <summary>
+        /// Carga todos los roles activos por defecto en la tabla
+        /// </summary>
+        private void CargarRoles()
+        {
+            List<Rol> roles = _rolesController.ObtenerRoles();
+            ConfigurarDataGridViewRoles(roles);
+        }
+
+        /// <summary>
+        /// Aplica la configuración y carga de datos al DataGridView de roles
+        /// </summary>
+        private void ConfigurarDataGridViewRoles(List<Rol> roles)
+        {
+            dgvRoles.DataSource = null;
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Código", typeof(string));
+            dt.Columns.Add("Descripción", typeof(string));
+            dt.Columns.Add("Estatus", typeof(string));
+
+            foreach (Rol rol in roles)
+            {
+                dt.Rows.Add(rol.IdRol, rol.Codigo, rol.Descripcion, rol.Estatus ? "Activo" : "Inactivo");
+            }
+
+            dgvRoles.DataSource = dt;
+
+            dgvRoles.Columns["ID"].Visible = false;
+            dgvRoles.Columns["Código"].Width = 120;
+            dgvRoles.Columns["Descripción"].Width = 220;
+            dgvRoles.Columns["Estatus"].Width = 100;
+
+            dgvRoles.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvRoles.ReadOnly = true;
+        }
+
+        private void btnColapsar_Click(object sender, EventArgs e)
+        {
+            scRoles.Panel1Collapsed = !scRoles.Panel1Collapsed;
+            btnColapsar.Text = scRoles.Panel1Collapsed ? "Mostrar captura" : "Ocultar captura";
+        }
+
+        private void editRolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvRoles.SelectedRows.Count > 0)
+            {
+                int idRol = Convert.ToInt32(dgvRoles.SelectedRows[0].Cells["ID"].Value);
+                Rol? rol = _rolesController.ObtenerDetalleRol(idRol);
+
+                if (rol != null)
+                {
+                    numIdRol.Value = rol.IdRol;
+                    txtCodigo.Text = rol.Codigo;
+                    txtDescripcion.Text = rol.Descripcion;
+                    cbxEstatus.SelectedValue = rol.Estatus ? 1 : 0;
+
+                    if (scRoles.Panel1Collapsed)
+                    {
+                        scRoles.Panel1Collapsed = false;
+                        btnColapsar.Text = "Ocultar captura";
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo cargar el rol seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private bool DatosVaciosGuardarRol()
+        {
+            return string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtDescripcion.Text);
+        }
+
         private bool DatosValidosGuardarRol()
         {
             if (!RolNegocio.EsCodigoValido(txtCodigo.Text.Trim()))
             {
-                MessageBox.Show("El codigo del Rol no es valido ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El código del Rol no es válido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;
         }
 
-        /// <summary>
-        /// Ejecuta el proceso completo de guardado de un rol
-        /// </summary>
-        /// <returns>True si el guardado fue exitoso</returns>
-        private bool GuardarRol()
+        private void LimpiarCampos()
         {
-            if (DatosVaciosGuardarRol())
-            {
-                MessageBox.Show("Favor de llenar los datos obligatorios ", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!DatosValidosGuardarRol())
-            {
-                return false;
-            }
-            return true;
+            numIdRol.Value = 0;
+            txtCodigo.Clear();
+            txtDescripcion.Clear();
+            cbxEstatus.SelectedValue = 1;
         }
 
-
-        /// <summary>
-        /// Evento Click para el botón de Guardar: Ejecuta validación y guardado
-        /// </summary>
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            if (GuardarRol())
-            {
-                MessageBox.Show("Datos guardados exitosamente!!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        /// <summary>
-        /// Evento Click para el botón Colapsar: Controla la visibilidad del panel de captura
-        /// </summary>
-        private void btnColapsar_Click(object sender, EventArgs e)
-        {
-            if (scRoles.Panel1Collapsed)
-            {
-                scRoles.Panel1Collapsed = false;
-                btnColapsar.Text = "Ocultar captura";
-            }
-            else
-            {
-                scRoles.Panel1Collapsed = true;
-                btnColapsar.Text = "Mostrar captura";
-            }
-        }
-
-        /// <summary>
-        /// Evento Click para el botón de buscar un rol
-        /// </summary>
-        private void btnBuscarRol_Click(object sender, EventArgs e)
+        private void btnEditarRol_Click(object sender, EventArgs e)
         {
 
         }
-
-        /// <summary>
-        /// Evento Click para el botón de Actualizar el DataGridView para aplicar filtros
-        /// </summary>
-        private void btnActualizarDataGridView_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
     }
 }

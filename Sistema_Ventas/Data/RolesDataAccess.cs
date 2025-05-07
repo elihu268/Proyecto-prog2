@@ -31,50 +31,6 @@ namespace Sistema_Ventas.Data
             }
         }
 
-        /// <summary>
-        /// Obtiene la lista de roles desde la base de datos.
-        /// </summary>
-        /// <param name="soloActivos">Si es verdadero, solo devuelve roles con estatus activo.</param>
-        /// <returns>Lista de objetos Rol.</returns>
-        public List<Rol> ObtenerRoles(bool soloActivos = true)
-        {
-            List<Rol> roles = new List<Rol>();
-
-            try
-            {
-                string query = "SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE 1=1";
-                if (soloActivos)
-                {
-                    query += " AND estatus = true";
-                }
-
-                _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
-
-                foreach (DataRow row in resultado.Rows)
-                {
-                    Rol rol = new Rol(
-                        Convert.ToInt32(row["id_rol"]),
-                        row["codigo"].ToString() ?? "",
-                        row["descripcion"].ToString() ?? "",
-                        Convert.ToBoolean(row["estatus"])
-                    );
-                    roles.Add(rol);
-                }
-
-                _logger.Info($"Se obtuvieron {roles.Count} roles");
-                return roles;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error al obtener los roles");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
 
         /// <summary>
         /// Verifica si un código de rol ya existe en la base de datos.
@@ -200,6 +156,51 @@ namespace Sistema_Ventas.Data
         }
 
         /// <summary>
+        /// Obtiene la lista de roles desde la base de datos.
+        /// </summary>
+        /// <param name="soloActivos">Si es verdadero, solo devuelve roles con estatus activo.</param>
+        /// <returns>Lista de objetos Rol.</returns>
+        public List<Rol> ObtenerRoles(bool soloActivos = true)
+        {
+            List<Rol> roles = new List<Rol>();
+
+            try
+            {
+                string query = "SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE 1=1";
+                if (soloActivos)
+                {
+                    query += " AND estatus = true";
+                }
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Rol rol = new Rol(
+                        Convert.ToInt32(row["id_rol"]),
+                        row["codigo"].ToString() ?? "",
+                        row["descripcion"].ToString() ?? "",
+                        Convert.ToBoolean(row["estatus"])
+                    );
+                    roles.Add(rol);
+                }
+
+                _logger.Info($"Se obtuvieron {roles.Count} roles");
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener los roles");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
         /// Obtiene un rol específico por su identificador.
         /// </summary>
         /// <param name="id">ID del rol a buscar.</param>
@@ -273,47 +274,74 @@ namespace Sistema_Ventas.Data
         }
 
         /// <summary>
-        /// Busca roles dinámicamente por coincidencia de código o descripción.
+        /// Obtiene una lista de roles desde la base de datos aplicando filtros opcionales:
+        /// por código exacto, coincidencia parcial en descripción y estatus activo/inactivo.
+        ///
         /// </summary>
-        /// <param name="termino">Texto a buscar (parcial o completo).</param>
-        /// <returns>Lista de roles que coinciden con el criterio.</returns>
-        public List<Rol> BuscarRoles(string termino)
+        /// <param name="codigo">Código exacto del rol (opcional)</param>
+        /// <param name="descripcion">Texto parcial de descripción (opcional)</param>
+        /// <param name="estatus">1 para activos, 0 para inactivos, null para todos (opcional)</param>
+        /// <returns>Lista de roles que coinciden con los filtros especificados.</returns>
+        public List<Rol> ObtenerRolesFiltrados(string? codigo = null, string? descripcion = null, int? estatus = null)
         {
             List<Rol> roles = new List<Rol>();
 
             try
             {
-                string query = @"SELECT id_rol, codigo, descripcion, estatus
-                                 FROM roles
-                                 WHERE codigo ILIKE @Termino OR descripcion ILIKE @Termino";
-
-                var parametro = _dbAccess.CreateParameter("@Termino", $"%{termino}%");
-
                 _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
+
+                string query = "SELECT id_rol, codigo, descripcion, estatus FROM roles WHERE 1=1";
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+
+                // Filtro por código exacto (ComboBox)
+                if (!string.IsNullOrWhiteSpace(codigo))
+                {
+                    query += " AND codigo = @Codigo";
+                    parametros.Add(_dbAccess.CreateParameter("@Codigo", codigo));
+                }
+
+                // Filtro por descripción con LIKE (TextBox)
+                if (!string.IsNullOrWhiteSpace(descripcion))
+                {
+                    query += " AND LOWER(descripcion) LIKE LOWER(@Descripcion)";
+                    parametros.Add(_dbAccess.CreateParameter("@Descripcion", $"%{descripcion.Trim()}%"));
+                }
+
+                // Filtro por estatus (ComboBox)
+                if (estatus.HasValue)
+                {
+                    query += " AND estatus = @Estatus";
+                    parametros.Add(_dbAccess.CreateParameter("@Estatus", estatus == 1));
+                }
+
+                query += " ORDER BY id_rol";
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    Rol rol = new Rol(
+                    roles.Add(new Rol(
                         Convert.ToInt32(row["id_rol"]),
                         row["codigo"].ToString() ?? "",
                         row["descripcion"].ToString() ?? "",
                         Convert.ToBoolean(row["estatus"])
-                    );
-                    roles.Add(rol);
+                    ));
                 }
 
+                _logger.Info($"Se recuperaron {roles.Count} roles con filtros aplicados.");
                 return roles;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al buscar roles con término '{termino}'");
-                return roles;
+                _logger.Error(ex, "Error al obtener roles filtrados.");
+                return new List<Rol>();
             }
             finally
             {
                 _dbAccess.Disconnect();
             }
         }
+
+
     }
 }

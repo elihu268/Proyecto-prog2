@@ -32,10 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracionRoles));
             scRoles = new SplitContainer();
             gbxAltaEdicionRol = new GroupBox();
+            btnGuardar = new Button();
             lblInfo = new Label();
             picBoxFormato = new PictureBox();
             numIdRol = new NumericUpDown();
-            btnGuardar = new Button();
+            btnEditarRol = new Button();
             cbxEstatus = new ComboBox();
             lblEstatus = new Label();
             txtDescripcion = new TextBox();
@@ -48,9 +49,10 @@
             editRolToolStripMenuItem = new ToolStripMenuItem();
             gbxBusquedaRol = new GroupBox();
             btnBuscarRol = new Button();
+            lblCodigoBusqueda = new Label();
+            cbxCodigoBusqueda = new ComboBox();
             cbxEstatusBusqueda = new ComboBox();
             lblEstatusBusqueda = new Label();
-            lblCodigoBusqueda = new Label();
             btnActualizarDataGridView = new Button();
             txtDescBusqueda = new TextBox();
             lblDescBusqueda = new Label();
@@ -58,7 +60,6 @@
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
-            cbxCodigoBusqueda = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)scRoles).BeginInit();
             scRoles.Panel1.SuspendLayout();
             scRoles.Panel2.SuspendLayout();
@@ -95,10 +96,11 @@
             // 
             // gbxAltaEdicionRol
             // 
+            gbxAltaEdicionRol.Controls.Add(btnGuardar);
             gbxAltaEdicionRol.Controls.Add(lblInfo);
             gbxAltaEdicionRol.Controls.Add(picBoxFormato);
             gbxAltaEdicionRol.Controls.Add(numIdRol);
-            gbxAltaEdicionRol.Controls.Add(btnGuardar);
+            gbxAltaEdicionRol.Controls.Add(btnEditarRol);
             gbxAltaEdicionRol.Controls.Add(cbxEstatus);
             gbxAltaEdicionRol.Controls.Add(lblEstatus);
             gbxAltaEdicionRol.Controls.Add(txtDescripcion);
@@ -114,6 +116,21 @@
             gbxAltaEdicionRol.TabIndex = 1;
             gbxAltaEdicionRol.TabStop = false;
             gbxAltaEdicionRol.Text = "Alta o Edición";
+            // 
+            // btnGuardar
+            // 
+            btnGuardar.BackColor = SystemColors.ActiveCaption;
+            btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGuardar.Image = Properties.Resources.guardar;
+            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGuardar.Location = new Point(69, 248);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(79, 31);
+            btnGuardar.TabIndex = 20;
+            btnGuardar.Text = "Guardar";
+            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
+            btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // lblInfo
             // 
@@ -145,26 +162,27 @@
             numIdRol.TabIndex = 21;
             numIdRol.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // btnGuardar
+            // btnEditarRol
             // 
-            btnGuardar.BackColor = SystemColors.ActiveCaption;
-            btnGuardar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnGuardar.Image = Properties.Resources.guardar;
-            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(69, 248);
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(79, 31);
-            btnGuardar.TabIndex = 20;
-            btnGuardar.Text = "Guardar";
-            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
-            btnGuardar.UseVisualStyleBackColor = false;
-            btnGuardar.Click += btnGuardar_Click;
+            btnEditarRol.BackColor = SystemColors.ActiveCaption;
+            btnEditarRol.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEditarRol.Image = Properties.Resources.guardar;
+            btnEditarRol.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEditarRol.Location = new Point(69, 248);
+            btnEditarRol.Name = "btnEditarRol";
+            btnEditarRol.Size = new Size(79, 31);
+            btnEditarRol.TabIndex = 20;
+            btnEditarRol.Text = "Editar";
+            btnEditarRol.TextAlign = ContentAlignment.MiddleRight;
+            btnEditarRol.UseVisualStyleBackColor = false;
+            btnEditarRol.Visible = false;
+            btnEditarRol.Click += btnEditarRol_Click;
             // 
             // cbxEstatus
             // 
             cbxEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(13, 181);
+            cbxEstatus.Location = new Point(13, 183);
             cbxEstatus.Name = "cbxEstatus";
             cbxEstatus.Size = new Size(203, 23);
             cbxEstatus.TabIndex = 19;
@@ -172,7 +190,7 @@
             // lblEstatus
             // 
             lblEstatus.AutoSize = true;
-            lblEstatus.Location = new Point(13, 163);
+            lblEstatus.Location = new Point(13, 165);
             lblEstatus.Name = "lblEstatus";
             lblEstatus.Size = new Size(52, 15);
             lblEstatus.TabIndex = 18;
@@ -248,6 +266,7 @@
             editRolToolStripMenuItem.Name = "editRolToolStripMenuItem";
             editRolToolStripMenuItem.Size = new Size(124, 22);
             editRolToolStripMenuItem.Text = "Editar Rol";
+            editRolToolStripMenuItem.Click += editRolToolStripMenuItem_Click;
             // 
             // gbxBusquedaRol
             // 
@@ -283,6 +302,24 @@
             btnBuscarRol.UseVisualStyleBackColor = false;
             btnBuscarRol.Click += btnBuscarRol_Click;
             // 
+            // lblCodigoBusqueda
+            // 
+            lblCodigoBusqueda.AutoSize = true;
+            lblCodigoBusqueda.Location = new Point(9, 62);
+            lblCodigoBusqueda.Name = "lblCodigoBusqueda";
+            lblCodigoBusqueda.Size = new Size(81, 15);
+            lblCodigoBusqueda.TabIndex = 13;
+            lblCodigoBusqueda.Text = "Código del rol";
+            // 
+            // cbxCodigoBusqueda
+            // 
+            cbxCodigoBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxCodigoBusqueda.FormattingEnabled = true;
+            cbxCodigoBusqueda.Location = new Point(93, 59);
+            cbxCodigoBusqueda.Name = "cbxCodigoBusqueda";
+            cbxCodigoBusqueda.Size = new Size(170, 23);
+            cbxCodigoBusqueda.TabIndex = 18;
+            // 
             // cbxEstatusBusqueda
             // 
             cbxEstatusBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -300,15 +337,6 @@
             lblEstatusBusqueda.Size = new Size(80, 15);
             lblEstatusBusqueda.TabIndex = 17;
             lblEstatusBusqueda.Text = "Estatus del rol";
-            // 
-            // lblCodigoBusqueda
-            // 
-            lblCodigoBusqueda.AutoSize = true;
-            lblCodigoBusqueda.Location = new Point(9, 62);
-            lblCodigoBusqueda.Name = "lblCodigoBusqueda";
-            lblCodigoBusqueda.Size = new Size(81, 15);
-            lblCodigoBusqueda.TabIndex = 13;
-            lblCodigoBusqueda.Text = "Código del rol";
             // 
             // btnActualizarDataGridView
             // 
@@ -382,15 +410,6 @@
             lblTituloRol.Text = "Configuración de roles";
             lblTituloRol.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // cbxCodigoBusqueda
-            // 
-            cbxCodigoBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbxCodigoBusqueda.FormattingEnabled = true;
-            cbxCodigoBusqueda.Location = new Point(93, 59);
-            cbxCodigoBusqueda.Name = "cbxCodigoBusqueda";
-            cbxCodigoBusqueda.Size = new Size(170, 23);
-            cbxCodigoBusqueda.TabIndex = 18;
-            // 
             // frmConfiguracionRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -453,5 +472,6 @@
         private ToolStripMenuItem editRolToolStripMenuItem;
         private Button btnBuscarRol;
         private ComboBox cbxCodigoBusqueda;
+        private Button btnEditarRol;
     }
 }
