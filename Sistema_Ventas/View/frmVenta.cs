@@ -368,7 +368,7 @@ namespace Sistema_Ventas.View
 
             // Evitar que se modifique el tamaño de las columnas al agregar filas
             dgv_carrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;  // No cambiar el tamaño de las columnas automáticamente
-            dgv_carrito.ScrollBars = ScrollBars.Both;  // Habilitar desplazamiento para el DataGridView
+           // dgv_carrito.ScrollBars = ScrollBars.Both;  // Habilitar desplazamiento para el DataGridView
 
             // Prevenir el ajuste del tamaño del DataGridView al contenedor
             dgv_carrito.Dock = DockStyle.None;
