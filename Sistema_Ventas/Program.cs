@@ -1,7 +1,7 @@
 using DiseñoForms.View;
 using Sistema_Ventas.View;
 using NLog;
-using Sistema_Ventas.Utilities;
+using Sistema_VentasCore.Utilities;
 
 
 namespace Sistema_Ventas

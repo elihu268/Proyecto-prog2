@@ -24,8 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="8.0.5" />
     <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sistema_VentasCore\Sistema_VentasCore.csproj" />
   </ItemGroup>
 
 </Project>

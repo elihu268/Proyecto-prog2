@@ -1,5 +1,5 @@
-﻿using Sistema_Ventas.Controller;
-using Sistema_Ventas.Model;
+﻿using Sistema_VentasCore.Controller;
+using Sistema_VentasCore.Model;
 using Sistema_Ventas.Utilities;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,8 @@
-﻿using Sistema_Ventas.Bussines;
+﻿using Sistema_VentasCore.Bussines;
 using Sistema_Ventas.Utilities;
-using Sistema_Ventas.Model;
-using Sistema_Ventas.Controller;
+using Sistema_VentasCore.Utilities;
+using Sistema_VentasCore.Model;
+using Sistema_VentasCore.Controller;
 using System.Data;
 using NLog;
 using System.Net;

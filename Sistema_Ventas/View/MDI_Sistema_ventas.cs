@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NLog;
-using Sistema_Ventas.Utilities;
+using Sistema_VentasCore.Utilities;
 
 namespace DiseñoForms.View
 {

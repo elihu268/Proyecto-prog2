@@ -8,14 +8,15 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Ventas.Controller;
-using Sistema_Ventas.Model;
+using Sistema_VentasCore.Controller;
+using Sistema_VentasCore.Model;
 using Sistema_Ventas.Utilities;
+using Sistema_VentasCore.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using NLog;
-using Sistema_Ventas.Bussines;
+using Sistema_VentasCore.Bussines;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Net;
 namespace Sistema_Ventas.View
@@ -238,7 +239,7 @@ namespace Sistema_Ventas.View
             }
 
             // Verificar que el correo no sea vacío o inválido, en caso de que quiera ingresar otro dato
-            if (string.IsNullOrEmpty(clienteSeleccionado.DatosPersonales.Correo) || !Utilities.Validaciones.EsCorreoValido(clienteSeleccionado.DatosPersonales.Correo))
+            if (string.IsNullOrEmpty(clienteSeleccionado.DatosPersonales.Correo) || !Validaciones.EsCorreoValido(clienteSeleccionado.DatosPersonales.Correo))
             {
                 MessageBox.Show("Cliente no válido: correo inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -263,7 +264,7 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!Bussines.CompraNegocio.EsCantidadValida(txt_cantidad.Text))
+            if (!CompraNegocio.EsCantidadValida(txt_cantidad.Text))
             {
                 MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

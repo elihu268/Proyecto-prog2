@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Ventas.Bussines;
-using static Sistema_Ventas.Bussines.ClientesNegocio;
-using Sistema_Ventas.Controller;
+using Sistema_VentasCore.Bussines;
+using static Sistema_VentasCore.Bussines.ClientesNegocio;
+using Sistema_VentasCore.Controller;
 
 namespace Sistema_Ventas.View
 {
