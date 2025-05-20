@@ -45,6 +45,21 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
+        public List<Usuario> ObtenerUsuariosPorRol(int rol)
+        {
+            try
+            {
+                List<Usuario> usuarios = _usuariosDataAccess.ObtenerUsuariosPorRol(rol);
+                _logger.Info("Usuarios obtenidos: ", usuarios.Count);
+                return usuarios;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                Console.WriteLine("Error al obtener usuarios por rol: " + ex.Message);
+                throw;
+            }
+        }
         public (int id, string mensaje) AgregarUsuario(Usuario usuario)
         {
             try

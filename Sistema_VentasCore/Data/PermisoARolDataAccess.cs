@@ -111,6 +111,50 @@ namespace Sistema_VentasCore.Data
 
             return permisos;
         }
+        public List<Permiso> ObtenerPermisosPorRol(int idRol)
+        {
+            List<Permiso> permisos = new List<Permiso>();
+
+            try
+            {
+                string query = @"
+            SELECT p.id_permiso, p.codigo, p.descripcion, p.estatus
+            FROM permisos_rol pr
+            JOIN permisos p ON pr.id_permiso = p.id_permiso
+            WHERE pr.id_rol = @IdRol";
+
+                NpgsqlParameter paramIdRol = _dbAccess.CreateParameter("@IdRol", idRol);
+
+                _dbAccess.Connect();
+                DataTable dt = _dbAccess.ExecuteQuery_Reader(query, paramIdRol);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Permiso permiso = new Permiso
+                    {
+                        IdPermiso = Convert.ToInt32(row["id_permiso"]),
+                        Codigo = row["codigo"].ToString(),
+                        Descripcion = row["descripcion"].ToString(),
+                        Estatus = Convert.ToBoolean(row["estatus"])
+                    };
+                    permisos.Add(permiso);
+                }
+
+                _logger.Info($"Se obtuvieron {permisos.Count} permisos para el rol {idRol}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener permisos del rol {idRol}");
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
+            return permisos;
+        }
+
+
 
     }
 }

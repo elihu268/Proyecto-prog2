@@ -468,6 +468,64 @@ namespace Sistema_VentasCore.Data
 
             return permisos;
         }
+        public List<Usuario> ObtenerUsuariosPorRol(int idRol)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            try
+            {
+                string query = @"
+            SELECT u.id_usuario, u.usuario, u.id_rol, u.estatus, 
+                   p.id_persona, p.nombre_completo, p.correo, 
+                   p.telefono, p.fecha_nacimiento, p.estatus AS estatus_persona
+            FROM usuarios u
+            JOIN personas p ON u.id_persona = p.id_persona
+            WHERE u.id_rol = @IdRol
+            ORDER BY u.id_usuario";
+
+                NpgsqlParameter paramIdRol = _dbAccess.CreateParameter("@IdRol", idRol);
+
+                _dbAccess.Connect();
+                DataTable dt = _dbAccess.ExecuteQuery_Reader(query, paramIdRol);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Persona persona = new Persona(
+                        Convert.ToInt32(row["id_persona"]),
+                        row["nombre_completo"].ToString(),
+                        row["correo"].ToString(),
+                        row["telefono"].ToString(),
+                        row["fecha_nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_nacimiento"]) : null,
+                        Convert.ToBoolean(row["estatus_persona"])
+                    );
+
+                    Usuario usuario = new Usuario(
+                        Convert.ToInt32(row["id_usuario"]),
+                        Convert.ToInt32(row["id_persona"]),
+                        Convert.ToInt32(row["id_rol"]),
+                        row["usuario"].ToString(),
+                        Convert.ToBoolean(row["estatus"]),
+                        persona
+                    );
+
+                    usuarios.Add(usuario);
+                }
+
+                _logger.Info($"Se encontraron {usuarios.Count} usuarios con el rol {idRol}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener usuarios del rol {idRol}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
+            return usuarios;
+        }
+
 
         public static void EliminarUsuario(int id)
         {

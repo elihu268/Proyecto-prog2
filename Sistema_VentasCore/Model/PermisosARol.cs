@@ -12,12 +12,14 @@ namespace Sistema_VentasCore.Model
         private string codigo { get; set; }
         private string descripcion { get; set; }
         private bool estatus { get; set; }
-        public PermisosARol(int id_permiso, string codigo, string descripcion, bool estatus)
+        private Rol rol { get; set; }
+        public PermisosARol(int id_permiso, string codigo, string descripcion, bool estatus, Rol rol)
         {
             this.id_permiso = id_permiso;
             this.codigo = codigo;
             this.descripcion = descripcion;
             this.estatus = estatus;
+            this.rol = rol;
         }
     }
 }

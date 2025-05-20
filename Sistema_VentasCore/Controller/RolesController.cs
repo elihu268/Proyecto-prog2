@@ -203,6 +203,7 @@ namespace Sistema_VentasCore.Controller
                 return new List<Rol>();
             }
         }
+        
 
     }
 }
