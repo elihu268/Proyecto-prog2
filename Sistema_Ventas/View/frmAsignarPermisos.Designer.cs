@@ -36,6 +36,8 @@
             lbl_selec_permiso = new Label();
             lbl_buscar = new Label();
             lblt_titulo = new Label();
+            btnExcel = new Button();
+            lblExcel = new Label();
             grbox_permisos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_permisos).BeginInit();
             SuspendLayout();
@@ -44,6 +46,8 @@
             // 
             grbox_permisos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             grbox_permisos.BackColor = SystemColors.InactiveBorder;
+            grbox_permisos.Controls.Add(lblExcel);
+            grbox_permisos.Controls.Add(btnExcel);
             grbox_permisos.Controls.Add(cbox_rol);
             grbox_permisos.Controls.Add(dgv_permisos);
             grbox_permisos.Controls.Add(btn_agregar);
@@ -52,7 +56,7 @@
             grbox_permisos.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grbox_permisos.Location = new Point(12, 79);
             grbox_permisos.Name = "grbox_permisos";
-            grbox_permisos.Size = new Size(634, 566);
+            grbox_permisos.Size = new Size(746, 566);
             grbox_permisos.TabIndex = 11;
             grbox_permisos.TabStop = false;
             grbox_permisos.Text = "Permisos";
@@ -71,11 +75,11 @@
             // 
             dgv_permisos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_permisos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_permisos.Location = new Point(23, 161);
+            dgv_permisos.Location = new Point(23, 197);
             dgv_permisos.MaximumSize = new Size(700, 900);
             dgv_permisos.Name = "dgv_permisos";
             dgv_permisos.RowHeadersWidth = 62;
-            dgv_permisos.Size = new Size(600, 377);
+            dgv_permisos.Size = new Size(700, 341);
             dgv_permisos.TabIndex = 21;
             dgv_permisos.CellContentClick += dgv_permisos_CellContentClick;
             // 
@@ -83,9 +87,9 @@
             // 
             btn_agregar.BackColor = SystemColors.ActiveCaption;
             btn_agregar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_agregar.Location = new Point(357, 30);
+            btn_agregar.Location = new Point(538, 30);
             btn_agregar.Name = "btn_agregar";
-            btn_agregar.Size = new Size(198, 51);
+            btn_agregar.Size = new Size(185, 43);
             btn_agregar.TabIndex = 20;
             btn_agregar.Text = "Asignar permisos";
             btn_agregar.UseVisualStyleBackColor = false;
@@ -94,7 +98,7 @@
             // lbl_selec_permiso
             // 
             lbl_selec_permiso.AutoSize = true;
-            lbl_selec_permiso.Location = new Point(433, 115);
+            lbl_selec_permiso.Location = new Point(23, 169);
             lbl_selec_permiso.Name = "lbl_selec_permiso";
             lbl_selec_permiso.Size = new Size(179, 25);
             lbl_selec_permiso.TabIndex = 19;
@@ -116,17 +120,36 @@
             lblt_titulo.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblt_titulo.Location = new Point(1, 9);
             lblt_titulo.Name = "lblt_titulo";
-            lblt_titulo.Size = new Size(659, 50);
+            lblt_titulo.Size = new Size(771, 50);
             lblt_titulo.TabIndex = 7;
             lblt_titulo.Text = "Asignacion de permisos";
             lblt_titulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnExcel
+            // 
+            btnExcel.Location = new Point(602, 126);
+            btnExcel.Name = "btnExcel";
+            btnExcel.Size = new Size(112, 34);
+            btnExcel.TabIndex = 23;
+            btnExcel.Text = "Crear Excel";
+            btnExcel.UseVisualStyleBackColor = true;
+            btnExcel.Click += btnExcel_Click;
+            // 
+            // lblExcel
+            // 
+            lblExcel.AutoSize = true;
+            lblExcel.Location = new Point(455, 98);
+            lblExcel.Name = "lblExcel";
+            lblExcel.Size = new Size(248, 25);
+            lblExcel.TabIndex = 24;
+            lblExcel.Text = "Usuarios con estos Permisos";
             // 
             // frmAsignarPermisos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(666, 657);
+            ClientSize = new Size(778, 657);
             Controls.Add(grbox_permisos);
             Controls.Add(lblt_titulo);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -148,5 +171,7 @@
         private Button btn_agregar;
         private DataGridView dgv_permisos;
         private ComboBox cbox_rol;
+        private Label lblExcel;
+        private Button btnExcel;
     }
 }

@@ -79,7 +79,7 @@ namespace Sistema_Ventas.View
                 int idRolSeleccionado = (int)cbox_rol.SelectedValue; //  SelectedValue = ID del rol
                 PermisoARolController permisoARolController = new PermisoARolController();
                 permisoARolController.AsignarPermisosARol(idRolSeleccionado, permisosSeleccionados);
-               
+
                 if (Sesión.IdRol == idRolSeleccionado)
                 {
                     UsuariosController uc = new UsuariosController();
@@ -106,7 +106,7 @@ namespace Sistema_Ventas.View
                         {
                             childForm.Close();
                         }
-                        
+
 
                     }
                 }
@@ -122,10 +122,10 @@ namespace Sistema_Ventas.View
                 Cursor = Cursors.Default;
             }
 
-        }      
-        
+        }
 
-         /// <summary>
+
+        /// <summary>
         /// obtener los id de permisos seleccionados
         /// </summary>
         /// <returns>lista de los id de los permisos seleccionaos</returns>
@@ -150,11 +150,11 @@ namespace Sistema_Ventas.View
         {
             InicializarVentanaPermisos();
         }
-        
 
 
 
-       
+
+
 
         private void cbox_rol_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -168,8 +168,8 @@ namespace Sistema_Ventas.View
                 CargarPermisosPorRol(idRol);
             }
         }
-       
-            private void CargarPermisosPorRol(int idRol)
+
+        private void CargarPermisosPorRol(int idRol)
         {
             try
             {
@@ -184,10 +184,10 @@ namespace Sistema_Ventas.View
                 // Obtener los id permisos que ya tiene el rol, para seleccionar el check de la tabla
                 List<int> permisosDelRol = permisosRolController.ObtenerIdsPermisosPorRol(idRol); ;
 
-                if (permisos == null )
+                if (permisos == null)
                 {
                     MessageBox.Show("No hay permisos disponibles.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                   
+
                     return;
                 }
 
@@ -227,7 +227,7 @@ namespace Sistema_Ventas.View
                 dgv_permisos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centrar el encabezado
                 dgv_permisos.DefaultCellStyle.WrapMode = DataGridViewTriState.True; // Que el texto se ajuste si es muy largo
                 dgv_permisos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;// Ajustar altura de filas si el texto se expande
-                
+
             }
             catch (Exception ex)
             {
@@ -237,7 +237,7 @@ namespace Sistema_Ventas.View
             {
                 Cursor = Cursors.Default;
             }
-        
+
 
         }
 
@@ -245,6 +245,69 @@ namespace Sistema_Ventas.View
         {
 
         }
-        
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            ImportarExcel();
+        }
+        public void ImportarExcel()
+        {
+            try
+            {
+                // Ejemplo: valores fijos o seleccionados desde la UI
+                int idRolSeleccionado = (int)cbox_rol.SelectedValue;
+                string nombreRolSeleccionado = cbox_rol.Text;
+
+                // Mostrar diálogo para guardar
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar archivo de Excel";
+                    saveFileDialog.FileName = $"Usuarios_{nombreRolSeleccionado}_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+
+                        // Instanciar controlador
+                        PermisoARolController PermioAsuController = new PermisoARolController();
+                        var (bandera, msj) = PermioAsuController.ExportarUsuariosPorRolExcel(saveFileDialog.FileName, idRolSeleccionado, nombreRolSeleccionado);
+
+                        Cursor.Current = Cursors.Default;
+
+                        if (bandera && msj == 1)
+                        {
+                            MessageBox.Show("Archivo Excel exportado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Preguntar si desea abrir el archivo
+                            DialogResult abrir = MessageBox.Show("¿Desea abrir el archivo Excel generado?", "Abrir archivo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (abrir == DialogResult.Yes)
+                            {
+                                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = saveFileDialog.FileName,
+                                    UseShellExecute = true
+                                });
+                            }
+                        }
+                        else if (msj == 0)
+                        {
+                            MessageBox.Show("No se encontraron usuarios con ese rol para exportar", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ocurrió un error durante la exportación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

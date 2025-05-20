@@ -69,7 +69,7 @@ namespace Sistema_VentasCore.Controller
                 return null;
             }
         }
-        public (bool bandera,int msj) ExportarUsuariosPorRolExcel(string rutaArchivo, int idRol, string nombreRol)
+        public (bool bandera, int msj) ExportarUsuariosPorRolExcel(string rutaArchivo, int idRol, string nombreRol)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace Sistema_VentasCore.Controller
                 if (usuarios == null || usuarios.Count == 0)
                 {
                     _logger.Warn($"No hay usuarios con el rol: {idRol}");
-                    return (false,0);
+                    return (false, 0); // 0: sin usuarios
                 }
 
                 using (var package = new ExcelPackage())
@@ -88,13 +88,13 @@ namespace Sistema_VentasCore.Controller
 
                     int row = 1;
 
-                    // Título del rol
+                    // Encabezado del rol
                     worksheet.Cells[row, 1].Value = "Rol:";
                     worksheet.Cells[row, 2].Value = nombreRol;
                     worksheet.Cells[row, 1, row, 2].Style.Font.Bold = true;
                     row += 2;
 
-                    // Título de permisos
+                    // Permisos asignados
                     worksheet.Cells[row, 1].Value = "Permisos asignados:";
                     worksheet.Cells[row, 1].Style.Font.Bold = true;
                     row++;
@@ -102,17 +102,16 @@ namespace Sistema_VentasCore.Controller
                     foreach (var permiso in permisos)
                     {
                         worksheet.Cells[row, 1].Value = permiso.Codigo;
-                       // worksheet.Cells[row, 2].Value = permiso.Descripcion;
+                        //worksheet.Cells[row, 2].Value = permiso.Descripcion;
                         row++;
                     }
 
-                    row++; // línea en blanco
+                    row++; // línea vacía
 
                     // Encabezados de usuarios
-                    //worksheet.Cells[row, 1].Value = "ID";
                     worksheet.Cells[row, 1].Value = "Nombre Usuario";
-                    worksheet.Cells[row, 2].Value = "Usuario";
-                    worksheet.Cells[row, 3].Value = "Telefono";
+                    worksheet.Cells[row, 2].Value = "Correo";
+                    worksheet.Cells[row, 3].Value = "Teléfono";
 
                     using (var range = worksheet.Cells[row, 1, row, 3])
                     {
@@ -126,7 +125,6 @@ namespace Sistema_VentasCore.Controller
 
                     foreach (var usuario in usuarios)
                     {
-                        //worksheet.Cells[row, 1].Value = usuario.Id;
                         worksheet.Cells[row, 1].Value = usuario.DatosPersonales.NombreCompleto;
                         worksheet.Cells[row, 2].Value = usuario.DatosPersonales.Correo;
                         worksheet.Cells[row, 3].Value = usuario.DatosPersonales.Telefono;
@@ -137,18 +135,18 @@ namespace Sistema_VentasCore.Controller
 
                     FileInfo fileInfo = new FileInfo(rutaArchivo);
                     package.SaveAs(fileInfo);
+
                     _logger.Info($"Archivo Excel exportado correctamente: {rutaArchivo}");
-                    return (true,1);
+                    return (true, 1); // 1: éxito
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Error al exportar usuarios del rol {idRol} a Excel");
-
-                throw;
-               
+                throw ex;
             }
         }
+
 
 
     }
