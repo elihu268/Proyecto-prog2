@@ -2,6 +2,7 @@ using DiseñoForms.View;
 using Sistema_Ventas.View;
 using NLog;
 using Sistema_VentasCore.Utilities;
+using OfficeOpenXml;
 
 
 namespace Sistema_Ventas
@@ -21,7 +22,7 @@ namespace Sistema_Ventas
             // Inicializar el sistema de logging
             _logger = LoggingManager.GetLogger("Sistema_Ventas.Program");
             _logger.Info("Aplicación iniciada...");
-
+            ExcelPackage.License.SetNonCommercialOrganization("My Noncommercial organization");
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

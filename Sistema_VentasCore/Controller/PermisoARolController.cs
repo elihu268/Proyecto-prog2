@@ -94,20 +94,7 @@ namespace Sistema_VentasCore.Controller
                     worksheet.Cells[row, 1, row, 2].Style.Font.Bold = true;
                     row += 2;
 
-                    // Permisos asignados
-                    worksheet.Cells[row, 1].Value = "Permisos asignados:";
-                    worksheet.Cells[row, 1].Style.Font.Bold = true;
-                    row++;
-
-                    foreach (var permiso in permisos)
-                    {
-                        worksheet.Cells[row, 1].Value = permiso.Codigo;
-                        //worksheet.Cells[row, 2].Value = permiso.Descripcion;
-                        row++;
-                    }
-
-                    row++; // línea vacía
-
+       
                     // Encabezados de usuarios
                     worksheet.Cells[row, 1].Value = "Nombre Usuario";
                     worksheet.Cells[row, 2].Value = "Correo";
@@ -130,7 +117,19 @@ namespace Sistema_VentasCore.Controller
                         worksheet.Cells[row, 3].Value = usuario.DatosPersonales.Telefono;
                         row++;
                     }
+                    row++; // línea vacía
+                    // Permisos asignados
+                    row = 1;
+                    worksheet.Cells[row, 5].Value = "Permisos asignados:";
+                    worksheet.Cells[row, 5].Style.Font.Bold = true;
+                    row++;
 
+                    foreach (var permiso in permisos)
+                    {
+                        worksheet.Cells[row, 5].Value = permiso.Codigo;
+                        //worksheet.Cells[row, 2].Value = permiso.Descripcion;
+                        row++;
+                    }
                     worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                     FileInfo fileInfo = new FileInfo(rutaArchivo);
