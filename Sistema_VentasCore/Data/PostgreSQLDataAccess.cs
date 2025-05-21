@@ -9,33 +9,60 @@ using NLog;
 using Npgsql;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 
 namespace Sistema_VentasCore.Data
 {
-    internal class PostgreSQLDataAccess
+    public class PostgreSQLDataAccess
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_VentasCore.Data.PostgreSQLDataAccess");
         //cadena de conexion desde Ap.cpnfig
-        private static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
+        //private static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
         //le indiica al dataacces donde esta la cadena de conexion que esta appConfig
+        private static string _connectionString;
 
-
-        private NpgsqlConnection _conecction;
+        private NpgsqlConnection _connection;
         private static PostgreSQLDataAccess? _instance;
         //para crear solo una instancias y no tenerlas repertidas
+
+        public static string ConnectionString
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                {
+                    try
+                    {
+                        // Intenta obtener desde ConfigurationManager (Windows Forms)
+                        _connectionString = ConfigurationManager.ConnectionStrings["ConexionBD"]?.ConnectionString;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Warn(ex, "No se pudo obtener la cadena de conexión desde ConfigurationManager");
+                    }
+                }
+                return _connectionString;
+            }
+            set { _connectionString = value; }
+        }
 
         //constrauctor
         private PostgreSQLDataAccess()
         {
             try
             {
-                _conecction = new NpgsqlConnection(_ConnectionString);
-                _logger.Info("instancia de acceso a datos creada correctamente");
+                if (string.IsNullOrEmpty(ConnectionString))
+                {
+                    throw new InvalidOperationException("La cadena de conexión no está configurada. Asegúrate de establecer PostgreSQLDataAccess.ConnectionString antes de usar la clase.");
+                }
+
+                _connection = new NpgsqlConnection(ConnectionString);
+                _logger.Info("Instancia de acceso a datos creada correctamente");
             }
             catch (Exception ex)
             {
-                _logger.Fatal(ex, "Error al inicializar el acceso a la base dde datos");
-                throw;//para informar el error, pasa el error aotro lado
+                _logger.Fatal(ex, "Error al inicializar el acceso a la base de datos");
+                throw;
             }
         }
         //solo tener una instancia
@@ -52,9 +79,9 @@ namespace Sistema_VentasCore.Data
         {
             try
             {
-                if (_conecction.State != ConnectionState.Open)
+                if (_connection.State != ConnectionState.Open)
                 {
-                    _conecction.Open();
+                    _connection.Open();
                     _logger.Info("Conexion a la base de datos establecida correctamente");
                 }
                 return true;
@@ -69,9 +96,9 @@ namespace Sistema_VentasCore.Data
         {
             try
             {
-                if (_conecction.State == ConnectionState.Open)
+                if (_connection.State == ConnectionState.Open)
                 {
-                    _conecction.Close();
+                    _connection.Close();
                     _logger.Info("conexion a la base de datos cerrada correctamente");
                 }
                 return true;
@@ -118,7 +145,7 @@ namespace Sistema_VentasCore.Data
         private NpgsqlCommand CreateCommand(string query, params NpgsqlParameter[] parameters)
         {
             //parametros pueden ser varios
-            NpgsqlCommand command = new NpgsqlCommand(query, _conecction);
+            NpgsqlCommand command = new NpgsqlCommand(query, _connection);
             if (parameters != null)
             {
                 command.Parameters.AddRange(parameters);
