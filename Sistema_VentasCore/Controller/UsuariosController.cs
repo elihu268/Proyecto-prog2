@@ -205,7 +205,9 @@ namespace Sistema_VentasCore.Controller
                     // Agregar encabezados
                     worksheet.Cells[row, 1].Value = "Nombre";
                     worksheet.Cells[row, 2].Value = "Correo";
-                    worksheet.Cells[row, 3].Value = "Estatus";
+                    worksheet.Cells[row, 3].Value = "Telefono";
+                    worksheet.Cells[row, 4].Value = "Rol";
+                    worksheet.Cells[row, 5].Value = "Estatus";
                     // Agregar datos de usuarios
                    using(var range = worksheet.Cells[row, 1, row, 5])
                     {
@@ -219,7 +221,9 @@ namespace Sistema_VentasCore.Controller
                     {
                         worksheet.Cells[row, 1].Value = usuario.DatosPersonales.NombreCompleto;
                         worksheet.Cells[row, 2].Value = usuario.Cuenta;
-                        worksheet.Cells[row, 3].Value = usuario.Estatus == true;
+                        worksheet.Cells[row, 3].Value = usuario.DatosPersonales.Telefono;
+                        worksheet.Cells[row, 4].Value = usuario.idRol;
+                        worksheet.Cells[row, 5].Value = usuario.Estatus == true;
                         row++;
                     }
                     // Guardar el archivo Excel
