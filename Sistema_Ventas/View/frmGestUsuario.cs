@@ -594,7 +594,38 @@ namespace PuntodeVenta.View
                 MessageBox.Show("Error al actualizar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public void ExpoertarExcel()
+        {
+            try
+            {
+                int estatus = (int)cbxEstatusB.SelectedValue;
 
+                using(SaveFileDialog save = new SaveFileDialog())
+                {
+                    save.Filter = "Excel Workbook|*.xlsx";
+                    save.Title = "Guardar archivo de Excel";
+                    save.FileName = "Usuarios_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xlsx";
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        string ruta = save.FileName;
+                        UsuariosController usuariosController = new UsuariosController();
+                        var (exito, msg) = usuariosController.ExportarUsuariosExel(ruta, estatus);
+                        if (exito)
+                        {
+                            MessageBox.Show("Archivo exportado con éxito", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al exportar el archivo: " + msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al exportar el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void lbEstatusB_Click(object sender, EventArgs e)
         {
 
