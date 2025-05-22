@@ -70,6 +70,7 @@
             ofdArchivo = new OpenFileDialog();
             lbTitulo = new Label();
             tooltip_passwor = new ToolTip(components);
+            btnExportExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)scUsuarios).BeginInit();
             scUsuarios.Panel1.SuspendLayout();
             scUsuarios.Panel2.SuspendLayout();
@@ -375,6 +376,7 @@
             // gbxBusqueda
             // 
             gbxBusqueda.BackColor = SystemColors.GradientInactiveCaption;
+            gbxBusqueda.Controls.Add(btnExportExcel);
             gbxBusqueda.Controls.Add(lbEstatusB);
             gbxBusqueda.Controls.Add(cbxEstatusB);
             gbxBusqueda.Controls.Add(btnBuscar);
@@ -406,7 +408,6 @@
             cbxEstatusB.Name = "cbxEstatusB";
             cbxEstatusB.Size = new Size(102, 23);
             cbxEstatusB.TabIndex = 13;
-          //  cbxEstatusB.SelectedIndexChanged += this.cbxEstatusB_SelectedIndexChanged;
             // 
             // btnBuscar
             // 
@@ -512,6 +513,16 @@
             lbTitulo.Text = "Gestion de Usuarios";
             lbTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btnExportExcel
+            // 
+            btnExportExcel.Location = new Point(508, 23);
+            btnExportExcel.Name = "btnExportExcel";
+            btnExportExcel.Size = new Size(107, 23);
+            btnExportExcel.TabIndex = 15;
+            btnExportExcel.Text = "Exportar Excel";
+            btnExportExcel.UseVisualStyleBackColor = true;
+            btnExportExcel.Click += btnExportExcel_Click;
+            // 
             // frmGestUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -582,5 +593,6 @@
         private ContextMenuStrip menuStrip;
         private ToolStripMenuItem editarToolStripMenuItem;
         private Button button1;
+        private Button btnExportExcel;
     }
 }

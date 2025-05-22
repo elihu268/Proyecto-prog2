@@ -594,25 +594,41 @@ namespace PuntodeVenta.View
                 MessageBox.Show("Error al actualizar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public void ExpoertarExcel()
+        public void ExportarExcel()
         {
             try
             {
-                int estatus = (int)cbxEstatusB.SelectedValue;
+                int estatus = (int)cbxEstatusB.SelectedIndex;
 
-                using(SaveFileDialog save = new SaveFileDialog())
+                using (SaveFileDialog save = new SaveFileDialog())
                 {
-                    save.Filter = "Excel Workbook|*.xlsx";
+                    save.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
                     save.Title = "Guardar archivo de Excel";
                     save.FileName = "Usuarios_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xlsx";
+                    save.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                     if (save.ShowDialog() == DialogResult.OK)
                     {
-                        string ruta = save.FileName;
+                        Cursor.Current = Cursors.WaitCursor;
                         UsuariosController usuariosController = new UsuariosController();
-                        var (exito, msg) = usuariosController.ExportarUsuariosExel(ruta, estatus);
-                        if (exito)
+                        var (exito, msg) = usuariosController.ExportarUsuariosExel(save.FileName, estatus);
+                        Cursor.Current = Cursors.Default;
+                        if (exito && msg == 1)
                         {
                             MessageBox.Show("Archivo exportado con éxito", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // Abrir el archivo después de exportar
+                            DialogResult result = MessageBox.Show("¿Desea abrir el archivo exportado?", "Abrir archivo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (result == DialogResult.Yes)
+                            {
+                                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = save.FileName,
+                                    UseShellExecute = true
+                                });
+                            }
+                        }
+                        else if (msg == -1)
+                        {
+                            MessageBox.Show("No hay usuarios para exportar", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
@@ -623,12 +639,18 @@ namespace PuntodeVenta.View
             }
             catch (Exception ex)
             {
+                Cursor.Current = Cursors.Default;
                 MessageBox.Show("Error al exportar el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void lbEstatusB_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            ExportarExcel();
         }
     }
 }
