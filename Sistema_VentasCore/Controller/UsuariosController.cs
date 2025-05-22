@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sistema_VentasCore.Utilities;
+using OfficeOpenXml;
 
 namespace Sistema_VentasCore.Controller
 {
@@ -182,6 +183,61 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
+        public (bool Ex, int msg) ExportarUsuariosExel(string ruta,int estatus)
+        {
+            try
+            {
+                List<Usuario> usuarios = _usuariosDataAccess.ObtenerUsuarios(estatus);
+                // Verificar si la lista de usuarios está vacía
+                if (usuarios == null || usuarios.Count == 0)
+                {
+                    _logger.Warn("No hay usuarios para exportar.");
+                    return (false, -1);// no hay usuarios
+                }
+                // Crear una instancia de la clase ExcelExport
+                using (var package = new ExcelPackage())
+                {
+                    // Crear una hoja de trabajo
+                    var worksheet = package.Workbook.Worksheets.Add("Usuarios");
+
+                    int row = 1;
+
+                    // Agregar encabezados
+                    worksheet.Cells[row, 1].Value = "Nombre";
+                    worksheet.Cells[row, 2].Value = "Correo";
+                    worksheet.Cells[row, 3].Value = "Estatus";
+                    // Agregar datos de usuarios
+                   using(var range = worksheet.Cells[row, 1, row, 5])
+                    {
+                        range.Style.Font.Bold = true;
+                        range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                        range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    }
+                    row++;
+                    foreach (var usuario in usuarios)
+                    {
+                        worksheet.Cells[row, 1].Value = usuario.DatosPersonales.NombreCompleto;
+                        worksheet.Cells[row, 2].Value = usuario.Cuenta;
+                        worksheet.Cells[row, 3].Value = usuario.Estatus == true;
+                        row++;
+                    }
+                    // Guardar el archivo Excel
+                    FileInfo fileInfo = new FileInfo(ruta);
+                    package.SaveAs(fileInfo);
+                    _logger.Info("Archivo Excel guardado en: " + ruta);
+                    return (true, 1);// archivo guardado con éxito
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                _logger.Error($"Error al exportar usuarios a Excel: " + ex.Message);
+                return (false, -1);
+            }
+        }
+
 
     }
 }
