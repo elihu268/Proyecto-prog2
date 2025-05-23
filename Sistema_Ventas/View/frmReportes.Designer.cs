@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportes));
             gbxFiltroVentas = new GroupBox();
+            btnExportarExcel = new Button();
             picBoxReportes = new PictureBox();
             cbFecha = new CheckBox();
             lblNomProducto = new Label();
@@ -54,6 +55,7 @@
             // gbxFiltroVentas
             // 
             gbxFiltroVentas.BackColor = SystemColors.GradientInactiveCaption;
+            gbxFiltroVentas.Controls.Add(btnExportarExcel);
             gbxFiltroVentas.Controls.Add(picBoxReportes);
             gbxFiltroVentas.Controls.Add(cbFecha);
             gbxFiltroVentas.Controls.Add(lblNomProducto);
@@ -71,11 +73,27 @@
             gbxFiltroVentas.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxFiltroVentas.Location = new Point(0, 0);
             gbxFiltroVentas.Name = "gbxFiltroVentas";
-            gbxFiltroVentas.Size = new Size(587, 212);
+            gbxFiltroVentas.Size = new Size(587, 241);
             gbxFiltroVentas.TabIndex = 0;
             gbxFiltroVentas.TabStop = false;
             gbxFiltroVentas.Text = "Filtrado de ventas";
             gbxFiltroVentas.Enter += gbxFiltroVentas_Enter;
+            // 
+            // btnExportarExcel
+            // 
+            btnExportarExcel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            btnExportarExcel.AutoSize = true;
+            btnExportarExcel.BackColor = SystemColors.ActiveCaption;
+            btnExportarExcel.Image = Sistema_Ventas.Properties.Resources.Excel1;
+            btnExportarExcel.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExportarExcel.Location = new Point(245, 209);
+            btnExportarExcel.MaximumSize = new Size(114, 32);
+            btnExportarExcel.Name = "btnExportarExcel";
+            btnExportarExcel.Size = new Size(114, 32);
+            btnExportarExcel.TabIndex = 25;
+            btnExportarExcel.Text = "Exportar Excel";
+            btnExportarExcel.TextAlign = ContentAlignment.MiddleRight;
+            btnExportarExcel.UseVisualStyleBackColor = false;
             // 
             // picBoxReportes
             // 
@@ -83,7 +101,7 @@
             picBoxReportes.Image = Sistema_Ventas.Properties.Resources.iconoPregunta;
             picBoxReportes.Location = new Point(285, 134);
             picBoxReportes.Name = "picBoxReportes";
-            picBoxReportes.Size = new Size(33, 32);
+            picBoxReportes.Size = new Size(33, 31);
             picBoxReportes.TabIndex = 23;
             picBoxReportes.TabStop = false;
             toolTipDetalle.SetToolTip(picBoxReportes, "Haz doble clic sobre un registro para ver los detalles de la compra");
@@ -222,9 +240,9 @@
             btnGenerarReporte.Image = Sistema_Ventas.Properties.Resources.generarReporte;
             btnGenerarReporte.ImageAlign = ContentAlignment.MiddleLeft;
             btnGenerarReporte.Location = new Point(266, 171);
-            btnGenerarReporte.MaximumSize = new Size(75, 30);
+            btnGenerarReporte.MaximumSize = new Size(75, 32);
             btnGenerarReporte.Name = "btnGenerarReporte";
-            btnGenerarReporte.Size = new Size(75, 30);
+            btnGenerarReporte.Size = new Size(75, 32);
             btnGenerarReporte.TabIndex = 2;
             btnGenerarReporte.Text = "Generar";
             btnGenerarReporte.TextAlign = ContentAlignment.MiddleRight;
@@ -237,12 +255,12 @@
             dgvReporteVentas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvReporteVentas.BackgroundColor = SystemColors.ActiveCaption;
             dgvReporteVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReporteVentas.Location = new Point(0, 217);
+            dgvReporteVentas.Location = new Point(0, 246);
             dgvReporteVentas.Margin = new Padding(2);
             dgvReporteVentas.Name = "dgvReporteVentas";
             dgvReporteVentas.ReadOnly = true;
             dgvReporteVentas.RowHeadersWidth = 62;
-            dgvReporteVentas.Size = new Size(587, 230);
+            dgvReporteVentas.Size = new Size(587, 201);
             dgvReporteVentas.TabIndex = 5;
             dgvReporteVentas.CellDoubleClick += dgvReporteVentas_CellDoubleClick;
             // 
@@ -283,5 +301,6 @@
         private DataGridView dgvReporteVentas;
         private PictureBox picBoxReportes;
         private ToolTip toolTipDetalle;
+        private Button btnExportarExcel;
     }
 }
