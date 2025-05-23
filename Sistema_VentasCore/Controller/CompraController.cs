@@ -319,7 +319,8 @@ namespace Sistema_VentasCore.Controller
                 return new ResumenVenta
                 {
                     CodigoArticulo = codigoArticulo,
-                    TotalVentas = ventas.Count
+                    TotalVentas = ventas.Count,
+                    Ventas = ventas
                 };
             }
             catch (Exception ex)

@@ -10,6 +10,7 @@ namespace Sistema_VentasCore.Model
     {
         public int CodigoArticulo { get; set; }
         public int TotalVentas { get; set; }
-    
+        public List<VentaPorArticulo> Ventas { get; set; }
+
     }
 }
