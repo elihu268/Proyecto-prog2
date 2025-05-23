@@ -135,31 +135,6 @@ namespace Sistema_VentasCore.Data
                     parametros.Add(new NpgsqlParameter("@estatus", true));
                 }
 
-                if (tipoFecha == 1) // Nacimiento
-                {
-                    query += " AND p.fecha_nacimiento BETWEEN @FechaInicial AND @FechaFinal ";
-                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
-                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
-                }
-                else if (tipoFecha == 2) // Alta
-                {
-                    query += " AND c.fecha_registro BETWEEN @FechaInicial AND @FechaFinal ";
-                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
-                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
-                }
-                else if (tipoFecha == 3) // Baja
-                {
-                    query += " AND p.fecha_baja BETWEEN @FechaInicial AND @FechaFinal ";
-                    parametros.Add(new NpgsqlParameter("@FechaInicial", fechaInicial));
-                    parametros.Add(new NpgsqlParameter("@FechaFinal", fechaFinal));
-                }
-
-                if (!string.IsNullOrEmpty(busqueda))
-                {
-                    query += " AND (p.nombre_completo ILIKE @Busqueda OR c.rfc ILIKE @Busqueda OR p.correo ILIKE @Busqueda) ";
-                    parametros.Add(new NpgsqlParameter("@Busqueda", "%" + busqueda + "%"));
-                }
-
                 query += "\nORDER BY c.id_cliente";
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
