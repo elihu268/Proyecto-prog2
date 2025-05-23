@@ -92,7 +92,6 @@ namespace Sistema_Ventas.View
             dt.Columns.Add("Precio", typeof(decimal));
             dt.Columns.Add("Descripcion", typeof(string));
             dt.Columns.Add("Existencia", typeof(int));
-            dt.Columns.Add("Estatus", typeof(string)); // Incluimos "Estatus"
 
             foreach (Producto prd in productos)
             {
@@ -120,7 +119,6 @@ namespace Sistema_Ventas.View
             dgvCatalogo.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.Columns["Precio"].DefaultCellStyle.Format = "C2";
             dgvCatalogo.Columns["Existencia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvCatalogo.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.AlternatingRowsDefaultCellStyle.BackColor = Color.LightCyan;
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
