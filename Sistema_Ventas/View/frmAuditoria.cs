@@ -244,7 +244,7 @@ namespace PuntodeVenta.View
                         }
                         else
                         {
-                            MessageBox.Show("Error al exportar el archivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Error al exportar el archivo Verifique las fechas ingresadas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
