@@ -130,9 +130,81 @@ namespace Sistema_Ventas.View
             dgvCatalogo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatalogo.ScrollBars = ScrollBars.Both;
         }
+        public void ImportarExcelCatalogo()
+        {
+            try
+            {
+                ProductosController productosController = new ProductosController();
+
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar archivo de Excel";
+                    saveFileDialog.FileName = $"Catalogo_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)//Espera confirmacion
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+                        // Exportar usando el método del controlador
+                        bool resultado = productosController.ExportarProductosExcel(saveFileDialog.FileName);
+
+                        // Restaurar cursor normal
+                        Cursor.Current = Cursors.Default;
+
+                        if (resultado)
+                        {
+                            MessageBox.Show("Archivo Excel exportado correctamente",
+                                            "Éxito",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+
+                            // Preguntar si desea abrir el archivo
+                            DialogResult abrirArchivo = MessageBox.Show(
+                                            "¿Desea abrir el archivo Excel generado?",
+                                            "Abrir archivo",
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+
+                            if (abrirArchivo == DialogResult.Yes)
+                            {
+                                // Usar ProcessStartInfo para abrir el archivo con la aplicación asociada
+                                var startInfo = new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = saveFileDialog.FileName,
+                                    UseShellExecute = true
+                                };
+                                System.Diagnostics.Process.Start(startInfo);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontraron productos para exportar",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             CargarCatalogo();
+        }
+
+        private void btnImportarExcel_Click(object sender, EventArgs e)
+        {
+            ImportarExcelCatalogo();
         }
     }
 }
