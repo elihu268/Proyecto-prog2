@@ -20,7 +20,6 @@ namespace Sistema_VentasCore.Data
         //private static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
         //le indiica al dataacces donde esta la cadena de conexion que esta appConfig
         private static string _connectionString;
-
         private NpgsqlConnection _connection;
         private static PostgreSQLDataAccess? _instance;
         //para crear solo una instancias y no tenerlas repertidas
