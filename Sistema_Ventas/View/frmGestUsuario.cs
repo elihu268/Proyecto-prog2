@@ -274,7 +274,7 @@ namespace PuntodeVenta.View
                         usuario.DatosPersonales.NombreCompleto,
                         usuario.DatosPersonales.Correo,
                         usuario.DatosPersonales.Telefono,
-                        usuario.Estatus,
+                        usuario.Estatus ? "Activo" : "Inactivo",
                         usuario.idRol);
                 }
                 dgvUsuarios.DataSource = dt;
@@ -309,7 +309,7 @@ namespace PuntodeVenta.View
                     usuario.DatosPersonales.NombreCompleto,
                     usuario.DatosPersonales.Correo,
                     usuario.DatosPersonales.Telefono,
-                    usuario.Estatus,
+                    usuario.Estatus ? "Activo" : "Inactivo",
                     usuario.idRol);
             }
             dgvUsuarios.DataSource = dt;
