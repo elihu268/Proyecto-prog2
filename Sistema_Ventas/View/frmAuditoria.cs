@@ -23,7 +23,7 @@ namespace PuntodeVenta.View
         private void frmAuditoria_Load(object sender, EventArgs e)
         {
             CargarAuditorias();
-            
+
         }
 
         private void CargarAuditorias()
@@ -142,14 +142,14 @@ namespace PuntodeVenta.View
         {
             ObtenerAuditoriasBusqueda();
         }
-        
+
         public void ObtenerAuditoriasBusqueda()
         {
-            
+
             try
             {
                 Cursor = Cursors.WaitCursor;
-                string nombre = string.IsNullOrWhiteSpace(txtBusqueda.Text) ? "": txtBusqueda.Text.ToLower();
+                string nombre = string.IsNullOrWhiteSpace(txtBusqueda.Text) ? "" : txtBusqueda.Text.ToLower();
                 DateTime? fechaInicio = dtpFechaInicio.Value;
                 DateTime? fechaFin = dtpFechaFin.Value;
 
@@ -203,6 +203,65 @@ namespace PuntodeVenta.View
             dgvAuditorias.DataSource = dt;
             ConfigurarDGV();
         }
+        public void ExportarExcel()
+        {
+            try
+            {
+                DateTime inicio = dtpFechaInicio.Value;
+                DateTime fin = dtpFechaFin.Value;
+                string nombre = string.IsNullOrWhiteSpace(txtBusqueda.Text) ? "" : txtBusqueda.Text.ToLower();
 
+                using (SaveFileDialog save = new SaveFileDialog())
+                {
+                    save.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    save.Title = "Guardar archivo de auditoría";
+                    save.FileName = $"Auditorias_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
+                    save.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+                        string ruta = save.FileName;
+                        AuditoriaController auditoriaController = new AuditoriaController();
+                        var (exito, msg) = auditoriaController.ExportarAuditoriasExcel(ruta, nombre, inicio, fin);
+                        if (exito && msg == 1)
+                        {
+                            MessageBox.Show("Exportación exitosa", "Información del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            DialogResult abrir = MessageBox.Show("¿Desea abrir el archivo exportado?", "Información del Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (abrir == DialogResult.Yes)
+                            {
+                                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = save.FileName,
+                                    UseShellExecute = true
+                                });
+                            }
+                        }
+                        else if (exito && msg == 0)
+                        {
+                            MessageBox.Show("No se encontraron resultados para la busqueda", "Informacion del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al exportar el archivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al exportar el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            ExportarExcel();
+        }
     }
 }

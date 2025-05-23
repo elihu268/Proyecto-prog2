@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAuditoria));
             gbxBusquedaAuditoria = new GroupBox();
+            btnExportExcel = new Button();
             dtpFechaFin = new DateTimePicker();
             dtpFechaInicio = new DateTimePicker();
             lbFechaFin = new Label();
@@ -44,6 +45,7 @@
             // 
             // gbxBusquedaAuditoria
             // 
+            gbxBusquedaAuditoria.Controls.Add(btnExportExcel);
             gbxBusquedaAuditoria.Controls.Add(dtpFechaFin);
             gbxBusquedaAuditoria.Controls.Add(dtpFechaInicio);
             gbxBusquedaAuditoria.Controls.Add(lbFechaFin);
@@ -55,10 +57,20 @@
             gbxBusquedaAuditoria.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbxBusquedaAuditoria.Location = new Point(0, 0);
             gbxBusquedaAuditoria.Name = "gbxBusquedaAuditoria";
-            gbxBusquedaAuditoria.Size = new Size(519, 85);
+            gbxBusquedaAuditoria.Size = new Size(616, 85);
             gbxBusquedaAuditoria.TabIndex = 0;
             gbxBusquedaAuditoria.TabStop = false;
             gbxBusquedaAuditoria.Text = "Busqueda de Auditorias";
+            // 
+            // btnExportExcel
+            // 
+            btnExportExcel.Location = new Point(486, 36);
+            btnExportExcel.Name = "btnExportExcel";
+            btnExportExcel.Size = new Size(118, 23);
+            btnExportExcel.TabIndex = 7;
+            btnExportExcel.Text = "Exportar Excel";
+            btnExportExcel.UseVisualStyleBackColor = true;
+            btnExportExcel.Click += btnExportExcel_Click;
             // 
             // dtpFechaFin
             // 
@@ -132,7 +144,7 @@
             dgvAuditorias.Location = new Point(0, 85);
             dgvAuditorias.Name = "dgvAuditorias";
             dgvAuditorias.RowHeadersWidth = 62;
-            dgvAuditorias.Size = new Size(519, 393);
+            dgvAuditorias.Size = new Size(616, 393);
             dgvAuditorias.TabIndex = 1;
             // 
             // frmAuditoria
@@ -140,7 +152,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(519, 478);
+            ClientSize = new Size(616, 478);
             Controls.Add(dgvAuditorias);
             Controls.Add(gbxBusquedaAuditoria);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -164,5 +176,6 @@
         private Label lbFechaFin;
         private Label lbFechaInicio;
         private DataGridView dgvAuditorias;
+        private Button btnExportExcel;
     }
 }
