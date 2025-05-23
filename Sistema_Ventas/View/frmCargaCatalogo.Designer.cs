@@ -45,9 +45,9 @@
             // 
             btnCargaCatalogo.BackColor = SystemColors.ActiveCaption;
             btnCargaCatalogo.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCargaCatalogo.Location = new Point(248, 28);
+            btnCargaCatalogo.Location = new Point(276, 30);
             btnCargaCatalogo.Name = "btnCargaCatalogo";
-            btnCargaCatalogo.Size = new Size(263, 44);
+            btnCargaCatalogo.Size = new Size(292, 48);
             btnCargaCatalogo.TabIndex = 1;
             btnCargaCatalogo.Text = "Carga de Catalogo";
             btnCargaCatalogo.UseVisualStyleBackColor = false;
@@ -59,9 +59,9 @@
             btnActualizar.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnActualizar.Image = Properties.Resources.actualizar;
             btnActualizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActualizar.Location = new Point(290, 85);
+            btnActualizar.Location = new Point(322, 92);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(157, 34);
+            btnActualizar.Size = new Size(174, 37);
             btnActualizar.TabIndex = 3;
             btnActualizar.Text = "Actualizar";
             btnActualizar.TextAlign = ContentAlignment.MiddleRight;
@@ -73,12 +73,11 @@
             dgvCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCatalogo.BackgroundColor = SystemColors.ActiveCaption;
             dgvCatalogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCatalogo.Enabled = false;
-            dgvCatalogo.Location = new Point(1, 184);
+            dgvCatalogo.Location = new Point(1, 200);
             dgvCatalogo.Name = "dgvCatalogo";
             dgvCatalogo.ReadOnly = true;
             dgvCatalogo.RowHeadersWidth = 62;
-            dgvCatalogo.Size = new Size(799, 254);
+            dgvCatalogo.Size = new Size(888, 276);
             dgvCatalogo.TabIndex = 4;
             // 
             // ofdCatalogo
@@ -88,9 +87,9 @@
             // pbCatalogo
             // 
             pbCatalogo.Image = Properties.Resources.catalogo1;
-            pbCatalogo.Location = new Point(24, 28);
+            pbCatalogo.Location = new Point(27, 30);
             pbCatalogo.Name = "pbCatalogo";
-            pbCatalogo.Size = new Size(97, 75);
+            pbCatalogo.Size = new Size(108, 82);
             pbCatalogo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCatalogo.TabIndex = 5;
             pbCatalogo.TabStop = false;
@@ -103,9 +102,9 @@
             groupBox1.Controls.Add(btnCargaCatalogo);
             groupBox1.Controls.Add(pbCatalogo);
             groupBox1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(1, 54);
+            groupBox1.Location = new Point(1, 59);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(799, 124);
+            groupBox1.Size = new Size(888, 135);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "Herramientas";
@@ -119,17 +118,17 @@
             lblTitulo.Location = new Point(0, 0);
             lblTitulo.Margin = new Padding(4, 0, 4, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(800, 51);
+            lblTitulo.Size = new Size(889, 55);
             lblTitulo.TabIndex = 8;
             lblTitulo.Text = "Carga de Catalogos";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // frmCargaCatalogo
             // 
-            AutoScaleDimensions = new SizeF(9F, 23F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(889, 489);
             Controls.Add(lblTitulo);
             Controls.Add(groupBox1);
             Controls.Add(dgvCatalogo);
