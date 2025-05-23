@@ -77,6 +77,7 @@
             btncollapse = new Button();
             lbtitle = new Label();
             ttipinfo = new ToolTip(components);
+            btnImportarExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)scClientes).BeginInit();
             scClientes.Panel1.SuspendLayout();
             scClientes.Panel2.SuspendLayout();
@@ -548,6 +549,7 @@
             // 
             // gbxHerramientas
             // 
+            gbxHerramientas.Controls.Add(btnImportarExcel);
             gbxHerramientas.Controls.Add(lbseleccione);
             gbxHerramientas.Controls.Add(btnCargaMasiva);
             gbxHerramientas.Controls.Add(btncollapse);
@@ -629,6 +631,26 @@
             ttipinfo.Tag = "xd";
             ttipinfo.ToolTipTitle = "RFC";
             // 
+            // btnImportarExcel
+            // 
+            btnImportarExcel.AccessibleDescription = "";
+            btnImportarExcel.BackColor = SystemColors.ActiveCaption;
+            btnImportarExcel.Cursor = Cursors.Hand;
+            btnImportarExcel.FlatAppearance.BorderSize = 0;
+            btnImportarExcel.FlatStyle = FlatStyle.Flat;
+            btnImportarExcel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnImportarExcel.Image = (Image)resources.GetObject("btnImportarExcel.Image");
+            btnImportarExcel.ImageAlign = ContentAlignment.MiddleLeft;
+            btnImportarExcel.Location = new Point(562, 31);
+            btnImportarExcel.Margin = new Padding(4, 5, 4, 5);
+            btnImportarExcel.Name = "btnImportarExcel";
+            btnImportarExcel.Size = new Size(155, 35);
+            btnImportarExcel.TabIndex = 3;
+            btnImportarExcel.Text = "Importar a Excel";
+            btnImportarExcel.TextAlign = ContentAlignment.MiddleRight;
+            btnImportarExcel.UseVisualStyleBackColor = false;
+            btnImportarExcel.Click += btnImportarExcel_Click;
+            // 
             // frmGestClientes
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
@@ -640,7 +662,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 5, 4, 5);
             Name = "frmGestClientes";
-            Text = "Gestion de Clientes";
+            Text = "|";
             Load += frmGestClientes_Load;
             scClientes.Panel1.ResumeLayout(false);
             scClientes.Panel2.ResumeLayout(false);
@@ -706,5 +728,6 @@
         private ContextMenuStrip cmsEdit;
         private ToolStripMenuItem editarToolStripMenuItem;
         private Button btnActualizarInfo;
+        private Button btnImportarExcel;
     }
 }

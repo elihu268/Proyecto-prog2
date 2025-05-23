@@ -638,5 +638,10 @@ namespace PuntodeVenta.View
         {
 
         }
+
+        private void btnImportarExcel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
