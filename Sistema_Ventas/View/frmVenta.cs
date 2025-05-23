@@ -298,7 +298,7 @@ namespace Sistema_Ventas.View
                     MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                cantidad += existente.Cantidad;
+                existente.Cantidad = existenciamod;
             }
             else
             {
