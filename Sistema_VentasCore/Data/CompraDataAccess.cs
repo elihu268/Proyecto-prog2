@@ -366,7 +366,7 @@ namespace Sistema_VentasCore.Data
                 _dbAccess.Connect();
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-                parametros.Add(new NpgsqlParameter("@id_producto", codigoArticulo.Value));
+                parametros.Add(new NpgsqlParameter("@codigoArticulo", codigoArticulo.Value));
 
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
