@@ -84,11 +84,14 @@ namespace Sistema_Ventas.View
             Dictionary<string, object?> estatusFiltro = new Dictionary<string, object?>
             {
                 { "Activo", 1 },
-                { "Inactivo", 0 }
+                { "Inactivo", 0 },
+                { "Sin especificar", null }
             };
             cbxEstatusBusqueda.DataSource = new BindingSource(estatusFiltro, null);
             cbxEstatusBusqueda.DisplayMember = "Key";
             cbxEstatusBusqueda.ValueMember = "Value";
+            cbxEstatusBusqueda.SelectedIndex = cbxEstatusBusqueda.FindStringExact("Sin especificar");
+            cbxEstatusBusqueda.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
@@ -415,6 +418,100 @@ namespace Sistema_Ventas.View
             }
         }
 
+        public void ImportarExcelRoles()
+        {
+            try
+            {
+                // Generar busqueda en la vista
+                btnBuscarRol.PerformClick();
 
+                // Instanciar el controlador
+                RolesController rolesController = new RolesController();
+
+                // Obtener filtros desde la vista
+                string? codigo = cbxCodigoBusqueda.SelectedValue?.ToString();
+                string? descripcion = string.IsNullOrWhiteSpace(txtDescBusqueda.Text) ? null : txtDescBusqueda.Text.Trim();
+                int? estatus = cbxEstatusBusqueda.SelectedValue as int?;
+
+                //int? estatus = null;
+                //if (cbxEstatusBusqueda.SelectedValue != null)
+                //{
+                //    int estatusSeleccionado = (int)cbxEstatusBusqueda.SelectedValue;
+                //    if (estatusSeleccionado == 0 || estatusSeleccionado == 1)
+                //        estatus = estatusSeleccionado;
+                //}
+                //string codigo = cbxCodigoRol.SelectedItem != null && cbxCodigoRol.SelectedIndex > 0
+                //                ? cbxCodigoRol.SelectedItem.ToString()
+                //                : null;
+
+                // Diálogo para guardar el archivo
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar archivo de Excel";
+                    saveFileDialog.FileName = $"Roles_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+
+                        // Ejecutar la exportación
+                        bool resultado = rolesController.ExportarRolesExcel(
+                            saveFileDialog.FileName,
+                            estatus,
+                            string.IsNullOrWhiteSpace(descripcion) ? null : descripcion,
+                            string.IsNullOrWhiteSpace(codigo) ? null : codigo
+                        );
+
+                        Cursor.Current = Cursors.Default;
+
+                        if (resultado)
+                        {
+                            MessageBox.Show("Archivo Excel exportado correctamente.",
+                                            "Éxito",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+
+                            DialogResult abrirArchivo = MessageBox.Show(
+                                "¿Desea abrir el archivo Excel generado?",
+                                "Abrir archivo",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+
+                            if (abrirArchivo == DialogResult.Yes)
+                            {
+                                var startInfo = new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = saveFileDialog.FileName,
+                                    UseShellExecute = true
+                                };
+                                System.Diagnostics.Process.Start(startInfo);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontraron roles para exportar.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            ImportarExcelRoles();
+        }
     }
 }

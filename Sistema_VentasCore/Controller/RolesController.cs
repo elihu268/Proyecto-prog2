@@ -1,7 +1,8 @@
-﻿using Sistema_VentasCore.Data;
-using Sistema_VentasCore.Utilities;
-using NLog;
+﻿using NLog;
+using OfficeOpenXml;
+using Sistema_VentasCore.Data;
 using Sistema_VentasCore.Model;
+using Sistema_VentasCore.Utilities;
 
 namespace Sistema_VentasCore.Controller
 {
@@ -12,6 +13,7 @@ namespace Sistema_VentasCore.Controller
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.Controller.RolesController");
         private readonly RolesDataAccess _rolesData;
+        private readonly PermisoARolDataAccess _permisoARolData;
 
         /// <summary>
         /// Constructor del controlador de roles.
@@ -20,6 +22,7 @@ namespace Sistema_VentasCore.Controller
         {
             try
             {
+                _permisoARolData = new PermisoARolDataAccess();
                 _rolesData = new RolesDataAccess();
             }
             catch (Exception ex)
@@ -203,7 +206,85 @@ namespace Sistema_VentasCore.Controller
                 return new List<Rol>();
             }
         }
-        
+
+        /// <summary>
+        /// Exporta los roles registrados junto con sus permisos asociados a un archivo Excel, aplicando filtros opcionales.
+        /// </summary>
+        /// <param name="rutaArchivo">Ruta completa donde se guardará el archivo Excel</param>
+        /// <param name="estatus">Estatus del rol (1 = Activo, 0 = Inactivo, null = Todos)</param>
+        /// <param name="descripcion">Texto parcial a buscar en la descripción del rol</param>
+        /// <param name="codigo">Código del rol (exacto o parcial)</param>
+        /// <returns>True si la exportación fue exitosa, False en caso contrario</returns>
+        public bool ExportarRolesExcel(string rutaArchivo, int? estatus = null, string? descripcion = null, string? codigo = null)
+        {
+            try
+            {
+                // Obtener los roles con filtros
+                var roles = _rolesData.ObtenerRolesFiltrados(codigo, descripcion, estatus);
+
+                if (roles == null || roles.Count == 0)
+                {
+                    _logger.Warn("No hay roles para exportar con los filtros especificados");
+                    return false;
+                }
+
+                // Crear el archivo Excel
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Roles");
+
+                    // Establecer los encabezados
+                    worksheet.Cells[1, 1].Value = "ID Rol";
+                    worksheet.Cells[1, 2].Value = "Código";
+                    worksheet.Cells[1, 3].Value = "Descripción";
+                    worksheet.Cells[1, 4].Value = "Estatus";
+                    worksheet.Cells[1, 5].Value = "Permisos Asignados";
+
+                    // Aplicar formato a los encabezados
+                    using (var range = worksheet.Cells[1, 1, 1, 5])
+                    {
+                        range.Style.Font.Bold = true;
+                        range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                        range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    }
+
+                    // Llenar los datos
+                    int row = 2;
+                    foreach (var rol in roles)
+                    {
+                        worksheet.Cells[row, 1].Value = rol.IdRol;
+                        worksheet.Cells[row, 2].Value = rol.Codigo;
+                        worksheet.Cells[row, 3].Value = rol.Descripcion;
+                        worksheet.Cells[row, 4].Value = rol.Estatus ? "Activo" : "Inactivo";
+
+
+                        // Obtener los permisos asignados al rol
+                        var permisos = _permisoARolData.ObtenerPermisosPorRol(rol.IdRol);
+                        string permisosConcatenados = string.Join(", ", permisos.Select(p => p.Codigo));
+
+                        worksheet.Cells[row, 5].Value = permisosConcatenados;
+                        row++;
+                    }
+
+                    // Ajustar ancho automático de columnas
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                    // Guardar el archivo
+                    FileInfo fileInfo = new FileInfo(rutaArchivo);
+                    package.SaveAs(fileInfo);
+
+                    _logger.Info($"Archivo Excel exportado correctamente: {rutaArchivo}");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar roles a Excel");
+                throw;
+            }
+        }
+
 
     }
 }

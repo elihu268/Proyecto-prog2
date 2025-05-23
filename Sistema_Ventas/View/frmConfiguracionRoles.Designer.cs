@@ -57,6 +57,7 @@
             txtDescBusqueda = new TextBox();
             lblDescBusqueda = new Label();
             gbxHerramienta = new GroupBox();
+            btnExportarExcel = new Button();
             btnColapsar = new Button();
             lblTituloRol = new Label();
             toolTipCodigo = new ToolTip(components);
@@ -327,7 +328,7 @@
             cbxEstatusBusqueda.FormattingEnabled = true;
             cbxEstatusBusqueda.Location = new Point(93, 25);
             cbxEstatusBusqueda.Name = "cbxEstatusBusqueda";
-            cbxEstatusBusqueda.Size = new Size(87, 23);
+            cbxEstatusBusqueda.Size = new Size(101, 23);
             cbxEstatusBusqueda.TabIndex = 18;
             // 
             // lblEstatusBusqueda
@@ -356,16 +357,16 @@
             // 
             // txtDescBusqueda
             // 
-            txtDescBusqueda.Location = new Point(262, 25);
+            txtDescBusqueda.Location = new Point(276, 25);
             txtDescBusqueda.MaxLength = 50;
             txtDescBusqueda.Name = "txtDescBusqueda";
-            txtDescBusqueda.Size = new Size(316, 23);
+            txtDescBusqueda.Size = new Size(304, 23);
             txtDescBusqueda.TabIndex = 1;
             // 
             // lblDescBusqueda
             // 
             lblDescBusqueda.AutoSize = true;
-            lblDescBusqueda.Location = new Point(186, 25);
+            lblDescBusqueda.Location = new Point(200, 25);
             lblDescBusqueda.Name = "lblDescBusqueda";
             lblDescBusqueda.Size = new Size(70, 30);
             lblDescBusqueda.TabIndex = 0;
@@ -373,6 +374,7 @@
             // 
             // gbxHerramienta
             // 
+            gbxHerramienta.Controls.Add(btnExportarExcel);
             gbxHerramienta.Controls.Add(btnColapsar);
             gbxHerramienta.Dock = DockStyle.Top;
             gbxHerramienta.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -383,15 +385,30 @@
             gbxHerramienta.TabStop = false;
             gbxHerramienta.Text = "Herramientas";
             // 
+            // btnExportarExcel
+            // 
+            btnExportarExcel.BackColor = SystemColors.ActiveCaption;
+            btnExportarExcel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExportarExcel.Image = Properties.Resources.Excel;
+            btnExportarExcel.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExportarExcel.Location = new Point(157, 15);
+            btnExportarExcel.Name = "btnExportarExcel";
+            btnExportarExcel.Size = new Size(125, 28);
+            btnExportarExcel.TabIndex = 1;
+            btnExportarExcel.Text = "Exportar Excel";
+            btnExportarExcel.TextAlign = ContentAlignment.MiddleRight;
+            btnExportarExcel.UseVisualStyleBackColor = false;
+            btnExportarExcel.Click += btnExportarExcel_Click;
+            // 
             // btnColapsar
             // 
             btnColapsar.BackColor = SystemColors.ActiveCaption;
             btnColapsar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnColapsar.Image = Properties.Resources.iconoVer;
             btnColapsar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnColapsar.Location = new Point(9, 17);
+            btnColapsar.Location = new Point(9, 15);
             btnColapsar.Name = "btnColapsar";
-            btnColapsar.Size = new Size(134, 26);
+            btnColapsar.Size = new Size(134, 28);
             btnColapsar.TabIndex = 0;
             btnColapsar.Text = "Mostrar captura";
             btnColapsar.TextAlign = ContentAlignment.MiddleRight;
@@ -474,5 +491,6 @@
         private Button btnBuscarRol;
         private ComboBox cbxCodigoBusqueda;
         private Button btnEditarRol;
+        private Button btnExportarExcel;
     }
 }
