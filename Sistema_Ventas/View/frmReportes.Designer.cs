@@ -86,7 +86,7 @@
             btnExportarExcel.BackColor = SystemColors.ActiveCaption;
             btnExportarExcel.Image = Sistema_Ventas.Properties.Resources.Excel1;
             btnExportarExcel.ImageAlign = ContentAlignment.MiddleLeft;
-            btnExportarExcel.Location = new Point(245, 209);
+            btnExportarExcel.Location = new Point(246, 209);
             btnExportarExcel.MaximumSize = new Size(114, 32);
             btnExportarExcel.Name = "btnExportarExcel";
             btnExportarExcel.Size = new Size(114, 32);
@@ -94,6 +94,7 @@
             btnExportarExcel.Text = "Exportar Excel";
             btnExportarExcel.TextAlign = ContentAlignment.MiddleRight;
             btnExportarExcel.UseVisualStyleBackColor = false;
+            btnExportarExcel.Click += btnExportarExcel_Click;
             // 
             // picBoxReportes
             // 

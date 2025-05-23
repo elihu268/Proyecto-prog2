@@ -24,6 +24,7 @@ namespace PuntodeVenta.View
         private void frmReportes_Load(object sender, EventArgs e)
         {
             InicializaVentanaReportes();
+
             _logger.Info("El formulario de reporte de ventas ha sido cargado correctamente.");
             _logger.Debug("Inicializando filtros y parámetros para generación de reportes.");
         }
@@ -289,6 +290,104 @@ namespace PuntodeVenta.View
             }
         }
 
+        private void ImportarExcelCompras()
+        {
+            try
+            {
+                // Generar reporte en la vista
+                btnGenerarReporte.PerformClick();
+
+                // Crear instancia del controlador
+                CompraController compraController = new CompraController();
+
+                // Obtener filtros de la vista
+                int? idCliente = null;
+                int? idProducto = null;
+                DateTime? fechaInicio = null;
+                DateTime? fechaFin = null;
+                int? estatus = 1;
+
+                if (cbCliente.Checked && cbxNomCliente.SelectedValue != null)
+                    idCliente = Convert.ToInt32(cbxNomCliente.SelectedValue);
+
+                if (cbProducto.Checked && cbxNomProducto.SelectedValue != null)
+                    idProducto = Convert.ToInt32(cbxNomProducto.SelectedValue);
+
+                if (cbFecha.Checked)
+                {
+                    fechaInicio = dtpFechaInicio.Value.Date;
+                    fechaFin = dtpFechaFin.Value.Date;
+                }
+
+                // Diálogo para guardar el archivo
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar archivo de Excel";
+                    saveFileDialog.FileName = $"ReporteVentas_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+
+                        bool resultado = compraController.ExportarComprasExcel(
+                            saveFileDialog.FileName,
+                            idCliente,
+                            idProducto,
+                            fechaInicio,
+                            fechaFin,
+                            estatus
+                        );
+
+                        Cursor.Current = Cursors.Default;
+
+                        if (resultado)
+                        {
+                            MessageBox.Show("Archivo Excel exportado correctamente.",
+                                            "Éxito",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+
+                            DialogResult abrir = MessageBox.Show("¿Desea abrir el archivo generado?",
+                                                                 "Abrir archivo",
+                                                                 MessageBoxButtons.YesNo,
+                                                                 MessageBoxIcon.Question);
+                            if (abrir == DialogResult.Yes)
+                            {
+                                var startInfo = new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = saveFileDialog.FileName,
+                                    UseShellExecute = true
+                                };
+                                System.Diagnostics.Process.Start(startInfo);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontraron compras para exportar.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            ImportarExcelCompras();
+        }
+        
         private void cbxNomProducto_SelectedIndexChanged(object sender, EventArgs e) { }
 
         private void cbxNomCliente_SelectedIndexChanged(object sender, EventArgs e) { }

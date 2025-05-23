@@ -2,8 +2,13 @@
 using Sistema_VentasCore.Utilities;
 using NLog;
 using Sistema_VentasCore.Model;
-using System.Linq.Expressions;
 using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using OfficeOpenXml;
 
 namespace Sistema_VentasCore.Controller
 {
@@ -209,5 +214,82 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
+
+        /// <summary>
+        /// Exporta a Excel la lista de compras filtradas.
+        /// </summary>
+        /// <param name="rutaArchivo">Ruta donde se guardará el archivo .xlsx</param>
+        /// <param name="idCliente">ID del cliente (opcional)</param>
+        /// <param name="idProducto">ID del producto (opcional)</param>
+        /// <param name="fechaInicio">Fecha de inicio (opcional)</param>
+        /// <param name="fechaFin">Fecha de fin (opcional)</param>
+        /// <param name="estatus">Estatus de las compras (opcional)</param>
+        /// <returns>True si se exportó correctamente, False en caso contrario</returns>
+        public bool ExportarComprasExcel(string rutaArchivo, int? idCliente = null, int? idProducto = null,
+                                         DateTime? fechaInicio = null, DateTime? fechaFin = null, int? estatus = 1)
+        {
+            try
+            {
+                var compras = _compraData.BuscarCompras(idCliente, idProducto, fechaInicio, fechaFin, estatus);
+
+                if (compras == null || compras.Count == 0)
+                {
+                    _logger.Warn("No hay compras para exportar");
+                    return false;
+                }
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Compras");
+
+                    // Encabezados
+                    worksheet.Cells[1, 1].Value = "ID Compra";
+                    worksheet.Cells[1, 2].Value = "Código";
+                    worksheet.Cells[1, 3].Value = "Cliente";
+                    worksheet.Cells[1, 4].Value = "Subtotal";
+                    worksheet.Cells[1, 5].Value = "IVA";
+                    worksheet.Cells[1, 6].Value = "Descuento";
+                    worksheet.Cells[1, 7].Value = "Total";
+                    worksheet.Cells[1, 8].Value = "Fecha de Compra";
+
+                    using (var range = worksheet.Cells[1, 1, 1, 8])
+                    {
+                        range.Style.Font.Bold = true;
+                        range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                        range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    }
+
+                    int row = 2;
+                    foreach (var compra in compras)
+                    {
+                        worksheet.Cells[row, 1].Value = compra.IdCompra;
+                        worksheet.Cells[row, 2].Value = compra.Codigo;
+                        worksheet.Cells[row, 3].Value = compra.NombreCliente;
+                        worksheet.Cells[row, 4].Value = compra.Subtotal;
+                        worksheet.Cells[row, 5].Value = compra.Iva;
+                        worksheet.Cells[row, 6].Value = compra.Descuento;
+                        worksheet.Cells[row, 7].Value = compra.Total;
+                        worksheet.Cells[row, 8].Value = compra.FechaCompra;
+                        worksheet.Cells[row, 8].Style.Numberformat.Format = "dd/MM/yyyy";
+                        row++;
+                    }
+
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                    FileInfo fileInfo = new FileInfo(rutaArchivo);
+                    package.SaveAs(fileInfo);
+
+                    _logger.Info($"Archivo Excel exportado correctamente: {rutaArchivo}");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar compras a Excel");
+                throw;
+            }
+        }
+
     }
 }
