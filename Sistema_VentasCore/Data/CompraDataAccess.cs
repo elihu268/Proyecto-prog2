@@ -354,7 +354,7 @@ namespace Sistema_VentasCore.Data
                 string query = @"
                     SELECT 
                         c.id_compra,
-                        d.id_producto,
+                        c.codigo,
                         c.fecha_de_compra,
                         c.id_cliente,
                         d.cantidad
@@ -376,7 +376,7 @@ namespace Sistema_VentasCore.Data
                     ventas.Add(new VentaPorArticulo
                     {
                         IdCompra = Convert.ToInt32(row["id_compra"]),
-                        CodigoCompra = Convert.ToInt32(row["id_producto"]),
+                        CodigoCompra = row["codigo"].ToString() ?? "",
                         FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
                         IdCliente = Convert.ToInt32(row["id_cliente"]),
                         Cantidad = Convert.ToInt32(row["cantidad"])
