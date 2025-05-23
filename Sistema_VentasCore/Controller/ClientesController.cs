@@ -10,6 +10,7 @@ using NLog;
 using System.Data;
 using System.Runtime.CompilerServices;
 using Npgsql;
+using OfficeOpenXml;
 
 namespace Sistema_VentasCore.Controller
 {
@@ -49,22 +50,22 @@ namespace Sistema_VentasCore.Controller
             }
         }
 
-        //public DataTable ObtenerClientes(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
-        //{
-        //    try
-        //    {
-        //        DataTable clientes = _clientesData.ObtenerClientesFiltrados(tipoFecha, fechaInicial, fechaFinal, busqueda, soloActivos);
-        //        _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
-        //        return clientes;
-        //    }
-        //    catch (Exception ex)
-        //    {
+        public DataTable ObtenerClientes( DateTime? fechaInicial, DateTime? fechaFinal, bool soloActivos)
+        {
+            try
+            {
+                DataTable clientes = _clientesData.ObtenerClientesFiltrados(fechaInicial, fechaFinal, soloActivos);
+                _logger.Info($"Se obtuvieron {clientes.Rows.Count} ");
+                return clientes;
+            }
+            catch (Exception ex)
+            {
 
-        //        _logger.Error(ex, "Error al obtener la lista de clientes");
-        //        throw;
-        //    }
-        //}
-      
+                _logger.Error(ex, "Error al obtener la lista de clientes");
+                throw;
+            }
+        }
+
         public Cliente ObtenerClientePorId(int id)
         {
             try
@@ -148,5 +149,115 @@ namespace Sistema_VentasCore.Controller
                 return (-4, $"Error inesperado: {ex.Message}");
             }
         }
+
+        public bool ExportarClientesExcel(string rutaArchivo, bool estatus, DateTime? fechaInicio = null, DateTime? fechaFin = null)
+        {
+            try
+            {
+                DataTable tablaClientes = ObtenerClientes(fechaInicio, fechaFin, estatus);
+                List<Cliente> clientes = ConvertirDataTableAClientes(tablaClientes);
+
+
+                if (clientes == null)
+                {
+                    _logger.Warn("No hay clientes para exportar");
+                    return false;
+                }
+
+                using (var package = new ExcelPackage())
+                { //Crea una hoja de trabajo
+                    var worksheet = package.Workbook.Worksheets.Add("Clientes");
+
+                    //Establecer encabezados
+                    worksheet.Cells[1, 1].Value = "ID";
+                    worksheet.Cells[1, 2].Value = "RFC";
+                    worksheet.Cells[1, 3].Value = "Nombre Completo";
+                    worksheet.Cells[1, 4].Value = "Tipo";
+                    worksheet.Cells[1, 5].Value = "Correo";
+                    worksheet.Cells[1, 6].Value = "Teléfono";
+                    worksheet.Cells[1, 7].Value = "Fecha de Nacimiento";
+                    worksheet.Cells[1, 8].Value = "Fecha de Registro";
+                    worksheet.Cells[1, 9].Value = "Estatus";
+
+                    using (var range = worksheet.Cells[1, 1, 1, 9])
+                    {
+                        range.Style.Font.Bold = true;
+                        range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                        range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    }
+
+                    //llenar los datos
+                    int row = 2;//se va a colocar en la siguiente fila
+                    foreach (var cliente in clientes)
+                    {
+                        worksheet.Cells[row, 1].Value = cliente.Id;
+                        worksheet.Cells[row, 2].Value = cliente.Rfc;
+                        worksheet.Cells[row, 3].Value = cliente.DatosPersonales.NombreCompleto;
+                        worksheet.Cells[row, 4].Value = cliente.DescripcionTipo;
+                        worksheet.Cells[row, 5].Value = cliente.DatosPersonales.Correo;
+                        worksheet.Cells[row, 6].Value = cliente.DatosPersonales.Telefono;
+                        worksheet.Cells[row, 7].Value = cliente.DatosPersonales.FechaNacimiento;
+                        worksheet.Cells[row, 8].Value = cliente.FechaRegistro;
+                        worksheet.Cells[row, 9].Value = cliente.DatosPersonales.DescripcionEstatus;
+
+                        //Aplicar formato a las fechas
+                        if (cliente.DatosPersonales.FechaNacimiento.HasValue)
+                        {
+                            worksheet.Cells[row, 7].Style.Numberformat.Format = "dd/MM/yyyy";
+                        }
+                        worksheet.Cells[row, 8].Style.Numberformat.Format = "dd/MM/yyyy";
+                        
+                        row++;
+                    }
+
+                    //Ajustar el ancho de las columnas
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                    //Guardar el archivo 
+                    FileInfo fileInfo = new FileInfo(rutaArchivo);
+                    package.SaveAs(fileInfo);
+
+                    _logger.Info($"Archivo Excel exportado correctamente: {rutaArchivo}");
+                    return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar clientes a Excel");
+                throw;
+            }
+        }
+        public List<Cliente> ConvertirDataTableAClientes(DataTable tabla)
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            foreach (DataRow row in tabla.Rows)
+            {
+                var persona = new Persona
+                {
+                    NombreCompleto = row["Nombre Completo"].ToString(),
+                    Correo = row["Correo"].ToString(),
+                    Telefono = row["Teléfono"].ToString(),
+                    FechaNacimiento = row["Fecha Nacimiento"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["Fecha Nacimiento"]) : null,
+                    Estatus = row["Estatus"].ToString() == "Activo"
+                };
+
+                Cliente cliente = new Cliente
+                {
+                    Id = Convert.ToInt32(row["ID"]),
+                    Rfc = row["RFC"].ToString(),
+                    Tipo = row["Tipo"].ToString() == "Físico" ? 1 : 2, // Ajusta si tienes más valores
+                    FechaRegistro = Convert.ToDateTime(row["Fecha de Registro"]),
+                    DatosPersonales = persona
+                };
+
+                clientes.Add(cliente);
+            }
+
+            return clientes;
+        }
+
     }
 }

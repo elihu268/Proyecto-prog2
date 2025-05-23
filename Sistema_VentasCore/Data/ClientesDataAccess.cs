@@ -106,7 +106,7 @@ namespace Sistema_VentasCore.Data
             }
         }
 
-        public DataTable ObtenerClientesFiltrados(int tipoFecha, DateTime fechaInicial, DateTime fechaFinal, string busqueda, int soloActivos)
+        public DataTable ObtenerClientesFiltrados(DateTime? fechaInicial, DateTime? fechaFinal, bool soloActivos)
         {
             DataTable clientesDataTable = new DataTable();
             try
@@ -129,7 +129,7 @@ namespace Sistema_VentasCore.Data
                     ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
-                if (soloActivos == 1)
+                if (soloActivos != null)
                 {
                     query += " AND p.estatus = @estatus ";
                     parametros.Add(new NpgsqlParameter("@estatus", true));

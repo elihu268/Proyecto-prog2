@@ -588,6 +588,79 @@ namespace PuntodeVenta.View
 
         }
 
+        public void ImportarExcelClientes(){
+            try
+            {
+                ClientesController clientesController = new ClientesController();
+
+                bool estatus = cbxEstatusFiltro.SelectedValue is bool valor ? valor : false;
+                DateTime? fechaInicio = dtpFechaInicio.Value;
+                DateTime? fechaFin = dtpFechaFin.Value;
+
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar archivo de Excel";
+                    saveFileDialog.FileName = $"Clientes_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)//Espera confirmacion
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+                        // Exportar usando el método del controlador
+                        bool resultado = clientesController.ExportarClientesExcel(
+                            saveFileDialog.FileName,
+                            estatus,
+                            fechaInicio,
+                            fechaFin);
+
+                        // Restaurar cursor normal
+                        Cursor.Current = Cursors.Default;
+
+                        if (resultado)
+                        {
+                            MessageBox.Show("Archivo Excel exportado correctamente",
+                                            "Éxito",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+
+                            // Preguntar si desea abrir el archivo
+                            DialogResult abrirArchivo = MessageBox.Show(
+                                            "¿Desea abrir el archivo Excel generado?",
+                                            "Abrir archivo",
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+
+                            if (abrirArchivo == DialogResult.Yes)
+                            {
+                                // Usar ProcessStartInfo para abrir el archivo con la aplicación asociada
+                                var startInfo = new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = saveFileDialog.FileName,
+                                    UseShellExecute = true
+                                };
+                                System.Diagnostics.Process.Start(startInfo);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontraron clientes para exportar",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
 
         private void dtpfechaRegistroCliente_ValueChanged(object sender, EventArgs e)
         {
@@ -641,7 +714,7 @@ namespace PuntodeVenta.View
 
         private void btnImportarExcel_Click(object sender, EventArgs e)
         {
-
+            ImportarExcelClientes();
         }
     }
 }
