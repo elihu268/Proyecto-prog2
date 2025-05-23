@@ -344,6 +344,59 @@ namespace Sistema_VentasCore.Data
             }
         }
 
+        public List<VentaPorArticulo> ObtenerVentasPorCodigoArticulo(int? codigoArticulo)
+        {
+            var ventas = new List<VentaPorArticulo>();
+
+            try
+            {
+                // Query para obtener las ventas por código de artículo
+                string query = @"
+                    SELECT 
+                        c.id_compra,
+                        c.id_producto,
+                        c.fecha_de_compra,
+                        c.id_cliente,
+                        d.cantidad
+                    FROM compra c
+                    INNER JOIN detalle_compra d ON c.id_compra = d.id_compra
+                    WHERE d.id_producto = @codigoArticulo
+                    ORDER BY c.fecha_de_compra DESC";
+
+                _dbAccess.Connect();
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+                parametros.Add(new NpgsqlParameter("@id_producto", codigoArticulo.Value));
+
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    ventas.Add(new VentaPorArticulo
+                    {
+                        IdCompra = Convert.ToInt32(row["id_compra"]),
+                        CodigoCompra = Convert.ToInt32(row["id_producto"]),
+                        FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
+                        IdCliente = Convert.ToInt32(row["id_cliente"]),
+                        Cantidad = Convert.ToInt32(row["cantidad"])
+                    });
+                }
+
+                _logger.Info($"Se obtuvieron {ventas.Count} ventas para el artículo {codigoArticulo}");
+                return ventas;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener ventas por artículo {CodigoArticulo}", codigoArticulo);
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
 
     }
 }

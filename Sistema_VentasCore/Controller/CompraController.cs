@@ -291,5 +291,43 @@ namespace Sistema_VentasCore.Controller
             }
         }
 
+        public List<VentaPorArticulo> ObtenerVentasPorArticulo(int codigoArticulo)
+        {
+            try
+            {
+                var ventas = _compraData.ObtenerVentasPorCodigoArticulo(codigoArticulo);
+                _logger.Info($"Ventas obtenidas para artículo {codigoArticulo}: {ventas.Count} registros");
+                return ventas;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener ventas por artículo.");
+                throw;
+            }
+        }
+
+
+        public ResumenVenta ObtenerResumenVentasPorArticulo(int codigoArticulo)
+        {
+            try
+            {
+                var ventas = _compraData.ObtenerVentasPorCodigoArticulo(codigoArticulo);
+
+                if (!ventas.Any())
+                    return null;
+
+                return new ResumenVenta
+                {
+                    CodigoArticulo = codigoArticulo,
+                    TotalVentas = ventas.Count
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener resumen de ventas por artículo.");
+                throw;
+            }
+        }
+
     }
 }

@@ -48,5 +48,31 @@ namespace API_Ventas.Controllers
                 return StatusCode(500, "Error interno del servidor: " + ex.Message);
             }
         }
+
+        [HttpGet("resumen")]
+        public IActionResult GetResumenVentasPorArticulo([FromQuery] int? codigoArticulo)
+        {
+            if (!codigoArticulo.HasValue)
+            {
+                return BadRequest("El parámetro 'codigoArticulo' es obligatorio.");
+            }
+
+            try
+            {
+                var resumen = _comprasController.ObtenerResumenVentasPorArticulo(codigoArticulo.Value);
+
+                if (resumen == null)
+                {
+                    return NotFound($"No se encontraron ventas para el artículo {codigoArticulo.Value}");
+                }
+
+                return Ok(resumen);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener resumen de ventas por artículo {CodigoArticulo}", codigoArticulo);
+                return StatusCode(500, "Error interno del servidor: " + ex.Message);
+            }
+        }
     }
 }
