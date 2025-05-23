@@ -354,7 +354,7 @@ namespace Sistema_VentasCore.Data
                 string query = @"
                     SELECT 
                         c.id_compra,
-                        c.id_producto,
+                        d.id_producto,
                         c.fecha_de_compra,
                         c.id_cliente,
                         d.cantidad
