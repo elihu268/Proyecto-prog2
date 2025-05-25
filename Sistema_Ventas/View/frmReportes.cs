@@ -151,6 +151,7 @@ namespace PuntodeVenta.View
                 int? idProducto = null;
                 DateTime? fechaInicio = null;
                 DateTime? fechaFin = null;
+                int? estatus = null;
 
                 if (cbCliente.Checked && cbxNomCliente.SelectedValue != null)
                     idCliente = Convert.ToInt32(cbxNomCliente.SelectedValue);
@@ -165,7 +166,7 @@ namespace PuntodeVenta.View
                 }
 
                 CompraController compraController = new CompraController();
-                List<Compra> compras = compraController.BuscarCompras(idCliente, idProducto, fechaInicio, fechaFin, 1);
+                List<Compra> compras = compraController.BuscarCompras(idCliente, idProducto, fechaInicio, fechaFin, estatus);
 
 
                 AuditoriaController auditoriaController = new AuditoriaController();
@@ -216,18 +217,22 @@ namespace PuntodeVenta.View
             dt.Columns.Add("Descuento", typeof(decimal));
             dt.Columns.Add("Total", typeof(decimal));
             dt.Columns.Add("Fecha de Compra", typeof(DateTime));
+            dt.Columns.Add("Estatus", typeof(string));
+            dt.Columns.Add("Estatus Numérico", typeof(int));
 
             foreach (var compra in compras)
             {
                 dt.Rows.Add(
                     compra.IdCompra,
                     compra.Codigo,
-                    compra.NombreCliente ?? "Desconocido",
+                    compra.NombreCliente ?? "Desconocido",                    
                     compra.Subtotal,
                     compra.Iva,
                     compra.Descuento,
                     compra.Total,
-                    compra.FechaCompra
+                    compra.FechaCompra,
+                    EstatusVentaHelper.ObtenerDescripcionEstatus(compra.Estatus),
+                    compra.Estatus
                 );
             }
 
@@ -240,7 +245,44 @@ namespace PuntodeVenta.View
         {
             dgvReporteVentas.AllowUserToAddRows = false;
             dgvReporteVentas.AllowUserToDeleteRows = false;
-            dgvReporteVentas.ReadOnly = true;
+
+            dgvReporteVentas.Columns["Estatus Numérico"].Visible = false; // Ocultar columna de estatus numérico
+
+            // CONFIGURAR EL COMBOBOX CON ESTATUS FILTRADOS SEGÚN PERMISOS
+            DataGridViewComboBoxColumn comboColumn = new DataGridViewComboBoxColumn();
+            comboColumn.Name = "Estatus";
+            comboColumn.HeaderText = "Estatus";
+            comboColumn.DataSource = EstatusVentaHelper.ObtenerTodosLosEstatus().Select(x => x.Value).ToList();
+            comboColumn.DataPropertyName = "Estatus";
+            comboColumn.FlatStyle = FlatStyle.Flat;
+
+            int estatusIndex = dgvReporteVentas.Columns["Estatus"].Index;
+            dgvReporteVentas.Columns.RemoveAt(estatusIndex);
+            dgvReporteVentas.Columns.Insert(estatusIndex, comboColumn);
+                        
+            if (Sesión.TienePermiso("SALE_EDIT"))
+            {
+                dgvReporteVentas.ReadOnly = false;
+                foreach (DataGridViewColumn column in dgvReporteVentas.Columns)
+                {
+                    column.ReadOnly = column.Name == "ID Compra" || column.Name == "Código";
+                }
+            }
+            else if (Sesión.TienePermiso("SALE_UPDATE"))
+            {
+                // Usuario con SALE_UPDATE solo puede editar la columna Estatus
+                dgvReporteVentas.ReadOnly = false; // Necesario para permitir edición del ComboBox
+                foreach (DataGridViewColumn column in dgvReporteVentas.Columns)
+                {
+                    column.ReadOnly = column.Name != "Estatus";
+                }
+            }
+            else
+            {
+                // Sin permisos de edición, toda la tabla es solo lectura
+                dgvReporteVentas.ReadOnly = true;
+            }
+
 
             // Ajustar ancho de columnas automáticamente
             dgvReporteVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -248,12 +290,19 @@ namespace PuntodeVenta.View
             // Alineaciones
             dgvReporteVentas.Columns["ID Compra"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvReporteVentas.Columns["Código"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvReporteVentas.Columns["Cliente"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvReporteVentas.Columns["Cliente"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;            
             dgvReporteVentas.Columns["Subtotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvReporteVentas.Columns["IVA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvReporteVentas.Columns["Descuento"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvReporteVentas.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvReporteVentas.Columns["Fecha de Compra"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvReporteVentas.Columns["Estatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Formato de moneda para columnas monetarias
+            dgvReporteVentas.Columns["Subtotal"].DefaultCellStyle.Format = "C2";
+            dgvReporteVentas.Columns["IVA"].DefaultCellStyle.Format = "C2";
+            dgvReporteVentas.Columns["Descuento"].DefaultCellStyle.Format = "C2";
+            dgvReporteVentas.Columns["Total"].DefaultCellStyle.Format = "C2";
 
             // Estilo alternado
             dgvReporteVentas.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
@@ -268,6 +317,109 @@ namespace PuntodeVenta.View
             dgvReporteVentas.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
             dgvReporteVentas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvReporteVentas.ColumnHeadersHeight = 30;
+
+            // Eventos para manejar cambios y formato
+            dgvReporteVentas.CellFormatting += DgvReporteVentas_CellFormatting;
+            dgvReporteVentas.CellValueChanged += DgvReporteVentas_CellValueChanged;
+            dgvReporteVentas.DataBindingComplete += DgvReporteVentas_DataBindingComplete;
+            dgvReporteVentas.CellBeginEdit += DgvReporteVentas_CellBeginEdit;
+        }
+
+        private void DgvReporteVentas_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            // Solo aplicar lógica si es la columna de Estatus
+            if (dgvReporteVentas.Columns[e.ColumnIndex].Name == "Estatus")
+            {
+                // Obtener el valor actual del estatus de la fila
+                var estatusActual = dgvReporteVentas.Rows[e.RowIndex].Cells["Estatus"].Value?.ToString();
+
+                // Si el movimiento está autorizado y el usuario no tiene permiso para editar movimientos autorizados
+                if (estatusActual == "Autorizado" && !Sesión.TienePermiso("EDIT_MOV_AUTH"))
+                {
+                    // Cancelar la edición
+                    e.Cancel = true;
+
+                    // Opcional: Mostrar mensaje al usuario
+                    MessageBox.Show("No puedes modificar movimientos autorizados.",
+                                  "Acceso Denegado",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // CONTROL ADICIONAL: Si no tiene permiso MOV_AUTH, personalizar el ComboBox
+                if (!Sesión.TienePermiso("MOV_AUTH"))
+                {
+                    // Obtener la celda del ComboBox
+                    var comboBoxCell = dgvReporteVentas.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                    if (comboBoxCell != null)
+                    {
+                        // Crear lista filtrada sin "Autorizado" para este usuario
+                        var estatusFiltrados = EstatusVentaHelper.ObtenerTodosLosEstatus()
+                            .Select(x => x.Value)
+                            .Where(estatus => estatus != "Autorizado")
+                            .ToList();
+
+                        // Agregar el valor actual si no está en la lista (para mantener consistencia)
+                        if (!string.IsNullOrEmpty(estatusActual) && !estatusFiltrados.Contains(estatusActual))
+                        {
+                            estatusFiltrados.Add(estatusActual);
+                        }
+
+                        // Asignar la lista filtrada solo a esta celda
+                        comboBoxCell.DataSource = estatusFiltrados;
+                    }
+                }
+            }
+        }
+
+        // MÉTODO COMBINADO PARA DATA BINDING COMPLETE
+        private void DgvReporteVentas_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            // Aplicar colores después de que se complete el binding de datos
+            AplicarColoresEstatus();
+        }
+
+        private void AplicarColoresEstatus()
+        {
+            foreach (DataGridViewRow row in dgvReporteVentas.Rows)
+            {
+                if (row.Cells["Estatus Numérico"].Value != null)
+                {
+                    var estatusNumerico = Convert.ToInt32(row.Cells["Estatus Numérico"].Value);
+                    var estatusValue = row.Cells["Estatus"].Value?.ToString();
+                    var estatusCell = row.Cells["Estatus"];
+
+                    // Aplicar colores base según el estatus numérico
+                    estatusCell.Style.BackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                    estatusCell.Style.ForeColor = Color.White;
+                    estatusCell.Style.Font = new Font("Arial", 9, FontStyle.Bold);
+                    estatusCell.Style.SelectionBackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                    estatusCell.Style.SelectionForeColor = Color.White;
+
+                    // LÓGICA ADICIONAL PARA MOVIMIENTOS AUTORIZADOS
+                    if (estatusValue == "Autorizado")
+                    {
+                        // Si no tiene permiso para editar autorizados, aplicar estilo de solo lectura
+                        if (!Sesión.TienePermiso("EDIT_MOV_AUTH"))
+                        {
+                            // Oscurecer el color base para indicar que no es editable
+                            var colorBase = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                            var colorOscuro = Color.FromArgb(
+                                Math.Max(0, colorBase.R - 50),
+                                Math.Max(0, colorBase.G - 50),
+                                Math.Max(0, colorBase.B - 50)
+                            );
+
+                            estatusCell.Style.BackColor = colorOscuro;
+                            estatusCell.Style.SelectionBackColor = colorOscuro;
+
+                            // Agregar borde para indicar que no es editable
+                            estatusCell.Style.Font = new Font("Arial", 9, FontStyle.Bold | FontStyle.Italic);
+                        }
+                    }
+                }
+            }
         }
 
         private void dgvReporteVentas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -305,7 +457,7 @@ namespace PuntodeVenta.View
                 int? idProducto = null;
                 DateTime? fechaInicio = null;
                 DateTime? fechaFin = null;
-                int? estatus = 1;
+                int? estatus = null;
 
                 if (cbCliente.Checked && cbxNomCliente.SelectedValue != null)
                     idCliente = Convert.ToInt32(cbxNomCliente.SelectedValue);
@@ -387,7 +539,70 @@ namespace PuntodeVenta.View
         {
             ImportarExcelCompras();
         }
-        
+
+        private void DgvReporteVentas_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvReporteVentas.Columns[e.ColumnIndex].Name == "Estatus" && e.Value != null)
+            {
+                // Obtener el valor numérico del estatus desde la columna oculta
+                var estatusNumerico = Convert.ToInt32(dgvReporteVentas.Rows[e.RowIndex].Cells["Estatus Numérico"].Value);
+
+                // Aplicar color de fondo según el estatus
+                e.CellStyle.BackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                e.CellStyle.ForeColor = Color.White;
+                e.CellStyle.Font = new Font("Arial", 9, FontStyle.Bold);
+                e.CellStyle.SelectionBackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                e.CellStyle.SelectionForeColor = Color.White;
+            }
+        }
+
+        private void DgvReporteVentas_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && dgvReporteVentas.Columns[e.ColumnIndex].Name == "Estatus")
+            {
+                try
+                {
+                    var row = dgvReporteVentas.Rows[e.RowIndex];
+                    var idCompra = Convert.ToInt32(row.Cells["ID Compra"].Value);
+                    var nuevoEstatus = row.Cells["Estatus"].Value.ToString();
+                    bool exito = false;
+                    string mensaje;
+
+                    // Obtener el valor numérico del estatus
+                    var estatusNumerico = EstatusVentaHelper.ObtenerTodosLosEstatus()
+                        .FirstOrDefault(x => x.Value == nuevoEstatus).Key;
+
+                    // Actualizar la columna oculta
+                    row.Cells["Estatus Numérico"].Value = estatusNumerico;
+
+                    // Aplicar el nuevo color inmediatamente
+                    var estatusCell = row.Cells["Estatus"];
+                    estatusCell.Style.BackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                    estatusCell.Style.ForeColor = Color.White;
+                    estatusCell.Style.Font = new Font("Arial", 9, FontStyle.Bold);
+                    estatusCell.Style.SelectionBackColor = EstatusVentaHelper.ObtenerColorEstatus(estatusNumerico);
+                    estatusCell.Style.SelectionForeColor = Color.White;
+
+                    CompraController cc = new CompraController();
+                    (exito, mensaje) = cc.ActualizarEstatusCompra(idCompra, estatusNumerico);
+
+                    // Refrescar el formato de la celda
+                    dgvReporteVentas.InvalidateRow(e.RowIndex);
+                    if (exito)
+                    {
+                        MessageBox.Show($"{mensaje}: {nuevoEstatus}",
+                        "Actualización", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al actualizar el estatus: {ex.Message}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         private void cbxNomProducto_SelectedIndexChanged(object sender, EventArgs e) { }
 
         private void cbxNomCliente_SelectedIndexChanged(object sender, EventArgs e) { }
