@@ -1,14 +1,15 @@
-﻿using Sistema_VentasCore.Data;
-using Sistema_VentasCore.Utilities;
-using NLog;
-using Sistema_VentasCore.Model;
+﻿using NLog;
 using Npgsql;
+using OfficeOpenXml;
+using Sistema_VentasCore.Data;
+using Sistema_VentasCore.Model;
+using Sistema_VentasCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OfficeOpenXml;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
 
 namespace Sistema_VentasCore.Controller
 {
@@ -182,7 +183,7 @@ namespace Sistema_VentasCore.Controller
                 if (actualizado)
                 {
                     _logger.Info($"Compra con ID {idCompra} actualizada al nuevo estatus {nuevoEstatus}");
-                    return (true, "Estatus de la compra actualizado exitosamente.");
+                    return (true, "Estatus de la compra actualizado exitosamente");
                 }
                 else
                 {
@@ -251,8 +252,9 @@ namespace Sistema_VentasCore.Controller
                     worksheet.Cells[1, 6].Value = "Descuento";
                     worksheet.Cells[1, 7].Value = "Total";
                     worksheet.Cells[1, 8].Value = "Fecha de Compra";
+                    worksheet.Cells[1, 9].Value = "Estatus";
 
-                    using (var range = worksheet.Cells[1, 1, 1, 8])
+                    using (var range = worksheet.Cells[1, 1, 1, 9])
                     {
                         range.Style.Font.Bold = true;
                         range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -272,6 +274,7 @@ namespace Sistema_VentasCore.Controller
                         worksheet.Cells[row, 7].Value = compra.Total;
                         worksheet.Cells[row, 8].Value = compra.FechaCompra;
                         worksheet.Cells[row, 8].Style.Numberformat.Format = "dd/MM/yyyy";
+                        worksheet.Cells[row, 9].Value = EstatusVentaHelper.ObtenerDescripcionEstatus(compra.Estatus);
                         row++;
                     }
 

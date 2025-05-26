@@ -567,6 +567,7 @@ namespace PuntodeVenta.View
                     var nuevoEstatus = row.Cells["Estatus"].Value.ToString();
                     bool exito = false;
                     string mensaje;
+                    int numCiclo = 0;
 
                     // Obtener el valor numérico del estatus
                     var estatusNumerico = EstatusVentaHelper.ObtenerTodosLosEstatus()
@@ -588,12 +589,12 @@ namespace PuntodeVenta.View
 
                     // Refrescar el formato de la celda
                     dgvReporteVentas.InvalidateRow(e.RowIndex);
-                    if (exito)
+                    if (exito && numCiclo == 0)
                     {
                         MessageBox.Show($"{mensaje}: {nuevoEstatus}",
                         "Actualización", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    
+                    numCiclo++;
                 }
                 catch (Exception ex)
                 {
