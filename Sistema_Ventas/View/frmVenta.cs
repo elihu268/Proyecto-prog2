@@ -487,6 +487,7 @@ namespace Sistema_Ventas.View
             dgv_productos.AllowUserToDeleteRows = false;
             dgv_productos.ReadOnly = true;
             dgv_productos.Columns["ID"].Visible = false;
+            dgv_productos.Columns["Existencia"].Visible = false;
             // Ajuste automático de las columnas
             dgv_productos.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
