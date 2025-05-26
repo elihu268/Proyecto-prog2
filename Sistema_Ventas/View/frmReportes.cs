@@ -422,10 +422,13 @@ namespace PuntodeVenta.View
             }
         }
 
-        private void dgvReporteVentas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvReporteVentas_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0) // Validar que no sea encabezado
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0) // Validar que no sea encabezado y sea clic derecho
             {
+                dgvReporteVentas.ClearSelection();
+                dgvReporteVentas.Rows[e.RowIndex].Selected = true;
+
                 int idCompra = Convert.ToInt32(dgvReporteVentas.Rows[e.RowIndex].Cells["ID Compra"].Value);
 
                 DetalleCompraController detalleController = new DetalleCompraController();

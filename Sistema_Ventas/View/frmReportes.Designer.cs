@@ -105,7 +105,7 @@
             picBoxReportes.Size = new Size(33, 31);
             picBoxReportes.TabIndex = 23;
             picBoxReportes.TabStop = false;
-            toolTipDetalle.SetToolTip(picBoxReportes, "Haz doble clic sobre un registro para ver los detalles de la compra");
+            toolTipDetalle.SetToolTip(picBoxReportes, "Haz clic derecho sobre un registro para ver los detalles de la compra\r\nHaz doble clic sobre una celda para actualizar su contenido");
             // 
             // cbFecha
             // 
@@ -263,7 +263,7 @@
             dgvReporteVentas.RowHeadersWidth = 62;
             dgvReporteVentas.Size = new Size(587, 201);
             dgvReporteVentas.TabIndex = 5;
-            dgvReporteVentas.CellDoubleClick += dgvReporteVentas_CellDoubleClick;
+            dgvReporteVentas.CellMouseClick += dgvReporteVentas_CellMouseClick;
             // 
             // frmReportes
             // 
