@@ -178,7 +178,7 @@ namespace Sistema_VentasCore.Controller
                 }
 
                 compra.Estatus = nuevoEstatus;
-                bool actualizado = _compraData.ActualizarCompra(compra);
+                bool actualizado = _compraData.ActualizarEstatusCompra(compra);
 
                 if (actualizado)
                 {

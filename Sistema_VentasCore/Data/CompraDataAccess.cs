@@ -193,9 +193,9 @@ namespace Sistema_VentasCore.Data
         }
 
         /// <summary>
-        /// Actualiza una compra existente en la base de datos.
+        /// Actualiza el estatus de una compra existente en la base de datos.
         /// </summary>
-        public bool ActualizarCompra(Compra compra)
+        public bool ActualizarEstatusCompra(Compra compra)
         {
             try
             {
