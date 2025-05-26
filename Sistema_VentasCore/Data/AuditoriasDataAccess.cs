@@ -35,22 +35,29 @@ namespace Sistema_VentasCore.Data
                 _dbAccess.Connect(); // Conectar a la base de datos
                 string query = @"SELECT u.id_usuario, p.nombre_completo, p.correo,
                                 b.accion, b.fecha, b.ip_acceso, 
-                                b.nombre_equipo, b.tipo,
-                                CASE 
-					                WHEN b.id_movimiento = 0 THEN 'USUARIO AGREGADO'
-					                WHEN b.id_movimiento = 1 THEN 'ACTUALIZACION USUARIO'
-					                WHEN b.id_movimiento = 2 THEN 'BAJA USUARIO'
-	                                WHEN b.id_movimiento = 3 THEN 'VENTA'
-	                                WHEN b.id_movimiento = 4 THEN 'MODIFICACION'
-	                                WHEN b.id_movimiento = 5 THEN 'CANCELACION'
-					                WHEN b.id_movimiento = 6 THEN 'CLIENTE AGREGADO'
-	                                ELSE
-	                                'Desconocido'
-	                                END AS movimiento
+                                b.nombre_equipo, b.tipo, b.id_movimiento as movimiento
 	                                FROM bitacora b
 	                                JOIN usuarios u ON u.id_usuario = b.id_usuario
 	                                JOIN personas p on u.id_persona = p.id_persona
 	                                WHERE 1=1";
+                //string query = @"SELECT u.id_usuario, p.nombre_completo, p.correo,
+                //                b.accion, b.fecha, b.ip_acceso, 
+                //                b.nombre_equipo, b.tipo, b.id_movimiento as movimiento
+                //                CASE 
+					           //     WHEN b.id_movimiento = 0 THEN 'USUARIO AGREGADO'
+					           //     WHEN b.id_movimiento = 1 THEN 'ACTUALIZACION USUARIO'
+					           //     WHEN b.id_movimiento = 2 THEN 'BAJA USUARIO'
+	               //                 WHEN b.id_movimiento = 3 THEN 'VENTA'
+	               //                 WHEN b.id_movimiento = 4 THEN 'MODIFICACION'
+	               //                 WHEN b.id_movimiento = 5 THEN 'CANCELACION'
+					           //     WHEN b.id_movimiento = 6 THEN 'CLIENTE AGREGADO'
+	               //                 ELSE
+	               //                 'Desconocido'
+	               //                 END AS movimiento
+	               //                 FROM bitacora b
+	               //                 JOIN usuarios u ON u.id_usuario = b.id_usuario
+	               //                 JOIN personas p on u.id_persona = p.id_persona
+	               //                 WHERE 1=1";
                 List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
                 _logger.Info("Ejecutando consulta: {0}", query);
                 DataTable auditoriaData = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());

@@ -595,6 +595,18 @@ namespace PuntodeVenta.View
                         "Actualización", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     numCiclo++;
+
+                    AuditoriaController auditoriaController = new AuditoriaController();
+                    Auditoria auditoria = new Auditoria(
+                        "Actualización estatus",
+                        DateTime.Now,
+                        Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                        System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                        Sesión.UsuarioActual,
+                        Sesión.IdUsuario,
+                        idCompra
+                    );
+                    auditoriaController.AudioriaAdd(auditoria);
                 }
                 catch (Exception ex)
                 {
