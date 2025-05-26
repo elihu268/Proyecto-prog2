@@ -47,7 +47,8 @@ namespace DiseñoForms.View
             {
                 usuariosToolStripMenuItem.Visible = false;
             }
-            if (!Sesión.TienePermiso("USR_VIEW")) {
+            if (!Sesión.TienePermiso("USR_VIEW"))
+            {
                 geUsuariosToolStripMenuItem.Visible = false;
             }
             if (!Sesión.TienePermiso("AUDIT_VIEW"))
@@ -301,5 +302,22 @@ namespace DiseñoForms.View
             rolesToolStripMenuItem.Visible = Sesión.TienePermiso("ROLE_CREATE");
         }
 
+        private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Sesión.CerrarSesion();
+
+            // Ocultar el formulario MDI en lugar de cerrarlo
+            this.Hide();
+
+            // Crear y mostrar el formulario de login
+            frmLogin login_form = new frmLogin();
+
+            if (login_form.ShowDialog() == DialogResult.OK)
+            {
+                ActualizarVistaPorPermisos();
+                // Si el login es exitoso, mostrar nuevamente el MDI
+                this.Show();
+            }
+        }
     }
 }
