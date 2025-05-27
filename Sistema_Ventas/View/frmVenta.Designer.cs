@@ -288,7 +288,7 @@
             cBox_codigo.FormattingEnabled = true;
             cBox_codigo.Location = new Point(27, 69);
             cBox_codigo.Name = "cBox_codigo";
-            cBox_codigo.Size = new Size(246, 33);
+            cBox_codigo.Size = new Size(298, 33);
             cBox_codigo.TabIndex = 23;
             cBox_codigo.SelectedIndexChanged += cBox_codigo_SelectedIndexChanged_1;
             // 
@@ -306,9 +306,9 @@
             lbl_nombre.AutoSize = true;
             lbl_nombre.Location = new Point(362, 54);
             lbl_nombre.Name = "lbl_nombre";
-            lbl_nombre.Size = new Size(81, 25);
+            lbl_nombre.Size = new Size(72, 25);
             lbl_nombre.TabIndex = 1;
-            lbl_nombre.Text = "Nombre";
+            lbl_nombre.Text = "Codigo";
             // 
             // txt_nombre
             // 

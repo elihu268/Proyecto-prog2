@@ -136,7 +136,7 @@ namespace Sistema_Ventas.View
                 Cursor = Cursors.WaitCursor;
                 cBox_codigo.DataSource = null;
                 cBox_codigo.DataSource = listaProducto;
-                cBox_codigo.DisplayMember = "Codigo";
+                cBox_codigo.DisplayMember = "Nombre";
                 cBox_codigo.ValueMember = "IdProducto";
                 cBox_codigo.SelectedIndex = 0;
             }
@@ -400,7 +400,7 @@ namespace Sistema_Ventas.View
         {
             if (cBox_codigo.SelectedItem is Producto productoSeleccionado)
             {
-                txt_nombre.Text = productoSeleccionado.Nombre;
+                txt_nombre.Text = productoSeleccionado.Codigo;
                 txt_precio.Text = Convert.ToString(productoSeleccionado.Precio);
 
             }
