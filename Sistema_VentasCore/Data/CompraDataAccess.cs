@@ -385,7 +385,7 @@ namespace Sistema_VentasCore.Data
                         FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
                         Cliente = row["cliente"].ToString() ?? "Desconocido",
                         Cantidad = Convert.ToInt32(row["cantidad"]),
-                        Costo = Convert.ToDecimal(row["costo"]),
+                        Costo = Convert.ToDecimal(row["precio"]),
                         Estatus = EstatusVentaHelper.ObtenerDescripcionEstatus(Convert.ToInt32(row["estatus"]))
                     });
                 }
