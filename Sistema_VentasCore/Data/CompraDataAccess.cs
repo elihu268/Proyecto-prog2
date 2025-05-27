@@ -373,7 +373,7 @@ namespace Sistema_VentasCore.Data
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
                 parametros.Add(new NpgsqlParameter("@codigoArticulo", NpgsqlTypes.NpgsqlDbType.Varchar)
                 {
-                    Value = codigoArticulo != null ? $"%{codigoArticulo}%" : DBNull.Value
+                    Value = codigoArticulo ?? (object)DBNull.Value 
                 });
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
