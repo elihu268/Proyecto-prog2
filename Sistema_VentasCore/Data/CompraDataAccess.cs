@@ -344,7 +344,7 @@ namespace Sistema_VentasCore.Data
             }
         }
 
-        public List<VentaPorArticulo> ObtenerVentasPorCodigoArticulo(int? codigoArticulo)
+        public List<VentaPorArticulo> ObtenerVentasPorCodigoArticulo(string? codigoArticulo)
         {
             var ventas = new List<VentaPorArticulo>();
 
@@ -365,14 +365,16 @@ namespace Sistema_VentasCore.Data
                     JOIN cliente cli ON c.id_cliente = cli.id_cliente
                     JOIN personas p ON cli.id_persona = p.id_persona
                     JOIN producto pr ON d.id_producto = pr.id_producto
-                    WHERE d.id_producto = @codigoArticulo
+                    WHERE p.cod_producto = @codigoArticulo
                     ORDER BY c.fecha_de_compra DESC";
 
                 _dbAccess.Connect();
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-                parametros.Add(new NpgsqlParameter("@codigoArticulo", codigoArticulo.Value));
-
+                parametros.Add(new NpgsqlParameter("@codigoArticulo", NpgsqlTypes.NpgsqlDbType.Varchar)
+                {
+                    Value = codigoArticulo != null ? $"%{codigoArticulo}%" : DBNull.Value
+                });
 
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros.ToArray());
 

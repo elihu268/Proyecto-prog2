@@ -50,20 +50,20 @@ namespace API_Ventas.Controllers
         }
 
         [HttpGet("resumen")]
-        public IActionResult GetResumenVentasPorArticulo([FromQuery] int? codigoArticulo)
+        public IActionResult GetResumenVentasPorArticulo([FromQuery] string? codigoArticulo)
         {
-            if (!codigoArticulo.HasValue)
+            if (string.IsNullOrEmpty(codigoArticulo))
             {
                 return BadRequest("El parámetro 'codigoArticulo' es obligatorio.");
             }
 
             try
             {
-                var resumen = _comprasController.ObtenerResumenVentasPorArticulo(codigoArticulo.Value);
+                var resumen = _comprasController.ObtenerResumenVentasPorArticulo(codigoArticulo);
 
                 if (resumen == null)
                 {
-                    return NotFound($"No se encontraron ventas para el artículo {codigoArticulo.Value}");
+                    return NotFound($"No se encontraron ventas para el artículo {codigoArticulo}");
                 }
 
                 return Ok(resumen);

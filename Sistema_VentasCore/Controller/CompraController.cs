@@ -295,7 +295,7 @@ namespace Sistema_VentasCore.Controller
             }
         }
 
-        public List<VentaPorArticulo> ObtenerVentasPorArticulo(int codigoArticulo)
+        public List<VentaPorArticulo> ObtenerVentasPorArticulo(string codigoArticulo)
         {
             try
             {
@@ -311,7 +311,7 @@ namespace Sistema_VentasCore.Controller
         }
 
 
-        public ResumenVenta ObtenerResumenVentasPorArticulo(int codigoArticulo)
+        public ResumenVenta ObtenerResumenVentasPorArticulo(string codigoArticulo)
         {
             try
             {
