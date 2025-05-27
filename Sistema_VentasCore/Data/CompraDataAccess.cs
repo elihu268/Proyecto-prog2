@@ -358,7 +358,7 @@ namespace Sistema_VentasCore.Data
                         c.fecha_de_compra,
                         p.nombre_completo AS cliente,
                         d.cantidad,
-                        pr.costo,
+                        pr.precio,
                         c.estatus
                     FROM compra c
                     INNER JOIN detalle_compra d ON c.id_compra = d.id_compra
