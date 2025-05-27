@@ -259,6 +259,8 @@ namespace Sistema_Ventas.View
                 MessageBox.Show("porfavor seleccione un producto valido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            //validar que el porducto este activo
+
             if (txt_cantidad.Text == "")
             {
                 MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -274,7 +276,7 @@ namespace Sistema_Ventas.View
             if (!detalleController.ValidarCantidad(cBox_codigo.Text, txt_cantidad.Text))//si la cantidad no es valida
             {
                 MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return;///desde la api
             }
             int cantidad = Convert.ToInt32(txt_cantidad.Text);
             Producto prod = (Producto)cBox_codigo.SelectedItem;//el procusto seleccionado casteado para agregarlo al detalle
