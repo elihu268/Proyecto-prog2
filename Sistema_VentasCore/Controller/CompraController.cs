@@ -6,6 +6,7 @@ using Sistema_VentasCore.Model;
 using Sistema_VentasCore.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -322,7 +323,7 @@ namespace Sistema_VentasCore.Controller
                 return new ResumenVenta
                 {
                     CodigoArticulo = codigoArticulo,
-                    TotalVentas = ventas.Count,
+                    TotalVentas = ventas.Sum(venta => venta.Cantidad),
                     Ventas = ventas
                 };
             }

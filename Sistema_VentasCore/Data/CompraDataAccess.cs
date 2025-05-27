@@ -356,10 +356,15 @@ namespace Sistema_VentasCore.Data
                         c.id_compra,
                         c.codigo,
                         c.fecha_de_compra,
-                        c.id_cliente,
-                        d.cantidad
+                        p.nombre_completo AS cliente,
+                        d.cantidad,
+                        pr.costo,
+                        c.estatus
                     FROM compra c
                     INNER JOIN detalle_compra d ON c.id_compra = d.id_compra
+                    JOIN cliente cli ON c.id_cliente = cli.id_cliente
+                    JOIN personas p ON cli.id_persona = p.id_persona
+                    JOIN producto pr ON d.id_producto = pr.id_producto
                     WHERE d.id_producto = @codigoArticulo
                     ORDER BY c.fecha_de_compra DESC";
 
@@ -378,8 +383,10 @@ namespace Sistema_VentasCore.Data
                         IdCompra = Convert.ToInt32(row["id_compra"]),
                         CodigoCompra = row["codigo"].ToString() ?? "",
                         FechaCompra = Convert.ToDateTime(row["fecha_de_compra"]),
-                        IdCliente = Convert.ToInt32(row["id_cliente"]),
-                        Cantidad = Convert.ToInt32(row["cantidad"])
+                        Cliente = row["cliente"].ToString() ?? "Desconocido",
+                        Cantidad = Convert.ToInt32(row["cantidad"]),
+                        Costo = Convert.ToDecimal(row["costo"]),
+                        Estatus = EstatusVentaHelper.ObtenerDescripcionEstatus(Convert.ToInt32(row["estatus"]))
                     });
                 }
 
