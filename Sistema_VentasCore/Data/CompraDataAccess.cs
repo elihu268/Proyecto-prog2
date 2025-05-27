@@ -365,7 +365,7 @@ namespace Sistema_VentasCore.Data
                     JOIN cliente cli ON c.id_cliente = cli.id_cliente
                     JOIN personas p ON cli.id_persona = p.id_persona
                     JOIN producto pr ON d.id_producto = pr.id_producto
-                    WHERE p.cod_producto = @codigoArticulo
+                    WHERE pr.cod_producto = @codigoArticulo
                     ORDER BY c.fecha_de_compra DESC";
 
                 _dbAccess.Connect();
