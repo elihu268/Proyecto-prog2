@@ -107,7 +107,6 @@ namespace Sistema_VentasCore.Controller
                     worksheet.Cells[1, 3].Value = "Nombre";
                     worksheet.Cells[1, 4].Value = "Precio";
                     worksheet.Cells[1, 5].Value = "Descripcion";
-                    worksheet.Cells[1, 6].Value = "Existencia";
 
                     using (var range = worksheet.Cells[1, 1, 1, 6])
                     {
@@ -126,7 +125,6 @@ namespace Sistema_VentasCore.Controller
                         worksheet.Cells[row, 3].Value = producto.Nombre;
                         worksheet.Cells[row, 4].Value = producto.Precio;
                         worksheet.Cells[row, 5].Value = producto.Descripcion;
-                        worksheet.Cells[row, 6].Value = producto.Existencia;
 
                         worksheet.Cells[row, 4].Style.Numberformat.Format = "$#,##0.00";
                         row++;

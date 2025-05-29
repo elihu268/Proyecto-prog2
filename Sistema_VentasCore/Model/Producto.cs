@@ -24,7 +24,6 @@ namespace Sistema_VentasCore.Model
             this.Nombre = nombre;
             this.Precio = precio;
             this.Descripcion = descripcion;
-            this.Existencia = existencia;
         }
       
        
