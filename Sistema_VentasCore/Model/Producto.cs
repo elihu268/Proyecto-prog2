@@ -18,7 +18,7 @@ namespace Sistema_VentasCore.Model
         public string Descripcion { get; set; }
         public int Existencia { get; set; }
         public Producto() { }
-        public Producto(int idProducto, string codigo,string nombre, decimal precio,string  descripcion, int existencia) {
+        public Producto(int idProducto, string codigo,string nombre, decimal precio,string  descripcion) {
         this.IdProducto = idProducto;
             this.Codigo = codigo; 
             this.Nombre = nombre;

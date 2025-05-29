@@ -108,7 +108,7 @@ namespace Sistema_VentasCore.Controller
                     worksheet.Cells[1, 4].Value = "Precio";
                     worksheet.Cells[1, 5].Value = "Descripcion";
 
-                    using (var range = worksheet.Cells[1, 1, 1, 6])
+                    using (var range = worksheet.Cells[1, 1, 1, 5])
                     {
                         range.Style.Font.Bold = true;
                         range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;

@@ -99,8 +99,7 @@ namespace Sistema_Ventas.View
                     prd.Codigo,
                     prd.Nombre,
                     prd.Precio,
-                    prd.Descripcion,
-                    prd.Existencia
+                    prd.Descripcion
                 );
             }
 

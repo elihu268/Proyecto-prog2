@@ -36,7 +36,7 @@ namespace Sistema_VentasCore.Data
                 // Consulta SQL
                 string query = @"
             SELECT 
-                id_producto,cod_producto,nombre, precio, descripcion,existencia
+                id_producto,cod_producto,nombre, precio, descripcion
             FROM producto
             WHERE estatus = TRUE
             ORDER BY nombre;
@@ -53,8 +53,7 @@ namespace Sistema_VentasCore.Data
                         row["cod_producto"].ToString(),
                         row["nombre"].ToString(),
                         Convert.ToDecimal(row["precio"]),
-                        row["descripcion"].ToString(),
-                        Convert.ToInt32(row["existencia"]) 
+                        row["descripcion"].ToString()
                     );
                     productos.Add(producto);
                 }
@@ -97,8 +96,7 @@ namespace Sistema_VentasCore.Data
                         row["cod_producto"].ToString(),
                         row["nombre"].ToString(),
                         Convert.ToDecimal(row["precio"]),
-                        row["descripcion"].ToString(),
-                        Convert.ToInt32(row["existencia"])
+                        row["descripcion"].ToString()
                     );
                     productos.Add(producto);
                 }
