@@ -69,7 +69,7 @@ namespace Sistema_Ventas.View
                 ProductosController productoController = new ProductosController();
                 List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
                 List<Producto> listaActivos = new List<Producto>();
-                foreach (var producto in listaProducto)
+               foreach (var producto in listaProducto)
                 {
                     bool estatus = false;
                     try
@@ -92,7 +92,7 @@ namespace Sistema_Ventas.View
                         }
                     }
                 }
-                var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaActivos);
+               /* var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaActivos);
                 if (alerta)
                 {
                     MessageBox.Show(
@@ -100,7 +100,7 @@ namespace Sistema_Ventas.View
                         "Existencia Baja",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
-                }
+                }*/
                 PoblacomboProducto(listaActivos);//producto por codigo para elegir en agregar producto
                 PoblaDataProducto(listaActivos);//para busqueda del producto
                 txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
@@ -495,7 +495,7 @@ namespace Sistema_Ventas.View
             {
                 txt_nombre.Text = productoSeleccionado.Codigo;
                 txt_precio.Text = Convert.ToString(productoSeleccionado.Precio);
-
+                exisalertAsync(productoSeleccionado.Codigo);//verifica la existencia del producto seleccionado
             }
         }
 
@@ -675,6 +675,40 @@ namespace Sistema_Ventas.View
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+        private async Task exisalertAsync(string codigo)
+        {
+            try
+            {
+                List<Producto> ObtenerCantidadAsynk = new List<Producto>();
+              
+                CompraNegocio compraNegocio = new CompraNegocio();
+                var existencia = await _apiService.GetExistencia(codigo);
+                Producto producto = new Producto(
+                  Convert.ToInt32(cBox_codigo.SelectedValue),
+                  cBox_codigo.SelectedText,
+                  cBox_codigo.SelectedText,
+                  Convert.ToDecimal(txt_precio.Text),
+                  txt_nombre.Text
+                  );
+                if (existencia <= 4)
+                {
+                    ObtenerCantidadAsynk.Add(producto);
+                }
+                var (alerta, mensaje) = CompraNegocio.AlertaExistencia(ObtenerCantidadAsynk);
+                if (alerta)
+                {
+                    MessageBox.Show(
+                        mensaje,
+                        "Existencia Baja",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al verificar existencia de productos");
+            }
         }
     }
 }
