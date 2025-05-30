@@ -38,7 +38,6 @@ namespace Sistema_VentasCore.Data
             SELECT 
                 id_producto,cod_producto,nombre, precio, descripcion
             FROM producto
-            WHERE estatus = TRUE
             ORDER BY nombre;
         ";
                 
