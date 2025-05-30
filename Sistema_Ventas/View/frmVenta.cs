@@ -85,7 +85,11 @@ namespace Sistema_Ventas.View
 
                     if (estatus)
                     {
-                        listaActivos.Add(producto);
+                        var existencia = await _apiService.GetExistencia(producto.Codigo);
+                        if (existencia > 0)
+                        {
+                            listaActivos.Add(producto);
+                        }
                     }
                 }
                 var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaActivos);
