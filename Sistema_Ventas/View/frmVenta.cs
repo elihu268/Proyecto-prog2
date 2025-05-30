@@ -256,6 +256,14 @@ namespace Sistema_Ventas.View
                 auditoriaController.AudioriaAdd(auditoria);
                 if (compraController.InsertarCompra(cliente.Id, (int)cbox_estatus.SelectedValue, (int)cb_metodo.SelectedValue, detalles))
                 {
+                    foreach (var d in detalles)
+                    {
+                        if (!await _apiService.ActualizarExistencias(d.Cantidad, d.Productoi.Codigo))
+                        {
+                            MessageBox.Show("no se pudo actualizar la existencia de un producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                     MessageBox.Show("compra generada correctamente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
 
                 }
@@ -264,13 +272,7 @@ namespace Sistema_Ventas.View
                     MessageBox.Show("no se pudo generar la compra", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                foreach (var d in detalles)
-                {
-                    if (!await _apiService.ActualizarExistencias(d.Cantidad, d.Productoi.Codigo))
-                    {
-                        MessageBox.Show("no se pudo actualizar la existencia de un producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }                    
-                }
+                
 
                 limpiarCampos();
             }

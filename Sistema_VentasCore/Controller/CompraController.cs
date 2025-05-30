@@ -100,12 +100,12 @@ namespace Sistema_VentasCore.Controller
                         return false;
                     }
                     //modificar la existencia del producto
-                    bool existenciaModificada = _productoData.ModificarExistencia(detalle.Productoi.IdProducto, detalle.Cantidad);//!!
+                   /* bool existenciaModificada = _productoData.ModificarExistencia(detalle.Productoi.IdProducto, detalle.Cantidad);
                     if (!existenciaModificada)
                     {
                         _logger.Error($"Error al modificar la existencia del producto {detalle.Productoi.IdProducto}.");
                         return false;
-                    }
+                    }*/
                 }
 
                 _logger.Info($"Compra realizada exitosamente. ID: {id_Compra}");
