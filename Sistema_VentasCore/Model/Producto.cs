@@ -25,7 +25,12 @@ namespace Sistema_VentasCore.Model
             this.Precio = precio;
             this.Descripcion = descripcion;
         }
-      
-       
+        public Producto(string nombre, int existencia)
+        {
+            this.Nombre = nombre;
+            this.Existencia = existencia;
+        }
+
+
     }
 }
