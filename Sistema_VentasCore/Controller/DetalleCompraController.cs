@@ -37,17 +37,10 @@ namespace Sistema_VentasCore.Controller
         /// <param name="codigo">saber que producto es</param>
         /// <param name="cantidad">cantidad que desea comprar</param>
         /// <returns>verdadero si encuentra el producto y que la cantidad que desea comprar ssea valida</returns>
-        public bool ValidarCantidad(string codigo, string cantidad)
+        public bool ValidarCantidad(string codigo, string cantidad, int existencia)
         {
             try
             {
-                int existencia = _productosController.ObtenerExistenciaDeProducto(codigo);
-                if (existencia == -1)
-                {
-                    _logger.Warn($"Producto con código {codigo} no encontrado.");
-                    return false;
-                }
-
                 bool resultado = CompraNegocio.CantidadEnRango(cantidad, existencia);
                 return resultado;
             }

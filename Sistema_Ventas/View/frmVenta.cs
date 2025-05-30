@@ -19,6 +19,8 @@ using NLog;
 using Sistema_VentasCore.Bussines;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Net;
+using Sistema_VentasCore.Service;
+using Microsoft.VisualBasic;
 namespace Sistema_Ventas.View
 {
     public partial class frmVenta : Form
@@ -26,44 +28,101 @@ namespace Sistema_Ventas.View
         //para que pueda se usado al agregar varios productos, si usa solo en el metodo hace varias listas conun solo producto
         private List<DetalleCompra> detalles = new List<DetalleCompra>();
         private static readonly Logger _logger = LoggingManager.GetLogger("Sistema_Ventas.View.frmVenta");
+        private readonly ApiService _apiService;
 
         public frmVenta(Form parent)
-        {
+        {           
             InitializeComponent();
-            Formas.InicializarForma(this, parent);
+            _apiService = new ApiService();
+            InicializaVentanaVenta();
+            Formas.InicializarForma(this, parent);            
         }
 
         private void frmVenta_Load(object sender, EventArgs e)
         {
-            InicializaVentanaVenta();
+            //InicializaVentanaVenta();
         }
         /// <summary>
         ///funcion que da valores a controles especificos despues de su creacion
         /// </summary>
-        public void InicializaVentanaVenta()
+        public async void InicializaVentanaVenta()
         {
-
-            //mostrar informacion
-            PoblaComboMetodo();//metodo de pago
-            PoblaComboEstatus();//estatus de compra
-            PoblacomboCliente();//cliente por correo
-                                //notifica la baja existencia de un producto
-            ProductosController productoController = new ProductosController();
-            List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
-            var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaProducto);
-            if (alerta)
+            try
             {
-                MessageBox.Show(
-                    mensaje,
-                    "Existencia Baja",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
-            PoblacomboProducto(listaProducto);//producto por codigo para elegir en agregar producto
-            PoblaDataProducto(listaProducto);//para busqueda del producto
-            txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
+                Cursor = Cursors.WaitCursor;//cambia el cursor a espera
 
-            _logger.Debug("se cargo correctamente los datos de productos,clientes");
+                cb_metodo.Enabled = false;
+                cbox_estatus.Enabled = false;
+                cb_clientes.Enabled = false;
+                cBox_codigo.Enabled = false;
+                txt_cantidad.Enabled = false;
+                txt_buscar.Enabled = false;
+                btn_agregar.Enabled = false;
+                btn_actualizar.Enabled = false;
+                btn_cobrar.Enabled = false;
+                btn_limpiar.Enabled = false;
+
+                PoblaComboMetodo();//metodo de pago
+                PoblaComboEstatus();//estatus de compra
+                PoblacomboCliente();//cliente por correo
+                                    //notifica la baja existencia de un producto
+                ProductosController productoController = new ProductosController();
+                List<Producto> listaProducto = productoController.ObtenerProductos();//se obtiene aqui porque hay 3 metodos que lo ocupan
+                List<Producto> listaActivos = new List<Producto>();
+                foreach (var producto in listaProducto)
+                {
+                    bool estatus = false;
+                    try
+                    {
+                        estatus = await _apiService.GetEstatus(producto.Codigo);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Opcional: Loguear error o manejar excepción si falla la llamada al API
+                        _logger.Warn(ex, $"No se pudo obtener estatus para producto {producto.IdProducto}");
+                        // Puedes decidir si excluir o incluir en caso de error, aquí decidimos excluir
+                    }
+
+                    if (estatus)
+                    {
+                        listaActivos.Add(producto);
+                    }
+                }
+                var (alerta, mensaje) = CompraNegocio.AlertaExistencia(listaActivos);
+                if (alerta)
+                {
+                    MessageBox.Show(
+                        mensaje,
+                        "Existencia Baja",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+                PoblacomboProducto(listaActivos);//producto por codigo para elegir en agregar producto
+                PoblaDataProducto(listaActivos);//para busqueda del producto
+                txt_nombre_prod.Text = "";//para que no aparezca el nombre del un cliente
+
+                cb_metodo.Enabled = true;
+                cbox_estatus.Enabled = true;
+                cb_clientes.Enabled = true;
+                cBox_codigo.Enabled = true;
+                txt_cantidad.Enabled = true;
+                txt_buscar.Enabled = true;
+                btn_agregar.Enabled = true;
+                btn_actualizar.Enabled = true;
+                btn_cobrar.Enabled = true;
+                btn_limpiar.Enabled = true;
+
+                _logger.Debug("se cargo correctamente los datos de productos,clientes");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al cargar datos del producto. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            } finally
+            {
+                // Liberar el cursor
+                Cursor = Cursors.Default;
+            }
 
         }
         /// <summary>
@@ -104,7 +163,6 @@ namespace Sistema_Ventas.View
         {
             try
             {
-                Cursor = Cursors.WaitCursor;
                 ClientesController clienteController = new ClientesController();
 
                 // Obtener la lista de clientes
@@ -122,11 +180,6 @@ namespace Sistema_Ventas.View
             {
                 _logger.Error(ex, "Error al cargar datos del cliente en el combo");
                 MessageBox.Show("Error al cargar datos del cliente. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                // Liberar el cursor
-                Cursor = Cursors.Default;
             }
         }
         private void PoblacomboProducto(List<Producto> listaProducto)
@@ -170,41 +223,58 @@ namespace Sistema_Ventas.View
         /// metodo para registrar datos de compra,cliente, y el detalle de compra
         /// </summary>
         /// <returns>retorna verdadeo si se cumplen condiciones</returns>
-        private void TerminarCompra()
+        private async void TerminarCompra()
         {
-            if (!SeleccionBusquedaCliente())
+            try
             {
-                return;
-            }
-            if (detalles.Count == 0)
-            {
-                MessageBox.Show("no se han agregado producto al carrito", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
-                return;
-            }
+                if (!SeleccionBusquedaCliente())
+                {
+                    return;
+                }
+                if (detalles.Count == 0)
+                {
+                    MessageBox.Show("no se han agregado producto al carrito", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
+                    return;
+                }
 
-            CompraController compraController = new CompraController();
-            Cliente cliente = (Cliente)cb_clientes.SelectedItem;
-            AuditoriaController auditoriaController = new AuditoriaController();
-            Auditoria auditoria = new Auditoria(
-                "Compra Terminada",
-                DateTime.Now,
-                Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
-                System.Windows.Forms.SystemInformation.ComputerName.ToString(),
-                Sesión.UsuarioActual,
-                Sesión.IdUsuario,
-                cliente.Id
-            );
-            auditoriaController.AudioriaAdd(auditoria);
-            if (compraController.InsertarCompra(cliente.Id, (int)cbox_estatus.SelectedValue, (int)cb_metodo.SelectedValue, detalles))
-            {
-                MessageBox.Show("compra generada correctamente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
+                CompraController compraController = new CompraController();
+                Cliente cliente = (Cliente)cb_clientes.SelectedItem;
+                AuditoriaController auditoriaController = new AuditoriaController();
+                Auditoria auditoria = new Auditoria(
+                    "Compra Terminada",
+                    DateTime.Now,
+                    Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString(),
+                    System.Windows.Forms.SystemInformation.ComputerName.ToString(),
+                    Sesión.UsuarioActual,
+                    Sesión.IdUsuario,
+                    cliente.Id
+                );
+                auditoriaController.AudioriaAdd(auditoria);
+                if (compraController.InsertarCompra(cliente.Id, (int)cbox_estatus.SelectedValue, (int)cb_metodo.SelectedValue, detalles))
+                {
+                    MessageBox.Show("compra generada correctamente", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning); ;
 
+                }
+                else
+                {
+                    MessageBox.Show("no se pudo generar la compra", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                foreach (var d in detalles)
+                {
+                    if (!await _apiService.ActualizarExistencias(d.Cantidad, d.Productoi.Codigo))
+                    {
+                        MessageBox.Show("no se pudo actualizar la existencia de un producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }                    
+                }
+
+                limpiarCampos();
             }
-            else
+            catch (Exception)
             {
                 MessageBox.Show("no se pudo generar la compra", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                throw;
             }
-            limpiarCampos();
         }
         public void limpiarCampos()
         {
@@ -252,68 +322,87 @@ namespace Sistema_Ventas.View
         /// metodo para validar que la cantidad halla sido puesta correctamente
         /// </summary>
         /// <returns>booleano si se cumple toda la validacion</returns>
-        private void AgregarProducto()
+        private async void AgregarProducto()
         {
-            if (!(cBox_codigo.SelectedItem is Producto productoSeleccionado))
-            {
-                MessageBox.Show("porfavor seleccione un producto valido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            //validar que el porducto este activo
 
-            if (txt_cantidad.Text == "")
+            try
             {
-                MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!CompraNegocio.EsCantidadValida(txt_cantidad.Text))
-            {
-                MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            DetalleCompraController detalleController = new DetalleCompraController();
-            CompraController compraController = new CompraController();
-            if (!detalleController.ValidarCantidad(cBox_codigo.Text, txt_cantidad.Text))//si la cantidad no es valida
-            {
-                MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;///desde la api
-            }
-            int cantidad = Convert.ToInt32(txt_cantidad.Text);
-            Producto prod = (Producto)cBox_codigo.SelectedItem;//el procusto seleccionado casteado para agregarlo al detalle
-            DetalleCompra existente = null;
-
-            foreach (var d in detalles)
-            {
-                if (d.Productoi.IdProducto == productoSeleccionado.IdProducto)
+                Cursor = Cursors.WaitCursor;
+                int existencia = await _apiService.GetExistencia(txt_nombre.Text);//obtiene la existencia del producto seleccionado
+                if (!(cBox_codigo.SelectedItem is Producto productoSeleccionado))
                 {
-                    existente = d;
-                    break;
-                }
-            }
-            //Busca el primer detalle en la lista detalles cuyo producto(Productoi.IdProducto) sea igual al producto seleccionado.Si existe, guárdalo en existente; si no, existente será null
-            if (existente != null)//ya existe en la lista
-            {
-                int existenciamod = existente.Cantidad + cantidad;
-                if (!detalleController.ValidarCantidad(cBox_codigo.Text
-                , Convert.ToString(existenciamod)))
-                {
-                    MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("porfavor seleccione un producto valido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                existente.Cantidad = existenciamod;
-            }
-            else
-            {
-                DetalleCompra producto = new DetalleCompra(prod, cantidad);//crea un objeto detalle para luego insertalo al arreglo
-                detalles.Add(new DetalleCompra(productoSeleccionado, cantidad));
-            }
-            txt_subtotal.Text = compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
-            txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
-            txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
-            //txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
-            ConfigurarDgvCarrito(detalles);
+                //validar que el porducto este activo
 
-            //MessageBox.Show("Producto agregado a la compra.{}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (txt_cantidad.Text == "")
+                {
+                    MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!CompraNegocio.EsCantidadValida(txt_cantidad.Text))
+                {
+                    MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                DetalleCompraController detalleController = new DetalleCompraController();
+                CompraController compraController = new CompraController();
+
+                if (!detalleController.ValidarCantidad(cBox_codigo.Text, txt_cantidad.Text, existencia))//si la cantidad no es valida
+                {
+                    MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;///desde la api
+                }
+
+                int cantidad = Convert.ToInt32(txt_cantidad.Text);
+                Producto prod = (Producto)cBox_codigo.SelectedItem;//el procusto seleccionado casteado para agregarlo al detalle
+                DetalleCompra existente = null;
+
+                foreach (var d in detalles)
+                {
+                    if (d.Productoi.IdProducto == productoSeleccionado.IdProducto)
+                    {
+                        existente = d;
+                        break;
+                    }
+                }
+                //Busca el primer detalle en la lista detalles cuyo producto(Productoi.IdProducto) sea igual al producto seleccionado.Si existe, guárdalo en existente; si no, existente será null
+
+                if (existente != null)//ya existe en la lista
+                {
+                    int existenciamod = existente.Cantidad + cantidad;
+                    if (!detalleController.ValidarCantidad(cBox_codigo.Text
+                    , Convert.ToString(existenciamod), existencia))
+                    {
+                        MessageBox.Show("la cantidad que se desea comprar rebasa el limite permitido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    existente.Cantidad = existenciamod;
+                }
+                else
+                {
+                    DetalleCompra producto = new DetalleCompra(prod, cantidad);//crea un objeto detalle para luego insertalo al arreglo
+                    detalles.Add(new DetalleCompra(productoSeleccionado, cantidad));
+                }
+
+                txt_subtotal.Text = compraController.DatosCompraSubtotal(detalles).ToString("#,##0.00");
+                txt_IVA.Text = compraController.DatosCompraIva(detalles).ToString("#,##0.00");
+                txt_total.Text = compraController.DatosCompraTotal(detalles).ToString("#,##0.00");
+                //txt_descuento.Text = compraController.DatosCompraDescuento().ToString("#,##0.00");
+                ConfigurarDgvCarrito(detalles);
+
+                //MessageBox.Show("Producto agregado a la compra.{}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            catch (Exception)
+            { 
+                MessageBox.Show("Error al agregar producto al carrito. Contacta al administrador del sistema", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            } finally
+            {
+                Cursor = Cursors.Default;
+            }
 
         }
 

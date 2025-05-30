@@ -1,4 +1,5 @@
 ﻿using Sistema_Ventas.Utilities;
+using Sistema_VentasCore.Service;
 using Sistema_VentasCore.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,24 +15,46 @@ namespace Sistema_Ventas.View
 {
     public partial class frmResumenVentas : Form
     {
+        private readonly ApiService _apiService;
         public frmResumenVentas(Form parent)
         {
             InitializeComponent();
+            _apiService = new ApiService();
             Formas.InicializarForma(this, parent);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Sesión.TienePermiso("SALE_EDIT"))
-            {
-                //Código para la edición de una venta
+        }
 
-            } 
-
-            if (Sesión.TienePermiso("SALE_UPDATE"))
+        private async void Consulta()
+        {
+            try
             {
-                //Código para actualizar el estado de una venta
+                Cursor = Cursors.WaitCursor;
+                if (string.IsNullOrEmpty(txtBusqueda.Text))
+                {
+                    MessageBox.Show("Por favor, ingrese un filtro para la consulta.");
+                    return;
+                }
+                var existencias = await _apiService.GetExistencia(txtBusqueda.Text);
+
+                // Mostrar resultados
+                lblprueba.Text = $"Total de existencias: {existencias}";
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al consultar estudiantes: {ex.Message}");
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            Consulta();
         }
     }
 }
