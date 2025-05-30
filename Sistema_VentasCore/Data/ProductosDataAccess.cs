@@ -79,7 +79,7 @@ namespace Sistema_VentasCore.Data
             SELECT 
                 id_producto, cod_producto, nombre, precio, descripcion, existencia
             FROM producto
-            WHERE LOWER(nombre) LIKE LOWER(@nombrePrd) and estatus = TRUE
+            WHERE LOWER(nombre) LIKE LOWER(@nombrePrd)
             ORDER BY nombre;
 ";
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
@@ -113,7 +113,7 @@ namespace Sistema_VentasCore.Data
             }
     }
 
-        public int ObtenerExistenciaPorCodigo(string codProducto)
+        /*public int ObtenerExistenciaPorCodigo(string codProducto)
         {
             try
             {
@@ -149,9 +149,9 @@ namespace Sistema_VentasCore.Data
             {
                 _dbAccess.Disconnect();
             }
-        }
+        }*/
 
-        public bool ModificarExistencia(int idProducto, int cantidad)
+       /* public bool ModificarExistencia(int idProducto, int cantidad)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace Sistema_VentasCore.Data
             {
                 _dbAccess.Disconnect(); // cerrar la conexión
             }
-        }
+        }*/
 
     }
 }

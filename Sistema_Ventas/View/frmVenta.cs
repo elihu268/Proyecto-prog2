@@ -333,18 +333,25 @@ namespace Sistema_Ventas.View
             {
                 Cursor = Cursors.WaitCursor;
                 int existencia = await _apiService.GetExistencia(txt_nombre.Text);//obtiene la existencia del producto seleccionado
+
                 if (!(cBox_codigo.SelectedItem is Producto productoSeleccionado))
                 {
                     MessageBox.Show("porfavor seleccione un producto valido", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 //validar que el porducto este activo
-
+                bool estatusProducto= await _apiService.GetEstatus(productoSeleccionado.Codigo);
+                if (estatusProducto== false)
+                {
+                    MessageBox.Show("el producto no se puede agregar, tiene estatus baja", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (txt_cantidad.Text == "")
                 {
                     MessageBox.Show("por davor,ingrese cantidad de producto", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                
                 if (!CompraNegocio.EsCantidadValida(txt_cantidad.Text))
                 {
                     MessageBox.Show("solo se aceptan numeros enteros positivos mayores a 0", "informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);

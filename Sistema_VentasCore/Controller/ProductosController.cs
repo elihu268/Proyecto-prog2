@@ -33,7 +33,7 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
-        public List<Producto> ObtenerProductos()
+        public List<Producto> ObtenerProductos()//!!
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
-        public int ObtenerExistenciaDeProducto(String codigo){
+       /* public int ObtenerExistenciaDeProducto(String codigo){
             try
             {
                 int existencia = _productosData.ObtenerExistenciaPorCodigo(codigo);
@@ -86,7 +86,7 @@ namespace Sistema_VentasCore.Controller
                 throw;
             }
         }
-
+       */
         public bool ExportarProductosExcel(string rutaArchivo)
         {
             try
