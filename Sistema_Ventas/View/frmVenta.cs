@@ -688,10 +688,9 @@ namespace Sistema_Ventas.View
                   cBox_codigo.SelectedText,
                   existencia
                   );
-                if (existencia <= 4)
-                {
+                
                     ObtenerCantidadAsynk.Add(producto);
-                }
+                
                 var (alerta, mensaje) = CompraNegocio.AlertaExistencia(ObtenerCantidadAsynk);
                 if (alerta)
                 {
