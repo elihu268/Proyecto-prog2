@@ -685,11 +685,8 @@ namespace Sistema_Ventas.View
                 CompraNegocio compraNegocio = new CompraNegocio();
                 var existencia = await _apiService.GetExistencia(codigo);
                 Producto producto = new Producto(
-                  Convert.ToInt32(cBox_codigo.SelectedValue),
                   cBox_codigo.SelectedText,
-                  cBox_codigo.SelectedText,
-                  Convert.ToDecimal(txt_precio.Text),
-                  txt_nombre.Text
+                  existencia
                   );
                 if (existencia <= 4)
                 {
